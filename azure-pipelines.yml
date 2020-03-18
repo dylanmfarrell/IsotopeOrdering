@@ -1,0 +1,38 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Restoring Nuget Packages'
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+    vstsFeed: '92dca98d-6841-4efd-abe6-79a704b79145'
+   
+- task: DotNetCoreCLI@2
+  displayName: 'Publishing Project'
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory) --no-restore'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Running Tests'
+  inputs:
+    command: test
+    projects: 'test/**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'MIRFileService_build'
+    publishLocation: 'Container'

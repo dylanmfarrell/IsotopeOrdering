@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IsotopeOrdering.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using IsotopeOrdering.UI.Models;
+using System.Diagnostics;
 
 namespace IsotopeOrdering.UI.Controllers {
     public class HomeController : Controller {

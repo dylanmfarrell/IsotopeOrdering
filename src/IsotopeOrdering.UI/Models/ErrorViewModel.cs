@@ -1,5 +1,3 @@
-using System;
-
 namespace IsotopeOrdering.UI.Models {
     public class ErrorViewModel {
         public string RequestId { get; set; }

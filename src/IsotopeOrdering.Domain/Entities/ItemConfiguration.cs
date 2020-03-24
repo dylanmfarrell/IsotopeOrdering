@@ -1,11 +1,11 @@
 ﻿using MIR.Core.Domain;
 
 namespace IsotopeOrdering.Domain.Entities {
-    public class ItemPrice : ModelBase {
+    public class ItemConfiguration : ModelBase {
         public int ItemId { get; set; }
         public Item Item { get; set; } = null!;
         public int? CustomerId { get; set; }
-        public Customer? Customer { get; set; }
+        public Customer Customer { get; set; } = null!;
         public decimal Price { get; set; }
         public decimal? MinimumAmount { get; set; }
         public decimal? MaximumAmount { get; set; }

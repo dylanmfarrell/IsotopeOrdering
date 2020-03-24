@@ -1,6 +1,5 @@
 ﻿using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
-using System;
 
 namespace IsotopeOrdering.Domain.Entities {
     public class CustomerForm : ModelBase {
@@ -10,6 +9,5 @@ namespace IsotopeOrdering.Domain.Entities {
         public Form Form { get; set; } = null!;
         public CustomerFormStatus Status { get; set; }
         public string? FormData { get; set; }
-        public DateTime? CompletedDate { get; set; }
     }
 }

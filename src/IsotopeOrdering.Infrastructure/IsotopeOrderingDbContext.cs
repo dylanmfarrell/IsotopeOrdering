@@ -1,12 +1,11 @@
-﻿using IsotopeOrdering.App.Interfaces;
-using IsotopeOrdering.Domain.Entities;
+﻿using IsotopeOrdering.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using MIR.Core.Data;
 using MIR.Core.Domain;
 using System.Reflection;
 
 namespace IsotopeOrdering.Infrastructure {
-    public class IsotopeOrderingDbContext : BaseDataContext<IsotopeOrderingDbContext>, IIsotopeOrderingDbContext {
+    public class IsotopeOrderingDbContext : BaseDataContext<IsotopeOrderingDbContext> {
         public IsotopeOrderingDbContext(IUserService userService) : base(userService) {
         }
 
@@ -20,11 +19,13 @@ namespace IsotopeOrdering.Infrastructure {
 
         public DbSet<Customer> Customers { get; set; } = null!;
         public DbSet<CustomerForm> CustomerForms { get; set; } = null!;
+        public DbSet<CustomerInstitution> CustomerInstitutions { get; set; } = null!;
+        public DbSet<EntityEvent> EntityEvents { get; set; } = null!;
         public DbSet<Form> Forms { get; set; } = null!;
+        public DbSet<Institution> Institutions { get; set; } = null!;
         public DbSet<Item> Items { get; set; } = null!;
-        public DbSet<ItemPrice> ItemPrices { get; set; } = null!;
+        public DbSet<ItemConfiguration> ItemConfigurations { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
-        public DbSet<OrderEvent> OrderEvents { get; set; } = null!;
         public DbSet<OrderItem> OrderItems { get; set; } = null!;
         public DbSet<Shipment> Shipments { get; set; } = null!;
         public DbSet<ShipmentItem> ShipmentItems { get; set; } = null!;

@@ -1,6 +1,5 @@
 ﻿using IdentityModel;
 using IdentityModel.Client;
-using IsotopeOrdering.App.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +16,6 @@ namespace IsotopeOrdering.Infrastructure {
             services.AddDbContext<IsotopeOrderingDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                 x => x.MigrationsAssembly(typeof(IsotopeOrderingDbContext).Assembly.FullName)));
-
-            services.AddScoped<IIsotopeOrderingDbContext>(provider => provider.GetService<IsotopeOrderingDbContext>());
 
             //Add internal role service
             services.AddMemoryCache();

@@ -1,6 +1,6 @@
 using FluentValidation.AspNetCore;
 using IsotopeOrdering.App;
-using IsotopeOrdering.App.Interfaces;
+using IsotopeOrdering.App.Validation;
 using IsotopeOrdering.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MIR.Core.Domain;
 using MIR.Core.Mvc.Security;
+using Serilog;
 
 namespace IsotopeOrdering.UI {
     public class Startup {
@@ -30,7 +31,7 @@ namespace IsotopeOrdering.UI {
             services.AddHealthChecks().AddDbContextCheck<IsotopeOrderingDbContext>();
 
             services.AddControllersWithViews()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IIsotopeOrderingDbContext>())
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerModelValidator>())
                 .AddNewtonsoftJson();
         }
 
@@ -42,19 +43,28 @@ namespace IsotopeOrdering.UI {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            app.UseHealthChecks("/health");
-            app.UseHttpsRedirection();
+            app.UseNotFoundHandler();
+            app.Use((context, next) => {
+                if (!context.Request.Scheme.Contains("https")) {
+                    context.Request.Scheme = "https";
+                }
+                return next();
+            });
             app.UseStaticFiles();
+            app.UseSerilogRequestLogging(options => {
+                options.EnrichDiagnosticContext = (diagnosticContext, httpContext) => {
+                    diagnosticContext.Set("User", httpContext.User.Claims);
+                };
+            });
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHealthChecks("/health");
             });
         }
     }

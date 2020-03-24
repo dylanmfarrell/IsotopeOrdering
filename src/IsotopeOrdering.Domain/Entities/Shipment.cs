@@ -7,6 +7,7 @@ namespace IsotopeOrdering.Domain.Entities {
         public int OrderId { get; set; }
         public Order Order { get; set; } = null!;
         public ShipmentStatus Status { get; set; }
-        public Address ShippingInformation { get; set; } = null!;
+        public decimal ShippingCharge { get; set; }
+        public Address Shipping { get; set; } = null!;
     }
 }

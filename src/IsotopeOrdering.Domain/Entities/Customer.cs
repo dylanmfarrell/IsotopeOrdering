@@ -11,7 +11,7 @@ namespace IsotopeOrdering.Domain.Entities {
         public Contact CustomerContact { get; set; } = null!;
         public Address Shipping { get; set; } = null!;
         public Address Billing { get; set; } = null!;
-        public List<ItemConfiguration> ItemPrices { get; set; } = new List<ItemConfiguration>();
+        public List<ItemConfiguration> ItemConfigurations { get; set; } = new List<ItemConfiguration>();
         public List<CustomerInstitution> Institutions { get; set; } = new List<CustomerInstitution>();
         public Guid UploadId { get; set; }
     }

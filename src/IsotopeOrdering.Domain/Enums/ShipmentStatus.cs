@@ -2,7 +2,8 @@
     public enum ShipmentStatus {
         Created = 0,
         Shipped = 1,
-        Cancelled = 2,
-        Received = 3
+        PartiallyShipped = 2,
+        Cancelled = 3,
+        Received = 4
     }
 }

@@ -6,10 +6,12 @@ using System.Reflection;
 
 namespace IsotopeOrdering.Infrastructure {
     public class IsotopeOrderingDbContext : BaseDataContext<IsotopeOrderingDbContext> {
-        public IsotopeOrderingDbContext(IUserService userService) : base(userService) {
+        public IsotopeOrderingDbContext(IUserService userService, IRoleService roleService) : base(userService) {
+            RoleService = roleService;
         }
 
-        public IsotopeOrderingDbContext(IUserService userService, DbContextOptions<IsotopeOrderingDbContext> options) : base(userService, options) {
+        public IsotopeOrderingDbContext(IUserService userService, IRoleService roleService, DbContextOptions<IsotopeOrderingDbContext> options) : base(userService, options) {
+            RoleService = roleService;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -29,5 +31,6 @@ namespace IsotopeOrdering.Infrastructure {
         public DbSet<OrderItem> OrderItems { get; set; } = null!;
         public DbSet<Shipment> Shipments { get; set; } = null!;
         public DbSet<ShipmentItem> ShipmentItems { get; set; } = null!;
+        public IRoleService RoleService { get; }
     }
 }

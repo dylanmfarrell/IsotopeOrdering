@@ -9,7 +9,6 @@ namespace IsotopeOrdering.Domain.Entities {
         public OrderItem OrderItem { get; set; } = null!;
         public ShipmentItemStatus Status { get; set; }
         public decimal ShippedRadioactivity { get; set; }
-        public decimal? ReceivedRadioactivity { get; set; }
         public string? DamagedReason { get; set; }
     }
 }

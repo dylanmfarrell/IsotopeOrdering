@@ -3,7 +3,6 @@
         Created = 0,
         Shipped = 1,
         PartiallyShipped = 2,
-        Cancelled = 3,
-        Received = 4
+        Cancelled = 3
     }
 }

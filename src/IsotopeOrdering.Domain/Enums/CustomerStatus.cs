@@ -1,7 +1,6 @@
 ﻿namespace IsotopeOrdering.Domain.Enums {
     public enum CustomerStatus {
         Pending = 0,
-        Initiated = 1,
-        Locked = 2
+        Initiated = 1
     }
 }

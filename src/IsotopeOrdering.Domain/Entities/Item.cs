@@ -12,6 +12,5 @@ namespace IsotopeOrdering.Domain.Entities {
         public string QualityControlAnalysis { get; set; } = null!;
         public decimal? MinQuantity { get; set; }
         public decimal? MaxQuantity { get; set; }
-
     }
 }

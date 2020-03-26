@@ -20,6 +20,8 @@ namespace IsotopeOrdering.Infrastructure {
         }
 
         public DbSet<Customer> Customers { get; set; } = null!;
+        public DbSet<CustomerAddress> CustomerAddresses { get; set; } = null!;
+        public DbSet<CustomerDocument> CustomerDocuments { get; set; } = null!;
         public DbSet<CustomerForm> CustomerForms { get; set; } = null!;
         public DbSet<CustomerInstitution> CustomerInstitutions { get; set; } = null!;
         public DbSet<EntityEvent> EntityEvents { get; set; } = null!;

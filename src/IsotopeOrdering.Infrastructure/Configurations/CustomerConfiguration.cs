@@ -7,9 +7,7 @@ using System;
 namespace IsotopeOrdering.Infrastructure.Configurations {
     internal class CustomerConfiguration : IEntityTypeConfiguration<Customer> {
         public void Configure(EntityTypeBuilder<Customer> builder) {
-            builder.OwnsOne(x => x.Billing);
-            builder.OwnsOne(x => x.Shipping);
-            builder.OwnsOne(x => x.CustomerContact,
+            builder.OwnsOne(x => x.Contact,
                 sa => {
                     sa.Property(x => x.Email).HasColumnName("Email").IsRequired();
                     sa.Property(x => x.Fax).HasColumnName("Fax");
@@ -18,7 +16,6 @@ namespace IsotopeOrdering.Infrastructure.Configurations {
                     sa.Property(x => x.LastName).HasColumnName("LastName").IsRequired();
                 });
             builder.Property(x => x.Status).HasDefaultValue(CustomerStatus.Pending);
-            builder.Property(x => x.UploadId).HasDefaultValue(Guid.NewGuid());
             builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Enums;
 using System.Linq;
 
@@ -14,6 +15,13 @@ namespace IsotopeOrdering.App.Models.Details {
                 .WithMessage("Must have at least one shipping address")
                 .Must(x => x.Any(x => x.Type == AddressType.Billing && !x.IsDeleted))
                 .WithMessage("Must have at least one billing address");
+            RuleForEach(x => x.Addresses).SetValidator(new CustomerAddressDetailModelValidator());
+        }
+
+        public class CustomerAddressDetailModelValidator: AbstractValidator<CustomerAddressDetailModel> {
+            public CustomerAddressDetailModelValidator() {
+                RuleFor(x => x.Address).SetValidator(new AddressDetailModelValidator());
+            }
         }
     }
 }

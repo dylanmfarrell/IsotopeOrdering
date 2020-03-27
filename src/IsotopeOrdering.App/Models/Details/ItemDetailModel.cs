@@ -1,7 +1,4 @@
-﻿using IsotopeOrdering.App.Models.Shared;
-using System.Collections.Generic;
-
-namespace IsotopeOrdering.App.Models.Details {
+﻿namespace IsotopeOrdering.App.Models.Details {
     public class ItemDetailModel {
         public int Id { get; set; }
         public string Name { get; set; } = null!;

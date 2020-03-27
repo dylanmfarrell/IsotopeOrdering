@@ -2,7 +2,6 @@
 using IsotopeOrdering.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace IsotopeOrdering.Infrastructure.Configurations {
     internal class CustomerConfiguration : IEntityTypeConfiguration<Customer> {

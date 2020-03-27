@@ -1,7 +1,6 @@
 ﻿using IsotopeOrdering.Domain.Entities.Shared;
 using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
-using System;
 using System.Collections.Generic;
 
 namespace IsotopeOrdering.Domain.Entities {
@@ -12,6 +11,6 @@ namespace IsotopeOrdering.Domain.Entities {
         public decimal ShippingCharge { get; set; }
         public Address Shipping { get; set; } = null!;
         public List<ShipmentItem> Items { get; set; } = new List<ShipmentItem>();
-        public Guid UploadId { get; set; }
+        public Document Document { get; set; } = null!;
     }
 }

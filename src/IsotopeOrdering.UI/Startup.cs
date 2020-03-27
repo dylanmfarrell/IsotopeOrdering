@@ -1,6 +1,6 @@
 using FluentValidation.AspNetCore;
 using IsotopeOrdering.App;
-using IsotopeOrdering.App.Validation;
+using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,7 +31,7 @@ namespace IsotopeOrdering.UI {
             services.AddHealthChecks().AddDbContextCheck<IsotopeOrderingDbContext>();
 
             services.AddControllersWithViews()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerModelValidator>())
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerDetailModelValidator>())
                 .AddNewtonsoftJson();
         }
 

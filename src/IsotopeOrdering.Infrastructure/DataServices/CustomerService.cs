@@ -24,11 +24,15 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<IEnumerable<T>> GetChildrenList<T>(int parentId) where T : class {
-            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.ParentCustomerId == parentId)).ToListAsync();
+            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.ParentCustomerId == parentId))
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetList<T>() where T : class {
-            return await _mapper.ProjectTo<T>(_context.Customers).ToListAsync();
+            return await _mapper.ProjectTo<T>(_context.Customers)
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }

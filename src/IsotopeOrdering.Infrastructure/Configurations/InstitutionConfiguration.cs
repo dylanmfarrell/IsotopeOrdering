@@ -9,7 +9,8 @@ namespace IsotopeOrdering.Infrastructure.Configurations {
             builder.OwnsOne(x => x.FinancialContact);
             builder.OwnsOne(x => x.SafetyContact);
             builder.OwnsOne(x => x.Address);
-            builder.Property(x => x.UploadId).HasDefaultValue(Guid.NewGuid());
+            builder.OwnsOne(x => x.Document)
+                .Property(x => x.UploadId).HasDefaultValue(Guid.NewGuid());
             builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }

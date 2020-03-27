@@ -1,10 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using IsotopeOrdering.App.Mappings;
+using Microsoft.EntityFrameworkCore;
 using MIR.Core.Domain;
 using Moq;
 using System;
 
 namespace IsotopeOrdering.Infrastructure.IntegrationTests {
     public static class TestUtilities {
+        public static IMapper GetMapper() {
+            var config = new MapperConfiguration(c =>
+                c.AddMaps(typeof(CustomerProfile).Assembly)
+            );
+            return new Mapper(config);
+        }
 
         public static IUserService GetUserService(string userName) {
             Mock<IUser> mockUser = new Mock<IUser>();

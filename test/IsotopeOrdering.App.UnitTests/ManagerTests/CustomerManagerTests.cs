@@ -2,7 +2,8 @@
 using AutoMapper;
 using IsotopeOrdering.App.Managers;
 using IsotopeOrdering.App.Mappings;
-using IsotopeOrdering.App.Models;
+using IsotopeOrdering.App.Models.Details;
+using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
@@ -28,9 +29,11 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                 .Returns(Task.FromResult(1));
             mock.Setup(x => x.Get<CustomerItemModel>(It.Is<int>(x => x == 1)))
                 .Returns(Task.FromResult(new CustomerItemModel() {
-                    ContactEmail = userService.User.Email,
-                    ContactFirstName = userService.User.FirstName,
-                    ContactLastName = userService.User.LastName
+                    Contact = {
+                        Email = userService.User.Email,
+                        FirstName = userService.User.FirstName,
+                        LastName = userService.User.LastName,
+                   }
                 }));
             ;
 
@@ -38,9 +41,9 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
             CustomerItemModel customer = await manager.InitializeCustomerForCurrentUser();
 
-            Assert.Equal(customer.ContactEmail, userService.User.Email);
-            Assert.Equal(customer.ContactFirstName, userService.User.FirstName);
-            Assert.Equal(customer.ContactLastName, userService.User.LastName);
+            Assert.Equal(customer.Contact.Email, userService.User.Email);
+            Assert.Equal(customer.Contact.FirstName, userService.User.FirstName);
+            Assert.Equal(customer.Contact.LastName, userService.User.LastName);
             Assert.True(customer.Status == CustomerStatus.Pending);
         }
 
@@ -52,18 +55,20 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
                 .Returns(Task.FromResult(new CustomerItemModel() {
-                    ContactEmail = userService.User.Email,
-                    ContactFirstName = userService.User.FirstName,
-                    ContactLastName = userService.User.LastName
+                    Contact = {
+                        Email = userService.User.Email,
+                        FirstName = userService.User.FirstName,
+                        LastName = userService.User.LastName,
+                   }
                 }));
 
             CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null);
 
             CustomerItemModel customer = await manager.InitializeCustomerForCurrentUser();
 
-            Assert.Equal(customer.ContactEmail, userService.User.Email);
-            Assert.Equal(customer.ContactFirstName, userService.User.FirstName);
-            Assert.Equal(customer.ContactLastName, userService.User.LastName);
+            Assert.Equal(customer.Contact.Email, userService.User.Email);
+            Assert.Equal(customer.Contact.FirstName, userService.User.FirstName);
+            Assert.Equal(customer.Contact.LastName, userService.User.LastName);
             Assert.True(customer.Status == CustomerStatus.Pending);
         }
 
@@ -95,9 +100,11 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                 .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>()));
             mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
                .Returns(Task.FromResult(new CustomerItemModel() {
-                   ContactEmail = userService.User.Email,
-                   ContactFirstName = userService.User.FirstName,
-                   ContactLastName = userService.User.LastName,
+                   Contact = {
+                        Email = userService.User.Email,
+                        FirstName = userService.User.FirstName,
+                        LastName = userService.User.LastName,
+                   },
                    ParentCustomerId = 1
                }));
 
@@ -118,9 +125,11 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                 .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>()));
             mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
                .Returns(Task.FromResult(new CustomerItemModel() {
-                   ContactEmail = userService.User.Email,
-                   ContactFirstName = userService.User.FirstName,
-                   ContactLastName = userService.User.LastName,
+                   Contact = {
+                        Email = userService.User.Email,
+                        FirstName = userService.User.FirstName,
+                        LastName = userService.User.LastName,
+                   },
                    ParentCustomerId = null
                }));
             mock.Setup(x => x.GetChildrenList<CustomerItemModel>(It.IsAny<int>()))
@@ -141,6 +150,11 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null);
 
             Assert.NotNull(await manager.GetCustomer(1));
+        }
+
+        [Fact]
+        public async void Edit_Customer_With_Validation_Errors() {
+
         }
     }
 }

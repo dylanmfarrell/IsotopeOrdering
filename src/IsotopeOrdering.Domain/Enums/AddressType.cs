@@ -1,6 +1,7 @@
 ﻿namespace IsotopeOrdering.Domain.Enums {
     public enum AddressType {
-        Shipping = 0,
-        Billing = 1
+        Default = 0,
+        Shipping = 1,
+        Billing = 2
     }
 }

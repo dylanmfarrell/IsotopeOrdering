@@ -7,13 +7,7 @@ namespace IsotopeOrdering.App.UnitTests {
         [Fact]
         public void Test_Configurations_Are_Valid() {
             var config = new MapperConfiguration(c => {
-                c.AddProfiles(new Profile[] {
-                    new CustomerProfile(),
-                    new FormProfile(),
-                    new ItemProfile(),
-                    new OrderProfile(),
-                    new ShipmentProfile()
-                });
+                c.AddMaps(typeof(CustomerProfile).Assembly);
             });
             config.AssertConfigurationIsValid();
         }

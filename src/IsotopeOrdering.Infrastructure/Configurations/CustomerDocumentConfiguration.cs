@@ -4,9 +4,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
 namespace IsotopeOrdering.Infrastructure.Configurations {
-    internal class ShipmentConfiguration : IEntityTypeConfiguration<Shipment> {
-        public void Configure(EntityTypeBuilder<Shipment> builder) {
-            builder.OwnsOne(x => x.Shipping);
+    internal class CustomerDocumentConfiguration : IEntityTypeConfiguration<CustomerDocument> {
+        public void Configure(EntityTypeBuilder<CustomerDocument> builder) {
             builder.OwnsOne(x => x.Document)
                 .Property(x => x.UploadId).HasDefaultValue(Guid.NewGuid());
             builder.HasQueryFilter(x => !x.IsDeleted);

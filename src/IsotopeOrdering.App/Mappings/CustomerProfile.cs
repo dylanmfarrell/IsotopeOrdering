@@ -17,6 +17,8 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForPath(x => x.Contact.FirstName, opt => opt.MapFrom(src => src.FirstName))
                 .ForPath(x => x.Contact.LastName, opt => opt.MapFrom(src => src.LastName))
                 .ForAllOtherMembers(x => x.Ignore());
+
+            
         }
     }
 }

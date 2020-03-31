@@ -8,6 +8,9 @@ namespace IsotopeOrdering.App.Models.Details {
         public int Id { get; set; }
         public FormType Type { get; set; }
         public string Name { get; set; } = null!;
+        public int CustomerDetailFormId { get; set; }
+        public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
+        public CustomerFormStatus CustomerFormStatus { get; set; }
         public FormInitiationDetailModel? InitiationModel { get; set; }
     }
 

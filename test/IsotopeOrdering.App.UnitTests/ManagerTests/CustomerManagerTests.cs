@@ -16,6 +16,7 @@ using Xunit;
 namespace IsotopeOrdering.App.UnitTests.ManagerTests {
     public class CustomerManagerTests {
         private readonly NullLogger<CustomerManager> _logger = new NullLogger<CustomerManager>();
+        private readonly IEventService _eventService = TestUtilities.GetEventService();
 
         [Fact]
         public async void Initialize_Customer_Does_Not_Exist() {
@@ -37,14 +38,14 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                 }));
             ;
 
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null, _eventService);
 
             CustomerItemModel customer = await manager.InitializeCustomerForCurrentUser();
 
             Assert.Equal(customer.Contact.Email, userService.User.Email);
             Assert.Equal(customer.Contact.FirstName, userService.User.FirstName);
             Assert.Equal(customer.Contact.LastName, userService.User.LastName);
-            Assert.True(customer.Status == CustomerStatus.Pending);
+            Assert.Equal(CustomerStatus.New, customer.Status);
         }
 
         [Fact]
@@ -62,14 +63,14 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                    }
                 }));
 
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null, _eventService);
 
             CustomerItemModel customer = await manager.InitializeCustomerForCurrentUser();
 
             Assert.Equal(customer.Contact.Email, userService.User.Email);
             Assert.Equal(customer.Contact.FirstName, userService.User.FirstName);
             Assert.Equal(customer.Contact.LastName, userService.User.LastName);
-            Assert.True(customer.Status == CustomerStatus.Pending);
+            Assert.Equal(CustomerStatus.New, customer.Status);
         }
 
         [Fact]
@@ -83,7 +84,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mock.Setup(x => x.GetList<CustomerItemModel>())
                 .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>()));
 
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, mockRoleService.Object);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, mockRoleService.Object, _eventService);
 
             Assert.NotEmpty(await manager.GetList());
         }
@@ -108,7 +109,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                    ParentCustomerId = 1
                }));
 
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, mockRoleService.Object);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, mockRoleService.Object, _eventService);
 
             Assert.Empty(await manager.GetList());
         }
@@ -135,7 +136,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mock.Setup(x => x.GetChildrenList<CustomerItemModel>(It.IsAny<int>()))
                .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>()));
 
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, mockRoleService.Object);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, mockRoleService.Object, _eventService);
 
             Assert.NotEmpty(await manager.GetList());
         }
@@ -147,7 +148,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.Get<CustomerDetailModel>(It.IsAny<int>()))
                 .ReturnsAsync(new Fixture().Create<CustomerDetailModel>());
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null, _eventService);
 
             Assert.NotNull(await manager.GetCustomer(1));
         }

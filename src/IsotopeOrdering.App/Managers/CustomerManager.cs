@@ -21,13 +21,20 @@ namespace IsotopeOrdering.App.Managers {
         private readonly ICustomerService _service;
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly IEventService _eventService;
 
-        public CustomerManager(ILogger<CustomerManager> logger, IMapper mapper, ICustomerService service, IUserService userService, IRoleService roleService) {
+        public CustomerManager(ILogger<CustomerManager> logger, 
+            IMapper mapper, 
+            ICustomerService service, 
+            IUserService userService, 
+            IRoleService roleService,
+            IEventService eventService) {
             _logger = logger;
             _mapper = mapper;
             _service = service;
             _userService = userService;
             _roleService = roleService;
+            _eventService = eventService;
         }
 
         public async Task<ApplicationResult> EditCustomer(CustomerDetailModel model) {
@@ -44,7 +51,7 @@ namespace IsotopeOrdering.App.Managers {
                     return ApplicationResult.Error(ex);
                 }
             }
-            return ApplicationResult.Error(result.Errors);
+            return ApplicationResult.Error(result);
         }
 
         public async Task<CustomerDetailModel> GetCustomer(int id) {

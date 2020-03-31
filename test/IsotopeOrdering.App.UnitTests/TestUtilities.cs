@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using IsotopeOrdering.Domain.Enums;
+using IsotopeOrdering.Domain.Interfaces;
 using MIR.Core.Domain;
 using Moq;
 using System;
+using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.UnitTests {
     public static class TestUtilities {
@@ -12,6 +15,13 @@ namespace IsotopeOrdering.App.UnitTests {
             Mock<IUserService> mock = new Mock<IUserService>();
             mock.SetupGet(x => x.User).Returns(mockUser.Object);
 
+            return mock.Object;
+        }
+
+        public static IEventService GetEventService() {
+            Mock<IEventService> mock = new Mock<IEventService>();
+            mock.Setup(x => x.CreateEvent(It.IsAny<EntityEventType>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<object[]>()))
+                .Returns(Task.CompletedTask);
             return mock.Object;
         }
 

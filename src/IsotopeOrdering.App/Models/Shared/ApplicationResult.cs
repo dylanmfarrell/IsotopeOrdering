@@ -17,8 +17,8 @@ namespace IsotopeOrdering.App.Models.Shared {
             return new ApplicationResult(ex.Message, false);
         }
 
-        public static ApplicationResult Error(IEnumerable<ValidationFailure> failures) {
-            return new ApplicationResult(string.Join(", ", failures), false) { Data = failures };
+        public static ApplicationResult Error(ValidationResult result) {
+            return new ApplicationResult(string.Join(", ", result.Errors), false) { Data = result.Errors };
         }
 
         public static ApplicationResult Error(string message) {

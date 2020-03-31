@@ -1,8 +1,9 @@
 ﻿using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.Infrastructure.DataServices {
@@ -13,16 +14,18 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             _context = context;
         }
 
-        public Task CreateDataUpdateEvent(EntityEventType type, int id, string currentData, string newData) {
-            throw new NotImplementedException();
+        public async Task CreateEvent(EntityEventType type, int id, string eventDescription, params object[] data) {
+            string description = string.Format(eventDescription, data);
+            _context.EntityEvents.Add(new EntityEvent() {
+                EntityId = id,
+                Type = type,
+                Description = description
+            });
+            await _context.SaveChangesAsync();
         }
 
-        public Task CreateStatusUpdateEvent(EntityEventType type, int id, Enum currentStatus, Enum newStatus) {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<EntityEvent>> GetEvents(EntityEventType type, int id) {
-            throw new NotImplementedException();
+        public Task<List<EntityEvent>> GetEvents(int entityId) {
+            return _context.EntityEvents.Where(x => x.EntityId == entityId).ToListAsync();
         }
     }
 }

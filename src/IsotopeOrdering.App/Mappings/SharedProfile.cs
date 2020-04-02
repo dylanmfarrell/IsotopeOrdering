@@ -5,9 +5,12 @@ using IsotopeOrdering.Domain.Entities.Shared;
 namespace IsotopeOrdering.App.Mappings {
     public class SharedProfile : Profile {
         public SharedProfile() {
-            CreateMap<Address, AddressDetailModel>();
-            CreateMap<Contact, ContactDetailModel>();
-            CreateMap<Document, DocumentDetailModel>();
+            CreateMap<Address, AddressDetailModel>()
+                .ReverseMap();
+            CreateMap<Contact, ContactDetailModel>()
+                .ReverseMap();
+            CreateMap<Document, DocumentDetailModel>()
+                .ReverseMap();
         }
     }
 }

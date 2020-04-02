@@ -1,22 +1,31 @@
 ﻿using AutoFixture;
 using AutoMapper;
+using FluentValidation.Results;
 using IsotopeOrdering.App.Managers;
 using IsotopeOrdering.App.Mappings;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
+using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging.Abstractions;
 using MIR.Core.Domain;
 using Moq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace IsotopeOrdering.App.UnitTests.ManagerTests {
     public class CustomerManagerTests {
+        private readonly ITestOutputHelper _output;
         private readonly NullLogger<CustomerManager> _logger = new NullLogger<CustomerManager>();
         private readonly IEventService _eventService = TestUtilities.GetEventService();
+
+        public CustomerManagerTests(ITestOutputHelper output) {
+            _output = output;
+        }
 
         [Fact]
         public async void Initialize_Customer_Does_Not_Exist() {
@@ -153,9 +162,43 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             Assert.NotNull(await manager.GetCustomer(1));
         }
 
-        [Fact]
-        public async void Edit_Customer_With_Validation_Errors() {
+        [Theory,AutoMoqData]
+        public async void Edit_Customer_With_Validation_Errors(CustomerDetailModel model) {
+            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile());
+            CustomerManager manager = new CustomerManager(_logger, mapper, null, null, null, null);
+            model.Addresses.Clear();
 
+            ApplicationResult applicationResult = await manager.EditCustomer(model);
+
+            _output.WriteLine(applicationResult.Message);
+            Assert.IsType<List<ValidationFailure>>(applicationResult.Data);
+            Assert.False(applicationResult.IsSuccessful);
+        }
+
+        [Theory, AutoMoqData]
+        public async void Edit_Customer_Without_Validation_Errors(CustomerDetailModel model) {
+            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(),new SharedProfile());
+            var mock = new Mock<ICustomerService>();
+            mock.Setup(x => x.Update(It.IsAny<Customer>())).ReturnsAsync(1);
+
+            AddressDetailModel address = new Fixture().Create<AddressDetailModel>();
+            address.State = "MO";
+            address.ZipCode = "12345";
+            model.Addresses.Clear();
+            model.Addresses.Add(new CustomerAddressDetailModel() { Address = address, Type = AddressType.Billing });
+            model.Addresses.Add(new CustomerAddressDetailModel() { Address = address, Type = AddressType.Shipping });
+            model.Contact.Email = "test@test.com";
+            model.Contact.Fax = "123-1234";
+            model.Contact.PhoneNumber = "123-1234";
+            model.Institutions.Clear();
+            model.ItemConfigurations.Clear();
+            model.Documents.Clear();
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, null, null, null);
+
+            ApplicationResult applicationResult = await manager.EditCustomer(model);
+
+            _output.WriteLine(applicationResult.Message);
+            Assert.True(applicationResult.IsSuccessful);
         }
     }
 }

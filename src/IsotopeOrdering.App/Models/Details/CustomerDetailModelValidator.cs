@@ -18,7 +18,7 @@ namespace IsotopeOrdering.App.Models.Details {
             RuleForEach(x => x.Addresses).SetValidator(new CustomerAddressDetailModelValidator());
         }
 
-        public class CustomerAddressDetailModelValidator: AbstractValidator<CustomerAddressDetailModel> {
+        public class CustomerAddressDetailModelValidator : AbstractValidator<CustomerAddressDetailModel> {
             public CustomerAddressDetailModelValidator() {
                 RuleFor(x => x.Address).SetValidator(new AddressDetailModelValidator());
             }

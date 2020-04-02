@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IsotopeOrdering.Domain.Interfaces {
     public interface IEventService {
-        Task CreateEvent(EntityEventType type, int id, string eventDescription,params object[] data);
+        Task CreateEvent(EntityEventType type, int id, string eventDescription, params object[] data);
         Task<List<EntityEvent>> GetEvents(int entityId);
     }
 }

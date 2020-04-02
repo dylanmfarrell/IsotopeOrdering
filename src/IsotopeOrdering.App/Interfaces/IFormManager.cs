@@ -28,7 +28,7 @@ namespace IsotopeOrdering.App.Interfaces {
         /// </summary>
         /// <param name="customerFormId"></param>
         /// <returns></returns>
-        Task<ApplicationResult> UpdateFormStatus(int customerId,int customerFormId,CustomerFormStatus status);
+        Task<ApplicationResult> UpdateFormStatus(int customerId, int customerFormId, CustomerFormStatus status);
 
     }
 }

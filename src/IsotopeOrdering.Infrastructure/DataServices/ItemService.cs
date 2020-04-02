@@ -15,6 +15,14 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             _mapper = mapper;
         }
 
+        public async Task<T> Get<T>(int id) {
+            return await _mapper.ProjectTo<T>(_context.Items.Where(x => x.Id == id)).SingleAsync();
+        }
+
+        public async Task<List<T>> GetList<T>() {
+            return await _mapper.ProjectTo<T>(_context.Items).ToListAsync();
+        }
+
         public async Task<List<T>> GetListForInitiation<T>() {
             return await _mapper.ProjectTo<T>(_context.Items.Where(x => !x.Unavailable)).ToListAsync();
         }

@@ -1,6 +1,5 @@
 ﻿using FluentValidation.Results;
 using System;
-using System.Collections.Generic;
 
 namespace IsotopeOrdering.App.Models.Shared {
     public class ApplicationResult {

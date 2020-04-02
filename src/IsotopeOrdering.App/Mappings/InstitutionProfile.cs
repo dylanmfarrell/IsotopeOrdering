@@ -6,7 +6,8 @@ using IsotopeOrdering.Domain.Entities;
 namespace IsotopeOrdering.App.Mappings {
     public class InstitutionProfile : Profile {
         public InstitutionProfile() {
-            CreateMap<Institution, InstitutionDetailModel>();
+            CreateMap<Institution, InstitutionDetailModel>()
+                .ReverseMap();
             CreateMap<Institution, InstitutionItemModel>();
         }
     }

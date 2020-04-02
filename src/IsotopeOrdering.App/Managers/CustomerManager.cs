@@ -23,10 +23,10 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IRoleService _roleService;
         private readonly IEventService _eventService;
 
-        public CustomerManager(ILogger<CustomerManager> logger, 
-            IMapper mapper, 
-            ICustomerService service, 
-            IUserService userService, 
+        public CustomerManager(ILogger<CustomerManager> logger,
+            IMapper mapper,
+            ICustomerService service,
+            IUserService userService,
             IRoleService roleService,
             IEventService eventService) {
             _logger = logger;
@@ -79,6 +79,7 @@ namespace IsotopeOrdering.App.Managers {
             _logger.LogInformation("Creating new customer for {user}", currentUser);
             Customer newCustomer = _mapper.Map<Customer>(currentUser);
             int id = await _service.Create(newCustomer);
+            await _eventService.CreateEvent(EntityEventType.Customer, id, Events.FormStatusChanged, id);
             _logger.LogInformation("New customer created {id}", id);
             return await _service.Get<CustomerItemModel>(id);
         }

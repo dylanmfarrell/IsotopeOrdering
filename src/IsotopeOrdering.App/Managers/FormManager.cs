@@ -73,7 +73,7 @@ namespace IsotopeOrdering.App.Managers {
         public async Task<ApplicationResult> UpdateFormStatus(int customerId, int customerFormId, CustomerFormStatus status) {
             await _eventService.CreateEvent(EntityEventType.Customer, customerId, Events.FormStatusChanged, customerFormId, status.ToString());
             await _service.UpdateCustomerFormStatus(customerFormId, status);
-            return ApplicationResult.Success("Form status updated",status);
+            return ApplicationResult.Success("Form status updated", status);
         }
     }
 }

@@ -18,6 +18,10 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.UpdatedBy, opt => opt.Ignore())
                 .ForMember(x => x.UpdatedDate, opt => opt.Ignore())
                 .ForMember(x => x.IsDeleted, opt => opt.Ignore());
+
+            CreateMap<Item, OrderItemDetailModel>()
+                .ForMember(x => x.Item, opt => opt.MapFrom(x => x))
+                .ForMember(x => x.Quantity, opt => opt.Ignore());
         }
     }
 }

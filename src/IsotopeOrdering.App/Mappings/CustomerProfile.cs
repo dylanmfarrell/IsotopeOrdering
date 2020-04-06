@@ -13,6 +13,8 @@ namespace IsotopeOrdering.App.Mappings {
                 .ReverseMap();
             CreateMap<CustomerAddress, CustomerAddressDetailModel>()
                 .ReverseMap();
+            CreateMap<CustomerAddress, OrderAddressDetailModel>()
+                .ForPath(x => x.IsSelected, opt => opt.Ignore());
             CreateMap<CustomerDocument, CustomerDocumentDetailModel>()
                 .ReverseMap();
             CreateMap<CustomerInstitution, CustomerInstitutionDetailModel>()

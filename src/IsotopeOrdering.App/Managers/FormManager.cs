@@ -64,6 +64,7 @@ namespace IsotopeOrdering.App.Managers {
                 int updated = await _service.SubmitCustomerForm(customerForm);
                 if (updated > 0) {
                     await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.SubmissionSuccessInitiationForm);
+                    return ApplicationResult.Success("Form submitted", updated);
                 }
             }
             await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.ValidationFailedInitiationForm);

@@ -12,9 +12,9 @@ namespace IsotopeOrdering.App.Models.Details {
             RuleFor(x => x.Contact.Email).EmailAddress().NotEmpty();
             RuleFor(x => x.Addresses)
                 .Must(x => x.Any(x => x.Type == AddressType.Shipping && !x.IsDeleted))
-                .WithMessage("Must have at least one shipping address")
+                .WithMessage(ValidationMessages.NoShippingAddress)
                 .Must(x => x.Any(x => x.Type == AddressType.Billing && !x.IsDeleted))
-                .WithMessage("Must have at least one billing address");
+                .WithMessage(ValidationMessages.NoBillingAddress);
             RuleForEach(x => x.Addresses).SetValidator(new CustomerAddressDetailModelValidator());
         }
 

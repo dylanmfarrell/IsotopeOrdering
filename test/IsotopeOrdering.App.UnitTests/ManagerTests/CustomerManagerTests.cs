@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using MIR.Core.Domain;
 using Moq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -91,7 +92,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.GetList<CustomerItemModel>())
-                .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>()));
+                .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>().ToList()));
 
             CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, mockRoleService.Object, _eventService);
 
@@ -107,7 +108,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.GetList<CustomerItemModel>())
-                .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>()));
+                .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>().ToList()));
             mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
                .Returns(Task.FromResult(new CustomerItemModel() {
                    Contact = {
@@ -132,7 +133,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.GetList<CustomerItemModel>())
-                .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>()));
+                .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>().ToList()));
             mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
                .Returns(Task.FromResult(new CustomerItemModel() {
                    Contact = {
@@ -143,7 +144,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                    ParentCustomerId = null
                }));
             mock.Setup(x => x.GetChildrenList<CustomerItemModel>(It.IsAny<int>()))
-               .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>()));
+               .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>().ToList()));
 
             CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, mockRoleService.Object, _eventService);
 
@@ -171,8 +172,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             ApplicationResult applicationResult = await manager.EditCustomer(model);
 
             _output.WriteLine(applicationResult.Message);
-            Assert.IsType<List<ValidationFailure>>(applicationResult.Data);
-            Assert.False(applicationResult.IsSuccessful);
+            CustomAssertions.AssertValidationErrorsExist(applicationResult);
         }
 
         [Theory, AutoMoqData]
@@ -198,7 +198,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             ApplicationResult applicationResult = await manager.EditCustomer(model);
 
             _output.WriteLine(applicationResult.Message);
-            Assert.True(applicationResult.IsSuccessful);
+
+            CustomAssertions.AssertValidationErrorsDoNotExist(applicationResult);
         }
     }
 }

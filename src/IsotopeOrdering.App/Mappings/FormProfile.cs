@@ -21,6 +21,14 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.CustomerDetailFormId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.CustomerFormStatus, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.InitiationModel, opt => opt.ConvertUsing<FormInitiationDetailModelFormatter, string?>(x => x.FormData));
+
+            CreateMap<FormDetailModel, CustomerForm>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.CustomerDetailFormId))
+                .ForMember(x => x.CustomerId, opt => opt.MapFrom(x => x.Customer.Id))
+                .ForMember(x => x.FormId, opt => opt.MapFrom(x => x.Id))
+                .ForMember(x => x.FormData, opt => opt.ConvertUsing<FormInitiationDetailModelToStringFormatter, FormInitiationDetailModel?>(x => x.InitiationModel))
+                .ForMember(x => x.Status, opt => opt.MapFrom(x => x.CustomerFormStatus))
+                .ForAllOtherMembers(x=>x.Ignore());
         }
     }
 
@@ -30,6 +38,14 @@ namespace IsotopeOrdering.App.Mappings {
                 return new FormInitiationDetailModel();
             }
             return JsonSerializer.Deserialize<FormInitiationDetailModel>(sourceMember);
+        }
+    } 
+    public class FormInitiationDetailModelToStringFormatter : IValueConverter<FormInitiationDetailModel?, string> {
+        public string Convert(FormInitiationDetailModel? sourceMember, ResolutionContext context) {
+            if (sourceMember == null) {
+                return string.Empty;
+            }
+            return JsonSerializer.Serialize(sourceMember);
         }
     }
 }

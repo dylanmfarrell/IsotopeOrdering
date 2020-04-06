@@ -8,5 +8,6 @@ namespace IsotopeOrdering.Domain.Interfaces {
         Task<List<T>> GetListForInitiation<T>();
         Task<T> Get<T>(int id);
         Task<List<T>> GetList<T>();
+        Task<List<T>> GetListForOrder<T>(int customerId, int? parentCustomerId);
     }
 }

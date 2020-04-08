@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Net.Http;
@@ -49,7 +50,7 @@ namespace IsotopeOrdering.Infrastructure {
                 options.RequireHttpsMetadata = false;
                 options.ClientId = configuration["OpenId:ClientId"];
                 options.ClientSecret = configuration["OpenId:ClientSecret"];
-                options.ResponseType = "code id_token";
+                options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
                 options.Scope.Clear();
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");

@@ -2,8 +2,10 @@ using FluentValidation.AspNetCore;
 using IsotopeOrdering.App;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,9 +32,12 @@ namespace IsotopeOrdering.UI {
 
             services.AddHealthChecks().AddDbContextCheck<IsotopeOrderingDbContext>();
 
-            services.AddControllersWithViews()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerDetailModelValidator>())
-                .AddNewtonsoftJson();
+            services.AddControllersWithViews(x => {
+                AuthorizationPolicy policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                x.Filters.Add(new AuthorizeFilter(policy));
+            })
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerDetailModelValidator>())
+            .AddNewtonsoftJson();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {

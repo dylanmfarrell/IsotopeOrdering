@@ -28,4 +28,11 @@
         public const string MinQuantityGreaterThanMax = "Minimum quantity must be greater than or equal to maximum quantity";
         public const string MaxQuantityLessThanMin = "Maximum quantity must be less than or equal to minimum quantity";
     }
+
+    public static class Policies {
+        public const string AdminPolicy = "AdminPolicy";
+        public const string ReviewerPolicy = "ReviewPolicy";
+        public const string CustomerPolicy = "CustomerPolicy";
+
+    }
 }

@@ -37,5 +37,6 @@ namespace IsotopeOrdering.App.UnitTests {
             );
             return new Mapper(config);
         }
+
     }
 }

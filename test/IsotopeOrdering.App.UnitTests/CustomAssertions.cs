@@ -1,10 +1,16 @@
 ﻿using FluentValidation.Results;
 using IsotopeOrdering.App.Models.Shared;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
 namespace IsotopeOrdering.App.UnitTests {
     public static class CustomAssertions {
+        public static void AssertExcpetionErrorsExist(ApplicationResult result) {
+            Assert.IsType<Exception>(result.Data);
+            Assert.False(result.IsSuccessful);
+        }
+
         public static void AssertValidationErrorsExist(ApplicationResult result) {
             Assert.IsType<List<ValidationFailure>>(result.Data);
             Assert.False(result.IsSuccessful);

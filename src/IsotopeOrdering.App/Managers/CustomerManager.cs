@@ -79,7 +79,7 @@ namespace IsotopeOrdering.App.Managers {
             _logger.LogInformation("Creating new customer for {user}", currentUser);
             Customer newCustomer = _mapper.Map<Customer>(currentUser);
             int id = await _service.Create(newCustomer);
-            await _eventService.CreateEvent(EntityEventType.Customer, id, Events.FormStatusChanged, id);
+            await _eventService.CreateEvent(EntityEventType.Customer, id, Events.Customer.Created, id);
             _logger.LogInformation("New customer created {id}", id);
             return await _service.Get<CustomerItemModel>(id);
         }

@@ -34,7 +34,7 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<FormDetailModel> GetInitiationForm(CustomerItemModel customer) {
-            await _eventService.CreateEvent(EntityEventType.Customer, customer.Id, Events.ObtainedInitiationForm);
+            await _eventService.CreateEvent(EntityEventType.Customer, customer.Id, Events.Customer.Created);
             FormDetailModel formDetailModel = await _service.Get<FormDetailModel>(FormType.Initiation);
             formDetailModel.InitiationModel = new FormInitiationDetailModel();
             formDetailModel.InitiationModel.Items = await _itemService.GetListForInitiation<FormInitiationItemModel>();
@@ -49,30 +49,30 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<ApplicationResult> SubmitInitiationForm(FormDetailModel form) {
-            await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.SubmittedInitiationForm);
+            await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
             var validator = new FormDetailModelValidator();
             ValidationResult result = await validator.ValidateAsync(form);
             if (result.IsValid) {
                 if (form.CustomerDetailFormId != 0) {
-                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.ResubmittedInitiationForm, form.CustomerDetailFormId);
+                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.ResubmittedInitiationForm, form.CustomerDetailFormId);
                     form.CustomerFormStatus = CustomerFormStatus.Completed;
                 }
                 else {
-                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.SubmittedInitiationForm);
+                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
                 }
                 CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
                 int updated = await _service.SubmitCustomerForm(customerForm);
                 if (updated > 0) {
-                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.SubmissionSuccessInitiationForm);
+                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmissionSuccessInitiationForm);
                     return ApplicationResult.Success("Form submitted", updated);
                 }
             }
-            await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.ValidationFailedInitiationForm);
+            await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.ValidationFailedInitiationForm);
             return ApplicationResult.Error(result);
         }
 
         public async Task<ApplicationResult> UpdateFormStatus(int customerId, int customerFormId, CustomerFormStatus status) {
-            await _eventService.CreateEvent(EntityEventType.Customer, customerId, Events.FormStatusChanged, customerFormId, status.ToString());
+            await _eventService.CreateEvent(EntityEventType.Customer, customerId, Events.Customer.FormStatusChanged, customerFormId, status.ToString());
             await _service.UpdateCustomerFormStatus(customerFormId, status);
             return ApplicationResult.Success("Form status updated", status);
         }

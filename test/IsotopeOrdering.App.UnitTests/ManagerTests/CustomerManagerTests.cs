@@ -12,6 +12,7 @@ using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging.Abstractions;
 using MIR.Core.Domain;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -200,6 +201,29 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             _output.WriteLine(applicationResult.Message);
 
             CustomAssertions.AssertValidationErrorsDoNotExist(applicationResult);
+        }
+
+        [Theory, AutoMoqData]
+        public async Task Edit_Customer_Throw_Exception(CustomerDetailModel model) {
+            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new SharedProfile());
+            var mock = new Mock<ICustomerService>();
+            mock.Setup(x => x.Update(It.IsAny<Customer>())).ThrowsAsync(new Exception("failed"));
+
+            AddressDetailModel address = new Fixture().Create<AddressDetailModel>();
+            address.State = "MO";
+            address.ZipCode = "12345";
+            model.Addresses.Clear();
+            model.Addresses.Add(new CustomerAddressDetailModel() { Address = address, Type = AddressType.Billing });
+            model.Addresses.Add(new CustomerAddressDetailModel() { Address = address, Type = AddressType.Shipping });
+            model.Contact.Email = "test@test.com";
+            model.Contact.Fax = "123-1234";
+            model.Contact.PhoneNumber = "123-1234";
+            model.Institutions.Clear();
+            model.ItemConfigurations.Clear();
+            model.Documents.Clear();
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, null, null, null);
+            ApplicationResult applicationResult = await manager.EditCustomer(model);
+            CustomAssertions.AssertExcpetionErrorsExist(applicationResult);
         }
     }
 }

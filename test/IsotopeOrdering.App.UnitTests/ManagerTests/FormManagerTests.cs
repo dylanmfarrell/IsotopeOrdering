@@ -11,6 +11,7 @@ using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -122,6 +123,36 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
             ApplicationResult result = await manager.SubmitInitiationForm(form);
             _output.WriteLine(result.Message);
+            CustomAssertions.AssertValidationErrorsDoNotExist(result);
+        }
+
+        [Fact]
+        public async void Get_CompletedInitiationForm_ReturnsForm() {
+            var mockFormService = new Mock<IFormService>();
+            mockFormService.Setup(x => x.GetCustomerForm<FormDetailModel>(It.IsAny<int>())).ReturnsAsync(new FormDetailModel());
+
+            var mockItemService = new Mock<IItemService>();
+            mockItemService.Setup(x => x.GetListForInitiation<FormInitiationItemModel>()).ReturnsAsync(new List<FormInitiationItemModel>());
+
+            var mockInstitutionService = new Mock<IInstitutionService>();
+            mockInstitutionService.Setup(x => x.GetListForInitiation<InstitutionItemModel>()).ReturnsAsync(new List<InstitutionItemModel>());
+
+            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, mockItemService.Object, mockInstitutionService.Object, _eventService);
+
+            FormDetailModel model = await manager.GetCompletedInitiationForm(1);
+            Assert.NotNull(model);
+        }
+        
+        [Fact]
+        public async void Update_Form_Status() {
+            var mockFormService = new Mock<IFormService>();
+            mockFormService.Setup(x => x.UpdateCustomerFormStatus(It.IsAny<int>(),It.IsAny<CustomerFormStatus>())).Returns(Task.CompletedTask);
+            
+            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, null, null, _eventService);
+
+            ApplicationResult result = await manager.UpdateFormStatus(1,1,CustomerFormStatus.Approved);
             CustomAssertions.AssertValidationErrorsDoNotExist(result);
         }
     }

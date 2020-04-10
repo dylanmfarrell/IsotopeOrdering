@@ -22,7 +22,7 @@ namespace IsotopeOrdering.App.Interfaces {
         /// </summary>
         /// <param name="customerFormId"></param>
         /// <returns>The completed form or null if one does not exist</returns>
-        Task<FormDetailModel> GetCompletedInitiationForm(int customerFormId);
+        Task<FormDetailModel?> GetCompletedInitiationForm(int customerFormId);
         /// <summary>
         /// Sets the status of the MTA form, creates an entity event
         /// </summary>

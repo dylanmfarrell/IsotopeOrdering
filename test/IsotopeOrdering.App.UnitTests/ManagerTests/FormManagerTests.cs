@@ -143,16 +143,16 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             FormDetailModel model = await manager.GetCompletedInitiationForm(1);
             Assert.NotNull(model);
         }
-        
+
         [Fact]
         public async void Update_Form_Status() {
             var mockFormService = new Mock<IFormService>();
-            mockFormService.Setup(x => x.UpdateCustomerFormStatus(It.IsAny<int>(),It.IsAny<CustomerFormStatus>())).Returns(Task.CompletedTask);
-            
+            mockFormService.Setup(x => x.UpdateCustomerFormStatus(It.IsAny<int>(), It.IsAny<CustomerFormStatus>())).Returns(Task.CompletedTask);
+
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
             FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, null, null, _eventService);
 
-            ApplicationResult result = await manager.UpdateFormStatus(1,1,CustomerFormStatus.Approved);
+            ApplicationResult result = await manager.UpdateFormStatus(1, 1, CustomerFormStatus.Approved);
             CustomAssertions.AssertValidationErrorsDoNotExist(result);
         }
     }

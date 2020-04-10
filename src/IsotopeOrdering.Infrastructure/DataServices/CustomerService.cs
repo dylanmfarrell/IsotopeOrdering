@@ -16,7 +16,9 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<T?> Get<T>(string email) where T : class {
-            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.Contact.Email == email)).SingleOrDefaultAsync();
+            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.Contact.Email.Equals(email, System.StringComparison.OrdinalIgnoreCase)))
+                .AsNoTracking()
+                .SingleOrDefaultAsync();
         }
 
         public async Task<T> Get<T>(int id) where T : class {
@@ -35,8 +37,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
                 .ToListAsync();
         }
 
-        public async Task<List<T>> GetAddressListForOrder<T>(int customerId, int? parentCustomerId) {
-            return await _mapper.ProjectTo<T>(_context.CustomerAddresses.Where(x => x.CustomerId == parentCustomerId.GetValueOrDefault(customerId))).ToListAsync();
+        public async Task<List<T>> GetAddressListForOrder<T>(int customerId, int? parentCustomerId) where T : class {
+            return await _mapper.ProjectTo<T>(_context.CustomerAddresses.Where(x => x.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }

@@ -54,7 +54,7 @@ namespace IsotopeOrdering.App.Managers {
                 await _eventService.CreateEvent(EntityEventType.Customer, model.Customer.Id, Events.Customer.SubmittedInitiationForm);
                 Order item = _mapper.Map<Order>(model);
                 int id = await _service.Create(item);
-                await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Created,id);
+                await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Created, id);
                 return ApplicationResult.Success("Order created", id);
             }
             return ApplicationResult.Error(result);

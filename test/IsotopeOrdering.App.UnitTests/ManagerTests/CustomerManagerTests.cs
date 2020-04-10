@@ -1,6 +1,5 @@
 ﻿using AutoFixture;
 using AutoMapper;
-using FluentValidation.Results;
 using IsotopeOrdering.App.Managers;
 using IsotopeOrdering.App.Mappings;
 using IsotopeOrdering.App.Models.Details;
@@ -13,7 +12,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 using MIR.Core.Domain;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -164,7 +162,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             Assert.NotNull(await manager.GetCustomer(1));
         }
 
-        [Theory,AutoMoqData]
+        [Theory, AutoMoqData]
         public async void Edit_Customer_With_Validation_Errors(CustomerDetailModel model) {
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile());
             CustomerManager manager = new CustomerManager(_logger, mapper, null, null, null, null);
@@ -178,7 +176,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
         [Theory, AutoMoqData]
         public async void Edit_Customer_Without_Validation_Errors(CustomerDetailModel model) {
-            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(),new SharedProfile());
+            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new SharedProfile());
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.Update(It.IsAny<Customer>())).ReturnsAsync(1);
 

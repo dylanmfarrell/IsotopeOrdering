@@ -13,7 +13,7 @@ namespace IsotopeOrdering.App.Models.Details {
             RuleFor(x => x.SelectedInstitution).NotNull();
             RuleFor(x => x.SelectedInstitution!.Id).GreaterThan(0);
             RuleFor(x => x.ShippingAddress).SetValidator(new AddressDetailModelValidator());
-            RuleFor(x => x.Items).Must(x=>x.Any(y=>y.IsSelected)).WithMessage(ValidationMessages.NoSelectedItems);
+            RuleFor(x => x.Items).Must(x => x.Any(y => y.IsSelected)).WithMessage(ValidationMessages.NoSelectedItems);
         }
     }
 }

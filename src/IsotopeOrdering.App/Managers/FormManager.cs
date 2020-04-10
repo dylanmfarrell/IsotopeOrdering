@@ -8,6 +8,7 @@ using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Managers {
@@ -43,8 +44,11 @@ namespace IsotopeOrdering.App.Managers {
             return formDetailModel;
         }
 
-        public async Task<FormDetailModel> GetCompletedInitiationForm(int customerFormId) {
-            FormDetailModel form = await _service.GetCustomerForm<FormDetailModel>(customerFormId);
+        public async Task<FormDetailModel?> GetCompletedInitiationForm(int customerFormId) {
+            FormDetailModel? form = await _service.GetCustomerForm<FormDetailModel>(customerFormId);
+            if(form != null && !string.IsNullOrEmpty(form.FormData)) {
+                form.InitiationModel = JsonSerializer.Deserialize<FormInitiationDetailModel>(form.FormData);
+            }
             return form;
         }
 

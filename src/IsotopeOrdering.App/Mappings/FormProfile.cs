@@ -12,6 +12,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Customer, opt => opt.Ignore())
                 .ForMember(x => x.CustomerDetailFormId, opt => opt.Ignore())
                 .ForMember(x => x.CustomerFormStatus, opt => opt.Ignore())
+                .ForMember(x => x.FormData, opt => opt.Ignore())
                 .ForPath(x => x.InitiationModel, opt => opt.Ignore());
 
             CreateMap<CustomerForm, FormDetailModel>()
@@ -20,7 +21,8 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Form.Name))
                 .ForMember(x => x.CustomerDetailFormId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.CustomerFormStatus, opt => opt.MapFrom(x => x.Status))
-                .ForMember(x => x.InitiationModel, opt => opt.ConvertUsing<FormInitiationDetailModelFormatter, string?>(x => x.FormData));
+                .ForMember(x => x.FormData, opt => opt.MapFrom(x => x.FormData))
+                .ForMember(x => x.InitiationModel, opt => opt.Ignore());
 
             CreateMap<FormDetailModel, CustomerForm>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => x.CustomerDetailFormId))
@@ -28,18 +30,10 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.FormId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.FormData, opt => opt.ConvertUsing<FormInitiationDetailModelToStringFormatter, FormInitiationDetailModel?>(x => x.InitiationModel))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.CustomerFormStatus))
-                .ForAllOtherMembers(x=>x.Ignore());
+                .ForAllOtherMembers(x => x.Ignore());
         }
     }
 
-    public class FormInitiationDetailModelFormatter : IValueConverter<string?, FormInitiationDetailModel> {
-        public FormInitiationDetailModel Convert(string? sourceMember, ResolutionContext context) {
-            if (string.IsNullOrEmpty(sourceMember)) {
-                return new FormInitiationDetailModel();
-            }
-            return JsonSerializer.Deserialize<FormInitiationDetailModel>(sourceMember);
-        }
-    } 
     public class FormInitiationDetailModelToStringFormatter : IValueConverter<FormInitiationDetailModel?, string> {
         public string Convert(FormInitiationDetailModel? sourceMember, ResolutionContext context) {
             if (sourceMember == null) {
@@ -48,4 +42,5 @@ namespace IsotopeOrdering.App.Mappings {
             return JsonSerializer.Serialize(sourceMember);
         }
     }
+
 }

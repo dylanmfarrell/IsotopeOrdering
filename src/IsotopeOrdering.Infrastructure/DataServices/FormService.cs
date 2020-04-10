@@ -20,8 +20,9 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             return await _mapper.ProjectTo<T>(_context.Forms.Where(x => x.Type == formType)).SingleAsync();
         }
 
-        public async Task<T> GetCustomerForm<T>(int customerFormId) {
-            return await _mapper.ProjectTo<T>(_context.CustomerForms.Include(x => x.Form).Where(x => x.Id == customerFormId)).SingleOrDefaultAsync();
+        public async Task<T?> GetCustomerForm<T>(int customerFormId) where T : class {
+            return await _mapper.ProjectTo<T>(_context.CustomerForms.Where(x => x.Id == customerFormId))
+                .SingleOrDefaultAsync();
         }
 
         public async Task<int> SubmitCustomerForm(CustomerForm form) {

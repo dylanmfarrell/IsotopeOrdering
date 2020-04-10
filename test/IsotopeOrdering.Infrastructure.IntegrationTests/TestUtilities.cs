@@ -36,7 +36,7 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests {
                 .Options;
         }
 
-        public static IsotopeOrderingDbContext GetDbContext(string instanceName = null, string instanceUser = null, string[] roles = null) {
+        public static IsotopeOrderingDbContext GetDbContext(string? instanceName = null, string? instanceUser = null, string[]? roles = null) {
             string defaultInstanceIdentifier = Guid.NewGuid().ToString();
             var options = GetInMemoryOptions(instanceName ?? defaultInstanceIdentifier);
             IUserService userService = GetUserService(instanceUser ?? defaultInstanceIdentifier);

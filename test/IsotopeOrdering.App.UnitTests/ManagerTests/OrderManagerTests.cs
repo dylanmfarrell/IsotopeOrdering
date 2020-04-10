@@ -32,7 +32,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var mockInstitutionService = new Mock<IInstitutionService>();
 
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
-            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, mockInstitutionService.Object,_eventService);
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, mockInstitutionService.Object, _eventService);
 
             OrderDetailModel result = await manager.GetOrderForm(model);
         }

@@ -25,10 +25,11 @@ namespace IsotopeOrdering.UI {
             services.AddHttpContextAccessor();
             services.AddHttpClient();
 
-            services.AddApplication();
+            //Add db context, data services, api services, oidc authentication
             services.AddInfrastructure(Configuration);
 
-            services.AddScoped<IUserService, UserService>();
+            //Add logical managers, policies, automapper mappings
+            services.AddApplication();
 
             services.AddHealthChecks().AddDbContextCheck<IsotopeOrderingDbContext>();
 
@@ -36,8 +37,7 @@ namespace IsotopeOrdering.UI {
                 AuthorizationPolicy policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 x.Filters.Add(new AuthorizeFilter(policy));
             })
-            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerDetailModelValidator>())
-            .AddNewtonsoftJson();
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerDetailModelValidator>());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {

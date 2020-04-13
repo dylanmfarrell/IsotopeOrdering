@@ -9,7 +9,7 @@ namespace IsotopeOrdering.Infrastructure.Configurations {
             builder.Property(x => x.Description).IsRequired();
             builder.Property(x => x.Type).IsRequired();
             builder.Property(x => x.EntityId).IsRequired();
-            builder.Property(x => x.EventDateTime).HasDefaultValue(DateTime.Now).IsRequired();
+            builder.Property(x => x.EventDateTime).IsRequired();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace IsotopeOrdering.Domain.Entities {
     public class Customer : ModelBase {
+        public string UserId { get; set; } = null!;
         public int? ParentCustomerId { get; set; }
         public Customer? ParentCustomer { get; set; }
         public CustomerStatus Status { get; set; } = CustomerStatus.Pending;

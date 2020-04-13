@@ -15,8 +15,8 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             _mapper = mapper;
         }
 
-        public async Task<T?> Get<T>(string email) where T : class {
-            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.Contact.Email.Equals(email, System.StringComparison.OrdinalIgnoreCase)))
+        public async Task<T?> Get<T>(string userId) where T : class {
+            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.UserId.Equals(userId, System.StringComparison.OrdinalIgnoreCase)))
                 .AsNoTracking()
                 .SingleOrDefaultAsync();
         }

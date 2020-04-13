@@ -3,7 +3,7 @@
 namespace IsotopeOrdering.Domain.Entities {
     public class Item : ModelBase {
         public string Name { get; set; } = null!;
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         public bool Unavailable { get; set; }
         public string Target { get; set; } = null!;
         public string Reaction { get; set; } = null!;

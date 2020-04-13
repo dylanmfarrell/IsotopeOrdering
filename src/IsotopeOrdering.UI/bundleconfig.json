@@ -1,0 +1,41 @@
+[
+  {
+    "outputFileName": "wwwroot/dist/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "wwwroot/lib/jquery/dist/css/jquery-ui.css",
+      "wwwroot/lib/font-awesome/all.min.css",
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/dist/css/datatables.min.css",
+    "inputFiles": [
+      "wwwroot/lib/Datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css",
+      "wwwroot/lib/Datatables/datatables.min.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/dist/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/site.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/dist/js/jquery.min.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery/dist/js/jquery.min.js",
+      "wwwroot/lib/jquery/dist/js/jquery-ui.min.js",
+      "wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "wwwroot/lib/jquery-validation/dist/jquery.validate.unobtrusive.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/dist/js/datatables.min.js",
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "wwwroot/lib/Datatables/datatables.min.js",
+      "wwwroot/lib/Datatables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"
+    ]
+  }
+]

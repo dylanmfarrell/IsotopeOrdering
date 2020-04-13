@@ -72,7 +72,7 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<CustomerItemModel> InitializeCustomerForCurrentUser() {
             IUser currentUser = _userService.User;
-            CustomerItemModel? customer = await _service.Get<CustomerItemModel>(currentUser.Email);
+            CustomerItemModel? customer = await _service.Get<CustomerItemModel>(currentUser.EducationId);
             if (customer != null) {
                 return customer;
             }

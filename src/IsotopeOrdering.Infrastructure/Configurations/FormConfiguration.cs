@@ -6,6 +6,7 @@ namespace IsotopeOrdering.Infrastructure.Configurations {
     internal class FormConfiguration : IEntityTypeConfiguration<Form> {
         public void Configure(EntityTypeBuilder<Form> builder) {
             builder.HasQueryFilter(x => !x.IsDeleted);
+            builder.HasData(DataSeeding.GetFormSeedData());
         }
     }
 }

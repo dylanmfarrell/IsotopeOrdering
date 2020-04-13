@@ -1,14 +1,22 @@
 ﻿using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace IsotopeOrdering.Infrastructure {
     public static class DataSeeding {
+        private const string _systemUser = "SYSTEM";
+        private static DateTime _now = DateTime.Now;
+
         public static IEnumerable<Form> GetFormSeedData() {
             yield return new Form() {
                 Id = 1,
                 Type = FormType.Initiation,
-                Name = "Material Transfer Agreement"
+                Name = "Material Transfer Agreement",
+                CreatedBy = _systemUser,
+                UpdatedBy = _systemUser,
+                CreatedDate = _now,
+                UpdatedDate = _now
             };
         }
 
@@ -20,7 +28,11 @@ namespace IsotopeOrdering.Infrastructure {
                 Reaction = "(p,n)",
                 FinalComposition = "Copper chloride",
                 SpecificActivity = "determined by TETA titration",
-                QualityControlAnalysis = "germanium spectrum"
+                QualityControlAnalysis = "germanium spectrum",
+                CreatedBy = _systemUser,
+                UpdatedBy = _systemUser,
+                CreatedDate = _now,
+                UpdatedDate = _now
             };
             yield return new Item() {
                 Id = 2,
@@ -29,7 +41,11 @@ namespace IsotopeOrdering.Infrastructure {
                 Reaction = "(p,n)",
                 FinalComposition = "Yttrium chloride",
                 SpecificActivity = "determined by TETA titration",
-                QualityControlAnalysis = "germanium spectrum"
+                QualityControlAnalysis = "germanium spectrum",
+                CreatedBy = _systemUser,
+                UpdatedBy = _systemUser,
+                CreatedDate = _now,
+                UpdatedDate = _now
             };
             yield return new Item() {
                 Id = 3,
@@ -38,7 +54,11 @@ namespace IsotopeOrdering.Infrastructure {
                 Reaction = "(p,n)",
                 FinalComposition = "Bromide",
                 SpecificActivity = "N/A",
-                QualityControlAnalysis = "germanium spectrum"
+                QualityControlAnalysis = "germanium spectrum",
+                CreatedBy = _systemUser,
+                UpdatedBy = _systemUser,
+                CreatedDate = _now,
+                UpdatedDate = _now
             };
             yield return new Item() {
                 Id = 4,
@@ -47,7 +67,11 @@ namespace IsotopeOrdering.Infrastructure {
                 Reaction = "(p,n)",
                 FinalComposition = "Bromide",
                 SpecificActivity = "determined by TETA titration",
-                QualityControlAnalysis = "germanium spectrum"
+                QualityControlAnalysis = "germanium spectrum",
+                CreatedBy = _systemUser,
+                UpdatedBy = _systemUser,
+                CreatedDate = _now,
+                UpdatedDate = _now
             };
             yield return new Item() {
                 Id = 5,
@@ -56,7 +80,11 @@ namespace IsotopeOrdering.Infrastructure {
                 Reaction = "(p,n)",
                 FinalComposition = "Zirconium Oxalate",
                 SpecificActivity = "determined by DFO titration",
-                QualityControlAnalysis = "germanium spectrum"
+                QualityControlAnalysis = "germanium spectrum",
+                CreatedBy = _systemUser,
+                UpdatedBy = _systemUser,
+                CreatedDate = _now,
+                UpdatedDate = _now
             };
         }
     }

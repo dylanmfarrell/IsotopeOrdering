@@ -8,14 +8,20 @@ using Microsoft.Extensions.DependencyInjection;
 namespace IsotopeOrdering.App {
     public static class DependencyInjection {
         public static IServiceCollection AddApplication(this IServiceCollection services) {
-            services.AddPolicies();
-            services.AddAutoMapper(typeof(DependencyInjection).Assembly);
+            //Add all logic managers
             services.AddManagers();
+
+            //Add policies for admins and customers
+            services.AddPolicies();
+
+            //Load all mapping profiles for automapper
+            services.AddAutoMapper(typeof(DependencyInjection).Assembly);
+
             return services;
         }
 
         private static IServiceCollection AddPolicies(this IServiceCollection services) {
-            services.AddSingleton<IAuthorizationHandler, PolicyHandler>();
+            services.AddScoped<IAuthorizationHandler, PolicyHandler>();
             services.AddAuthorizationCore(options => { options.AddPolicies(); });
             return services;
         }

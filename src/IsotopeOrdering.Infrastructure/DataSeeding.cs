@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace IsotopeOrdering.Infrastructure {
     public static class DataSeeding {
         private const string _systemUser = "SYSTEM";
-        private static DateTime _now = DateTime.Now;
+        private static readonly DateTime _now = DateTime.Now;
 
         public static IEnumerable<Form> GetFormSeedData() {
             yield return new Form() {

@@ -61,15 +61,15 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<OrderDetailModel> GetOrderForReview(int id) {
-            throw new NotImplementedException();
+            return await Task.FromResult(new OrderDetailModel());
         }
 
         public async Task<OrderDetailModel> GetOrderView(int id) {
-            throw new NotImplementedException();
+            return await Task.FromResult(new OrderDetailModel());
         }
 
         public async Task<OrderItemModel> GetPendingOrders() {
-            throw new NotImplementedException();
+            return await Task.FromResult(new OrderItemModel());
         }
     }
 }

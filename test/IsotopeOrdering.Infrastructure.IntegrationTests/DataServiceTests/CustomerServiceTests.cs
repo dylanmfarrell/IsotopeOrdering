@@ -32,7 +32,7 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
             }
             using (var context = TestUtilities.GetDbContext(instanceName)) {
                 CustomerService service = new CustomerService(context, TestUtilities.GetMapper());
-                CustomerItemModel? result = await service.Get<CustomerItemModel>(customer.Contact.Email);
+                CustomerItemModel? result = await service.Get<CustomerItemModel>(customer.UserId);
                 Assert.NotNull(result);
                 result = await service.Get<CustomerItemModel>("test");
                 Assert.Null(result);

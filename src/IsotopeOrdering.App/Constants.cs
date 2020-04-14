@@ -33,6 +33,5 @@
         public const string AdminPolicy = "AdminPolicy";
         public const string ReviewerPolicy = "ReviewPolicy";
         public const string CustomerPolicy = "CustomerPolicy";
-
     }
 }

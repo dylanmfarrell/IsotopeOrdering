@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\IsotopeOrdering.App\IsotopeOrdering.App.csproj" />
     <ProjectReference Include="..\..\src\IsotopeOrdering.Infrastructure\IsotopeOrdering.Infrastructure.csproj" />
   </ItemGroup>
 

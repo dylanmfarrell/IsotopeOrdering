@@ -8,9 +8,20 @@ namespace IsotopeOrdering.UI.Controllers
 {
     public class CustomerController : Controller
     {
-        public IActionResult Index()
-        {
-            
-        }
     }
+
+
+    public class OrderController : Controller {
+
+    }
+
+    public class ShipmentController : Controller {
+
+    }
+
+    public class ItemController : Controller {
+
+    }
+
+
 }

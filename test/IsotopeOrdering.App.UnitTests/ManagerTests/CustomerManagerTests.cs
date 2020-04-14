@@ -34,7 +34,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
-                .Returns(Task.FromResult<CustomerItemModel>(null));
+                .Returns(Task.FromResult<CustomerItemModel?>(null));
             mock.Setup(x => x.Create(It.IsAny<Customer>()))
                 .Returns(Task.FromResult(1));
             mock.Setup(x => x.Get<CustomerItemModel>(It.Is<int>(x => x == 1)))
@@ -45,9 +45,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                         LastName = userService.User.LastName,
                    }
                 }));
-            ;
-
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null, _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, Mock.Of<IRoleService>(), _eventService);
 
             CustomerItemModel customer = await manager.InitializeCustomerForCurrentUser();
 
@@ -64,7 +62,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
-                .Returns(Task.FromResult(new CustomerItemModel() {
+                .Returns(Task.FromResult<CustomerItemModel?>(new CustomerItemModel() {
                     Contact = {
                         Email = userService.User.Email,
                         FirstName = userService.User.FirstName,
@@ -72,7 +70,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                    }
                 }));
 
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null, _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, Mock.Of<IRoleService>(), _eventService);
 
             CustomerItemModel customer = await manager.InitializeCustomerForCurrentUser();
 
@@ -109,7 +107,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mock.Setup(x => x.GetList<CustomerItemModel>())
                 .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>().ToList()));
             mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
-               .Returns(Task.FromResult(new CustomerItemModel() {
+               .Returns(Task.FromResult<CustomerItemModel?>(new CustomerItemModel() {
                    Contact = {
                         Email = userService.User.Email,
                         FirstName = userService.User.FirstName,
@@ -134,7 +132,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mock.Setup(x => x.GetList<CustomerItemModel>())
                 .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>().ToList()));
             mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
-               .Returns(Task.FromResult(new CustomerItemModel() {
+               .Returns(Task.FromResult<CustomerItemModel?>(new CustomerItemModel() {
                    Contact = {
                         Email = userService.User.Email,
                         FirstName = userService.User.FirstName,
@@ -157,15 +155,16 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.Get<CustomerDetailModel>(It.IsAny<int>()))
                 .ReturnsAsync(new Fixture().Create<CustomerDetailModel>());
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, null, _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, Mock.Of<IRoleService>(), _eventService);
 
             Assert.NotNull(await manager.GetCustomer(1));
         }
 
         [Theory, AutoMoqData]
         public async void Edit_Customer_With_Validation_Errors(CustomerDetailModel model) {
+            
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile());
-            CustomerManager manager = new CustomerManager(_logger, mapper, null, null, null, null);
+            CustomerManager manager = new CustomerManager(_logger, mapper, Mock.Of<ICustomerService>(), Mock.Of<IUserService>(), Mock.Of<IRoleService>(), Mock.Of<IEventService>());
             model.Addresses.Clear();
 
             ApplicationResult applicationResult = await manager.EditCustomer(model);
@@ -192,7 +191,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.Institutions.Clear();
             model.ItemConfigurations.Clear();
             model.Documents.Clear();
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, null, null, null);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, Mock.Of<IUserService>(), Mock.Of<IRoleService>(), Mock.Of<IEventService>());
 
             ApplicationResult applicationResult = await manager.EditCustomer(model);
 
@@ -219,7 +218,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.Institutions.Clear();
             model.ItemConfigurations.Clear();
             model.Documents.Clear();
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, null, null, null);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, Mock.Of<IUserService>(), Mock.Of<IRoleService>(), Mock.Of<IEventService>());
             ApplicationResult applicationResult = await manager.EditCustomer(model);
             CustomAssertions.AssertExcpetionErrorsExist(applicationResult);
         }

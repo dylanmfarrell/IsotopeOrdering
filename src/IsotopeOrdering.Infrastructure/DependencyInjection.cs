@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using MIR.Core.Domain;
-using MIR.Core.Mvc.Security;
 using System;
 using System.Net.Http;
 

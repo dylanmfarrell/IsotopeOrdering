@@ -11,8 +11,13 @@ namespace IsotopeOrdering.App.Interfaces {
         /// </summary>
         /// <returns>CustomerItemModel for the existing or new customer</returns>
         Task<CustomerItemModel> InitializeCustomerForCurrentUser();
-        Task<IEnumerable<CustomerItemModel>> GetList();
-        Task<CustomerDetailModel> GetCustomer(int id);
-        Task<ApplicationResult> EditCustomer(CustomerDetailModel customer);
+        /// <summary>
+        /// Returns a list of customers based on the current users policy
+        /// </summary>
+        /// <returns></returns>
+        Task<List<CustomerItemModel>> GetList();
+        Task<CustomerDetailModel?> Get(int id);
+        Task<CustomerItemModel?> GetCurrentCustomer();
+        Task<ApplicationResult> Edit(CustomerDetailModel customer);
     }
 }

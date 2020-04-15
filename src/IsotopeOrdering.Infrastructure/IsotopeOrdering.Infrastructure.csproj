@@ -14,8 +14,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.3" />
     <PackageReference Include="MIR.Core.Data" Version="3.1.3" />
-    <PackageReference Include="MIR.Core.Domain" Version="3.1.2" />
-    <PackageReference Include="MIR.Core.Mvc" Version="3.1.6" />
+    <PackageReference Include="MIR.Core.Domain" Version="3.1.3" />
+    <PackageReference Include="MIR.Core.Mvc" Version="3.1.7" />
   </ItemGroup>
 
   <ItemGroup>

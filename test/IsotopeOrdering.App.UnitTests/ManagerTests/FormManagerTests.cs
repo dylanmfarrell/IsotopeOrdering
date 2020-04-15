@@ -50,7 +50,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mockFormService.Setup(x => x.SubmitCustomerForm(It.IsAny<CustomerForm>())).ReturnsAsync(1);
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, null, null, _eventService);
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), Mock.Of<IInstitutionService>(), _eventService);
 
             List<FormInitiationItemModel> items = new List<FormInitiationItemModel>();
 
@@ -74,7 +74,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mockFormService.Setup(x => x.SubmitCustomerForm(It.IsAny<CustomerForm>())).ReturnsAsync(1);
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, null, null, _eventService);
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), Mock.Of<IInstitutionService>(), _eventService);
 
             List<FormInitiationItemModel> items = new List<FormInitiationItemModel>() {
                 new FormInitiationItemModel() {
@@ -103,7 +103,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mockFormService.Setup(x => x.SubmitCustomerForm(It.IsAny<CustomerForm>())).ReturnsAsync(1);
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, null, null, _eventService);
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), Mock.Of<IInstitutionService>(), _eventService);
 
             List<FormInitiationItemModel> items = new List<FormInitiationItemModel>() {
                 new FormInitiationItemModel() {
@@ -140,7 +140,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
             FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, mockItemService.Object, mockInstitutionService.Object, _eventService);
 
-            FormDetailModel model = await manager.GetCompletedInitiationForm(1);
+            FormDetailModel? model = await manager.GetCompletedInitiationForm(1);
             Assert.NotNull(model);
         }
 
@@ -150,7 +150,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mockFormService.Setup(x => x.UpdateCustomerFormStatus(It.IsAny<int>(), It.IsAny<CustomerFormStatus>())).Returns(Task.CompletedTask);
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, null, null, _eventService);
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), Mock.Of<IInstitutionService>(), _eventService);
 
             ApplicationResult result = await manager.UpdateFormStatus(1, 1, CustomerFormStatus.Approved);
             CustomAssertions.AssertValidationErrorsDoNotExist(result);

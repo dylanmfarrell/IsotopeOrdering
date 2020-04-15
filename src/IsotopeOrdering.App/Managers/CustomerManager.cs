@@ -4,6 +4,7 @@ using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
+using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
@@ -20,24 +21,24 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IMapper _mapper;
         private readonly ICustomerService _service;
         private readonly IUserService _userService;
-        private readonly IRoleService _roleService;
+        private readonly IIsotopeOrderingAuthorizationService _authorization;
         private readonly IEventService _eventService;
 
         public CustomerManager(ILogger<CustomerManager> logger,
             IMapper mapper,
             ICustomerService service,
             IUserService userService,
-            IRoleService roleService,
+            IIsotopeOrderingAuthorizationService authorization,
             IEventService eventService) {
             _logger = logger;
             _mapper = mapper;
             _service = service;
             _userService = userService;
-            _roleService = roleService;
+            _authorization = authorization;
             _eventService = eventService;
         }
 
-        public async Task<ApplicationResult> EditCustomer(CustomerDetailModel model) {
+        public async Task<ApplicationResult> Edit(CustomerDetailModel model) {
             var validator = new CustomerDetailModelValidator();
             ValidationResult result = await validator.ValidateAsync(model);
             if (result.IsValid) {
@@ -54,30 +55,75 @@ namespace IsotopeOrdering.App.Managers {
             return ApplicationResult.Error(result);
         }
 
-        public async Task<CustomerDetailModel> GetCustomer(int id) {
-            return await _service.Get<CustomerDetailModel>(id);
+        public async Task<CustomerDetailModel?> Get(int id) {
+            bool isAdmin = await _authorization.AuthorizeAsync(_userService.User.ClaimsPrincipal, Policies.AdminPolicy);
+            //user is admin
+            if (isAdmin) {
+                return await _service.Get<CustomerDetailModel>(id);
+            }
+            IUser currentUser = _userService.User;
+            CustomerItemModel? customer = await _service.Get<CustomerItemModel>(currentUser.EducationId);
+            if (customer == null) {
+                return null;
+            }
+            //if a child customer is requesting their profile
+            if (customer.IsChild && customer.Id == id) {
+                return await _service.Get<CustomerDetailModel>(id);
+            }
+            //if parent is requesting their profile or their children's
+            if (!customer.IsChild) {
+                if (customer.Id == id) {
+                    return await _service.Get<CustomerDetailModel>(id);
+                }
+                else {
+                    return await _service.GetChild<CustomerDetailModel>(customer.Id, id);
+                }
+            }
+            //bad request return no customer profile
+            return null;
         }
 
-        public async Task<IEnumerable<CustomerItemModel>> GetList() {
-            if (_roleService.UserRoles.Contains(UserRole.Admin.ToString())) {
+        public async Task<List<CustomerItemModel>> GetList() {
+            bool isAdmin = await _authorization.AuthorizeAsync(_userService.User.ClaimsPrincipal, Policies.AdminPolicy);
+            //user is an admin
+            if (isAdmin) {
                 return await _service.GetList<CustomerItemModel>();
             }
             IUser currentUser = _userService.User;
-            CustomerItemModel? customer = await _service.Get<CustomerItemModel>(currentUser.Email);
-            if (customer == null || customer.ParentCustomerId.HasValue) {
-                return Enumerable.Empty<CustomerItemModel>();
+            CustomerItemModel? customer = await _service.Get<CustomerItemModel>(currentUser.EducationId);
+            //customer not found, return empty list
+            if (customer == null) {
+                return new List<CustomerItemModel>();
             }
-            return await _service.GetChildrenList<CustomerItemModel>(customer.Id);
+            //customer found but is a child of another customer, just show them their customer record
+            if (customer.IsChild) {
+                return new List<CustomerItemModel>() { customer };
+            }
+            //customer found and is a parent, return their record and their children
+            else {
+                List<CustomerItemModel> children = await _service.GetChildrenList<CustomerItemModel>(customer.Id);
+                children.Add(customer);
+                return children;
+            }
         }
 
         public async Task<CustomerItemModel> InitializeCustomerForCurrentUser() {
-            IUser currentUser = _userService.User;
-            CustomerItemModel? customer = await _service.Get<CustomerItemModel>(currentUser.EducationId);
+            CustomerItemModel? customer = await GetCurrentCustomer();
             if (customer != null) {
                 return customer;
             }
-            _logger.LogInformation("Creating new customer for {user}", currentUser);
-            Customer newCustomer = _mapper.Map<Customer>(currentUser);
+            return await Create();
+        }
+
+        public async Task<CustomerItemModel?> GetCurrentCustomer() {
+            IUser currentUser = _userService.User;
+            return await _service.Get<CustomerItemModel>(currentUser.EducationId);
+        }
+
+        private async Task<CustomerItemModel> Create() {
+            IUser user = _userService.User;
+            _logger.LogInformation("Creating new customer for {user}", user);
+            Customer newCustomer = _mapper.Map<Customer>(user);
             int id = await _service.Create(newCustomer);
             await _eventService.CreateEvent(EntityEventType.Customer, id, Events.Customer.Created, id);
             _logger.LogInformation("New customer created {id}", id);

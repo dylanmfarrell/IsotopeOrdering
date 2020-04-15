@@ -21,6 +21,8 @@ namespace IsotopeOrdering.Infrastructure {
             _claimsPrincipal = claimsPrincipal;
         }
 
+        public ClaimsPrincipal ClaimsPrincipal => _claimsPrincipal;
+
         public string UserName => GetClaimValue(JwtClaimTypes.PreferredUserName);
 
         public string FirstName => GetClaimValue(JwtClaimTypes.Name);

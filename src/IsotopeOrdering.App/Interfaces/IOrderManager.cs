@@ -16,10 +16,10 @@ namespace IsotopeOrdering.App.Interfaces {
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<ApplicationResult> SubmitOrderForm(OrderDetailModel model);
-        Task<OrderItemModel> GetPendingOrders();
-        Task<OrderDetailModel> GetOrderView(int id);
-        Task<OrderDetailModel> GetOrderForReview(int id);
+        Task<ApplicationResult> Create(OrderDetailModel model);
+        Task<OrderItemModel> GetList();
+        Task<OrderDetailModel?> Get(int id);
+        Task<ApplicationResult> Edit(OrderDetailModel model);
 
     }
 }

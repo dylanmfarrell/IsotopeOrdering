@@ -47,7 +47,7 @@ namespace IsotopeOrdering.App.Managers {
             return model;
         }
 
-        public async Task<ApplicationResult> SubmitOrderForm(OrderDetailModel model) {
+        public async Task<ApplicationResult> Create(OrderDetailModel model) {
             OrderDetailModelValidator validator = new OrderDetailModelValidator();
             ValidationResult result = await validator.ValidateAsync(model);
             if (result.IsValid) {
@@ -60,16 +60,16 @@ namespace IsotopeOrdering.App.Managers {
             return ApplicationResult.Error(result);
         }
 
-        public async Task<OrderDetailModel> GetOrderForReview(int id) {
-            return await Task.FromResult(new OrderDetailModel());
-        }
-
-        public async Task<OrderDetailModel> GetOrderView(int id) {
-            return await Task.FromResult(new OrderDetailModel());
-        }
-
-        public async Task<OrderItemModel> GetPendingOrders() {
+        public async Task<OrderItemModel> GetList() {
             return await Task.FromResult(new OrderItemModel());
+        }
+
+        public Task<OrderDetailModel?> Get(int id) {
+            throw new NotImplementedException();
+        }
+
+        public Task<ApplicationResult> Edit(OrderDetailModel model) {
+            throw new NotImplementedException();
         }
     }
 }

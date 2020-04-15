@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
+using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using MIR.Core.Domain;
 using Moq;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.UnitTests {
     public static class TestUtilities {
-        public static IUserService GetUserService(string userName = null) {
+        public static IUserService GetUserService(string? userName = null) {
             Mock<IUser> mockUser = new Mock<IUser>();
             mockUser.SetupGet(x => x.UserName).Returns(userName ?? Guid.NewGuid().ToString());
 
@@ -38,5 +41,12 @@ namespace IsotopeOrdering.App.UnitTests {
             return new Mapper(config);
         }
 
+
+        public static IIsotopeOrderingAuthorizationService GetAuthorizationService(string policy) {
+            var mock = new Mock<IIsotopeOrderingAuthorizationService>();
+            mock.Setup(x => x.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), It.Is<string>(x => x == policy)))
+                .ReturnsAsync(true);
+            return mock.Object;
+        }
     }
 }

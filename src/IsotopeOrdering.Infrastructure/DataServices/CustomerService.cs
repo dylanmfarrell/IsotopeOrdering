@@ -42,5 +42,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public async Task<T> GetChild<T>(int parentId, int childId) where T : class {
+            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.Id == childId && x.ParentCustomerId.HasValue && x.ParentCustomerId.Value == parentId))
+                .SingleOrDefaultAsync();
+        }
     }
 }

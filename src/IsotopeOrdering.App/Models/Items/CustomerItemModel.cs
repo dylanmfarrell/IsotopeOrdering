@@ -7,5 +7,6 @@ namespace IsotopeOrdering.App.Models.Items {
         public ContactDetailModel Contact { get; set; } = new ContactDetailModel();
         public int? ParentCustomerId { get; set; }
         public CustomerStatus Status { get; set; }
+        public bool IsChild => ParentCustomerId.HasValue;
     }
 }

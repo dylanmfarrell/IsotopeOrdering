@@ -40,13 +40,18 @@ namespace IsotopeOrdering.App.Security {
         }
 
         private async Task HandleInitiationRequirement(AuthorizationHandlerContext context, InitiationRequirement requirement) {
-            CustomerItemModel customer = await _customerManager.InitializeCustomerForCurrentUser();
-            if (requirement.CustomerStatus == customer.Status) {
-                context.Succeed(requirement);
-            }
-            else {
+            //if user's role is [customer] check their customer status
+           if (_roleService.UserRoles.Any(x => requirement.UserRole == Enum.Parse<UserRole>(x))) {
+                CustomerItemModel customer = await _customerManager.InitializeCustomerForCurrentUser();
+                if (requirement.CustomerStatus == customer.Status) {
+                    context.Succeed(requirement);
+                }
                 context.Fail();
             }
+           //user's role does not apply to this requirement
+            context.Succeed(requirement);
+            await Task.CompletedTask;
         }
+
     }
 }

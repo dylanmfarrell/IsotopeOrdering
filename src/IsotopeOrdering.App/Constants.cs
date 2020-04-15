@@ -33,5 +33,9 @@
         public const string AdminPolicy = "AdminPolicy";
         public const string ReviewerPolicy = "ReviewPolicy";
         public const string CustomerPolicy = "CustomerPolicy";
+        /// <summary>
+        /// Enforces Admin, Reviewer user roles and Customer users that have been initiated
+        /// </summary>
+        public const string OrderPolicy = "OrderPolicy";
     }
 }

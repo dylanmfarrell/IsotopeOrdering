@@ -2,6 +2,7 @@
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Enums;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Interfaces {
@@ -22,13 +23,14 @@ namespace IsotopeOrdering.App.Interfaces {
         /// </summary>
         /// <param name="customerFormId"></param>
         /// <returns>The completed form or null if one does not exist</returns>
-        Task<FormDetailModel?> GetCompletedInitiationForm(int customerFormId);
+        Task<FormDetailModel?> Get(int customerFormId);
         /// <summary>
         /// Sets the status of the MTA form, creates an entity event
         /// </summary>
         /// <param name="customerFormId"></param>
         /// <returns></returns>
         Task<ApplicationResult> UpdateFormStatus(int customerId, int customerFormId, CustomerFormStatus status);
+        Task<List<FormItemModel>> GetList();
 
     }
 }

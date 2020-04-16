@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace IsotopeOrdering.Domain.Interfaces {
     public interface ICustomerService : IService<Customer> {
+        Task<T?> GetCurrentCustomer<T>() where T : class;
         Task<T?> Get<T>(string userId) where T : class;
         Task<T> Get<T>(int id) where T : class;
         Task<List<T>> GetList<T>() where T : class;

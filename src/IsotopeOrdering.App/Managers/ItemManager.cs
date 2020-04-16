@@ -21,7 +21,7 @@ namespace IsotopeOrdering.App.Managers {
             _mapper = mapper;
             _service = service;
         }
-        public async Task<ApplicationResult> CreateItem(ItemDetailModel model) {
+        public async Task<ApplicationResult> Create(ItemDetailModel model) {
             ItemDetailModelValidator validator = new ItemDetailModelValidator();
             ValidationResult result = await validator.ValidateAsync(model);
             if (result.IsValid) {
@@ -32,12 +32,12 @@ namespace IsotopeOrdering.App.Managers {
             return ApplicationResult.Error(result);
         }
 
-        public async Task<ApplicationResult> DeleteItem(int id) {
+        public async Task<ApplicationResult> Delete(int id) {
             int recordsAffected = await _service.Delete(id);
             return ApplicationResult.Success("Item deleted", recordsAffected);
         }
 
-        public async Task<ApplicationResult> EditItem(ItemDetailModel model) {
+        public async Task<ApplicationResult> Edit(ItemDetailModel model) {
             ItemDetailModelValidator validator = new ItemDetailModelValidator();
             ValidationResult result = await validator.ValidateAsync(model);
             if (result.IsValid) {
@@ -48,7 +48,7 @@ namespace IsotopeOrdering.App.Managers {
             return ApplicationResult.Error(result);
         }
 
-        public async Task<ItemDetailModel> GetItem(int id) {
+        public async Task<ItemDetailModel> Get(int id) {
             return await _service.Get<ItemDetailModel>(id);
         }
 

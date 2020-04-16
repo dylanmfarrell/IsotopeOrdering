@@ -34,7 +34,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.MinQuantity = 10;
             model.MaxQuantity = 5;
 
-            ApplicationResult result = await manager.CreateItem(model);
+            ApplicationResult result = await manager.Create(model);
             _output.WriteLine(result.Message);
             CustomAssertions.AssertValidationErrorsExist(result);
         }
@@ -51,7 +51,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.MinQuantity = 10;
             model.MaxQuantity = 10;
 
-            ApplicationResult result = await manager.CreateItem(model);
+            ApplicationResult result = await manager.Create(model);
             _output.WriteLine(result.Message);
             CustomAssertions.AssertValidationErrorsExist(result);
         }
@@ -67,7 +67,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.MinQuantity = 10;
             model.MaxQuantity = 10;
 
-            ApplicationResult result = await manager.CreateItem(model);
+            ApplicationResult result = await manager.Create(model);
             _output.WriteLine(result.Message);
             CustomAssertions.AssertValidationErrorsDoNotExist(result);
         }
@@ -83,7 +83,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.MinQuantity = 10;
             model.MaxQuantity = 5;
 
-            ApplicationResult result = await manager.EditItem(model);
+            ApplicationResult result = await manager.Edit(model);
             _output.WriteLine(result.Message);
             CustomAssertions.AssertValidationErrorsExist(result);
         }
@@ -99,7 +99,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.MinQuantity = 10;
             model.MaxQuantity = 10;
 
-            ApplicationResult result = await manager.EditItem(model);
+            ApplicationResult result = await manager.Edit(model);
             _output.WriteLine(result.Message);
             CustomAssertions.AssertValidationErrorsDoNotExist(result);
         }
@@ -112,7 +112,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
             ItemManager manager = new ItemManager(_logger, mapper, mockItemService.Object);
 
-            ApplicationResult result = await manager.DeleteItem(1);
+            ApplicationResult result = await manager.Delete(1);
             CustomAssertions.AssertValidationErrorsDoNotExist(result);
         }
 
@@ -124,7 +124,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
             ItemManager manager = new ItemManager(_logger, mapper, mockItemService.Object);
 
-            ItemDetailModel model = await manager.GetItem(1);
+            ItemDetailModel model = await manager.Get(1);
             Assert.NotNull(model);
         }
 

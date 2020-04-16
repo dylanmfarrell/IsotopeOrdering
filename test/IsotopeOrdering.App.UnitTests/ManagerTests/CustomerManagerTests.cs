@@ -63,7 +63,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile());
 
             var mock = new Mock<ICustomerService>();
-            mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
+            mock.Setup(x => x.GetCurrentCustomer<CustomerItemModel>())
                 .Returns(Task.FromResult<CustomerItemModel?>(new CustomerItemModel() {
                     Contact = {
                         Email = userService.User.Email,
@@ -107,7 +107,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.GetList<CustomerItemModel>())
                 .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>().ToList()));
-            mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
+            mock.Setup(x => x.GetCurrentCustomer<CustomerItemModel>())
                .Returns(Task.FromResult<CustomerItemModel?>(new CustomerItemModel() {
                    Contact = {
                         Email = userService.User.Email,
@@ -131,7 +131,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.GetList<CustomerItemModel>())
                 .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>().ToList()));
-            mock.Setup(x => x.Get<CustomerItemModel>(It.IsAny<string>()))
+            mock.Setup(x => x.GetCurrentCustomer<CustomerItemModel>())
                .Returns(Task.FromResult<CustomerItemModel?>(new CustomerItemModel() {
                    Contact = {
                         Email = userService.User.Email,

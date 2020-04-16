@@ -2,7 +2,6 @@
 using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using MIR.Core.Domain;
 using Moq;
 using System;
@@ -45,6 +44,8 @@ namespace IsotopeOrdering.App.UnitTests {
         public static IIsotopeOrderingAuthorizationService GetAuthorizationService(string policy) {
             var mock = new Mock<IIsotopeOrderingAuthorizationService>();
             mock.Setup(x => x.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), It.Is<string>(x => x == policy)))
+                .ReturnsAsync(true);
+            mock.Setup(x => x.AuthorizeAsync(It.Is<string>(x => x == policy)))
                 .ReturnsAsync(true);
             return mock.Object;
         }

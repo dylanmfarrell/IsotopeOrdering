@@ -15,6 +15,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             _mapper = mapper;
         }
 
+        public async Task<T?> GetCurrentCustomer<T>() where T : class {
+            return await Get<T>(_context.UserService.User.EducationId);
+        }
+
         public async Task<T?> Get<T>(string userId) where T : class {
             return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.UserId.Equals(userId, System.StringComparison.OrdinalIgnoreCase)))
                 .AsNoTracking()

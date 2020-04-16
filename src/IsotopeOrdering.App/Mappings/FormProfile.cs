@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IsotopeOrdering.App.Models.Details;
+using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.Domain.Entities;
 using System.Text.Json;
 
@@ -31,6 +32,14 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.FormData, opt => opt.ConvertUsing<FormInitiationDetailModelToStringFormatter, FormInitiationDetailModel?>(x => x.InitiationModel))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.CustomerFormStatus))
                 .ForAllOtherMembers(x => x.Ignore());
+
+            CreateMap<CustomerForm, FormItemModel>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.FormId))
+                .ForMember(x => x.CustomerDetailFormId, opt => opt.MapFrom(x => x.CustomerId))
+                .ForMember(x => x.Customer, opt => opt.MapFrom(x => x.Customer))
+                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Form.Name))
+                .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
+                .ForMember(x => x.Type, opt => opt.MapFrom(x => x.Form.Type));
         }
     }
 

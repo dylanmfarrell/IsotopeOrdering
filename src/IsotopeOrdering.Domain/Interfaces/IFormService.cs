@@ -1,6 +1,7 @@
 ﻿using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.Domain.Interfaces {
@@ -15,5 +16,7 @@ namespace IsotopeOrdering.Domain.Interfaces {
         /// <returns>The id of the customer form</returns>
         Task<int> SubmitCustomerForm(CustomerForm form);
         Task UpdateCustomerFormStatus(int customerFormId, CustomerFormStatus status);
+        Task<List<T>> GetCustomerForms<T>();
+        Task<List<T>> GetCustomerForms<T>(int customerId);
     }
 }

@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 using MIR.Core.Domain;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Managers {
@@ -56,13 +55,12 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<CustomerDetailModel?> Get(int id) {
-            bool isAdmin = await _authorization.AuthorizeAsync(_userService.User.ClaimsPrincipal, Policies.AdminPolicy);
+            bool isAdmin = await _authorization.AuthorizeAsync(Policies.AdminPolicy);
             //user is admin
             if (isAdmin) {
                 return await _service.Get<CustomerDetailModel>(id);
             }
-            IUser currentUser = _userService.User;
-            CustomerItemModel? customer = await _service.Get<CustomerItemModel>(currentUser.EducationId);
+            CustomerItemModel? customer = await _service.GetCurrentCustomer<CustomerItemModel>();
             if (customer == null) {
                 return null;
             }
@@ -84,13 +82,12 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<List<CustomerItemModel>> GetList() {
-            bool isAdmin = await _authorization.AuthorizeAsync(_userService.User.ClaimsPrincipal, Policies.AdminPolicy);
+            bool isAdmin = await _authorization.AuthorizeAsync(Policies.AdminPolicy);
             //user is an admin
             if (isAdmin) {
                 return await _service.GetList<CustomerItemModel>();
             }
-            IUser currentUser = _userService.User;
-            CustomerItemModel? customer = await _service.Get<CustomerItemModel>(currentUser.EducationId);
+            CustomerItemModel? customer = await _service.GetCurrentCustomer<CustomerItemModel>();
             //customer not found, return empty list
             if (customer == null) {
                 return new List<CustomerItemModel>();
@@ -116,8 +113,7 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<CustomerItemModel?> GetCurrentCustomer() {
-            IUser currentUser = _userService.User;
-            return await _service.Get<CustomerItemModel>(currentUser.EducationId);
+            return await _service.GetCurrentCustomer<CustomerItemModel>();
         }
 
         private async Task<CustomerItemModel> Create() {

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace IsotopeOrdering.App.Interfaces {
     public interface IItemManager {
         Task<List<ItemItemModel>> GetList();
-        Task<ItemDetailModel> GetItem(int id);
-        Task<ApplicationResult> CreateItem(ItemDetailModel item);
-        Task<ApplicationResult> EditItem(ItemDetailModel item);
-        Task<ApplicationResult> DeleteItem(int id);
+        Task<ItemDetailModel> Get(int id);
+        Task<ApplicationResult> Create(ItemDetailModel item);
+        Task<ApplicationResult> Edit(ItemDetailModel item);
+        Task<ApplicationResult> Delete(int id);
     }
 }

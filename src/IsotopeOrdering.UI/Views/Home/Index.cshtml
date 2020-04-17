@@ -1,8 +1,10 @@
-﻿@{
+﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
+@{
     ViewData[ViewDataKeys.Title] = "Home Page";
 }
+@if (!await AuthorizationService.AuthorizeAsync(Policies.CustomerPolicy)) {
+    <partial name="_InitiationMessage" />
+}
+else {
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+}

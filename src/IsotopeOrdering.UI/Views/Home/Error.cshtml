@@ -1,11 +1,11 @@
-﻿
+﻿@model ApplicationResult
 @{
-    ViewData[ViewDataKeys.Title] = "Unauthorized";
+    ViewData[ViewDataKeys.Title] = "Error";
 }
 <div class="jumbotron jumbotron-fluid">
     <div class="container" style="text-align:center;">
         <i class="fas fa-exclamation-circle float-left text-danger" style="font-size: 6rem;"></i>
-        <h1 class="display-4">Unauthorized</h1>
-        <p class="lead">You are not authorized to view this page</p>
+        <h1 class="display-4">Error</h1>
+        <p class="lead">@Model.Message</p>
     </div>
 </div>

@@ -2,6 +2,36 @@
 @{
     ViewData[ViewDataKeys.Title] = "Material Transfer Agreement";
 }
+<div class="mx-auto w-75 border rounded p-3">
+    <h4 class="font-weight-bold text-center">
+        Washington University in St. Louis
+        Agreement for supply of Radioisotope
+    </h4>
+    <p class="lead">
+        <b>Provider: THE WASHINGTON UNIVERSITY,</b> a corporation established by special act of the
+        Missouri General Assembly approved February 22, 1853 and acts amendatory thereto, having its principal
+        office at One Brookings Drive, St. Louis, MO 63130 <b>(Hereinafter referred to as “WU”)</b>
+    </p>
+    <form asp-controller="Form" asp-action="@nameof(FormController.InitiationForm)" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Customer" />
+        <input type="hidden" asp-for="Type" />
+        <input type="hidden" asp-for="CustomerFormStatus" />
+        <div class="form-group row">
+            <label for="providingScientists" class="col-sm-3 col-form-label">WU’s Providing Scientists:</label>
+            <div class="col-sm-9">
+                <input type="text" readonly class="form-control-plaintext" id="providingScientists" value="Sally Schwarz, MS BCNP Department of Radiology – Rad. Sciences">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="providingScientists" class="col-sm-3 col-form-label">WU’s Providing Scientists:</label>
+            <div class="col-sm-9">
+                <input type="text" readonly class="form-control-plaintext" id="providingScientists" value="Sally Schwarz, MS BCNP Department of Radiology – Rad. Sciences">
+            </div>
+        </div>
+    </form>
+</div>
+
 
 
 

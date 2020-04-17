@@ -36,6 +36,7 @@ namespace IsotopeOrdering.UI {
                 AuthorizationPolicy policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 x.Filters.Add(new AuthorizeFilter(policy));
             })
+            .AddRazorRuntimeCompilation()
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerDetailModelValidator>());
         }
 
@@ -56,9 +57,12 @@ namespace IsotopeOrdering.UI {
             });
             app.UseStatusCodePages(async context => {
                 var response = context.HttpContext.Response;
-                if (response.StatusCode == (int)HttpStatusCode.Unauthorized ||
-                    response.StatusCode == (int)HttpStatusCode.Forbidden)
+                if (response.StatusCode == (int)HttpStatusCode.Unauthorized || response.StatusCode == (int)HttpStatusCode.Forbidden) {
                     response.Redirect("/Home/Unauthorized");
+                }
+                else if (response.StatusCode == (int)HttpStatusCode.NotFound) {
+                    response.Redirect("/Home/PageNotFound");
+                }
             });
             app.UseStaticFiles();
             app.UseSerilogRequestLogging(options => {

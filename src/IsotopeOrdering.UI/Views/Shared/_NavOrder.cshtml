@@ -1,0 +1,13 @@
+﻿@inject IAuthorizationService AuthorizationService
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="orderDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Orders
+    </a>
+    <div class="dropdown-menu bg-dark" aria-labelledby="orderDropDown">
+        <a class="nav-link" asp-controller="Order" asp-action="@nameof(OrderController.Index)">View My Orders</a>
+        <a class="nav-link" asp-controller="Order" asp-action="@nameof(OrderController.Create)">Create New Order</a>
+        @if ((await AuthorizationService.AuthorizeAsync(User, Policies.ReviewerPolicy)).Succeeded) {
+            <a class="nav-link" asp-controller="Order" asp-action="@nameof(OrderController.Center)">Order Center</a>
+        }
+    </div>
+</li>

@@ -1,4 +1,4 @@
-﻿using IsotopeOrdering.UI.Models;
+﻿using IsotopeOrdering.App.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -21,7 +21,7 @@ namespace IsotopeOrdering.UI.Controllers {
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ApplicationResult(Activity.Current?.Id ?? HttpContext.TraceIdentifier, false));
         }
     }
 }

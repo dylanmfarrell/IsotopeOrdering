@@ -11,6 +11,7 @@ namespace IsotopeOrdering.App.Models.Details {
         public List<OrderAddressDetailModel> Addresses { get; set; } = new List<OrderAddressDetailModel>();
         public string Notes { get; set; } = string.Empty;
         public string FedExNumber { get; set; } = string.Empty;
+        public OrderStatus Status { get; set; }
     }
 
     public class OrderItemDetailModel {

@@ -21,7 +21,7 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int id) {
+        public async Task<IActionResult> Detail(int id) {
             FormDetailModel? model = await _formManager.Get(id);
             if(model == null) {
                 return NotFound();

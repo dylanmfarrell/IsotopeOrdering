@@ -71,5 +71,15 @@ namespace IsotopeOrdering.App.Managers {
         public Task<ApplicationResult> Edit(OrderDetailModel model) {
             throw new NotImplementedException();
         }
+
+        public Task<OrderItemModel> GetCenterList() {
+            throw new NotImplementedException();
+        }
+
+        public Task<OrderDetailModel?> GetOrderForReview(int id) {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }

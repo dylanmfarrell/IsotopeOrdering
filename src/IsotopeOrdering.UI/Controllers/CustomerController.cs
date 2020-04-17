@@ -18,7 +18,7 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int id) {
+        public async Task<IActionResult> Detail(int id) {
             CustomerDetailModel? model = await _customerManager.Get(id);
             if (model == null) {
                 return NotFound();

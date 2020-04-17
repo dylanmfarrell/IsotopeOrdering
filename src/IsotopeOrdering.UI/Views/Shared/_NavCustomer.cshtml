@@ -1,0 +1,11 @@
+﻿@inject IAuthorizationService AuthorizationService
+@if ((await AuthorizationService.AuthorizeAsync(User, Policies.ReviewerPolicy)).Succeeded) {
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
+    </li>
+}
+else {
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Customer" asp-action="Index">View My Team</a>
+    </li>
+}

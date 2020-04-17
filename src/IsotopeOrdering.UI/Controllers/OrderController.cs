@@ -3,6 +3,7 @@ using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
+using IsotopeOrdering.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int id) {
+        public async Task<IActionResult> Detail(int id) {
             OrderDetailModel? model = await _orderManager.Get(id);
             if (model == null) {
                 return NotFound();
@@ -45,6 +46,18 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpPost]
         public async Task<IActionResult> Create(OrderDetailModel model) {
             if (ModelState.IsValid) {
+                model.Status = OrderStatus.Sent;
+                ApplicationResult result = await _orderManager.Create(model);
+                return ApplicationResult(nameof(Index), result);
+            }
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateDraft(OrderDetailModel model) {
+            if (ModelState.IsValid) {
+                model.Status = OrderStatus.Draft;
                 ApplicationResult result = await _orderManager.Create(model);
                 return ApplicationResult(nameof(Index), result);
             }
@@ -65,6 +78,22 @@ namespace IsotopeOrdering.UI.Controllers {
             if (ModelState.IsValid) {
                 ApplicationResult result = await _orderManager.Edit(model);
                 return ApplicationResult(nameof(Index), result);
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Policies.ReviewerPolicy)]
+        public async Task<IActionResult> Center() {
+            return View(await _orderManager.GetCenterList());
+        }
+
+        [HttpGet]
+        [Authorize(Policies.ReviewerPolicy)]
+        public async Task<IActionResult> Review(int id) {
+            OrderDetailModel? model = await _orderManager.GetOrderForReview(id);
+            if (model == null) {
+                return NotFound();
             }
             return View(model);
         }

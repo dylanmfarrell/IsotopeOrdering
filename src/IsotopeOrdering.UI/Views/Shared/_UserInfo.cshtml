@@ -1,0 +1,4 @@
+﻿@inject IUserService UserService
+@if (UserService.User != null) {
+    @($"{UserService.User.FirstName} {UserService.User.LastName}")
+}

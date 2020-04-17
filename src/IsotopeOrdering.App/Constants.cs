@@ -38,4 +38,9 @@
         /// </summary>
         public const string OrderPolicy = "OrderPolicy";
     }
+
+    public static class ViewDataKeys {
+        public const string Title = "Title";
+        public const string ApplicationResult = "ApplicationResult";
+    }
 }

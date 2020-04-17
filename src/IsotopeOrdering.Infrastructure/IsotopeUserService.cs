@@ -36,7 +36,7 @@ namespace IsotopeOrdering.Infrastructure {
         public string Email => GetClaimValue(JwtClaimTypes.Email);
 
         private string GetClaimValue(string jwtType) {
-            Claim? claim =  _claimsPrincipal.Claims.FirstOrDefault(x => x.Type == jwtType);
+            Claim? claim = _claimsPrincipal.Claims.FirstOrDefault(x => x.Type == jwtType);
             return claim?.Value ?? string.Empty;
         }
     }

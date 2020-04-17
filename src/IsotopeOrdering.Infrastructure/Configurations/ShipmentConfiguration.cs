@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace IsotopeOrdering.Infrastructure.Configurations {
     internal class ShipmentConfiguration : IEntityTypeConfiguration<Shipment> {
         public void Configure(EntityTypeBuilder<Shipment> builder) {
+            builder.Property(x => x.ShippingCharge).HasColumnType("decimal(18,4)");
             builder.OwnsOne(x => x.Shipping, sa => {
                 sa.Property(x => x.Name).HasColumnName("AddressName").IsRequired();
                 sa.Property(x => x.State).HasColumnName("State");

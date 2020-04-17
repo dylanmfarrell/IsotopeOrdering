@@ -19,7 +19,7 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IItemService _itemService;
         private readonly ICustomerService _customerService;
         private readonly IInstitutionService _institutionService;
-        private readonly IEventService _eventService;
+        private readonly IEventManager _eventService;
 
         public OrderManager(ILogger<OrderManager> logger,
             IMapper mapper,
@@ -27,7 +27,7 @@ namespace IsotopeOrdering.App.Managers {
             IItemService itemService,
             ICustomerService customerService,
             IInstitutionService institutionService,
-            IEventService eventService) {
+            IEventManager eventService) {
             _logger = logger;
             _mapper = mapper;
             _service = service;
@@ -54,7 +54,7 @@ namespace IsotopeOrdering.App.Managers {
                 await _eventService.CreateEvent(EntityEventType.Customer, model.Customer.Id, Events.Customer.SubmittedInitiationForm);
                 Order item = _mapper.Map<Order>(model);
                 int id = await _service.Create(item);
-                await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Created, id);
+                await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Created);
                 return ApplicationResult.Success("Order created", id);
             }
             return ApplicationResult.Error(result);
@@ -80,6 +80,8 @@ namespace IsotopeOrdering.App.Managers {
             throw new NotImplementedException();
         }
 
-        
+        public Task<ApplicationResult> SubmitReview(OrderReviewDetailModel review) {
+            throw new NotImplementedException();
+        }
     }
 }

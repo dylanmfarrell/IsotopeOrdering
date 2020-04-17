@@ -4,6 +4,7 @@ using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using IsotopeOrdering.Infrastructure.DataServices;
 using IsotopeOrdering.Infrastructure.Options;
+using IsotopeOrdering.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -103,6 +104,7 @@ namespace IsotopeOrdering.Infrastructure {
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IShipmentService, ShipmentService>();
+            services.AddTransient<INotificationService, NotificationService>();
             return services;
         }
 

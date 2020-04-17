@@ -1,22 +1,19 @@
 ﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="orderDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Orders
+        <i class="fas fa-truck"></i>
+        Shipments
     </a>
     <div class="dropdown-menu bg-dark" aria-labelledby="orderDropDown">
-        <a class="nav-link" asp-controller="Order" asp-action="@nameof(OrderController.Index)">
+        <a class="nav-link" asp-controller="Shipment" asp-action="@nameof(ShipmentController.Index)">
             <i class="fas fa-boxes"></i>
-            View My Orders
-        </a>
-        <a class="nav-link" asp-controller="Order" asp-action="@nameof(OrderController.Create)">
-            <i class="fas fa-cart-plus"></i>
-            Create New Order
+            View My Shipments
         </a>
         @if (await AuthorizationService.AuthorizeAsync(User, Policies.ReviewerPolicy)) {
             <div class="dropdown-divider"></div>
-            <a class="nav-link" asp-controller="Order" asp-action="@nameof(OrderController.Center)">
+            <a class="nav-link" asp-controller="Shipment" asp-action="@nameof(ShipmentController.Center)">
                 <i class="fas fa-warehouse"></i>
-                Manage Orders
+                Manage Shipments
             </a>
         }
     </div>

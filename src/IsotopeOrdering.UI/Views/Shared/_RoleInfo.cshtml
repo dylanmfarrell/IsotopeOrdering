@@ -1,4 +1,4 @@
 ﻿@inject IRoleService RoleService
 @if (RoleService.UserRoles.Any()) {
-    @(string.Join(" - ", RoleService.UserRoles) + " )")
+    @($"{string.Join(" - ", RoleService.UserRoles)})")
 }

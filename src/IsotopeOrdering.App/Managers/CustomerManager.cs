@@ -21,14 +21,14 @@ namespace IsotopeOrdering.App.Managers {
         private readonly ICustomerService _service;
         private readonly IUserService _userService;
         private readonly IIsotopeOrderingAuthorizationService _authorization;
-        private readonly IEventService _eventService;
+        private readonly IEventManager _eventService;
 
         public CustomerManager(ILogger<CustomerManager> logger,
             IMapper mapper,
             ICustomerService service,
             IUserService userService,
             IIsotopeOrderingAuthorizationService authorization,
-            IEventService eventService) {
+            IEventManager eventService) {
             _logger = logger;
             _mapper = mapper;
             _service = service;
@@ -121,7 +121,7 @@ namespace IsotopeOrdering.App.Managers {
             _logger.LogInformation("Creating new customer for {user}", user);
             Customer newCustomer = _mapper.Map<Customer>(user);
             int id = await _service.Create(newCustomer);
-            await _eventService.CreateEvent(EntityEventType.Customer, id, Events.Customer.Created, id);
+            await _eventService.CreateEvent(EntityEventType.Customer, id, Events.Customer.Created);
             _logger.LogInformation("New customer created {id}", id);
             return await _service.Get<CustomerItemModel>(id);
         }

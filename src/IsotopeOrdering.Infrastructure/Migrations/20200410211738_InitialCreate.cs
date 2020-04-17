@@ -1,16 +1,12 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class InitialCreate : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class InitialCreate : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.CreateTable(
                 name: "Customers",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -29,8 +25,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     Fax = table.Column<string>(nullable: true),
                     InternalNotes = table.Column<string>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Customers_Customers_ParentCustomerId",
@@ -42,8 +37,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "EntityEvents",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EventDateTime = table.Column<DateTime>(nullable: false),
@@ -51,15 +45,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     EntityId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_EntityEvents", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Forms",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -70,15 +62,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     Type = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Forms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Institutions",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -109,15 +99,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     Document_Details = table.Column<string>(nullable: true),
                     Document_UploadId = table.Column<Guid>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Institutions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Items",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -136,15 +124,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     MinQuantity = table.Column<decimal>(nullable: true),
                     MaxQuantity = table.Column<decimal>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Items", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Shipments",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -167,15 +153,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     Document_Details = table.Column<string>(nullable: true),
                     Document_UploadId = table.Column<Guid>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Shipments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "CustomerAddresses",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -193,8 +177,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     Address2 = table.Column<string>(nullable: true),
                     Address3 = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_CustomerAddresses", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CustomerAddresses_Customers_CustomerId",
@@ -206,8 +189,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "CustomerDocuments",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -221,8 +203,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     UploadId = table.Column<Guid>(nullable: true),
                     ExpirationDate = table.Column<DateTime>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_CustomerDocuments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CustomerDocuments_Customers_CustomerId",
@@ -234,8 +215,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "CustomerForms",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -248,8 +228,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     Status = table.Column<int>(nullable: false),
                     FormData = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_CustomerForms", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CustomerForms_Customers_CustomerId",
@@ -267,8 +246,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "CustomerInstitutions",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -280,8 +258,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     InstitutionId = table.Column<int>(nullable: false),
                     Relationship = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_CustomerInstitutions", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CustomerInstitutions_Customers_CustomerId",
@@ -299,8 +276,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Orders",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -328,8 +304,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     Billing_Address2 = table.Column<string>(nullable: true),
                     Billing_Address3 = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Orders_Customers_CustomerId",
@@ -347,8 +322,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ItemConfigurations",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -362,8 +336,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     MinimumAmount = table.Column<decimal>(nullable: true),
                     MaximumAmount = table.Column<decimal>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_ItemConfigurations", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ItemConfigurations_Customers_CustomerId",
@@ -381,8 +354,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "OrderItems",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -395,8 +367,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     Quantity = table.Column<decimal>(nullable: false),
                     SpecialInstructions = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_OrderItems", x => x.Id);
                     table.ForeignKey(
                         name: "FK_OrderItems_ItemConfigurations_ItemConfigurationId",
@@ -414,8 +385,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ShipmentItems",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -429,8 +399,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     ShippedRadioactivity = table.Column<decimal>(nullable: false),
                     DamagedReason = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_ShipmentItems", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ShipmentItems_OrderItems_OrderItemId",
@@ -569,8 +538,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 column: "ShipmentId");
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "CustomerAddresses");
 

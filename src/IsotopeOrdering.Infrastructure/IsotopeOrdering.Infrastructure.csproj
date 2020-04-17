@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200417155756_DecimalColumnFixesAndInternalNotesUpdate.cs" />
+    <Compile Remove="Migrations\20200417155756_DecimalColumnFixesAndInternalNotesUpdate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Appman.Core.Service" Version="1.0.2" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.3" />

@@ -1,11 +1,11 @@
-﻿@inject IAuthorizationService AuthorizationService
+﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MIR - Isotope Ordering</title>
+    <title>@ViewData[ViewDataKeys.Title] - MIR - Isotope Ordering</title>
     <link rel="icon" href="~/images/wustl-icon.png" />
     <link rel="stylesheet" href="~/dist/css/datatables.min.css" />
     <link rel="stylesheet" href="~/dist/css/site.min.css" asp-append-version="true" />
@@ -30,44 +30,19 @@
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home"></i>
+                                Home
+                            </a>
                         </li>
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Policies.CustomerPolicy)).Succeeded) {
-                            <partial name="_Nav" />
-                        }
-                        @if ((await AuthorizationService.AuthorizeAsync(User, Policies.OrderPolicy)).Succeeded) {
+                        <partial name="_NavCustomer" />
+                        @if (await AuthorizationService.AuthorizeAsync(User, Policies.CustomerPolicy)) {
                             <partial name="_NavOrder" />
+                            <partial name="_NavShipment" />
                         }
-                        @*<li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="requestDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Requests
-                                </a>
-                                <div class="dropdown-menu bg-dark" aria-labelledby="requestDropDown">
-                                    <a class="nav-link" asp-controller="Request" asp-action="Create">Create New Funding Request</a>
-                                    <a class="nav-link" asp-controller="Request" asp-action="Index">View My Requests</a>
-                                </div>
-                            </li>
-                            @if ((await AuthorizationService.AuthorizeAsync(User, PolicyConfiguration.ReportPolicy)).Succeeded) {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="reportDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Reports
-                                    </a>
-                                    <div class="dropdown-menu bg-dark" aria-labelledby="reportDropDown">
-                                        <a class="nav-link" asp-controller="Report" asp-action="ArchiveReport">Archive Report</a>
-                                    </div>
-                                </li>
-                            }
-                            @if ((await AuthorizationService.AuthorizeAsync(User, PolicyConfiguration.AdminPolicy)).Succeeded) {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Admin
-                                    </a>
-                                    <div class="dropdown-menu bg-dark" aria-labelledby="adminDropdown">
-                                        <a class="nav-link" asp-controller="Facility" asp-action="Index">Manage Facilities</a>
-                                        <a class="nav-link" asp-controller="Reviewer" asp-action="Index">Manage Reviewers</a>
-                                    </div>
-                                </li>
-                            }*@
+                        @if (await AuthorizationService.AuthorizeAsync(User, Policies.AdminPolicy)) {
+                            <partial name="_NavAdmin" />
+                        }
                     </ul>
                     <span class="navbar-text">
                         <partial name="_UserInfo" />

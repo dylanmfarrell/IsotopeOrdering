@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using AutoMapper;
+using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Managers;
 using IsotopeOrdering.App.Mappings;
 using IsotopeOrdering.App.Models.Details;
@@ -23,7 +24,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
     public class CustomerManagerTests {
         private readonly ITestOutputHelper _output;
         private readonly NullLogger<CustomerManager> _logger = new NullLogger<CustomerManager>();
-        private readonly IEventService _eventService = TestUtilities.GetEventService();
+        private readonly IEventManager _eventService = TestUtilities.GetEventService();
 
         public CustomerManagerTests(ITestOutputHelper output) {
             _output = output;
@@ -165,7 +166,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
         public async void Edit_Customer_With_Validation_Errors(CustomerDetailModel model) {
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile());
-            CustomerManager manager = new CustomerManager(_logger, mapper, Mock.Of<ICustomerService>(), Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<IEventService>());
+            CustomerManager manager = new CustomerManager(_logger, mapper, Mock.Of<ICustomerService>(), Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService);
             model.Addresses.Clear();
 
             ApplicationResult applicationResult = await manager.Edit(model);
@@ -192,7 +193,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.Institutions.Clear();
             model.ItemConfigurations.Clear();
             model.Documents.Clear();
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<IEventService>());
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService);
 
             ApplicationResult applicationResult = await manager.Edit(model);
 
@@ -219,7 +220,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.Institutions.Clear();
             model.ItemConfigurations.Clear();
             model.Documents.Clear();
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<IEventService>());
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService);
             ApplicationResult applicationResult = await manager.Edit(model);
             CustomAssertions.AssertExcpetionErrorsExist(applicationResult);
         }

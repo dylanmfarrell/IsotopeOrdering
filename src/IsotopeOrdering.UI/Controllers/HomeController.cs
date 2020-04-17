@@ -1,21 +1,22 @@
-﻿using IsotopeOrdering.App.Models.Shared;
+﻿using IsotopeOrdering.App.Interfaces;
+using IsotopeOrdering.App.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace IsotopeOrdering.UI.Controllers {
-    public class HomeController : Controller {
+    public class HomeController : BaseController {
         private readonly ILogger<HomeController> _logger;
+        private readonly ICustomerManager _customerManager;
 
-        public HomeController(ILogger<HomeController> logger) {
+        public HomeController(ILogger<HomeController> logger, ICustomerManager customerManager) {
             _logger = logger;
+            _customerManager = customerManager;
         }
 
-        public IActionResult Index() {
-            return View();
-        }
-
-        public IActionResult Privacy() {
+        public async Task<IActionResult> Index() {
+            await _customerManager.InitializeCustomerForCurrentUser();
             return View();
         }
 

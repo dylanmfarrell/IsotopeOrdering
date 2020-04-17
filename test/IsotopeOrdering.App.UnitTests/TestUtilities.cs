@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Enums;
-using IsotopeOrdering.Domain.Interfaces;
 using MIR.Core.Domain;
 using Moq;
 using System;
@@ -20,9 +20,9 @@ namespace IsotopeOrdering.App.UnitTests {
             return mock.Object;
         }
 
-        public static IEventService GetEventService() {
-            Mock<IEventService> mock = new Mock<IEventService>();
-            mock.Setup(x => x.CreateEvent(It.IsAny<EntityEventType>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<object[]>()))
+        public static IEventManager GetEventService() {
+            Mock<IEventManager> mock = new Mock<IEventManager>();
+            mock.Setup(x => x.CreateEvent(It.IsAny<EntityEventType>(), It.IsAny<int>(), It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
             return mock.Object;
         }

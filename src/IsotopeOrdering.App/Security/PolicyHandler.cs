@@ -1,6 +1,6 @@
-﻿using IsotopeOrdering.App.Interfaces;
-using IsotopeOrdering.App.Models.Items;
+﻿using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.Domain.Enums;
+using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using MIR.Core.Domain;
 using System;
@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 namespace IsotopeOrdering.App.Security {
     public class PolicyHandler : IAuthorizationHandler {
         private readonly IRoleService _roleService;
-        private readonly ICustomerManager _customerManager;
+        private readonly ICustomerService _customerService;
 
-        public PolicyHandler(IRoleService roleService, ICustomerManager customerManager) {
+        public PolicyHandler(IRoleService roleService, ICustomerService customerService) {
             _roleService = roleService;
-            _customerManager = customerManager;
+            _customerService = customerService;
         }
 
         public async Task HandleAsync(AuthorizationHandlerContext context) {
@@ -41,14 +41,14 @@ namespace IsotopeOrdering.App.Security {
 
         private async Task HandleInitiationRequirement(AuthorizationHandlerContext context, InitiationRequirement requirement) {
             //if user's role is [customer] check their customer status
-           if (_roleService.UserRoles.Any(x => requirement.UserRole == Enum.Parse<UserRole>(x))) {
-                CustomerItemModel customer = await _customerManager.InitializeCustomerForCurrentUser();
-                if (requirement.CustomerStatus == customer.Status) {
+            if (_roleService.UserRoles.Any(x => requirement.UserRole == Enum.Parse<UserRole>(x))) {
+                CustomerItemModel? customer = await _customerService.GetCurrentCustomer<CustomerItemModel>();
+                if (customer != null && requirement.CustomerStatus == customer.Status) {
                     context.Succeed(requirement);
                 }
                 context.Fail();
             }
-           //user's role does not apply to this requirement
+            //user's role does not apply to this requirement
             context.Succeed(requirement);
             await Task.CompletedTask;
         }

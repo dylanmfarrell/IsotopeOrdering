@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Managers;
 using IsotopeOrdering.App.Mappings;
 using IsotopeOrdering.App.Models.Details;
@@ -14,7 +15,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
     public class OrderManagerTests {
         private readonly ITestOutputHelper _output;
         private readonly NullLogger<OrderManager> _logger = new NullLogger<OrderManager>();
-        private readonly IEventService _eventService = TestUtilities.GetEventService();
+        private readonly IEventManager _eventService = TestUtilities.GetEventService();
         public OrderManagerTests(ITestOutputHelper output) {
             _output = output;
         }

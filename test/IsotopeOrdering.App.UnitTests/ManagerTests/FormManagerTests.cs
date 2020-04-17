@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using AutoMapper;
+using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Managers;
 using IsotopeOrdering.App.Mappings;
 using IsotopeOrdering.App.Models.Details;
@@ -20,7 +21,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
     public class FormManagerTests {
         private readonly ITestOutputHelper _output;
         private readonly NullLogger<FormManager> _logger = new NullLogger<FormManager>();
-        private readonly IEventService _eventService = TestUtilities.GetEventService();
+        private readonly IEventManager _eventService = TestUtilities.GetEventService();
 
         public FormManagerTests(ITestOutputHelper output) {
             _output = output;
@@ -38,7 +39,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mockInstitutionService.Setup(x => x.GetListForInitiation<InstitutionItemModel>()).ReturnsAsync(new List<InstitutionItemModel>());
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, mockItemService.Object, mockInstitutionService.Object,Mock.Of<IIsotopeOrderingAuthorizationService>(),Mock.Of<ICustomerService>(), _eventService);
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, mockItemService.Object, mockInstitutionService.Object, Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService);
 
             FormDetailModel model = await manager.GetInitiationForm(customer);
             Assert.Equal(model.Customer, customer);

@@ -9,9 +9,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MIR.Core.Domain;
-using MIR.Core.Mvc.Security;
 using Serilog;
+using System.Net;
 
 namespace IsotopeOrdering.UI {
     public class Startup {
@@ -54,6 +53,12 @@ namespace IsotopeOrdering.UI {
                     context.Request.Scheme = "https";
                 }
                 return next();
+            });
+            app.UseStatusCodePages(async context => {
+                var response = context.HttpContext.Response;
+                if (response.StatusCode == (int)HttpStatusCode.Unauthorized ||
+                    response.StatusCode == (int)HttpStatusCode.Forbidden)
+                    response.Redirect("/Home/Unauthorized");
             });
             app.UseStaticFiles();
             app.UseSerilogRequestLogging(options => {

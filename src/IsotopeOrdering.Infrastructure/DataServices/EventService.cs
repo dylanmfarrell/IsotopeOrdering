@@ -14,12 +14,11 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             _context = context;
         }
 
-        public async Task CreateEvent(EntityEventType type, int id, string eventDescription, params object[] data) {
-            string description = string.Format(eventDescription, data);
+        public async Task CreateEvent(EntityEventType type, int id, string eventDescription) {
             _context.EntityEvents.Add(new EntityEvent() {
                 EntityId = id,
                 Type = type,
-                Description = description
+                Description = eventDescription
             });
             await _context.SaveChangesAsync();
         }

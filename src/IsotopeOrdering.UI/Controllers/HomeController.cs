@@ -20,11 +20,11 @@ namespace IsotopeOrdering.UI.Controllers {
             return View();
         }  
         
-        public async Task<IActionResult> PageNotFound() {
+        public IActionResult PageNotFound() {
             return View();
         }
         
-        public async Task<IActionResult> Unauthorized() {
+        public new IActionResult Unauthorized() {
             return View();
         }
 

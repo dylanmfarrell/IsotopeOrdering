@@ -43,7 +43,6 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
             FormDetailModel model = await manager.GetInitiationForm(customer);
             Assert.Equal(model.Customer, customer);
-
         }
 
         [Theory, AutoMoqData]
@@ -60,7 +59,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             address.State = "MO";
             address.ZipCode = "12345";
             form.InitiationModel = new FormInitiationDetailModel() {
-                SelectedInstitution = new InstitutionItemModel() { Id = 1 },
+                Institution = new InstitutionDetailModel() { Id = 1 },
                 ShippingAddress = address,
                 Items = items
             };
@@ -88,7 +87,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             address.State = "MO123123123123";
             address.ZipCode = "123123123123123123";
             form.InitiationModel = new FormInitiationDetailModel() {
-                SelectedInstitution = new InstitutionItemModel() { Id = 1 },
+                Institution = new InstitutionDetailModel() { Id = 1 },
                 ShippingAddress = address,
                 Items = items
             };
@@ -112,12 +111,21 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                     IsSelected = true
                 }
             };
-
-            AddressDetailModel address = new Fixture().Create<AddressDetailModel>();
+            Fixture fixture = new Fixture();
+            AddressDetailModel address = fixture.Create<AddressDetailModel>();
             address.State = "MO";
             address.ZipCode = "12345";
+
+            ContactDetailModel contact = fixture.Create<ContactDetailModel>();
+            contact.Email = "test@test.com";
+            contact.PhoneNumber = "123-123-1234";
             form.InitiationModel = new FormInitiationDetailModel() {
-                SelectedInstitution = new InstitutionItemModel() { Id = 1 },
+                Institution = new InstitutionDetailModel() {
+                    Name = "Test",
+                    Address = address,
+                    FinancialContact = contact,
+                    SafetyContact = contact
+                },
                 ShippingAddress = address,
                 Items = items
             };

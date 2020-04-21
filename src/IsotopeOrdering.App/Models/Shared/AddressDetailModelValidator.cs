@@ -19,7 +19,11 @@ namespace IsotopeOrdering.App.Models.Shared {
         }
 
         private bool BeValidZipCode(string zipCode) {
+            if (string.IsNullOrEmpty(zipCode)) {
+                return false;
+            }
             return Regex.IsMatch(zipCode, @"(^\d{5}$)|(^\d{9}$)|(^\d{5}-\d{4}$)");
         }
     }
+
 }

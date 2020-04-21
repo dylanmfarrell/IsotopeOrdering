@@ -1,4 +1,5 @@
 ﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
+@inject IConfiguration Configuration
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +51,7 @@
                     </span>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Logout">Logout</a>
+                            <a class="nav-link" href="@($"{Configuration["OpenId:Authority"]}/Account/Logout")">Logout</a>
                         </li>
                     </ul>
                 </div>

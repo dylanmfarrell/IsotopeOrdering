@@ -52,9 +52,9 @@ namespace IsotopeOrdering.Infrastructure {
                 x.Url = options.Url;
             });
 
-            services.AddRoleService(options => {
-                options.Token = options.Token;
-                options.DefaultRole = UserRole.Customer.ToString();
+            services.AddRoleService(x => {
+                x.Token = options.Token;
+                x.DefaultRole = UserRole.Customer.ToString();
             });
             return services;
         }

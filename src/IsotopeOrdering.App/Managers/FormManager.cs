@@ -43,11 +43,10 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<FormDetailModel> GetInitiationForm(CustomerItemModel customer) {
-            await _eventService.CreateEvent(EntityEventType.Customer, customer.Id, Events.Customer.Created);
+            await _eventService.CreateEvent(EntityEventType.Customer, customer.Id, Events.Customer.ObtainedInitiationForm);
             FormDetailModel formDetailModel = await _service.Get<FormDetailModel>(FormType.Initiation);
             formDetailModel.InitiationModel = new FormInitiationDetailModel();
             formDetailModel.InitiationModel.Items = await _itemService.GetListForInitiation<FormInitiationItemModel>();
-            formDetailModel.InitiationModel.Institutions = await _institutionService.GetListForInitiation<InstitutionItemModel>();
             formDetailModel.Customer = customer;
             return formDetailModel;
         }

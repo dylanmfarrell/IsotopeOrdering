@@ -10,8 +10,7 @@ namespace IsotopeOrdering.App.Models.Details {
 
     public class FormInitiationDetailModelValidator : AbstractValidator<FormInitiationDetailModel> {
         public FormInitiationDetailModelValidator() {
-            RuleFor(x => x.SelectedInstitution).NotNull();
-            RuleFor(x => x.SelectedInstitution!.Id).GreaterThan(0);
+            RuleFor(x => x.Institution).SetValidator(new InstitutionDetailModelValidator());
             RuleFor(x => x.ShippingAddress).SetValidator(new AddressDetailModelValidator());
             RuleFor(x => x.Items).Must(x => x.Any(y => y.IsSelected)).WithMessage(ValidationMessages.NoSelectedItems);
         }

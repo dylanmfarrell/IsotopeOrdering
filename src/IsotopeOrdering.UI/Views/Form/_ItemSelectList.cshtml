@@ -1,0 +1,6 @@
+﻿@model List<FormInitiationItemModel>
+<ul class="list-group">
+    @for (var i = 0; i < Model.Count; i++) {
+        <partial name="_ItemSelect" for="@Model[i]" />
+    }
+</ul>

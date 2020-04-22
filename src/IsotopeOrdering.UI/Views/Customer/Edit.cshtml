@@ -1,7 +1,33 @@
-﻿
+﻿@model CustomerDetailModel
 @{
     ViewData[ViewDataKeys.Title] = "Edit";
 }
+    <form asp-action="@nameof(CustomerController.Edit)" asp-controller="Customer" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ParentCustomerId" />
+        <input type="hidden" asp-for="Status" />
+        <div asp-validation-summary="ModelOnly"></div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Contact Information</h5>
+                            <partial name="_Contact" for="Contact" />
+                        </div>
+                    </div>
 
-<h1>Edit</h1>
-
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Addresses</h5>
+                            @Html.EditorFor(x=>x.Addresses,"_CustomerAddress")
+                            @*<partial name="_CustomerAddressList" for="Addresses" />*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <input type="submit" class="btn btn-success col-8 mx-auto" value="Save Changes" />
+            </div>
+    </form>

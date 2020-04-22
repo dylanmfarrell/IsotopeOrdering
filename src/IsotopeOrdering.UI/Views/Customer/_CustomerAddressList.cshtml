@@ -1,0 +1,7 @@
+﻿@model List<CustomerAddressDetailModel>
+<ul class="list-group" id="customer-address-list">
+    <li class="list-group-item border-0 p-0"><button type="button" class="btn btn-success">Add New Address</button></li>
+    @for (var i = 0; i < Model.Count; i++) {
+        <partial name="_CustomerAddress" for="@Model[i]" />
+    }
+</ul>

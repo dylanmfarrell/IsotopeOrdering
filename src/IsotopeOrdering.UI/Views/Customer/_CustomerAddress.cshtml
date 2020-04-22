@@ -1,0 +1,7 @@
+﻿@model CustomerAddressDetailModel
+<li class="list-group-item">
+    <input type="hidden" asp-for="Id" />
+    <select asp-for="Type" asp-items="@ListUtility.GetAddressTypes()"></select>
+    <partial name="_Address" for="Address" />
+    <button type="button" class="btn btn-danger" onclick="removeCollectionItem(this);" data-for=".list-group-item">Remove</button>
+</li>

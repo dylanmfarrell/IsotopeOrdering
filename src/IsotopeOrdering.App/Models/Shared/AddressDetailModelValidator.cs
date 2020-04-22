@@ -13,17 +13,12 @@ namespace IsotopeOrdering.App.Models.Shared {
             RuleFor(x => x.City)
                 .NotEmpty();
             RuleFor(x => x.ZipCode)
-                .Must(BeValidZipCode);
+                .Must(PropertyValidators.BeValidZipCode);
             RuleFor(x => x.Address1)
                 .NotEmpty();
         }
 
-        private bool BeValidZipCode(string zipCode) {
-            if (string.IsNullOrEmpty(zipCode)) {
-                return false;
-            }
-            return Regex.IsMatch(zipCode, @"(^\d{5}$)|(^\d{9}$)|(^\d{5}-\d{4}$)");
-        }
+     
     }
 
 }

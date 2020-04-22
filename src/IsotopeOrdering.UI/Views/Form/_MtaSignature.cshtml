@@ -1,0 +1,110 @@
+﻿@model  FormDetailModel
+@if (Model.RequiresEmailForOtm) {
+    <p>Please provide the email address of the OTM for counter signature:</p>
+    <div class="form-group row">
+        <label asp-for="InitiationModel!.OtmSignature.Email" class="col-sm-3 col-form-label">OTM Email Address</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" asp-for="InitiationModel!.OtmSignature.Email">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="InitiationModel!.OtmSignature.PhoneNumber" class="col-sm-3 col-form-label">OTM Phone Number</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" asp-for="InitiationModel!.OtmSignature.PhoneNumber">
+        </div>
+    </div>
+}
+else {
+    <div class="form-group row">
+        <label asp-for="InitiationModel!.OtmSignature.Email" class="col-sm-3 col-form-label">OTM Contact Email</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" readonly asp-for="InitiationModel!.OtmSignature.Email">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="InitiationModel!.OtmSignature.PhoneNumber" class="col-sm-3 col-form-label">OTM Contact Phone Number</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" readonly asp-for="InitiationModel!.OtmSignature.PhoneNumber">
+        </div>
+    </div>
+}
+@if (Model.RequiresSignatureFromOtm) {
+    <div class="form-group row mb-3">
+        <label asp-for="InitiationModel!.OtmSignature.Signature" class="col-sm-2 col-form-label">Sign Below:</label>
+        <div class="col-sm-12">
+            <div id="signature" class="shadow"></div>
+        </div>
+    </div>
+    <div class="form-row mt-4">
+        <div class="col">
+            <label asp-for="InitiationModel!.OtmSignature.PrintedName">Printed Name</label>
+            <input asp-for="InitiationModel!.OtmSignature.PrintedName" class="form-control" />
+        </div>
+        <div class="col">
+            <label asp-for="InitiationModel!.OtmSignature.Position">Printed Name</label>
+            <input asp-for="InitiationModel!.OtmSignature.Position" class="form-control" />
+        </div>
+        <div class="col">
+            <label asp-for="InitiationModel!.OtmSignature.Date">Signed Date</label>
+            <input asp-for="InitiationModel!.OtmSignature.Date" class="form-control" type="date" />
+        </div>
+    </div>
+}
+@if (Model.ShowSignatureFromOtm) {
+    <div class="form-group row mb-3">
+        <label asp-for="InitiationModel!.OtmSignature.Signature" class="col-sm-2 col-form-label">Sign Below:</label>
+        <div class="col-sm-12">
+            <div id="signature" class="shadow"></div>
+        </div>
+    </div>
+    <div class="form-row mt-4">
+        <div class="col">
+            <label asp-for="InitiationModel!.OtmSignature.PrintedName">Printed Name</label>
+            <input asp-for="InitiationModel!.OtmSignature.PrintedName" readonly class="form-control" />
+        </div>
+        <div class="col">
+            <label asp-for="InitiationModel!.OtmSignature.Position">Printed Name</label>
+            <input asp-for="InitiationModel!.OtmSignature.Position" class="form-control" />
+        </div>
+        <div class="col">
+            <label asp-for="InitiationModel!.OtmSignature.Date">Signed Date</label>
+            <input asp-for="InitiationModel!.OtmSignature.Date" readonly class="form-control" type="date" />
+        </div>
+    </div>
+}
+@if (Model.RequiresSignatureFromAdmin) {
+    <div class="form-group row mb-3">
+        <label asp-for="InitiationModel!.AdminSignature.Signature" class="col-sm-2 col-form-label">Sign Below:</label>
+        <div class="col-sm-12">
+            <div id="signature" class="shadow"></div>
+        </div>
+    </div>
+    <div class="form-row mt-4">
+        <div class="col">
+            <label asp-for="InitiationModel!.AdminSignature.PrintedName">Printed Name</label>
+            <input asp-for="InitiationModel!.AdminSignature.PrintedName" class="form-control" />
+        </div>
+        <div class="col">
+            <label asp-for="InitiationModel!.AdminSignature.Date">Signed Date</label>
+            <input asp-for="InitiationModel!.AdminSignature.Date" class="form-control" type="date" />
+        </div>
+    </div>
+}
+@if (Model.ShowSignatureFromAdmin) {
+    <div class="form-group row mb-3">
+        <label asp-for="InitiationModel!.AdminSignature.Signature" class="col-sm-2 col-form-label">Sign Below:</label>
+        <div class="col-sm-12">
+            <div id="signature" class="shadow"></div>
+        </div>
+    </div>
+    <div class="form-row mt-4">
+        <div class="col">
+            <label asp-for="InitiationModel!.AdminSignature.PrintedName">Printed Name</label>
+            <input asp-for="InitiationModel!.AdminSignature.PrintedName" readonly class="form-control" />
+        </div>
+        <div class="col">
+            <label asp-for="InitiationModel!.AdminSignature.Date">Signed Date</label>
+            <input asp-for="InitiationModel!.AdminSignature.Date" readonly class="form-control" type="date" />
+        </div>
+    </div>
+}

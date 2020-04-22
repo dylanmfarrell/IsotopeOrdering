@@ -17,10 +17,11 @@
         <input type="hidden" asp-for="Customer.Id" />
         <input type="hidden" asp-for="Type" />
         <input type="hidden" asp-for="CustomerFormStatus" />
+        <input type="hidden" asp-for="InitiationModel!.FormIdentifier" />
         <div class="form-group row">
             <label for="providingScientists" class="col-sm-3 col-form-label">WU’s Providing Scientists:</label>
             <div class="col-sm-9">
-                <input type="text" readonly class="form-control-plaintext" id="providingScientists" value="Sally Schwarz, MS BCNP Department of Radiology – Rad. Sciences">
+                <input type="text" readonly class="form-control-plaintext" id="providingScientists" value="Mike Nichels, MS BCNP Department of Radiology – Rad. Sciences">
             </div>
         </div>
         <div class="card">
@@ -51,174 +52,11 @@
                 <partial name="_ItemSelectList" for="InitiationModel!.Items" />
             </div>
         </div>
-        <br />
-        <br />
-        <b>
-            For good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged,
-            WU and Recipient each a “Party” or collectively the “Parties” of this agreement (“Agreement”),
-            hereby agree to the terms and conditions of this Agreement as follows:
-        </b>
-        <ol>
-            <li>
-                Recipient shall be solely responsible for all shipping and/or freight costs. Upon receipt of the
-                invoice from WU, Recipient shall promptly pay to WU the Material Fee(s) and Packaging Fee(s.).<br /><br />
-                <b>Payment Instructions:</b>
-                <p>
-                    Make all checks (Checks must be drawn on US bank only) payable to: Washington University
-                    Include the WU Invoice number on the check.
-                </p>
-                <b>Remit payment to:</b><br />
-                Washington University in St. Louis<br />
-                Department of Radiology<br />
-                ATTN: Kashwayne Williams<br />
-                Campus Box 8225<br />
-                660 S. Euclid Avenue<br />
-                St Louis, MO 63110<br />
-                Ph: 314 362-3001<br />
-                Email: kashwayne@wustl.edu<br /><br />
-                <b>Wire Transfer Instructions: </b><br />
-                Payment details:<br />
-                <b>(1) Include the WU Invoice number.</b><br />
-                <b>(2) Attn: Kashwayne Williams, Ph: 314 362-3001</b><br />
-                Bank fees: Add your bank's wire fee to the total amount due.<br />
-                Routing: Bank of America<br />
-                800 Market Street<br />
-                St. Louis, MO 63101<br />
-                A.B.A. Routing #0260-0959-3 (wire transfer only)<br />
-                A.B.A. Routing #081000032 (ACH & EFT)<br />
-                To credit the account of Washington University<br />
-                Account #100100002663<br />
-                State Code: 722<br />
-                SWIFT Code: BOFAUS3N<br />
-                Federal Tax ID: 43-0653611<br /><br />
-            </li>
-            <li>
-                Recipient assumes ownership of the Material upon taking physical possession of said Material.
-                Recipient assumes any and all applicable legal and regulatory obligations associated with the
-                possession, use and ownership of the Material, including but not limited to radioactive licensure
-                and registration, hazardous-materials management and disposal obligations. Recipient represents
-                and warrants that Recipient shall (a) ensure that only qualified scientists work with the Material in
-                proper facilities; (b) handle, use, transport and store the Material in compliance with all applicable
-                statutes and regulations, including Public Health Service and National Institutes of Health
-                regulations and guidelines such as, for example, those relating to research involving the use of
-                animals or recombinant DNA as well as all applicable statutes and regulations relating to
-                exportation and deemed exportation, and (c) in the event that Recipient uses the Material in the
-                conduct of studies involving human subjects, Recipient shall obtain all required approvals from
-                Recipient’s appropriate Institutional Review Board.
-            </li>
-            <li>
-                Any Material delivered pursuant to this Agreement is provided “AS IS” and understood to be
-                experimental in nature and may have hazardous properties. WU MAKES NO REPRESENTATIONS
-                AND EXTENDS NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
-                INCLUDING NO WARRANTIES THAT THE MATERIAL IS FIT FOR THE RESEARCH
-                PROJECT OR ANY HUMAN USE. THERE ARE NO EXPRESS OR IMPLIED WARRANTIES
-                OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE (WHETHER OR
-                NOT PROVIDER KNOWS, HAS REASON TO KNOW, HAS BEEN ADVISED OR IS
-                OTHERWISE AWARE OF SUCH PURPOSE), OR THAT THE USE OF THE MATERIAL WILL
-                NOT INFRINGE ANY PATENT, COPYRIGHT, TRADEMARK, OR OTHER PROPRIETARY
-                RIGHT.
-            </li>
-            <li>
-                The Recipient assumes all liability due to or arising from its use, storage or disposal of the
-                Material. WU will not be liable to the Recipient for any loss, claim or demand made or incurred by
-                the Recipient or any third party. Further, the following terms of liability or indemnification will
-                apply as indicated, depending on if the Recipient is an institution of the state, a U.S. Government
-                Agency, or other:
-                <ol>
-                    <li>
-                        <b>If the Recipient is an institution of the state:</b> Except to the extent prohibited by law, the
-                        Recipient assumes all liability for damages which may arise from its use, storage or
-                        disposal of the Material. WU will not be liable to the Recipient for any loss, claim or
-                        demand made by the Recipient, or made against the Recipient by any other party, due to or
-                        arising from the use of the Material by the Recipient, except to the extent permitted by law
-                        when caused by the gross negligence or willful misconduct of WU.
-                    </li>
-                    <li>
-                        <b>If the Recipient is a U.S. Government Agency: </b>Recipient assumes all liability for
-                        damages which may arise from its use, storage or disposal of the Material. WU will not be
-                        liable to the Recipient for any loss, claim or demand made by the Recipient, or made
-                        against the Recipient by any other party, due to or arising from the use of the Material by
-                        the Recipient. No indemnification for any loss, claim, damage, or liability is intended or
-                        provided by any party under this Agreement. Each party shall be liable for any loss, claim,
-                        damage, or liability that said party incurs as a result of said party’s activities under this
-                        Agreement, except that Recipient Institution, as an agency of the United States
-                        government, assumes liability only to the extent as provided under the Federal Tort Claims
-                        Act (28 U.S.C. Ch. 171).
-                    </li>
-                    <li>
-                        <b>All other Recipients: </b>Recipient agrees to indemnify, defend and hold harmless WU, and
-                        each of its present and former trustees, faculty, staff, employees, students, directors,
-                        officers, agents, successors and assigns (each a “WU Indemnitee”) from and against any
-                        and all judgments, losses, expenses, damages and/or liabilities (including, without
-                        limitation, any and all attorneys’ and expert witness fees and court costs), that a WU
-                        Indemnitee may incur from any and all claims, suits, actions and/or proceedings
-                        (collectively, “Claims”) due to or arising out of the use, storage, or disposal of the Material
-                        by Recipient or any third party receiving Material from Recipient, except to the extent
-                        permitted by law when caused by the gross negligence or willful misconduct of WU.
-                    </li>
-                </ol>
-            </li>
-            <li>
-                Recipient shall obtain and maintain adequate insurance, or adequate self-insurance, to protect
-                against potential liabilities and risk, including coverage for the indemnity obligations herein.
-            </li>
-            <li>
-                Neither Party may use the trademarks or name of the other Party or its employees for any
-                commercial, advertisement, or promotional purposes without the prior written consent of the other,
-                with WU acting through an authorized corporate officer. If either Party is required by law,
-                governmental regulation, or its own authorship or conflict of interest policies to disclose its
-                relationship with the other Party, including, but not limited to, in SEC filings, scientific
-                publications or grant submissions, it shall provide the other Party with a copy of the disclosure at
-                least thirty (30) days in advance of such disclosure.
-            </li>
-            <li>
-                Neither WU nor Recipient will be liable for failure of or delay in performing obligations set forth
-                in this Agreement, and neither will be deemed in breach of its obligations, other than for Payments,
-                if such failure or delay is due to natural disasters or other causes reasonably beyond the control of
-                a Party and reasonable notice of the delay is provided to the other Party.
-            </li>
-            <li>
-                In performing their respective obligations under the Agreement, the Parties will comply with all
-                applicable United States export control and asset control laws, regulations, and orders, as they may
-                be amended from time to time, applicable to the export or re-export of goods or services, including
-                software, processes, or technical data. Such regulations include without limitation the Export
-                Administration Regulations (“EAR”), International Traffic in Arms Regulations (“ITAR”), and
-                regulations and orders administered by the Treasury Department’s Office of Foreign Assets
-                Control (collectively, “Export Control Laws”). WU is providing no representation regarding the
-                export control status or classification of any information or materials provided hereunder.
-            </li>
-            <li>
-                Each provision of this Agreement that would by its nature or terms survive, shall survive any
-                termination or expiration of this Agreement, regardless of the cause. Such provisions include,
-                without limitation, Paragraphs 2, 3, 4, 5 and 6.
-            </li>
-            <li>
-                The parties agree that this Agreement may be executed by facsimile including Portable Document
-                Format (PDF) electronic scan, which shall be deemed an original.
-            </li>
-        </ol>
-        <b>
-            The signatures of the undersigned indicate that they have read, understand and agree with the
-            terms of this Agreement and have the authority to execute this Agreement on behalf of their
-            represented Party and to bind their Party to all the terms of this Agreement.
-        </b>
-        <div class="form-group row mb-3">
-            <label asp-for="InitiationModel!.Signature" class="col-sm-2 col-form-label">Sign Below:</label>
-            <div class="col-sm-12">
-                <div id="signature" class="shadow"></div>
-            </div>
-        </div>
-        <div class="form-row mt-4">
-            <div class="col">
-                <label asp-for="InitiationModel!.SignaturePrintedName">Printed Name</label>
-                <input asp-for="InitiationModel!.SignaturePrintedName" class="form-control" />
-            </div>
-            <div class="col">
-                <label asp-for="InitiationModel!.SignatureDate">Signed Date</label>
-                <input asp-for="InitiationModel!.SignatureDate" class="form-control" type="date" />
-            </div>
-        </div>
-        <input type="submit" class="btn btn-success col-12 mt-4" value="Submit form for approval" />
+        <partial name="_MtaContract" />
+        <partial name="_MtaSignature" />
+        @if (Model.CanEdit) {
+            <input type="submit" class="btn btn-success col-12 mt-4" value="Submit form for signature" />
+        }
     </form>
 </div>
 

@@ -1,8 +1,10 @@
 ﻿namespace IsotopeOrdering.Domain.Enums {
     public enum CustomerFormStatus {
         Assigned = 0,
-        Completed = 1,
-        Approved = 2,
-        Denied = 3
+        AwaitingSignature = 1,
+        SignedBySafetyContact = 2,
+        Completed = 3,
+        Approved = 4,
+        Denied = 5
     }
 }

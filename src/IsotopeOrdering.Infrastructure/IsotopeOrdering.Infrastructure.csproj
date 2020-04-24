@@ -9,6 +9,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200417155756_DecimalColumnFixesAndInternalNotesUpdate.cs" />
     <Compile Remove="Migrations\20200417155756_DecimalColumnFixesAndInternalNotesUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20200424151530_RemoveFaxNullValue.cs" />
+    <Compile Remove="Migrations\20200424151530_RemoveFaxNullValue.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

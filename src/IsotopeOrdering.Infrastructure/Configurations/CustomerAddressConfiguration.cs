@@ -15,6 +15,7 @@ namespace IsotopeOrdering.Infrastructure.Configurations {
                     sa.Property(x => x.Address2).HasColumnName("Address2");
                     sa.Property(x => x.Address3).HasColumnName("Address3");
                 });
+            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }

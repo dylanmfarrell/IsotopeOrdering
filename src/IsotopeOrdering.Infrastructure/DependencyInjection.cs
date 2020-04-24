@@ -18,12 +18,12 @@ using System.Net.Http;
 
 namespace IsotopeOrdering.Infrastructure {
     public static class DependencyInjection {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) {
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, bool isDevelopment) {
 
             services.AddIsotopeOrderingDbContext(configuration.GetConnectionString("DefaultConnection"));
 
             ApplicationManagerOptions applicationManagerOptions = configuration.GetSection("ApplicationManager").Get<ApplicationManagerOptions>();
-            services.AddApplicationManagerRoleServices(applicationManagerOptions);
+            services.AddApplicationManagerRoleServices(applicationManagerOptions, isDevelopment);
 
             OpenIdOptions oidcOptions = configuration.GetSection("OpenId").Get<OpenIdOptions>();
             services.AddOidcAuthentication(oidcOptions);
@@ -42,7 +42,7 @@ namespace IsotopeOrdering.Infrastructure {
             return services;
         }
 
-        private static IServiceCollection AddApplicationManagerRoleServices(this IServiceCollection services, ApplicationManagerOptions options) {
+        private static IServiceCollection AddApplicationManagerRoleServices(this IServiceCollection services, ApplicationManagerOptions options, bool isDevelopment) {
             //Add internal role service
             services.AddMemoryCache();
 
@@ -52,10 +52,15 @@ namespace IsotopeOrdering.Infrastructure {
                 x.Url = options.Url;
             });
 
-            services.AddRoleService(x => {
-                x.Token = options.Token;
-                x.DefaultRole = UserRole.Customer.ToString();
-            });
+            if (isDevelopment) {
+                services.AddSingleton<IRoleService, DevelopmentRoleService>();
+            }
+            else {
+                services.AddRoleService(x => {
+                    x.Token = options.Token;
+                    x.DefaultRole = UserRole.Customer.ToString();
+                });
+            }
             return services;
         }
 

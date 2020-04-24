@@ -9,12 +9,11 @@ namespace IsotopeOrdering.Infrastructure.Configurations {
             builder.OwnsOne(x => x.Contact,
                 sa => {
                     sa.Property(x => x.Email).HasColumnName("Email").IsRequired();
-                    sa.Property(x => x.Fax).HasColumnName("Fax");
-                    sa.Property(x => x.PhoneNumber).HasColumnName("PhoneNumber").IsRequired();
+                    sa.Property(x => x.PhoneNumber).HasColumnName("PhoneNumber");
                     sa.Property(x => x.FirstName).HasColumnName("FirstName").IsRequired();
-                    sa.Property(x => x.LastName).HasColumnName("LastName").IsRequired();
+                    sa.Property(x => x.LastName).HasColumnName("LastName");
+                    sa.Property(x => x.Fax).HasColumnName("Fax");
                 });
-            builder.Property(x => x.InternalNotes);
             builder.Property(x => x.Status).HasDefaultValue(CustomerStatus.Pending);
             builder.HasQueryFilter(x => !x.IsDeleted);
         }

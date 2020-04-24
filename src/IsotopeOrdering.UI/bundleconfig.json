@@ -27,7 +27,8 @@
       "wwwroot/lib/jquery/dist/js/jquery.min.js",
       "wwwroot/lib/jquery/dist/js/jquery-ui.min.js",
       "wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
-      "wwwroot/lib/jquery-validation/dist/jquery.validate.unobtrusive.min.js"
+      "wwwroot/lib/jquery-validation/dist/jquery.validate.unobtrusive.min.js",
+      "wwwroot/lib/jquery-unobtrusive/jquery.unobtrusive.js"
     ]
   },
   {

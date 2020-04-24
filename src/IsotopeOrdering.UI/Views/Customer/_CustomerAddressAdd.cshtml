@@ -1,0 +1,11 @@
+﻿@model CustomerAddressDetailModel
+<li class="list-group-item add-collection-item">
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Billing/Shipping</label>
+        <div class="col-sm-9">
+            <select asp-for="Type" asp-items="@ListUtility.GetAddressTypes()" class="form-control"></select>
+        </div>
+    </div>
+    <partial name="_Address" model="new AddressDetailModel()"/>
+    <button type="button" class="btn btn-success" onclick="addCustomerAddress(this)" data-url="@Url.Action(nameof(CustomerController.AddCustomerAddress))" data-target="#customer-address-list">Add New Address</button>
+</li>

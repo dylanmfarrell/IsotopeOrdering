@@ -3,6 +3,10 @@ using System;
 
 namespace IsotopeOrdering.App.Models.Shared {
     public class ApplicationResult {
+        public ApplicationResult() {
+            Message = string.Empty;
+            Data = null;
+        }
         public ApplicationResult(string message, bool isSuccessful) {
             Message = message;
             IsSuccessful = isSuccessful;

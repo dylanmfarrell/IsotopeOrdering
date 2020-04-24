@@ -6,7 +6,6 @@ using System.Linq;
 namespace IsotopeOrdering.App.Models.Details {
     public class CustomerDetailModelValidator : AbstractValidator<CustomerDetailModel> {
         public CustomerDetailModelValidator() {
-            RuleFor(x => x.Id).NotNull().GreaterThan(0);
             RuleFor(x => x.Contact.FirstName).NotEmpty();
             RuleFor(x => x.Contact.LastName).NotEmpty();
             RuleFor(x => x.Contact.Email).EmailAddress().NotEmpty();

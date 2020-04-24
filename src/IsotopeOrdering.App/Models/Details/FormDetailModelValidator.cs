@@ -10,8 +10,8 @@ namespace IsotopeOrdering.App.Models.Details {
 
     public class FormInitiationDetailModelValidator : AbstractValidator<FormInitiationDetailModel> {
         public FormInitiationDetailModelValidator() {
-            RuleFor(x => x.OtmSignature.Email).NotEmpty().EmailAddress();
-            RuleFor(x => x.OtmSignature.PhoneNumber).NotEmpty().Must(PropertyValidators.BeValidPhoneNumber);
+            RuleFor(x => x.CustomerAdminSignature.Email).NotEmpty().EmailAddress();
+            RuleFor(x => x.CustomerAdminSignature.PhoneNumber).NotEmpty().Must(PropertyValidators.BeValidPhoneNumber);
             RuleFor(x => x.Institution).SetValidator(new InstitutionDetailModelValidator());
             RuleFor(x => x.ShippingAddress).SetValidator(new AddressDetailModelValidator());
             RuleFor(x => x.Items).Must(x => x.Any(y => y.IsSelected)).WithMessage(ValidationMessages.NoSelectedItems);

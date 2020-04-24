@@ -9,6 +9,21 @@ using Xunit;
 
 namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
     public class CustomerServiceTests {
+
+        [Theory, AutoMoqData]
+        public async void Get_Customer_Mapping_Correct(Customer customer) {
+            string instanceName = Guid.NewGuid().ToString();
+            using (var context = TestUtilities.GetDbContext(instanceName)) {
+                context.Customers.Add(customer);
+                await context.SaveChangesAsync();
+            }
+            using (var context = TestUtilities.GetDbContext(instanceName)) {
+                CustomerService service = new CustomerService(context, TestUtilities.GetMapper());
+                CustomerItemModel model = await service.Get<CustomerItemModel>(customer.Id);
+                Assert.Equal(customer.Contact.FirstName, model.Contact.FirstName);
+            }
+        }
+
         [Theory, AutoMoqData]
         public async void Get_List_Returns_Models(Customer customer) {
             string instanceName = Guid.NewGuid().ToString();

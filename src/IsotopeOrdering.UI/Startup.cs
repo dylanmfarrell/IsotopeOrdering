@@ -14,18 +14,21 @@ using System.Net;
 
 namespace IsotopeOrdering.UI {
     public class Startup {
-        public Startup(IConfiguration configuration) {
-            Configuration = configuration;
+        private readonly IWebHostEnvironment _environment;
+        private readonly IConfiguration _configuration;
+
+        public Startup(IConfiguration configuration,IWebHostEnvironment environment) {
+            _configuration = configuration;
+            _environment = environment;
         }
 
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddHttpContextAccessor();
             services.AddHttpClient();
 
             //Add db context, data services, api services, oidc authentication
-            services.AddInfrastructure(Configuration);
+            services.AddInfrastructure(_configuration,_environment.IsDevelopment());
 
             //Add logical managers, policies, automapper mappings
             services.AddApplication();

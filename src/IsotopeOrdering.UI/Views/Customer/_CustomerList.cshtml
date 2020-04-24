@@ -1,0 +1,24 @@
+﻿@model List<CustomerItemModel>
+<div class="table-responsive table-fadein mt-3">
+    <table class="table table-hover table-bordered table-sm table-datatable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr class="clickable" onclick="window.location = '@Url.Action(nameof(CustomerController.Edit),"Customer",new { id= item.Id})'">
+                    <td>@item.Contact.FullName</td>
+                    <td>@item.Contact.Email</td>
+                    <td>@item.Contact.PhoneNumber</td>
+                    <td>@item.Status.ToString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

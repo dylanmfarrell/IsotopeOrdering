@@ -1,6 +1,9 @@
-﻿using IsotopeOrdering.App.Interfaces;
+﻿using IsotopeOrdering.App;
+using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Models.Details;
+using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -13,15 +16,35 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index() {
+        [Authorize(Policies.ReviewerPolicy)]
+        public async Task<IActionResult> ManageCustomers() {
             return View(await _customerManager.GetList());
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(int id) {
-            CustomerDetailModel? model = await _customerManager.Get(id);
+        public async Task<IActionResult> MyTeam() {
+            return View(await _customerManager.GetList());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyProfile() {
+            CustomerItemModel? customer = await _customerManager.GetCurrentCustomer();
+            if(customer == null) {
+                return NotFound();
+            }
+            CustomerDetailModel? model = await _customerManager.Get(customer.Id);
             if (model == null) {
                 return NotFound();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MyProfile(CustomerDetailModel model) {
+            if (ModelState.IsValid) {
+                ApplicationResult result = await _customerManager.Edit(model);
+                SetApplicationResult(result);
+                return RedirectToAction(nameof(MyProfile));
             }
             return View(model);
         }
@@ -39,9 +62,20 @@ namespace IsotopeOrdering.UI.Controllers {
         public async Task<IActionResult> Edit(CustomerDetailModel model) {
             if (ModelState.IsValid) {
                 ApplicationResult result = await _customerManager.Edit(model);
-                return ApplicationResult(nameof(Index), result);
+                SetApplicationResult(result);
+                return RedirectToAction(nameof(Edit), new { id = model.Id });
             }
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCustomerAddress(CustomerAddressDetailModel model) {
+            return await Task.Run(() => {
+                if (ModelState.IsValid) {
+                    return PartialView("_CustomerAddress", model);
+                }
+                return JsonValidationErrorResult(ModelState);
+            });
         }
     }
 }

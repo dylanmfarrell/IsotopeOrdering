@@ -1,4 +1,28 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model CustomerDetailModel
+<input type="hidden" asp-for="Id" />
+<input type="hidden" asp-for="ParentCustomerId" />
+<input type="hidden" asp-for="Status" />
+<input type="hidden" asp-for="UserId" />
+<div asp-validation-summary="All" class="alert alert-danger"></div>
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Contact Information</h5>
+                <partial name="_Contact" for="Contact" />
+            </div>
+        </div>
+
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Addresses</h5>
+                <partial name="_CustomerAddressList" for="Addresses" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-5">
+    <input type="submit" class="btn btn-success col-8 mx-auto" value="Save Changes" />
+</div>

@@ -62,11 +62,9 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item active">@ViewData[ViewDataKeys.Title]</li>
         </ol>
-        <span id="alert-container">
-            @if (ViewData[ViewDataKeys.ApplicationResult] != null) {
-                <partial name="_ApplicationResult" model="ViewData[ViewDataKeys.ApplicationResult]" />
-            }
-        </span>
+        @if (TempData.Get<ApplicationResult>(ViewDataKeys.ApplicationResult) != null) {
+            <partial name="_ApplicationResult" model="TempData.Get<ApplicationResult>(ViewDataKeys.ApplicationResult)" />
+        }
     </div>
     <div class="container-fluid">
         <main role="main" class="pb-3">

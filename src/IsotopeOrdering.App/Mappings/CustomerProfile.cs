@@ -8,8 +8,10 @@ namespace IsotopeOrdering.App.Mappings {
     public class CustomerProfile : Profile {
         public CustomerProfile() {
             CreateMap<Customer, CustomerItemModel>()
+                .ForMember(x => x.Contact, opt => opt.MapFrom(x => x.Contact))
                 .ReverseMap();
             CreateMap<Customer, CustomerDetailModel>()
+                .ForMember(x => x.Contact, opt => opt.MapFrom(x => x.Contact))
                 .ReverseMap();
             CreateMap<CustomerAddress, CustomerAddressDetailModel>()
                 .ReverseMap();

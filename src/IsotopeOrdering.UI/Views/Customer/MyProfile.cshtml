@@ -1,8 +1,8 @@
 ﻿@model CustomerDetailModel
 @{
-    ViewData[ViewDataKeys.Title] = "Edit Customer";
+    ViewData[ViewDataKeys.Title] = "My Profile";
 }
-<form asp-action="@nameof(CustomerController.Edit)" asp-controller="Customer" method="post">
+<form asp-action="@nameof(CustomerController.MyProfile)" asp-controller="Customer" method="post">
     <partial name="_CustomerForm" for="@Model" />
 </form>
 @section Scripts{

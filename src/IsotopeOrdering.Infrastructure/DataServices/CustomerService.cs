@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IsotopeOrdering.Domain.Entities;
+using IsotopeOrdering.Domain.Entities.Shared;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MIR.Core.Data;
@@ -20,13 +21,14 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<T?> Get<T>(string userId) where T : class {
-            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.UserId == userId))
-                .AsNoTracking()
+            return await _mapper.ProjectTo<T>(_context.Customers.Include(x=>x.Contact).Where(x=>x.UserId == userId))
                 .SingleOrDefaultAsync();
         }
 
         public async Task<T> Get<T>(int id) where T : class {
-            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.Id == id)).SingleOrDefaultAsync();
+            Contact contact = _context.Customers.Single(x => x.Id == id).Contact;
+            T value = await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.Id == id)).SingleOrDefaultAsync();
+            return value;
         }
 
         public async Task<List<T>> GetChildrenList<T>(int parentId) where T : class {

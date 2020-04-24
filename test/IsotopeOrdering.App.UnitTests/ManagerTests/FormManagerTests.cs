@@ -130,7 +130,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                 Items = items
             };
             form.CustomerDetailFormId = 1;
-
+            form.InitiationModel.CustomerAdminSignature.Email = "test@test.com";
+            form.InitiationModel.CustomerAdminSignature.PhoneNumber = "123-123-1234";
             ApplicationResult result = await manager.SubmitInitiationForm(form);
             _output.WriteLine(result.Message);
             CustomAssertions.AssertValidationErrorsDoNotExist(result);

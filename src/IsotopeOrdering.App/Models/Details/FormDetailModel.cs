@@ -14,9 +14,9 @@ namespace IsotopeOrdering.App.Models.Details {
         public CustomerFormStatus CustomerFormStatus { get; set; }
         public string? FormData { get; set; }
         public FormInitiationDetailModel? InitiationModel { get; set; }
-        public bool RequiresEmailForOtm => CustomerFormStatus == CustomerFormStatus.Assigned;
-        public bool RequiresSignatureFromOtm => CustomerFormStatus == CustomerFormStatus.AwaitingSignature;
-        public bool ShowSignatureFromOtm => CustomerFormStatus > CustomerFormStatus.AwaitingSignature;
+        public bool RequiresEmailForCustomerAdmin => CustomerFormStatus == CustomerFormStatus.Assigned;
+        public bool RequiresSignatureFromCustomerAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingSignature;
+        public bool ShowSignatureFromCustomerAdmin => CustomerFormStatus > CustomerFormStatus.AwaitingSignature;
         public bool RequiresSignatureFromAdmin => CustomerFormStatus == CustomerFormStatus.SignedBySafetyContact;
         public bool ShowSignatureFromAdmin => CustomerFormStatus == CustomerFormStatus.Completed;
         public bool CanEdit => CustomerFormStatus != CustomerFormStatus.Approved && CustomerFormStatus != CustomerFormStatus.Denied;
@@ -28,7 +28,7 @@ namespace IsotopeOrdering.App.Models.Details {
         public AddressDetailModel ShippingAddress { get; set; } = new AddressDetailModel();
         public string FedExNumber { get; set; } = string.Empty;
         public List<FormInitiationItemModel> Items { get; set; } = new List<FormInitiationItemModel>();
-        public FormInitiationSignatureModel OtmSignature { get; set; } = new FormInitiationSignatureModel();
+        public FormInitiationSignatureModel CustomerAdminSignature { get; set; } = new FormInitiationSignatureModel();
         public FormInitiationSignatureModel AdminSignature { get; set; } = new FormInitiationSignatureModel();
     }
 

@@ -21,13 +21,17 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<T?> Get<T>(string userId) where T : class {
-            return await _mapper.ProjectTo<T>(_context.Customers.Include(x=>x.Contact).Where(x=>x.UserId == userId))
+            return await _mapper.ProjectTo<T>(_context.Customers.Where(x=>x.UserId == userId))
                 .SingleOrDefaultAsync();
         }
 
         public async Task<T> Get<T>(int id) where T : class {
-            Contact contact = _context.Customers.Single(x => x.Id == id).Contact;
-            T value = await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.Id == id)).SingleOrDefaultAsync();
+            T value = await _mapper.ProjectTo<T>(_context.Customers
+                .Include(x=>x.Documents)
+                .Include(x=>x.Addresses)
+                .Include(x=>x.Institutions)
+                .Include(x=>x.ItemConfigurations)
+                .Where(x => x.Id == id)).SingleOrDefaultAsync();
             return value;
         }
 

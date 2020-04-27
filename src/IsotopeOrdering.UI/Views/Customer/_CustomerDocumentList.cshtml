@@ -1,0 +1,7 @@
+﻿@model List<CustomerDocumentDetailModel>
+<ul class="list-group" id="customer-document-list">
+    <partial name="_CustomerDocumentAdd" model="new CustomerDocumentDetailModel()" />
+    @foreach (var document in Model) {
+        <partial name="_CustomerDocument" model="document" />
+    }
+</ul>

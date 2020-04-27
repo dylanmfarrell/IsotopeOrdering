@@ -1,0 +1,10 @@
+﻿@model CustomerInstitutionDetailModel
+<li class="list-group-item">
+    @using (Html.BeginCollectionItem("Institutions")) {
+        <partial name="_AuditInformation" for="@Model" />
+        <input type="hidden" asp-for="CustomerId" />
+        <input type="hidden" asp-for="InstitutionId" />
+        <partial name="_Institution" for="Institution" />
+        <button type="button" class="btn btn-danger" onclick="removeCollectionItem(this);" data-for=".list-group-item">Remove</button>
+    }
+</li>

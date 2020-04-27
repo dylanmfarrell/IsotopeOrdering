@@ -3,6 +3,7 @@ using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
+using IsotopeOrdering.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpGet]
         public async Task<IActionResult> MyProfile() {
             CustomerItemModel? customer = await _customerManager.GetCurrentCustomer();
-            if(customer == null) {
+            if (customer == null) {
                 return NotFound();
             }
             CustomerDetailModel? model = await _customerManager.Get(customer.Id);
@@ -73,6 +74,27 @@ namespace IsotopeOrdering.UI.Controllers {
             return await Task.Run(() => {
                 if (ModelState.IsValid) {
                     return PartialView("_CustomerAddress", model);
+                }
+                return JsonValidationErrorResult(ModelState);
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCustomerInstituion(CustomerInstitutionDetailModel model) {
+            model.Relationship = CustomerInstitutionRelationship.Primary;
+            return await Task.Run(() => {
+                if (ModelState.IsValid) {
+                    return PartialView("_CustomerInstitution", model);
+                }
+                return JsonValidationErrorResult(ModelState);
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCustomerDocument(CustomerDocumentDetailModel model) {
+            return await Task.Run(() => {
+                if (ModelState.IsValid) {
+                    return PartialView("_CustomerDocument", model);
                 }
                 return JsonValidationErrorResult(ModelState);
             });

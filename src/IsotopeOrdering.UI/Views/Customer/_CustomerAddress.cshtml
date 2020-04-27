@@ -1,9 +1,8 @@
 ﻿@model CustomerAddressDetailModel
 <li class="list-group-item">
     @using (Html.BeginCollectionItem("Addresses")) {
-        <input type="hidden" asp-for="Id" />
+        <partial name="_AuditInformation" for="@Model"/>
         <input type="hidden" asp-for="CustomerId" />
-
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">
                 @if (Model.IsBilling) {

@@ -1,4 +1,5 @@
-﻿@model CustomerDetailModel
+﻿@inject IConfiguration Configuration
+@model CustomerDetailModel
 @{
     ViewData[ViewDataKeys.Title] = "My Profile";
 }
@@ -6,5 +7,6 @@
     <partial name="_CustomerForm" for="@Model" />
 </form>
 @section Scripts{
+    <script type="text/javascript" src="@Configuration["FileUploadUri"]"></script>
     <script src="~/js/customer.js"></script>
 }

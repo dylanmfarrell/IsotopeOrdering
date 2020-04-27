@@ -17,31 +17,25 @@ namespace IsotopeOrdering.App.Models.Details {
         public string InternalNotes { get; set; } = string.Empty;
     }
 
-    public class CustomerInstitutionDetailModel {
-        public int Id { get; set; }
+    public class CustomerInstitutionDetailModel:ModelBase {
         public int CustomerId { get; set; }
         public int InstitutionId { get; set; }
         public InstitutionDetailModel Institution { get; set; } = new InstitutionDetailModel();
         public CustomerInstitutionRelationship Relationship { get; set; }
-        public bool IsDeleted { get; set; }
     }
 
-    public class CustomerAddressDetailModel {
-        public int Id { get; set; }
+    public class CustomerAddressDetailModel : ModelBase {
         public int CustomerId { get; set; }
         public AddressDetailModel Address { get; set; } = new AddressDetailModel();
         public AddressType Type { get; set; }
-        public bool IsDeleted { get; set; }
         public bool IsShipping => Type == AddressType.Shipping;
         public bool IsBilling => Type == AddressType.Billing;
     }
 
-    public class CustomerDocumentDetailModel {
-        public int Id { get; set; }
+    public class CustomerDocumentDetailModel: ModelBase {
         public int CustomerId { get; set; }
         public DocumentDetailModel Document { get; set; } = new DocumentDetailModel();
         public DateTime? ExpirationDate { get; set; }
-        public bool IsDeleted { get; set; }
     }
 
 }

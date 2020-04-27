@@ -1,0 +1,13 @@
+﻿@model CustomerDocumentDetailModel
+<li class="list-group-item">
+    @using (Html.BeginCollectionItem("Documents")) {
+        <partial name="_AuditInformation" for="@Model" />
+        <input type="hidden" asp-for="CustomerId" />
+        <div class="form-group">
+            <label asp-for="ExpirationDate">Expiration Date</label>
+            <input asp-for="ExpirationDate" class="form-control" type="date" />
+        </div>
+        <partial name="_Document" for="Document" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.UploadModule,UploadModules.CustomerDocument},{ ViewDataKeys.Readonly,bool.TrueString} }"/>
+        <button type="button" class="btn btn-danger mt-5" onclick="removeCollectionItem(this);" data-for=".list-group-item">Remove</button>
+    }
+</li>

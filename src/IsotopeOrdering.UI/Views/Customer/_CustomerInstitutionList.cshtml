@@ -1,0 +1,7 @@
+﻿@model List<CustomerInstitutionDetailModel>
+<ul class="list-group" id="customer-institution-list">
+    <partial name="_CustomerInstitutionAdd" model="new CustomerInstitutionDetailModel()" />
+    @foreach (var institution in Model) {
+        <partial name="_CustomerInstitution" model="institution" />
+    }
+</ul>

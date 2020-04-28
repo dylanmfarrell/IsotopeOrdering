@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace IsotopeOrdering.UI {
     public class Startup {
@@ -59,13 +60,15 @@ namespace IsotopeOrdering.UI {
                 return next();
             });
             app.UseStatusCodePages(async context => {
-                var response = context.HttpContext.Response;
-                if (response.StatusCode == (int)HttpStatusCode.Unauthorized || response.StatusCode == (int)HttpStatusCode.Forbidden) {
-                    response.Redirect("/Home/Unauthorized");
-                }
-                else if (response.StatusCode == (int)HttpStatusCode.NotFound) {
-                    response.Redirect("/Home/PageNotFound");
-                }
+                await Task.Run(() => {
+                    var response = context.HttpContext.Response;
+                    if (response.StatusCode == (int)HttpStatusCode.Unauthorized || response.StatusCode == (int)HttpStatusCode.Forbidden) {
+                        response.Redirect("/Home/Unauthorized");
+                    }
+                    else if (response.StatusCode == (int)HttpStatusCode.NotFound) {
+                        response.Redirect("/Home/PageNotFound");
+                    }
+                });
             });
             app.UseStaticFiles();
             app.UseSerilogRequestLogging(options => {

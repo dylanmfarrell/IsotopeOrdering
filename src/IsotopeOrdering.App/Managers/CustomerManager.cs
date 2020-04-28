@@ -116,6 +116,14 @@ namespace IsotopeOrdering.App.Managers {
             return await _service.GetCurrentCustomer<CustomerItemModel>();
         }
 
+        public async Task<CustomerItemModel?> GetItem(int id) {
+            return await _service.Get<CustomerItemModel>(id);
+        }
+
+        public async Task<List<CustomerItemModel>> GetListForOrder() {
+            return await _service.GetListForOrder<CustomerItemModel>();
+        }
+
         private async Task<CustomerItemModel> Create() {
             IUser user = _userService.User;
             _logger.LogInformation("Creating new customer for {user}", user);

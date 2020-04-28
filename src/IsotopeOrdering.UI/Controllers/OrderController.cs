@@ -3,9 +3,12 @@ using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
+using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.UI.Controllers {
@@ -13,10 +16,14 @@ namespace IsotopeOrdering.UI.Controllers {
     public class OrderController : BaseController {
         private readonly IOrderManager _orderManager;
         private readonly ICustomerManager _customerManager;
+        private readonly IIsotopeOrderingAuthorizationService _authorizationService;
 
-        public OrderController(IOrderManager orderManager, ICustomerManager customerManager) {
+        public OrderController(IOrderManager orderManager, 
+            ICustomerManager customerManager, 
+            IIsotopeOrderingAuthorizationService authorizationService) {
             _orderManager = orderManager;
             _customerManager = customerManager;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -35,6 +42,11 @@ namespace IsotopeOrdering.UI.Controllers {
 
         [HttpGet]
         public async Task<IActionResult> Create() {
+            if(await _authorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
+                List<CustomerItemModel> customers = await _customerManager.GetListForOrder();
+                ViewData[ViewDataKeys.Customers] = new SelectList(customers, nameof(CustomerItemModel.Id), "Contact.FullName");
+                return View(null);
+            }
             CustomerItemModel? customer = await _customerManager.GetCurrentCustomer();
             if (customer == null) {
                 return NotFound();
@@ -42,6 +54,16 @@ namespace IsotopeOrdering.UI.Controllers {
             return View(await _orderManager.GetOrderForm(customer));
         }
 
+        [HttpGet]
+        [Route("Order/Create/{customerId}")]
+        [Authorize(Policies.AdminPolicy)]
+        public async Task<IActionResult> Create(int customerId) {
+            CustomerItemModel? customer = await _customerManager.GetItem(customerId);
+            if (customer == null) {
+                return NotFound();
+            }
+            return View(await _orderManager.GetOrderForm(customer));
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(OrderDetailModel model) {

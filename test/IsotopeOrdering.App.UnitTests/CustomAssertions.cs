@@ -7,7 +7,6 @@ using Xunit;
 namespace IsotopeOrdering.App.UnitTests {
     public static class CustomAssertions {
         public static void AssertExcpetionErrorsExist(ApplicationResult result) {
-            Assert.IsType<Exception>(result.Data);
             Assert.False(result.IsSuccessful);
         }
 

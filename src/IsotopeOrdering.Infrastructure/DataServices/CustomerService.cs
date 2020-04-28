@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IsotopeOrdering.Domain.Entities;
+using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MIR.Core.Data;
@@ -14,11 +15,6 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         public CustomerService(IsotopeOrderingDbContext context, IMapper mapper) : base(context) {
             _mapper = mapper;
         }
-
-        //public override async Task<int> Update(Customer customer) {
-        //    customer.ItemConfigurations.ForEach((x) => { _context.Entry(x.Item).State = EntityState.Unchanged; });
-        //    return await base.Update(customer);
-        //}
 
         public async Task<T?> GetCurrentCustomer<T>() where T : class {
             return await Get<T>(_context.UserService.User.EducationId);
@@ -61,6 +57,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         public async Task<T> GetChild<T>(int parentId, int childId) where T : class {
             return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.Id == childId && x.ParentCustomerId.HasValue && x.ParentCustomerId.Value == parentId))
                 .SingleOrDefaultAsync();
+        }
+
+        public async Task<List<T>> GetListForOrder<T>() where T : class {
+            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.Status == CustomerStatus.Initiated)).ToListAsync();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace IsotopeOrdering.App {
             services.AddAuthorizationCore(options => {
                 options.AddPolicy(Policies.AdminPolicy, policy => policy.Requirements.Add(new RoleRequirement(UserRole.Admin)));
                 options.AddPolicy(Policies.ReviewerPolicy, policy => policy.Requirements.Add(new RoleRequirement(UserRole.Admin, UserRole.Reviewer)));
-                options.AddPolicy(Policies.CustomerPolicy, policy => policy.AddRequirements(new RoleRequirement(UserRole.Customer), new InitiationRequirement(UserRole.Customer, CustomerStatus.Initiated)));
+                options.AddPolicy(Policies.CustomerPolicy, policy => policy.AddRequirements(new RoleRequirement(UserRole.Admin, UserRole.Reviewer, UserRole.Customer), new InitiationRequirement(UserRole.Customer, CustomerStatus.Initiated)));
                 options.AddPolicy(Policies.OrderPolicy, policy => policy.AddRequirements(new RoleRequirement(UserRole.Admin, UserRole.Reviewer, UserRole.Customer), new InitiationRequirement(UserRole.Customer, CustomerStatus.Initiated)));
             });
             return services;

@@ -6,5 +6,8 @@
         public string PhoneNumber { get; set; } = string.Empty;
         public string? Fax { get; set; }
         public string FullName => $"{FirstName} {LastName}";
+        public override string ToString() {
+            return $"{FullName} -Phone #:{PhoneNumber} -Email:{Email}";
+        }
     }
 }

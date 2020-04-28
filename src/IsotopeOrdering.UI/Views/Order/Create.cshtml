@@ -1,7 +1,14 @@
-﻿
+﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
+@model OrderDetailModel
 @{
     ViewData[ViewDataKeys.Title] = "Create";
 }
-
-<h1>Create</h1>
-
+@if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy) && Model == null) {
+    <partial name="_SelectCustomer" view-data="@ViewData"/>
+}
+else {
+    <partial name="_OrderForm" for="@Model" />
+}
+@section Scripts{ 
+    <script src="~/js/order.js" type="text/javascript"></script>
+}

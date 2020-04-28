@@ -20,31 +20,31 @@ namespace IsotopeOrdering.App.Managers {
             _eventManager = eventManager;
         }
         public async Task<ApplicationResult> Create(ShipmentDetailModel model) {
-            throw new System.NotImplementedException();
+            return await Task.FromResult(new ApplicationResult());
         }
 
         public async Task<ApplicationResult> Edit(ShipmentDetailModel model) {
-            throw new System.NotImplementedException();
+            return await Task.FromResult(new ApplicationResult());
         }
 
         public async Task<ShipmentDetailModel?> Get(int id) {
-            throw new System.NotImplementedException();
+            return await Task.FromResult(new ShipmentDetailModel());
         }
 
         public async Task<List<ShipmentItemModel>> GetCenterList() {
-            throw new System.NotImplementedException();
+            return await Task.FromResult(new List<ShipmentItemModel>());
         }
 
         public async Task<List<ShipmentItemModel>> GetList() {
-            throw new System.NotImplementedException();
+            return await Task.FromResult(new List<ShipmentItemModel>());
         }
 
         public async Task<ShipmentDetailModel> GetShipmentFormForItems(int[] orderItemIds) {
-            throw new System.NotImplementedException();
+            return await Task.FromResult(new ShipmentDetailModel());
         }
 
         public async Task<ShipmentDetailModel?> GetShipmentFormForOrder(int orderId) {
-            throw new System.NotImplementedException();
+            return await Task.FromResult(new ShipmentDetailModel());
         }
     }
 }

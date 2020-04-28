@@ -10,7 +10,9 @@ namespace IsotopeOrdering.App.Mappings {
             CreateMap<Item, ItemDetailModel>();
             CreateMap<Item, ItemItemModel>();
             CreateMap<ItemConfiguration, ItemConfigurationDetailModel>()
-                .ReverseMap();
+                .ForMember(x => x.ItemName, opt => opt.MapFrom(x => x.Item.Name));
+            CreateMap<ItemConfigurationDetailModel, ItemConfiguration>()
+                .ForMember(x => x.Item, opt => opt.Ignore());
 
             CreateMap<ItemDetailModel, Item>()
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore())

@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System.Text.RegularExpressions;
 
 namespace IsotopeOrdering.App.Models.Shared {
     public class AddressDetailModelValidator : AbstractValidator<AddressDetailModel> {
@@ -18,7 +17,7 @@ namespace IsotopeOrdering.App.Models.Shared {
                 .NotEmpty();
         }
 
-     
+
     }
 
 }

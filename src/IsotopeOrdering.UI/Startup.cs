@@ -17,7 +17,7 @@ namespace IsotopeOrdering.UI {
         private readonly IWebHostEnvironment _environment;
         private readonly IConfiguration _configuration;
 
-        public Startup(IConfiguration configuration,IWebHostEnvironment environment) {
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment) {
             _configuration = configuration;
             _environment = environment;
         }
@@ -28,7 +28,7 @@ namespace IsotopeOrdering.UI {
             services.AddHttpClient();
 
             //Add db context, data services, api services, oidc authentication
-            services.AddInfrastructure(_configuration,_environment.IsDevelopment());
+            services.AddInfrastructure(_configuration, _environment.IsDevelopment());
 
             //Add logical managers, policies, automapper mappings
             services.AddApplication();

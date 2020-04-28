@@ -1,7 +1,7 @@
-﻿@model CustomerDetailModel
+﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
+@model CustomerDetailModel
 <partial name="_AuditInformation" for="@Model" />
 <input type="hidden" asp-for="ParentCustomerId" />
-<input type="hidden" asp-for="Status" />
 <input type="hidden" asp-for="UserId" />
 <div asp-validation-summary="All" class="alert alert-danger"></div>
 <ul class="nav nav-tabs" id="customer-tabs" role="tablist">
@@ -54,34 +54,21 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="admin-content" role="tabpanel" aria-labelledby="admin-tab"></div>
+    @if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
+        <div class="tab-pane fade" id="admin-content" role="tabpanel" aria-labelledby="admin-tab">
+            <div class="card border-top-0">
+                <div class="card-body">
+                    <h5 class="card-title">Admin</h5>
+                    <partial name="_CustomerFormAdmin" for="@Model" />
+                </div>
+            </div>
+        </div>
+    }
+    else {
+        <input type="hidden" asp-for="Status" />
+        <input type="hidden" asp-for="InternalNotes" />
+    }
 </div>
-
-
-@*<div class="row">
-        <div class="col-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Contact Information</h5>
-                    <partial name="_Contact" for="Contact" />
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Institution Information</h5>
-                    <partial name="_CustomerInstitutionList" for="Institutions" />
-                </div>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Addresses</h5>
-                    <partial name="_CustomerAddressList" for="Addresses" />
-                </div>
-            </div>
-        </div>
-    </div>*@
 <div class="row mt-5">
     <input type="submit" class="btn btn-success col-8 mx-auto" value="Save Changes" />
 </div>

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using IsotopeOrdering.Domain.Entities;
-using IsotopeOrdering.Domain.Entities.Shared;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MIR.Core.Data;
@@ -16,21 +15,27 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             _mapper = mapper;
         }
 
+        //public override async Task<int> Update(Customer customer) {
+        //    customer.ItemConfigurations.ForEach((x) => { _context.Entry(x.Item).State = EntityState.Unchanged; });
+        //    return await base.Update(customer);
+        //}
+
         public async Task<T?> GetCurrentCustomer<T>() where T : class {
             return await Get<T>(_context.UserService.User.EducationId);
         }
 
         public async Task<T?> Get<T>(string userId) where T : class {
-            return await _mapper.ProjectTo<T>(_context.Customers.Where(x=>x.UserId == userId))
+            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.UserId == userId))
                 .SingleOrDefaultAsync();
         }
 
         public async Task<T> Get<T>(int id) where T : class {
             T value = await _mapper.ProjectTo<T>(_context.Customers
-                .Include(x=>x.Documents)
-                .Include(x=>x.Addresses)
-                .Include(x=>x.Institutions)
-                .Include(x=>x.ItemConfigurations)
+                .Include(x => x.Documents)
+                .Include(x => x.Addresses)
+                .Include(x => x.Institutions)
+                .Include(x => x.ItemConfigurations)
+                    .ThenInclude(x => x.Item)
                 .Where(x => x.Id == id)).SingleOrDefaultAsync();
             return value;
         }

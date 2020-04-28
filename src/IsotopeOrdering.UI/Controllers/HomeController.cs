@@ -18,12 +18,12 @@ namespace IsotopeOrdering.UI.Controllers {
         public async Task<IActionResult> Index() {
             await _customerManager.InitializeCustomerForCurrentUser();
             return View();
-        }  
-        
+        }
+
         public IActionResult PageNotFound() {
             return View();
         }
-        
+
         public new IActionResult Unauthorized() {
             return View();
         }

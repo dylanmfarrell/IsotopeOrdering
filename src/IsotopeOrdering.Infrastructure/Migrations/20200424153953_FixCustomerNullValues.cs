@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class FixCustomerNullValues : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class FixCustomerNullValues : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.UpdateData(
                 table: "Forms",
                 keyColumn: "Id",
@@ -50,8 +47,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 values: new object[] { new DateTime(2020, 4, 24, 10, 39, 53, 389, DateTimeKind.Local).AddTicks(4210), new DateTime(2020, 4, 24, 10, 39, 53, 389, DateTimeKind.Local).AddTicks(4210) });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.UpdateData(
                 table: "Forms",
                 keyColumn: "Id",

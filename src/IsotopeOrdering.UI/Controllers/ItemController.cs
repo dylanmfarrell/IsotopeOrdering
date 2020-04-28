@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.UI.Controllers {
-    [Authorize(Policies.AdminPolicy)]
+
     public class ItemController : BaseController {
         private readonly IItemManager _itemManager;
 
@@ -16,11 +16,13 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
+        [Authorize(Policies.AdminPolicy)]
         public async Task<IActionResult> Index() {
             return View(await _itemManager.GetList());
         }
 
         [HttpGet]
+        [Authorize(Policies.AdminPolicy)]
         public async Task<IActionResult> Detail(int id) {
             ItemDetailModel? model = await _itemManager.Get(id);
             if (model == null) {
@@ -30,11 +32,13 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
+        [Authorize(Policies.AdminPolicy)]
         public async Task<IActionResult> Create() {
             return View(await Task.FromResult(new ItemDetailModel()));
         }
 
         [HttpPost]
+        [Authorize(Policies.AdminPolicy)]
         public async Task<IActionResult> Create(ItemDetailModel model) {
             if (ModelState.IsValid) {
                 ApplicationResult result = await _itemManager.Create(model);
@@ -44,6 +48,7 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
+        [Authorize(Policies.AdminPolicy)]
         public async Task<IActionResult> Edit(int id) {
             ItemDetailModel? model = await _itemManager.Get(id);
             if (model == null) {
@@ -53,6 +58,7 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpPost]
+        [Authorize(Policies.AdminPolicy)]
         public async Task<IActionResult> Edit(ItemDetailModel model) {
             if (ModelState.IsValid) {
                 ApplicationResult result = await _itemManager.Edit(model);
@@ -60,8 +66,5 @@ namespace IsotopeOrdering.UI.Controllers {
             }
             return View(model);
         }
-
     }
-
-
 }

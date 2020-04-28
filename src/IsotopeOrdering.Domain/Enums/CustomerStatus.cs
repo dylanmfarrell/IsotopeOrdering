@@ -11,6 +11,10 @@
         /// <summary>
         /// Customer's MTA has been reviewed and accepted
         /// </summary>
-        Initiated = 2
+        Initiated = 2,
+        /// <summary>
+        /// Customer cannot order or alter any information
+        /// </summary>
+        Locked = 3,
     }
 }

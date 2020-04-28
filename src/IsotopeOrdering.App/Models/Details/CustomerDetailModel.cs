@@ -14,10 +14,10 @@ namespace IsotopeOrdering.App.Models.Details {
         public List<CustomerDocumentDetailModel> Documents { get; set; } = new List<CustomerDocumentDetailModel>();
         public List<ItemConfigurationDetailModel> ItemConfigurations { get; set; } = new List<ItemConfigurationDetailModel>();
         public List<CustomerInstitutionDetailModel> Institutions { get; set; } = new List<CustomerInstitutionDetailModel>();
-        public string InternalNotes { get; set; } = string.Empty;
+        public string? InternalNotes { get; set; } = string.Empty;
     }
 
-    public class CustomerInstitutionDetailModel:ModelBase {
+    public class CustomerInstitutionDetailModel : ModelBase {
         public int CustomerId { get; set; }
         public int InstitutionId { get; set; }
         public InstitutionDetailModel Institution { get; set; } = new InstitutionDetailModel();
@@ -32,7 +32,7 @@ namespace IsotopeOrdering.App.Models.Details {
         public bool IsBilling => Type == AddressType.Billing;
     }
 
-    public class CustomerDocumentDetailModel: ModelBase {
+    public class CustomerDocumentDetailModel : ModelBase {
         public int CustomerId { get; set; }
         public DocumentDetailModel Document { get; set; } = new DocumentDetailModel();
         public DateTime? ExpirationDate { get; set; }

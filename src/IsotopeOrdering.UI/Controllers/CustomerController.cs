@@ -3,7 +3,6 @@ using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
-using IsotopeOrdering.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -70,34 +69,15 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCustomerAddress(CustomerAddressDetailModel model) {
-            return await Task.Run(() => {
-                if (ModelState.IsValid) {
-                    return PartialView("_CustomerAddress", model);
-                }
-                return JsonValidationErrorResult(ModelState);
-            });
-        }
+        public async Task<IActionResult> AddCustomerAddress(CustomerAddressDetailModel model) => await Partial("_CustomerAddress", model);
 
         [HttpPost]
-        public async Task<IActionResult> AddCustomerInstituion(CustomerInstitutionDetailModel model) {
-            model.Relationship = CustomerInstitutionRelationship.Primary;
-            return await Task.Run(() => {
-                if (ModelState.IsValid) {
-                    return PartialView("_CustomerInstitution", model);
-                }
-                return JsonValidationErrorResult(ModelState);
-            });
-        }
+        public async Task<IActionResult> AddCustomerInstituion(CustomerInstitutionDetailModel model) => await Partial("_CustomerInstitution", model);
 
         [HttpPost]
-        public async Task<IActionResult> AddCustomerDocument(CustomerDocumentDetailModel model) {
-            return await Task.Run(() => {
-                if (ModelState.IsValid) {
-                    return PartialView("_CustomerDocument", model);
-                }
-                return JsonValidationErrorResult(ModelState);
-            });
-        }
+        public async Task<IActionResult> AddCustomerDocument(CustomerDocumentDetailModel model) => await Partial("_CustomerDocument", model);
+
+        [HttpPost]
+        public async Task<IActionResult> AddCustomerItem(ItemConfigurationDetailModel model) => await Partial("_CustomerItem", model);
     }
 }

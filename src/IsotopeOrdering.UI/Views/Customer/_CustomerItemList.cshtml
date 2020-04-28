@@ -1,0 +1,7 @@
+﻿@model List<ItemConfigurationDetailModel>
+<ul class="list-group" id="customer-item-list">
+    <partial name="_CustomerItemAdd" model="new ItemConfigurationDetailModel()" />
+    @foreach (var item in Model) {
+        <partial name="_CustomerItem" model="item" />
+    }
+</ul>

@@ -31,6 +31,12 @@ function onAddCustomerDocument(data, options) {
     $(options.target).find('[data-entityid="' + entityId + '"]').renderFileUpload().init();
 }
 
+function addCustomerItem(el) {
+    var options = getCollectionAddOptions(el);
+    var model = getItem('ItemConfigurations');
+    postCollectionAdd(options, model);
+}
+
 function addCustomerAddress(el) {
     var options = getCollectionAddOptions(el);
     var model = {};
@@ -78,4 +84,15 @@ function getDocument(prefix) {
     document.Name = $('#' + prefix + '_Name').val();
     document.Details = $('#' + prefix + '_Details').val();
     return document;
+}
+
+function getItem(prefix) {
+    var item = {};
+    item.ItemId = $('#' + prefix + '_ItemId').val();
+    item.ItemName = $('#' + prefix + '_ItemId').find('option[value="' + item.ItemId + '"]').text();
+    item.CustomerId = $('#' + prefix + '_CustomerId').val();
+    item.Price = $('#' + prefix + '_Price').val();
+    item.MinimumAmount = $('#' + prefix + '_MinimumAmount').val();
+    item.MaximumAmount = $('#' + prefix + '_MaximumAmount').val();
+    return item;
 }

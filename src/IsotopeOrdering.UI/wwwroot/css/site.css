@@ -37,6 +37,11 @@ footer {
     margin-left: 10px;
 }
 
+.navbar-dark .navbar-nav .nav-link,
+.dropdown-item {
+    color: white;
+}
+
 .logo-header {
     background-color: #3c3d3d;
     padding-top: 15px;

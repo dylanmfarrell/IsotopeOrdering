@@ -5,13 +5,18 @@
         Shipments
     </a>
     <div class="dropdown-menu bg-dark" aria-labelledby="orderDropDown">
-        <a class="nav-link" asp-controller="Shipment" asp-action="@nameof(ShipmentController.Index)">
+        @if (await AuthorizationService.AuthorizeAsync(User, Policies.ReviewerPolicy)) {
+            <a class="dropdown-item" asp-controller="Shipment" asp-action="@nameof(ShipmentController.Create)">
+                <i class="fas fa-plus"></i>
+                Create Shipment
+            </a>
+        }
+        <a class="dropdown-item" asp-controller="Shipment" asp-action="@nameof(ShipmentController.Index)">
             <i class="fas fa-boxes"></i>
             View My Shipments
         </a>
         @if (await AuthorizationService.AuthorizeAsync(User, Policies.ReviewerPolicy)) {
-            <div class="dropdown-divider"></div>
-            <a class="nav-link" asp-controller="Shipment" asp-action="@nameof(ShipmentController.Center)">
+            <a class="dropdown-item" asp-controller="Shipment" asp-action="@nameof(ShipmentController.Center)">
                 <i class="fas fa-warehouse"></i>
                 Manage Shipments
             </a>

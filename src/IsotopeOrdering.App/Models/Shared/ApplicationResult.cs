@@ -17,7 +17,7 @@ namespace IsotopeOrdering.App.Models.Shared {
         public object? Data { get; set; }
 
         public static ApplicationResult Error(Exception ex) {
-            return new ApplicationResult(ex.Message, false) { Data = ex };
+            return new ApplicationResult(ex.Message, false);
         }
 
         public static ApplicationResult Error(ValidationResult result) {

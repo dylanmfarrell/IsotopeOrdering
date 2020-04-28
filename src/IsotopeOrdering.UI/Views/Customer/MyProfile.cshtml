@@ -3,6 +3,7 @@
 @{
     ViewData[ViewDataKeys.Title] = "My Profile";
 }
+
 <form asp-action="@nameof(CustomerController.MyProfile)" asp-controller="Customer" method="post">
     <partial name="_CustomerForm" for="@Model" />
 </form>

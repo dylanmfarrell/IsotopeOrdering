@@ -1,9 +1,13 @@
 ﻿<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="reportDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="adminDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Admin
     </a>
-    <div class="dropdown-menu bg-dark" aria-labelledby="reportDropDown">
-        <a class="nav-link" asp-controller="Report" asp-action="ArchiveReport">Manage Items</a>
-        <a class="nav-link" asp-controller="Report" asp-action="ArchiveReport">Manage Institutions</a>
+    <div class="dropdown-menu bg-dark" aria-labelledby="adminDropDown">
+        <a class="dropdown-item" asp-controller="Customer" asp-action="@nameof(CustomerController.ManageCustomers)">
+            <i class="fas fa-users-cog"></i>
+            Manage Customers
+        </a>
+        <a class="dropdown-item" asp-controller="Report" asp-action="ArchiveReport">Manage Items</a>
+        <a class="dropdown-item" asp-controller="Report" asp-action="ArchiveReport">Manage Institutions</a>
     </div>
 </li>

@@ -73,11 +73,33 @@ function S4() {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 }
 $.fn.extend({
-    getObject: function () {
-        var object = {};
-        $(this).find('input,select').each(function () {
-            object[$(this).attr('id')] = $(this).val();
-        });
-        return object;
+    renderAutoComplete: function (options) {
+        var search = {
+            context: $(this),
+            onSelect: options.onSelect,
+        };
+        search.execute = function (request, response) {
+            $.ajax({
+                url: search.context.data('url'),
+                dataType: "json",
+                data: {
+                    search: request.term
+                },
+                success: function (data) {
+                    response(data);
+                }
+            });
+        }
+        search.init = function () {
+            this.context.autocomplete({
+                source: search.execute,
+                minLength: 3,
+                select: function (event, ui) {
+                    search.onSelect(ui.item)
+                    return false;
+                }
+            });
+        }
+        return search;
     }
 })

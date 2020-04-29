@@ -120,8 +120,8 @@ namespace IsotopeOrdering.App.Managers {
             return await _service.Get<CustomerItemModel>(id);
         }
 
-        public async Task<List<CustomerItemModel>> GetListForOrder() {
-            return await _service.GetListForOrder<CustomerItemModel>();
+        public async Task<List<CustomerSearchResult>> Search(string search) {
+            return await _service.Search<CustomerSearchResult>(search);
         }
 
         private async Task<CustomerItemModel> Create() {

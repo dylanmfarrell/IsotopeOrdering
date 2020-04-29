@@ -58,6 +58,12 @@ namespace IsotopeOrdering.UI.Controllers {
             return View(model);
         }
 
+        [HttpGet]
+        [Authorize(Policies.AdminPolicy)]
+        public async Task<IActionResult> Search(string search) {
+            return Json(await _customerManager.Search(search));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Edit(CustomerDetailModel model) {
             if (ModelState.IsValid) {

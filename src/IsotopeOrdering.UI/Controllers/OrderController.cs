@@ -43,8 +43,6 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpGet]
         public async Task<IActionResult> Create() {
             if (await _authorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
-                List<CustomerItemModel> customers = await _customerManager.GetListForOrder();
-                ViewData[ViewDataKeys.Customers] = new SelectList(customers, nameof(CustomerItemModel.Id), "Contact.FullName");
                 return View(null);
             }
             CustomerItemModel? customer = await _customerManager.GetCurrentCustomer();

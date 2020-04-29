@@ -8,7 +8,7 @@ namespace IsotopeOrdering.Domain.Interfaces {
         Task<T?> GetCurrentCustomer<T>() where T : class;
         Task<T?> Get<T>(string userId) where T : class;
         Task<T> Get<T>(int id) where T : class;
-        Task<List<T>> GetListForOrder<T>() where T : class;
+        Task<List<T>> Search<T>(string search) where T : class;
         Task<List<T>> GetList<T>() where T : class;
         Task<List<T>> GetChildrenList<T>(int parentId) where T : class;
         Task<T> GetChild<T>(int parentId, int childId) where T : class;

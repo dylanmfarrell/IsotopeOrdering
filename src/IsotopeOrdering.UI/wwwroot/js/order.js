@@ -1,10 +1,13 @@
-﻿function onSelectCustomer(el) {
+﻿$('#customer-autocomplete').renderAutoComplete({
+    onSelect: onSelectCustomer
+}).init();
+
+function onSelectCustomer(item) {
     var form = $('#selectCustomer');
     var action = form.attr('action');
-    form.attr('action', action + '/' + $(el).val());
+    form.attr('action', action + '/' + item.value);
     form.submit();
 }
-
 
 function addCartItem(el) {
     var options = getCollectionAddOptions(el);

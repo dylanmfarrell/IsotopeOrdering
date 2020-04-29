@@ -4,6 +4,7 @@ using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MIR.Core.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,8 +60,9 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<List<T>> GetListForOrder<T>() where T : class {
-            return await _mapper.ProjectTo<T>(_context.Customers.Where(x => x.Status == CustomerStatus.Initiated)).ToListAsync();
+        public async Task<List<T>> Search<T>(string search) where T : class {
+            IQueryable<Customer> customers = _context.Customers.Where(x => x.Status == CustomerStatus.Initiated && (x.Contact.FirstName.ToLower().Contains(search.ToLower()) ||  x.Contact.LastName!.ToLower().Contains(search.ToLower())));
+            return await _mapper.ProjectTo<T>(customers).ToListAsync();
         }
     }
 }

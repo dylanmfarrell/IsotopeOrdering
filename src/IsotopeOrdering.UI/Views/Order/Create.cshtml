@@ -4,11 +4,19 @@
     ViewData[ViewDataKeys.Title] = "New Order";
 }
 @if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy) && Model == null) {
-    <partial name="_SelectCustomer" view-data="@ViewData"/>
+    <div class="jumbotron">
+        <h1 class="display-4">New Order</h1>
+        <p class="lead">Create a new order for a customer.</p>
+        <hr class="my-4">
+        <p>Search for a customer below to load a order form for them.</p>
+        <p class="lead">
+            <partial name="_SelectCustomer" view-data="@ViewData" />
+        </p>
+    </div>
 }
 else {
     <partial name="_OrderForm" for="@Model" />
 }
-@section Scripts{ 
+@section Scripts{
     <script src="~/js/order.js" type="text/javascript"></script>
 }

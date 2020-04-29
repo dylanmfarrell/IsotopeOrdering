@@ -1,9 +1,7 @@
 ﻿@model int
 <form asp-action="@nameof(OrderController.Create)" asp-controller="Order" method="get" id="selectCustomer">
-    <div class="form-group">
-        <label>Select a customer:</label>
-        <select asp-items="@(SelectList)ViewData[ViewDataKeys.Customers]" class="form-control" id="customerId" onchange="onSelectCustomer(this)" style="width:200px;">
-            <option value="0"></option>
-        </select>
+    <div class="form-group has-search mb-0">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input type="text" class="form-control" id="customer-autocomplete" style="width:300px;" data-url="@Url.Action(nameof(CustomerController.Search),"Customer")" />
     </div>
 </form>

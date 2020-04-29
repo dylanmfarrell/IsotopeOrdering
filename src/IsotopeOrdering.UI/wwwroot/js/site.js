@@ -57,7 +57,11 @@ function toggleErrorState(context, data) {
         context.prepend('<div class="alert alert-danger" role="alert">' + data.message + '</div>');
         return true;
     }
-    context.find('input,textarea').val('');
+    context.find('input,textarea').each(function () {
+        if (!$(this).is('[readonly]') && $(this).attr('type') !== 'hidden') {
+            $(this).val('');
+        }
+    })
     return false;
 }
 

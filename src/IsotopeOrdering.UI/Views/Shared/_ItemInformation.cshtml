@@ -1,0 +1,26 @@
+﻿@model ItemDetailModel
+<partial name="_AuditInformation" for="@Model" />
+<div class="form-row">
+    <div class="form-group col-3">
+        <label asp-for="Name">Material</label>
+        <input class="form-control" readonly asp-for="Name">
+    </div>
+    <div class="form-group col-3">
+        <label asp-for="Target"></label>
+        <input class="form-control" readonly asp-for="Target">
+    </div>
+    <div class="form-group col-3">
+        <label asp-for="Reaction"></label>
+        <input class="form-control" readonly asp-for="Reaction">
+    </div>
+    <div class="form-group col-3">
+        <label asp-for="FinalComposition">Final Composition</label>
+        <input class="form-control" readonly asp-for="FinalComposition">
+    </div>
+</div>
+@if (!string.IsNullOrEmpty(@Model.Description)) {
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <input class="form-control" readonly asp-for="Description">
+    </div>
+}

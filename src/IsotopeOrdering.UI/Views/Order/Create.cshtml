@@ -1,7 +1,7 @@
 ﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
 @model OrderDetailModel
 @{
-    ViewData[ViewDataKeys.Title] = "Create";
+    ViewData[ViewDataKeys.Title] = "New Order";
 }
 @if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy) && Model == null) {
     <partial name="_SelectCustomer" view-data="@ViewData"/>

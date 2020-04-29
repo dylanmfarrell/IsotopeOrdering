@@ -1,8 +1,12 @@
 ﻿@model OrderDetailModel
+<partial name="_AuditInformation" for="@Model" />
+<input type="hidden" asp-for="Customer.Id" />
+<input type="hidden" asp-for="Status" />
+<div asp-validation-summary="All" class="alert alert-danger"></div>
 <div class="row">
     <div class="col-2">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="item-tab" data-toggle="pill" href="#item-content" role="tab" aria-controls="item-content" aria-selected="true">Materials Requested</a>
+            <a class="nav-link active" id="item-tab" data-toggle="pill" href="#item-content" role="tab" aria-controls="item-content" aria-selected="true">Select Material</a>
             <a class="nav-link" id="shipping-tab" data-toggle="pill" href="#shipping-content" role="tab" aria-controls="shipping-content" aria-selected="false">Shipping Information</a>
             <a class="nav-link" id="billing-tab" data-toggle="pill" href="#billing-content" role="tab" aria-controls="billing-content" aria-selected="false">Billing Information</a>
             <a class="nav-link" id="review-tab" data-toggle="pill" href="#review-content" role="tab" aria-controls="review-content" aria-selected="false">Review Order</a>
@@ -13,7 +17,8 @@
             <div class="tab-pane fade show active" id="item-content" role="tabpanel" aria-labelledby="item-tab">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Materials Requested</h5>
+                        <h5 class="card-title">Select Materials</h5>
+                        <partial name="_OrderItemList" for="Items" />
                     </div>
                 </div>
             </div>
@@ -35,6 +40,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Review Order</h5>
+                        <partial name="_OrderCart" for="Cart"/>
                     </div>
                 </div>
             </div>

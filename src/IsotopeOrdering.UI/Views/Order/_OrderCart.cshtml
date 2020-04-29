@@ -1,0 +1,6 @@
+﻿@model List<OrderItemDetailModel>
+<ul class="list-group" id="order-cart-list">
+    @foreach (OrderItemDetailModel item in Model) {
+        <partial name="_OrderCartItem" model="item" />
+    }
+</ul>

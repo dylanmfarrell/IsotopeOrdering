@@ -23,6 +23,7 @@ namespace IsotopeOrdering.App.Mappings {
 
             CreateMap<ItemConfiguration, OrderItemDetailModel>()
                 .ForMember(x => x.Item, opt => opt.MapFrom(x => x.Item))
+                .ForMember(x => x.ItemConfiguration, opt => opt.MapFrom(x => x))
                 .ForMember(x => x.Quantity, opt => opt.Ignore());
 
             CreateMap<Item, FormInitiationItemModel>()

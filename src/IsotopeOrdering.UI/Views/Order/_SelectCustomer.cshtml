@@ -2,7 +2,7 @@
 <form asp-action="@nameof(OrderController.Create)" asp-controller="Order" method="get" id="selectCustomer">
     <div class="form-group">
         <label>Select a customer:</label>
-        <select asp-items="@(SelectList)ViewData[ViewDataKeys.Customers]" class="form-control" id="customerId" onchange="onSelectCustomer(this)">
+        <select asp-items="@(SelectList)ViewData[ViewDataKeys.Customers]" class="form-control" id="customerId" onchange="onSelectCustomer(this)" style="width:200px;">
             <option value="0"></option>
         </select>
     </div>

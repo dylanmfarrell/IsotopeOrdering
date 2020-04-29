@@ -18,8 +18,8 @@ namespace IsotopeOrdering.UI.Controllers {
         private readonly ICustomerManager _customerManager;
         private readonly IIsotopeOrderingAuthorizationService _authorizationService;
 
-        public OrderController(IOrderManager orderManager, 
-            ICustomerManager customerManager, 
+        public OrderController(IOrderManager orderManager,
+            ICustomerManager customerManager,
             IIsotopeOrderingAuthorizationService authorizationService) {
             _orderManager = orderManager;
             _customerManager = customerManager;
@@ -42,7 +42,7 @@ namespace IsotopeOrdering.UI.Controllers {
 
         [HttpGet]
         public async Task<IActionResult> Create() {
-            if(await _authorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
+            if (await _authorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
                 List<CustomerItemModel> customers = await _customerManager.GetListForOrder();
                 ViewData[ViewDataKeys.Customers] = new SelectList(customers, nameof(CustomerItemModel.Id), "Contact.FullName");
                 return View(null);
@@ -119,6 +119,8 @@ namespace IsotopeOrdering.UI.Controllers {
             }
             return View(model);
         }
+
+        public async Task<IActionResult> AddCartItem(OrderItemDetailModel model) => await Partial("_OrderCartItem", model);
     }
 
 

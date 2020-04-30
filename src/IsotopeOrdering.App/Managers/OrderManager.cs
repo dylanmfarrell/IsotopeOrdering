@@ -51,7 +51,6 @@ namespace IsotopeOrdering.App.Managers {
             OrderDetailModelValidator validator = new OrderDetailModelValidator();
             ValidationResult result = await validator.ValidateAsync(model);
             if (result.IsValid) {
-                await _eventService.CreateEvent(EntityEventType.Customer, model.Customer.Id, Events.Customer.SubmittedInitiationForm);
                 Order item = _mapper.Map<Order>(model);
                 int id = await _service.Create(item);
                 await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Created);

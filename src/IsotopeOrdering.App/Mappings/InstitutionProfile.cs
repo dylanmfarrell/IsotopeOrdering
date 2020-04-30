@@ -13,6 +13,9 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Name))
                 .ReverseMap();
             CreateMap<Institution, InstitutionItemModel>();
+            CreateMap<CustomerInstitution, OrderAddressDetailModel>()
+                .ForMember(x => x.Address, opt => opt.MapFrom(x => x.Institution.Address))
+                .ForMember(x => x.Type, opt => opt.Ignore());
         }
     }
 }

@@ -11,6 +11,8 @@ namespace IsotopeOrdering.App.Models.Details {
         public List<OrderItemDetailModel> Items { get; set; } = new List<OrderItemDetailModel>();
         public List<OrderItemDetailModel> Cart { get; set; } = new List<OrderItemDetailModel>();
         public List<OrderAddressDetailModel> Addresses { get; set; } = new List<OrderAddressDetailModel>();
+        public OrderAddressDetailModel ShippingAddress { get; set; } = new OrderAddressDetailModel();
+        public OrderAddressDetailModel BillingAddress { get; set; } = new OrderAddressDetailModel();
         public string Notes { get; set; } = string.Empty;
         public string FedExNumber { get; set; } = string.Empty;
         public OrderStatus Status { get; set; }
@@ -25,7 +27,6 @@ namespace IsotopeOrdering.App.Models.Details {
 
     public class OrderAddressDetailModel {
         public AddressType Type { get; set; }
-        public bool IsSelected { get; set; }
         public AddressDetailModel Address { get; set; } = new AddressDetailModel();
     }
 }

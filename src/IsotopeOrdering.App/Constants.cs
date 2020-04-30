@@ -49,6 +49,6 @@
         public const string Readonly = "Readonly";
         public const string UploadModule = "UploadModule";
         public const string Customers = "Customers";
-
+        public const string AddressType = "AddressType";
     }
 }

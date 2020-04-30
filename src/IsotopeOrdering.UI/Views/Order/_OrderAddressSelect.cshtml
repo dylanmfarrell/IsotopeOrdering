@@ -1,0 +1,7 @@
+﻿@model List<OrderAddressDetailModel>
+<ul class="list-group" name="order-address-list">
+    @foreach (var address in Model) {
+        <partial name="_OrderAddress" model="address" />
+    }
+
+</ul>

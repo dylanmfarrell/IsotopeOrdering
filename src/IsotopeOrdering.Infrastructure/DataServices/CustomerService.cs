@@ -50,9 +50,16 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<List<T>> GetAddressListForOrder<T>(int customerId, int? parentCustomerId) where T : class {
-            return await _mapper.ProjectTo<T>(_context.CustomerAddresses.Where(x => x.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
+            int targetCustomerId = parentCustomerId.GetValueOrDefault(customerId);
+            List<T> customerAddresses =  await _mapper.ProjectTo<T>(_context.CustomerAddresses.Where(x => x.CustomerId == targetCustomerId))
                 .AsNoTracking()
                 .ToListAsync();
+            List<T> institutionAddresses = await _mapper.ProjectTo<T>(_context.CustomerInstitutions.Include(x=>x.Institution).Where(x => x.CustomerId == targetCustomerId))
+                .AsNoTracking()
+                .ToListAsync();
+            customerAddresses.AddRange(institutionAddresses);
+            return customerAddresses;
+
         }
 
         public async Task<T> GetChild<T>(int parentId, int childId) where T : class {

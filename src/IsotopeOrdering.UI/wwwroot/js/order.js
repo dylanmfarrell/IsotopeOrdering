@@ -39,3 +39,7 @@ function getItem(context, prefix) {
     item.SpecificActivity = context.find('#' + prefix + '_SpecificActivity').val();
     return item;
 }
+
+function getAddress(context,prefix) {
+
+}

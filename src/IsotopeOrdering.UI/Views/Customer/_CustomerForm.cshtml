@@ -25,7 +25,7 @@
                         <h5 class="card-title">Contact Information</h5>
                         <partial name="_Contact" for="Contact" />
                         @if (!Model.ParentCustomerId.HasValue) {
-                            <a class="btn btn-info" asp-controller="Customer" asp-action="@nameof(CustomerController.MyTeam)">
+                            <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="@nameof(CustomerController.MyTeam)">
                                 <i class="fas fa-users"></i>
                                 View My Team
                             </a>

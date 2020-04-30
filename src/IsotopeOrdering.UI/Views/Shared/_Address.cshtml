@@ -3,38 +3,40 @@
     <div class="col-6">
         <div class="form-group">
             <label asp-for="Name">Address Name</label>
-            <textarea asp-for="Name" class="form-control" rows="3"></textarea>
+            <textarea asp-for="Name" class="form-control form-control-sm" rows="6"></textarea>
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <label asp-for="State">State</label>
-            <input asp-for="State" class="form-control" />
-            <span asp-validation-for="State" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="City">City</label>
-            <input asp-for="City" class="form-control" />
-            <span asp-validation-for="City" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="ZipCode">Zip Code</label>
-            <input asp-for="ZipCode" class="form-control" />
-            <span asp-validation-for="ZipCode" class="text-danger"></span>
+        <div class="form-row">
+            <div class="form-group col-2">
+                <label asp-for="State">State</label>
+                <input asp-for="State" class="form-control form-control-sm" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group col-8">
+                <label asp-for="City">City</label>
+                <input asp-for="City" class="form-control form-control-sm" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group col-2">
+                <label asp-for="ZipCode">Zip Code</label>
+                <input asp-for="ZipCode" class="form-control form-control-sm" />
+                <span asp-validation-for="ZipCode" class="text-danger"></span>
+            </div>
         </div>
     </div>
     <div class="col-6">
         <div class="form-group">
             <label asp-for="Address1">Address1</label>
-            <textarea asp-for="Address1" class="form-control" rows="3"></textarea>
+            <textarea asp-for="Address1" class="form-control form-control-sm" rows="3"></textarea>
             <span asp-validation-for="Address1" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Address2">Address2</label>
-            <input asp-for="Address2" class="form-control" />
+            <input asp-for="Address2" class="form-control form-control-sm" />
         </div>
         <div class="form-group">
             <label asp-for="Address3">Address3</label>
-            <input asp-for="Address3" class="form-control" />
+            <input asp-for="Address3" class="form-control form-control-sm" />
         </div>
     </div>
 </div>

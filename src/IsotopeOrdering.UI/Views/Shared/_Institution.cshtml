@@ -1,9 +1,11 @@
 ﻿@model InstitutionDetailModel
 <partial name="_AuditInformation" />
-<div class="form-group">
-    <label asp-for="Name">Name</label>
-    <input asp-for="Name" class="form-control" />
-    <span asp-validation-for="Name" class="text-danger"></span>
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label" asp-for="Name">Institution Name</label>
+    <div class="col-sm-10">
+        <input asp-for="Name" class="form-control form-control-sm" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
 </div>
 <h6 class="mb-2 text-muted"><i class="fas fa-home pr-1"></i>Institution Address</h6>
 <partial name="_Address" for="Address" />

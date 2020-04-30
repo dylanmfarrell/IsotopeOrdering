@@ -117,3 +117,18 @@ footer {
     pointer-events: none;
     color: #aaa;
 }
+
+.upload-container {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    height: 100px;
+}
+
+    .upload-container .dropzone {
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+    }
+
+        .upload-container .dropzone .dz-message {
+            margin: 1.5em 0;
+        }

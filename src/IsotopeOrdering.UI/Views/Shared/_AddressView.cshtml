@@ -1,0 +1,22 @@
+﻿@model AddressDetailModel
+<input type="hidden" asp-for="Name"/>
+<input type="hidden" asp-for="State"/>
+<input type="hidden" asp-for="City"/>
+<input type="hidden" asp-for="ZipCode"/>
+<input type="hidden" asp-for="Address1"/>
+<input type="hidden" asp-for="Address2"/>
+<input type="hidden" asp-for="Address3"/>
+<div class="row">
+    <div class="col-6">
+        @Model.Name
+        @Model.City
+        @Model.State
+        @Model.ZipCode
+    </div>
+    <div class="col-6">
+        @Model.Address1
+        @Model.Address2
+        @Model.Address3
+    </div>
+</div>
+

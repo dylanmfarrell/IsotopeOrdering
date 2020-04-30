@@ -1,23 +1,21 @@
 ﻿@model CustomerAddressDetailModel
-<li class="list-group-item">
-    @using (Html.BeginCollectionItem("Addresses")) {
-        <partial name="_AuditInformation" for="@Model"/>
-        <input type="hidden" asp-for="CustomerId" />
-        <div class="form-group row">
-            <label class="col-sm-3 col-form-label">
-                @if (Model.IsBilling) {
-                <i class="fas fa-money-bill"></i>
-                }
-                @if (Model.IsShipping) {
-                <i class="fas fa-truck"></i>
-                }
-                Address Type
-            </label>
-            <div class="col-sm-9">
-                <select asp-for="Type" asp-items="@ListUtility.GetAddressTypes()" class="form-control"></select>
+    <li class="list-group-item">
+        @using (Html.BeginCollectionItem("Addresses")) {
+            <button type="button" class="btn btn-sm btn-danger collection-remove float-right" onclick="removeCollectionItem(this);" data-for=".list-group-item"><i class="fas fa-trash-alt"></i></button>
+            <partial name="_AuditInformation" for="@Model" />
+            <input type="hidden" asp-for="CustomerId" />
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label pl-0">
+                    @if (Model.IsBilling) {
+                        <i class="fas fa-money-bill"></i>
+                    }
+                    @if (Model.IsShipping) {
+                        <i class="fas fa-truck"></i>
+                    }
+                    Address Type
+                </label>
+                <select asp-for="Type" asp-items="@ListUtility.GetAddressTypes()" class="form-control form-control-sm w-25"></select>
             </div>
-        </div>
-        <partial name="_Address" for="Address" />
-        <button type="button" class="btn btn-danger" onclick="removeCollectionItem(this);" data-for=".list-group-item">Remove</button>
-    }
-</li>
+            <partial name="_Address" for="Address" />
+        }
+    </li>

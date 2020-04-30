@@ -1,0 +1,31 @@
+﻿@model CustomerItemModel
+<div class="form-row align-items-center">
+    <div class="col-auto">
+        <div class="input-group input-group-sm">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-user"></i></div>
+            </div>
+            <input asp-for="Contact.FullName" readonly class="form-control form-control-sm" />
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group input-group-sm">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="far fa-envelope"></i></div>
+            </div>
+            <input asp-for="Contact.Email" readonly class="form-control form-control-sm" />
+        </div>
+    </div>
+    <div class="col-auto">
+        <div class="input-group input-group-sm">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-phone"></i></div>
+            </div>
+            <input asp-for="Contact.PhoneNumber" readonly class="form-control form-control-sm" />
+        </div>
+    </div>
+    <div class="col-auto">
+        <a asp-action="@nameof(CustomerController.Edit)" asp-controller="Customer" asp-route-id="@Model.Id" class="btn btn-info btn-sm">Edit Customer</a>
+    </div>
+</div>
+

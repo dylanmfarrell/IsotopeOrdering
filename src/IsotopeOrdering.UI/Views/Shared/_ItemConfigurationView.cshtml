@@ -4,22 +4,22 @@
     @if (Model.MinimumAmount.HasValue) {
         <div class="form-group col-3">
             <label asp-for="MinimumAmount">Minimum Amount Required</label>
-            <input class="form-control" readonly="readonly" asp-for="MinimumAmount" />
+            <input class="form-control form-control-sm" readonly="readonly" asp-for="MinimumAmount" />
         </div>
     }
     @if (Model.MaximumAmount.HasValue) {
         <div class="form-group col-3">
             <label asp-for="MaximumAmount">Maximum Amount Allowed</label>
-            <input class="form-control" readonly="readonly" asp-for="MaximumAmount" />
+            <input class="form-control form-control-sm" readonly="readonly" asp-for="MaximumAmount" />
         </div>
     }
     <div class="form-group col-3">
         <label asp-for="MaximumAmount">Price</label>
-        <div class="input-group">
+        <div class="input-group input-group-sm">
             <div class="input-group-prepend">
                 <div class="input-group-text">$</div>
             </div>
-            <input type="number" readonly="readonly" asp-for="Price" class="form-control" />
+            <input type="number" readonly="readonly" asp-for="Price" class="form-control form-control-sm" />
         </div>
     </div>
 </div>

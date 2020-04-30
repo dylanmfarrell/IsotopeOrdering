@@ -37,7 +37,7 @@ function removeCollectionItem(el) {
     var $el = $(el);
     var $parent = $el.parents($el.data('for'));
     $parent.find('[id$="IsDeleted"]').val(true);
-    var undoSection = $('<button type="button" class="btn btn-warning" name="undoRemove">Undo</button>')
+    var undoSection = $('<button type="button" class="btn btn-sm btn-warning" name="undoRemove">Undo</button>')
     undoSection.click(function () {
         $parent.find('[id$="IsDeleted"]').val(false);
         undoSection.remove();

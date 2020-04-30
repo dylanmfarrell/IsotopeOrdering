@@ -1,18 +1,21 @@
 ﻿@model DocumentDetailModel
 <input type="hidden" asp-for="UploadId" />
-<div class="form-group">
+<div class="form-group col-6">
     <label asp-for="Name">Document Name</label>
-    <input asp-for="Name" class="form-control" />
+    <input asp-for="Name" class="form-control form-control-sm" />
     <span asp-validation-for="Name" class="text-danger"></span>
 </div>
-<div class="form-group">
+<div class="form-group col-6">
     <label asp-for="Details">Details</label>
-    <textarea asp-for="Details" class="form-control" rows="3"></textarea>
+    <textarea asp-for="Details" class="form-control form-control-sm" rows="3"></textarea>
     <span asp-validation-for="Details" class="text-danger"></span>
 </div>
-@if (ViewData[ViewDataKeys.Readonly] == null) {
-    <div class="document-upload" data-module="@ViewData[ViewDataKeys.UploadModule]" data-entityid="@Model.UploadId.ToString()"></div>
-}
-else {
-    <div class="document-upload" data-module="@ViewData[ViewDataKeys.UploadModule]" data-entityid="@Model.UploadId.ToString()" data-readonly="ViewData[ViewDataKeys.Readonly]"></div>
-}
+<div class="form-group col-6">
+    <label>Files</label>
+    @if (ViewData[ViewDataKeys.Readonly] == null) {
+        <div class="document-upload" data-module="@ViewData[ViewDataKeys.UploadModule]" data-entityid="@Model.UploadId.ToString()"></div>
+    }
+    else {
+        <div class="document-upload" data-module="@ViewData[ViewDataKeys.UploadModule]" data-entityid="@Model.UploadId.ToString()" data-readonly="ViewData[ViewDataKeys.Readonly]"></div>
+    }
+</div>

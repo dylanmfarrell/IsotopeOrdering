@@ -1,12 +1,12 @@
 ﻿@model CustomerDetailModel
 <div class="form-group">
     <label asp-for="Status">Status</label>
-    <select asp-for="Status" asp-items="ListUtility.GetCustomerStatuses()" class="form-control"></select>
+    <select asp-for="Status" asp-items="ListUtility.GetCustomerStatuses()" class="form-control form-control-sm"></select>
     <span asp-validation-for="Status" class="text-danger"></span>
 </div>
 <div class="form-group">
     <label asp-for="InternalNotes">Internal Notes</label>
-    <textarea asp-for="InternalNotes" class="form-control"></textarea>
+    <textarea asp-for="InternalNotes" class="form-control form-control-sm"></textarea>
     <span asp-validation-for="InternalNotes" class="text-danger"></span>
 </div>
 <partial name="_CustomerItemList" for="ItemConfigurations" />

@@ -4,27 +4,27 @@
     <div class="form-row">
         <div class="col">
             <label asp-for="ItemId">Material</label>
-            <select asp-for="ItemId" asp-items="@new SelectList(await ItemManager.GetList(),nameof(ItemItemModel.Id),nameof(ItemItemModel.Name))" class="form-control"></select>
+            <select asp-for="ItemId" asp-items="@new SelectList(await ItemManager.GetList(),nameof(ItemItemModel.Id),nameof(ItemItemModel.Name))" class="form-control form-control-sm"></select>
             <span asp-validation-for="ItemId" class="text-danger"></span>
         </div>
         <div class="col">
             <label asp-for="Price"></label>
-            <div class="input-group">
+            <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                     <div class="input-group-text">$</div>
                 </div>
-                <input type="number" asp-for="Price" class="form-control" />
+                <input type="number" asp-for="Price" class="form-control form-control-sm" />
             </div>
             <span asp-validation-for="Price" class="text-danger"></span>
         </div>
         <div class="col">
             <label asp-for="MinimumAmount">Minimum Amount</label>
-            <input type="number" asp-for="MinimumAmount" class="form-control" />
+            <input type="number" asp-for="MinimumAmount" class="form-control form-control-sm" />
         </div>
         <div class="col">
             <label asp-for="MaximumAmount">Maximum Amount</label>
-            <input type="number" asp-for="MaximumAmount" class="form-control" />
+            <input type="number" asp-for="MaximumAmount" class="form-control form-control-sm" />
         </div>
     </div>
-    <button type="button" class="btn btn-success mt-5" onclick="addCustomerItem(this)" data-url="@Url.Action(nameof(CustomerController.AddCustomerItem))" data-target="#customer-item-list">Add New Material Configuration</button>
+    <button type="button" class="btn btn-sm btn-sm btn-success mt-5" onclick="addCustomerItem(this)" data-url="@Url.Action(nameof(CustomerController.AddCustomerItem))" data-target="#customer-item-list">Add New Material Configuration</button>
 </li>

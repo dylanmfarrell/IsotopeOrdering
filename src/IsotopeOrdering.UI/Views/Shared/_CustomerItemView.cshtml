@@ -5,6 +5,9 @@
             <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-user"></i></div>
             </div>
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="Contact.FirstName" type="hidden" />
+            <input asp-for="Contact.LastName" type="hidden" />
             <input asp-for="Contact.FullName" readonly class="form-control form-control-sm" />
         </div>
     </div>

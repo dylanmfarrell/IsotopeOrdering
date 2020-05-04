@@ -15,17 +15,14 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Item, opt => opt.Ignore());
 
             CreateMap<ItemDetailModel, Item>()
+                .ForMember(x => x.ItemConfigurations, opt => opt.Ignore())
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore())
                 .ForMember(x => x.CreatedDate, opt => opt.Ignore())
                 .ForMember(x => x.UpdatedBy, opt => opt.Ignore())
                 .ForMember(x => x.UpdatedDate, opt => opt.Ignore())
                 .ForMember(x => x.IsDeleted, opt => opt.Ignore());
 
-            CreateMap<ItemConfiguration, OrderItemDetailModel>()
-                .ForMember(x => x.Item, opt => opt.MapFrom(x => x.Item))
-                .ForMember(x => x.ItemConfiguration, opt => opt.MapFrom(x => x))
-                .ForMember(x => x.SpecialInstructions, opt => opt.Ignore())
-                .ForMember(x => x.Quantity, opt => opt.Ignore());
+
 
             CreateMap<Item, FormInitiationItemModel>()
                 .ForMember(x => x.Item, opt => opt.MapFrom(x => x))

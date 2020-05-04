@@ -7,20 +7,21 @@ using System.Collections.Generic;
 namespace IsotopeOrdering.App.Models.Details {
     public class OrderDetailModel : ModelBase {
         public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
-        public InstitutionDetailModel Institution { get; set; } = new InstitutionDetailModel();
+        public InstitutionItemModel Institution { get; set; } = new InstitutionItemModel();
         public List<OrderItemDetailModel> Items { get; set; } = new List<OrderItemDetailModel>();
         public List<OrderItemDetailModel> Cart { get; set; } = new List<OrderItemDetailModel>();
-        public List<OrderAddressDetailModel> Addresses { get; set; } = new List<OrderAddressDetailModel>();
-        public OrderAddressDetailModel ShippingAddress { get; set; } = new OrderAddressDetailModel();
-        public OrderAddressDetailModel BillingAddress { get; set; } = new OrderAddressDetailModel();
+        public List<OrderAddressDetailModel> ShippingAddresses { get; set; } = new List<OrderAddressDetailModel>();
+        public List<OrderAddressDetailModel> BillingAddresses { get; set; } = new List<OrderAddressDetailModel>();
+        public AddressDetailModel ShippingAddress { get; set; } = new AddressDetailModel();
+        public AddressDetailModel BillingAddress { get; set; } = new AddressDetailModel();
         public string Notes { get; set; } = string.Empty;
         public string FedExNumber { get; set; } = string.Empty;
         public OrderStatus Status { get; set; }
     }
 
-    public class OrderItemDetailModel:ModelBase {
+    public class OrderItemDetailModel : ModelBase {
         public ItemDetailModel Item { get; set; } = new ItemDetailModel();
-        public ItemConfigurationDetailModel ItemConfiguration { get; set; } = new ItemConfigurationDetailModel();
+        public List<ItemConfigurationDetailModel> ItemConfigurations { get; set; } = new List<ItemConfigurationDetailModel>();
         public decimal Quantity { get; set; }
         public string? SpecialInstructions { get; set; } = string.Empty;
     }

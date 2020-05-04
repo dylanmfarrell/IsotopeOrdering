@@ -24,7 +24,7 @@
     public static class ValidationMessages {
         public const string NoShippingAddress = "Must have at least one shipping address";
         public const string NoBillingAddress = "Must have at least one billing address";
-        public const string NoSelectedItems = "Must have at least one item selected";
+        public const string NoSelectedItems = "Must have at least one material selected";
         public const string MinQuantityGreaterThanMax = "Minimum quantity must be greater than or equal to maximum quantity";
         public const string MaxQuantityLessThanMin = "Maximum quantity must be less than or equal to minimum quantity";
     }

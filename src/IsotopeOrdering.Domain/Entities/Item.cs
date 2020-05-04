@@ -1,4 +1,5 @@
 ﻿using MIR.Core.Domain;
+using System.Collections.Generic;
 
 namespace IsotopeOrdering.Domain.Entities {
     public class Item : ModelBase {
@@ -12,5 +13,6 @@ namespace IsotopeOrdering.Domain.Entities {
         public string QualityControlAnalysis { get; set; } = null!;
         public decimal? MinQuantity { get; set; }
         public decimal? MaxQuantity { get; set; }
+        public List<ItemConfiguration> ItemConfigurations { get; set; } = new List<ItemConfiguration>();
     }
 }

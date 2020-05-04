@@ -59,9 +59,13 @@ function toggleErrorState(context, data) {
     }
     context.find('input,textarea').each(function () {
         if (!$(this).is('[readonly]') && $(this).attr('type') !== 'hidden') {
-            $(this).val('');
+            if ($(this).attr('type') === 'number') {
+                $(this).val(0);
+            } else {
+                $(this).val('');
+            }
         }
-    })
+    });
     return false;
 }
 
@@ -101,5 +105,27 @@ $.fn.extend({
             });
         }
         return search;
+    },
+    getAddress: function () {
+        var $el = $(this);
+        var address = {};
+        address.Name = $el.find('[name$="Name"]').val();
+        address.State = $el.find('[name$="State"]').val();
+        address.City = $el.find('[name$="City"]').val();
+        address.ZipCode = $el.find('[name$="ZipCode"]').val();
+        address.Address1 = $el.find('[name$="Address1"]').val();
+        address.Address2 = $el.find('[name$="Address2"]').val();
+        address.Address3 = $el.find('[name$="Address3"]').val();
+        return address;
+    },
+    setAddress: function (address) {
+        var $el = $(this);
+        $el.find('[name$="Name"]').val(address.Name);
+        $el.find('[name$="State"]').val(address.State);
+        $el.find('[name$="City"]').val(address.City);
+        $el.find('[name$="ZipCode"]').val(address.ZipCode);
+        $el.find('[name$="Address1"]').val(address.Address1);
+        $el.find('[name$="Address2"]').val(address.Address2);
+        $el.find('[name$="Address3"]').val(address.Address3);
     }
 })

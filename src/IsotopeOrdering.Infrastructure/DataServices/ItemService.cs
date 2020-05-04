@@ -29,9 +29,9 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
 
         public async Task<List<T>> GetListForOrder<T>(int customerId, int? parentCustomerId) {
             return await _mapper.ProjectTo<T>(
-                _context.ItemConfigurations
-                .Include(x => x.Item)
-                .Where(x => x.CustomerId == parentCustomerId.GetValueOrDefault(customerId))
+                _context.Items
+                .Include(x => x.ItemConfigurations)
+                .Where(x => x.ItemConfigurations.Any(y=>y.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
                 ).ToListAsync();
         }
     }

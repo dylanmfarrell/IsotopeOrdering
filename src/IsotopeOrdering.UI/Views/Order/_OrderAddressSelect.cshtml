@@ -1,6 +1,10 @@
 ﻿@model List<OrderAddressDetailModel>
+@{
+    AddressType type = (AddressType)ViewData[ViewDataKeys.AddressType];
+}
 <ul class="list-group" name="order-address-list">
     @foreach (var address in Model) {
-        <partial name="_OrderAddress" model="address" />
+        <partial name="_OrderAddressView" model="address" />
     }
+    <partial name="_OrderAddressAdd" model="new OrderAddressDetailModel() { Type = type }" />
 </ul>

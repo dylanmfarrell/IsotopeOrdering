@@ -2,16 +2,26 @@
 <partial name="_AuditInformation" for="@Model" />
 <div class="form-row">
     @if (Model.MinimumAmount.HasValue) {
-        <div class="form-group col-3">
-            <label asp-for="MinimumAmount">Minimum Amount Required</label>
-            <input class="form-control form-control-sm" readonly="readonly" asp-for="MinimumAmount" />
-        </div>
+    <div class="form-group col-3">
+        <label asp-for="MinimumAmount">Minimum Amount Required</label>
+        <input class="form-control form-control-sm" readonly="readonly" asp-for="MinimumAmount" />
+    </div>
+    }else{
+    <div class="form-group col-3">
+        <label asp-for="MinimumAmount">Minimum Amount Required</label>
+        <input class="form-control form-control-sm" readonly="readonly" value="N/A">
+    </div>
     }
     @if (Model.MaximumAmount.HasValue) {
-        <div class="form-group col-3">
-            <label asp-for="MaximumAmount">Maximum Amount Allowed</label>
-            <input class="form-control form-control-sm" readonly="readonly" asp-for="MaximumAmount" />
-        </div>
+    <div class="form-group col-3">
+        <label asp-for="MaximumAmount">Maximum Amount Allowed</label>
+        <input class="form-control form-control-sm" readonly="readonly" asp-for="MaximumAmount" />
+    </div>
+    }else{
+    <div class="form-group col-3">
+        <label asp-for="MaximumAmount">Maximum Amount Allowed</label>
+        <input class="form-control form-control-sm" readonly="readonly" value="N/A">
+    </div>
     }
     <div class="form-group col-3">
         <label asp-for="MaximumAmount">Price</label>

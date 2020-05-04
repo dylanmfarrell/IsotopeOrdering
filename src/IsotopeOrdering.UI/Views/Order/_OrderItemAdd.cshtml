@@ -1,16 +1,18 @@
 ﻿@model OrderItemDetailModel
 <li class="list-group-item add-collection-item">
     <partial name="_ItemInformation" for="Item" />
-    <partial name="_ItemConfigurationView" for="ItemConfiguration" />
-    <div class="form-group w-25">
-        <label asp-for="Quantity"></label>
-        <input class="form-control form-control-sm" type="number" asp-for="Quantity">
-        <span asp-validation-for="Quantity" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="SpecialInstructions"></label>
-        <textarea class="form-control form-control-sm" asp-for="SpecialInstructions"></textarea>
-        <span asp-validation-for="SpecialInstructions" class="text-danger"></span>
+    <partial name="_ItemConfigurationList" for="ItemConfigurations" />
+    <div class="form-row">
+        <div class="col">
+            <label asp-for="Quantity"></label>
+            <input class="form-control form-control-sm" type="number" asp-for="Quantity">
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label asp-for="SpecialInstructions"></label>
+            <textarea class="form-control form-control-sm" asp-for="SpecialInstructions" rows="1"></textarea>
+            <span asp-validation-for="SpecialInstructions" class="text-danger"></span>
+        </div>
     </div>
     <button type="button" class="btn btn-sm btn-success mt-5" onclick="addCartItem(this)" data-url="@Url.Action(nameof(OrderController.AddCartItem))" data-target="#order-cart-list">Add Material to Cart</button>
 </li>

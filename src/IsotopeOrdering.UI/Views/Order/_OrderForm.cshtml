@@ -1,7 +1,6 @@
 ﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
 @model OrderDetailModel
 <partial name="_AuditInformation" for="@Model" />
-<input type="hidden" asp-for="Customer.Id" />
 <input type="hidden" asp-for="Status" />
 <div asp-validation-summary="All" class="alert alert-danger"></div>
 <div class="row">
@@ -14,13 +13,12 @@
         </div>
     </div>
     <div class="col-10">
-        @if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
         <div class="card">
             <div class="card-body">
                 <partial name="_CustomerItemView" for="Customer" />
+                <partial name="_InstitutionItemView" for="Institution" />
             </div>
         </div>
-        }
         <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="item-content" role="tabpanel" aria-labelledby="item-tab">
                 <div class="card">
@@ -34,7 +32,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Shipping Information</h5>
-                        <partial name="_OrderAddressSelect" for="Addresses" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.AddressType, AddressType.Shipping} }" />
+                        <i>Select an existing address to ship to or enter a new address</i>
+                        <partial name="_OrderAddressSelect" for="ShippingAddresses" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.AddressType, AddressType.Shipping} }" />
+                        <div class="form-group">
+                            <label>FedEx Number</label>
+                            <input type="text" class="form-control form-control-sm" onblur="onFedexNumberChanged(this);" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -42,6 +45,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Billing Information</h5>
+                        <i>Select an existing address to bill to or enter a new address</i>
+                        <partial name="_OrderAddressSelect" for="BillingAddresses" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.AddressType, AddressType.Billing} }" />
                     </div>
                 </div>
             </div>
@@ -49,7 +54,29 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Review Order</h5>
-                        <partial name="_OrderCart" for="Cart" />
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Selected Materials</h5>
+                                <partial name="_OrderCart" for="Cart" />
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body" id="shipping-information">
+                                <h5 class="card-title">Shipping Information</h5>
+                                <partial name="_OrderAddress" for="ShippingAddress" />
+                                <div class="form-group">
+                                    <label>FedEx Number</label>
+                                    <input type="text" class="form-control-plaintext form-control-sm" asp-for="FedExNumber" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body" id="billing-information">
+                                <h5 class="card-title">Billing Information</h5>
+                                <partial name="_OrderAddress" for="BillingAddress" />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn btn-success col-12 mt-5">Submit Order</button>
                     </div>
                 </div>
             </div>

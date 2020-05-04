@@ -5,10 +5,13 @@ using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Entities;
+using IsotopeOrdering.Domain.Entities.Shared;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Managers {
@@ -41,9 +44,11 @@ namespace IsotopeOrdering.App.Managers {
             await _eventService.CreateEvent(EntityEventType.Customer, customer.Id, Events.Customer.ObtainedOrderForm);
             OrderDetailModel model = new OrderDetailModel();
             model.Customer = customer;
-            model.Institution = await _institutionService.GetInstitutionForCustomer<InstitutionDetailModel>(customer.Id);
+            model.Institution = await _institutionService.GetInstitutionForCustomer<InstitutionItemModel>(customer.Id);
             model.Items = await _itemService.GetListForOrder<OrderItemDetailModel>(customer.Id, customer.ParentCustomerId);
-            model.Addresses = await _customerService.GetAddressListForOrder<OrderAddressDetailModel>(customer.Id, customer.ParentCustomerId);
+            List<OrderAddressDetailModel> addresses =  await _customerService.GetAddressListForOrder<OrderAddressDetailModel>(customer.Id, customer.ParentCustomerId);
+            model.BillingAddresses = addresses.Where(x => x.Type == AddressType.Billing || x.Type == AddressType.Default).ToList();
+            model.ShippingAddresses = addresses.Where(x => x.Type == AddressType.Shipping || x.Type == AddressType.Default).ToList();
             return model;
         }
 

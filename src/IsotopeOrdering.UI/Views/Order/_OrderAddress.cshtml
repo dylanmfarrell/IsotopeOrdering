@@ -1,5 +1,24 @@
-﻿@model OrderAddressDetailModel
-<li class="list-group-item list-group-item-action clickable" onclick="">
-    <input asp-for="Type" type="hidden" />
-    <partial name="_AddressView" for="Address" />
-</li>
+﻿@model AddressDetailModel
+<div class="form-row">
+    <div class="col-auto">
+        <input asp-for="Name" class="form-control-plaintext" readonly />
+    </div>
+    <div class="col-auto">
+        <input asp-for="City" class="form-control-plaintext" readonly />
+    </div>
+    <div class="col-auto">
+        <input asp-for="State" class="form-control-plaintext" readonly />
+    </div>
+    <div class="col-auto">
+        <input asp-for="ZipCode" class="form-control-plaintext" readonly />
+    </div>
+    <div class="col-auto">
+        <input asp-for="Address1" class="form-control-plaintext" readonly />
+    </div>
+    <div class="col-auto">
+        <input asp-for="Address2" class="form-control-plaintext" readonly />
+    </div>
+    <div class="col-auto">
+        <input asp-for="Address3" class="form-control-plaintext" readonly />
+    </div>
+</div>

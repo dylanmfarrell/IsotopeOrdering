@@ -7,8 +7,6 @@ using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.UI.Controllers {
@@ -16,13 +14,16 @@ namespace IsotopeOrdering.UI.Controllers {
     public class OrderController : BaseController {
         private readonly IOrderManager _orderManager;
         private readonly ICustomerManager _customerManager;
+        private readonly IItemManager _itemManager;
         private readonly IIsotopeOrderingAuthorizationService _authorizationService;
 
         public OrderController(IOrderManager orderManager,
             ICustomerManager customerManager,
+            IItemManager itemManager,
             IIsotopeOrderingAuthorizationService authorizationService) {
             _orderManager = orderManager;
             _customerManager = customerManager;
+            _itemManager = itemManager;
             _authorizationService = authorizationService;
         }
 
@@ -67,10 +68,16 @@ namespace IsotopeOrdering.UI.Controllers {
         public async Task<IActionResult> Create(OrderDetailModel model) {
             if (ModelState.IsValid) {
                 model.Status = OrderStatus.Sent;
+                await ApplyItemConfigurations(model);
                 ApplicationResult result = await _orderManager.Create(model);
                 return ApplicationResult(nameof(Index), result);
             }
-            return View(model);
+            OrderDetailModel form = await _orderManager.GetOrderForm(model.Customer);
+            form.Cart = model.Cart;
+            form.BillingAddress = model.BillingAddress;
+            form.ShippingAddress = model.ShippingAddress;
+            form.FedExNumber = model.FedExNumber;
+            return View(form);
         }
 
 
@@ -119,6 +126,13 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         public async Task<IActionResult> AddCartItem(OrderItemDetailModel model) => await Partial("_OrderCartItem", model);
+
+        private async Task ApplyItemConfigurations(OrderDetailModel order) {
+            foreach (OrderItemDetailModel item in order.Cart) {
+                int configurationId = await _itemManager.GetItemConfigurationId(item.Item.Id, order.Customer.Id, order.Customer.ParentCustomerId, item.Quantity);
+                item.ItemConfigurationId = configurationId;
+            }
+        }
     }
 
 

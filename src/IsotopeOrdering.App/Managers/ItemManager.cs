@@ -8,6 +8,7 @@ using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Managers {
@@ -54,6 +55,35 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<List<ItemItemModel>> GetList() {
             return await _service.GetList<ItemItemModel>();
+        }
+
+        public async Task<int> GetItemConfigurationId(int itemId, int customerId, int? parentCustomerId, decimal quantity) {
+            List<ItemConfiguration> itemConfigurations = await _service.GetItemConfigurations(itemId, parentCustomerId.GetValueOrDefault(customerId));
+
+            //Evaluate most restrictive
+            foreach (ItemConfiguration configuration in itemConfigurations.Where(x => x.MaximumAmount.HasValue && x.MinimumAmount.HasValue)) {
+                if (quantity >= configuration.MinimumAmount!.Value && quantity <= configuration.MaximumAmount) {
+                    return configuration.Id;
+                }
+            }
+
+            //Evaluate less restrictive
+            //No minimum but has maximum
+            foreach (ItemConfiguration configuration in itemConfigurations.Where(x => x.MaximumAmount.HasValue && !x.MinimumAmount.HasValue)) {
+                if (quantity <= configuration.MaximumAmount!.Value) {
+                    return configuration.Id;
+                }
+            }
+
+            //No maximum but has minimum
+            foreach (ItemConfiguration configuration in itemConfigurations.Where(x => !x.MaximumAmount.HasValue && x.MinimumAmount.HasValue)) {
+                if (quantity >= configuration.MinimumAmount!.Value) {
+                    return configuration.Id;
+                }
+            }
+
+            //Return default, none restrictive
+            return itemConfigurations.First(x => x.ItemId == itemId && x.CustomerId == null).Id;
         }
     }
 }

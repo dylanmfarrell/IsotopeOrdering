@@ -60,20 +60,26 @@
                                 <partial name="_OrderCart" for="Cart" />
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-body" id="shipping-information">
-                                <h5 class="card-title">Shipping Information</h5>
-                                <partial name="_OrderAddress" for="ShippingAddress" />
-                                <div class="form-group">
-                                    <label>FedEx Number</label>
-                                    <input type="text" class="form-control-plaintext form-control-sm" asp-for="FedExNumber" />
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-body" id="shipping-information">
+                                        <h5 class="card-title">Shipping Information</h5>
+                                        <partial name="_OrderAddress" for="ShippingAddress" />
+                                        <div class="form-group">
+                                            <label>FedEx Number</label>
+                                            <input type="text" class="form-control-plaintext form-control-sm" asp-for="FedExNumber" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body" id="billing-information">
-                                <h5 class="card-title">Billing Information</h5>
-                                <partial name="_OrderAddress" for="BillingAddress" />
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-body" id="billing-information">
+                                        <h5 class="card-title">Billing Information</h5>
+                                        <partial name="_OrderAddress" for="BillingAddress" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn btn-success col-12 mt-5">Submit Order</button>

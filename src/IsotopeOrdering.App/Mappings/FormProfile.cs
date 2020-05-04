@@ -2,7 +2,6 @@
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.Domain.Entities;
-using System.Text.Json;
 
 namespace IsotopeOrdering.App.Mappings {
     public class FormProfile : Profile {
@@ -40,15 +39,6 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Form.Name))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.Type, opt => opt.MapFrom(x => x.Form.Type));
-        }
-    }
-
-    public class FormInitiationDetailModelToStringFormatter : IValueConverter<FormInitiationDetailModel?, string> {
-        public string Convert(FormInitiationDetailModel? sourceMember, ResolutionContext context) {
-            if (sourceMember == null) {
-                return string.Empty;
-            }
-            return JsonSerializer.Serialize(sourceMember);
         }
     }
 

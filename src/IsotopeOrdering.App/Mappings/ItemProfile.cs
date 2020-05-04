@@ -8,9 +8,12 @@ namespace IsotopeOrdering.App.Mappings {
     public class ItemProfile : Profile {
         public ItemProfile() {
             CreateMap<Item, ItemDetailModel>();
+
             CreateMap<Item, ItemItemModel>();
+
             CreateMap<ItemConfiguration, ItemConfigurationDetailModel>()
                 .ForMember(x => x.ItemName, opt => opt.MapFrom(x => x.Item.Name));
+
             CreateMap<ItemConfigurationDetailModel, ItemConfiguration>()
                 .ForMember(x => x.Item, opt => opt.Ignore());
 
@@ -21,9 +24,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.UpdatedBy, opt => opt.Ignore())
                 .ForMember(x => x.UpdatedDate, opt => opt.Ignore())
                 .ForMember(x => x.IsDeleted, opt => opt.Ignore());
-
-
-
+            
             CreateMap<Item, FormInitiationItemModel>()
                 .ForMember(x => x.Item, opt => opt.MapFrom(x => x))
                 .ForMember(x => x.IsSelected, opt => opt.Ignore());

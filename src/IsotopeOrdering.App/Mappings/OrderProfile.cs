@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using IsotopeOrdering.App.Models.Details;
-using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Entities;
-using System.Linq;
 
 namespace IsotopeOrdering.App.Mappings {
     public class OrderProfile : Profile {
@@ -15,7 +13,7 @@ namespace IsotopeOrdering.App.Mappings {
 
             CreateMap<OrderItemDetailModel, OrderItem>()
                 .ForMember(x => x.ItemConfiguration, opt => opt.Ignore())
-                .ForMember(x => x.ItemConfigurationId, opt => opt.MapFrom<OrderItemConfigurationResolver>())
+                .ForMember(x => x.ItemConfigurationId, opt => opt.MapFrom(x=>x.ItemConfigurationId))
                 .ForMember(x => x.OrderId, opt => opt.Ignore())
                 .ForMember(x => x.Order, opt => opt.Ignore())
                 .ForMember(x => x.Quantity, opt => opt.MapFrom(x => x.Quantity))
@@ -32,17 +30,6 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.FedExNumber, opt => opt.MapFrom(x => x.FedExNumber))
                 .ForMember(x => x.Notes, opt => opt.MapFrom(x => x.Notes));
-        }
-
-        public class OrderItemConfigurationResolver : IValueResolver<OrderItemDetailModel, OrderItem, int> {
-            public int Resolve(OrderItemDetailModel source, OrderItem destination, int destMember, ResolutionContext context) {
-                ItemConfigurationDetailModel model = source.ItemConfigurations.FirstOrDefault(
-                    x => x.ItemId == source.Item.Id &&
-                    x.MinimumAmount.GetValueOrDefault(0) >= source.Quantity &&
-                    x.MaximumAmount.GetValueOrDefault(int.MaxValue) <= source.Quantity
-                    );
-                return model != null ? model.Id : 0;
-            }
         }
     }
 }

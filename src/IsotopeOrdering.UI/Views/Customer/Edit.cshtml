@@ -3,7 +3,7 @@
 @{
     ViewData[ViewDataKeys.Title] = "Edit Customer";
 }
-<form asp-action="@nameof(CustomerController.Edit)" asp-controller="Customer" method="get">
+<form asp-action="@nameof(CustomerController.Edit)" asp-controller="Customer" method="post">
     <partial name="_CustomerForm" for="@Model" />
 </form>
 @section Scripts{

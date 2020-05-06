@@ -2,6 +2,7 @@
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.Domain.Entities;
+using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
 
 namespace IsotopeOrdering.App.Mappings {
@@ -29,6 +30,9 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForPath(x => x.Contact.FirstName, opt => opt.MapFrom(src => src.FirstName))
                 .ForPath(x => x.Contact.LastName, opt => opt.MapFrom(src => src.LastName))
                 .ForAllOtherMembers(x => x.Ignore());
+            CreateMap<CustomerInstitution, CustomerAddressDetailModel>()
+                .ForMember(x=>x.Type,opt => opt.MapFrom(x=> AddressType.Default))
+                .ForMember(x => x.Address, opt => opt.MapFrom(x => x.Institution.Address));
         }
     }
 }

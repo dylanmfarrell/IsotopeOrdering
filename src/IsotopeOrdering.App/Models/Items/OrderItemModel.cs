@@ -1,10 +1,9 @@
 ﻿using IsotopeOrdering.Domain.Enums;
+using MIR.Core.Domain;
 
 namespace IsotopeOrdering.App.Models.Items {
-    public class OrderItemModel {
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public string Description { get; set; } = null!;
+    public class OrderItemModel:ModelBase {
+        public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
         public OrderStatus Status { get; set; }
     }
 }

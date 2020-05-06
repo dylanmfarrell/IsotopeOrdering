@@ -1,7 +1,45 @@
-﻿
+﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
+@model OrderDetailModel
 @{
-    ViewData[ViewDataKeys.Title] = "Detail";
+    ViewData[ViewDataKeys.Title] = "Order Details";
 }
-
-<h1>Detail</h1>
-
+@if (await AuthorizationService.AuthorizeAsync(Policies.ReviewerPolicy)) {
+    <div class="card">
+        <div class="card-body">
+            <partial name="_CustomerItemView" for="Customer" />
+        </div>
+    </div>
+}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Order Details</h5>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Selected Materials</h5>
+                <partial name="_OrderCart" for="Cart" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }"/>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body" id="shipping-information">
+                        <h5 class="card-title">Shipping Information</h5>
+                        <partial name="_OrderAddress" for="ShippingAddress" />
+                        <div class="form-group">
+                            <label>FedEx Number</label>
+                            <input type="text" class="form-control-plaintext form-control-sm" asp-for="FedExNumber" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body" id="billing-information">
+                        <h5 class="card-title">Billing Information</h5>
+                        <partial name="_OrderAddress" for="BillingAddress" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

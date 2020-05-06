@@ -4,6 +4,7 @@ using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
+using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
@@ -22,6 +23,7 @@ namespace IsotopeOrdering.App.Managers {
         private readonly ICustomerService _customerService;
         private readonly IInstitutionService _institutionService;
         private readonly IEventManager _eventService;
+        private readonly IIsotopeOrderingAuthorizationService _authorizationService;
 
         public OrderManager(ILogger<OrderManager> logger,
             IMapper mapper,
@@ -29,7 +31,8 @@ namespace IsotopeOrdering.App.Managers {
             IItemService itemService,
             ICustomerService customerService,
             IInstitutionService institutionService,
-            IEventManager eventService) {
+            IEventManager eventService,
+            IIsotopeOrderingAuthorizationService authorizationService) {
             _logger = logger;
             _mapper = mapper;
             _service = service;
@@ -37,9 +40,17 @@ namespace IsotopeOrdering.App.Managers {
             _customerService = customerService;
             _institutionService = institutionService;
             _eventService = eventService;
+            _authorizationService = authorizationService;
         }
 
         public async Task<OrderDetailModel> GetOrderForm(CustomerItemModel customer) {
+            OrderDetailModel model = new OrderDetailModel();
+            model.Customer = customer;
+            return await GetOrderForm(model);
+        }
+
+        public async Task<OrderDetailModel> GetOrderForm(OrderDetailModel order) {
+            CustomerItemModel customer = order.Customer;
             await _eventService.CreateEvent(EntityEventType.Customer, customer.Id, Events.Customer.ObtainedOrderForm);
             OrderDetailModel model = new OrderDetailModel();
             model.Customer = customer;
@@ -48,6 +59,10 @@ namespace IsotopeOrdering.App.Managers {
             List<OrderAddressDetailModel> addresses = await _customerService.GetAddressListForOrder<OrderAddressDetailModel>(customer.Id, customer.ParentCustomerId);
             model.BillingAddresses = addresses.Where(x => x.Type == AddressType.Billing || x.Type == AddressType.Default).ToList();
             model.ShippingAddresses = addresses.Where(x => x.Type == AddressType.Shipping || x.Type == AddressType.Default).ToList();
+            model.Cart = order.Cart;
+            model.BillingAddress = order.BillingAddress;
+            model.ShippingAddress = order.ShippingAddress;
+            model.FedExNumber = order.FedExNumber;
             return model;
         }
 
@@ -63,19 +78,36 @@ namespace IsotopeOrdering.App.Managers {
             return ApplicationResult.Error(result);
         }
 
-        public async Task<OrderItemModel> GetList() {
-            return await Task.FromResult(new OrderItemModel());
+        public async Task<List<OrderItemModel>> GetListForCurrentCustomer() {
+            CustomerItemModel? customer = await _customerService.GetCurrentCustomer<CustomerItemModel>();
+            //customer not found, return empty list
+            if (customer == null) {
+                return new List<OrderItemModel>();
+            }
+            return await _service.GetListForCustomer<OrderItemModel>(customer.Id, customer.ParentCustomerId);
         }
 
-        public Task<OrderDetailModel?> Get(int id) {
-            throw new NotImplementedException();
+        public async Task<List<OrderItemModel>> GetCenterList() {
+            return await _service.GetList<OrderItemModel>();
+        }
+
+        public async Task<OrderDetailModel?> Get(int id) {
+            bool isReviewer = await _authorizationService.AuthorizeAsync(Policies.ReviewerPolicy);
+            if (isReviewer) {
+                return await _service.Get<OrderDetailModel>(id);
+            }
+            CustomerItemModel? customer = await _customerService.GetCurrentCustomer<CustomerItemModel>();
+            if (customer == null) {
+                return null;
+            }
+            return await _service.Get<OrderDetailModel>(id, customer.Id, customer.ParentCustomerId);
+        }
+     
+        public async Task<OrderItemModel?> GetItem(int id) {
+            return await _service.Get<OrderItemModel>(id);
         }
 
         public Task<ApplicationResult> Edit(OrderDetailModel model) {
-            throw new NotImplementedException();
-        }
-
-        public Task<OrderItemModel> GetCenterList() {
             throw new NotImplementedException();
         }
 
@@ -86,5 +118,6 @@ namespace IsotopeOrdering.App.Managers {
         public Task<ApplicationResult> SubmitReview(OrderReviewDetailModel review) {
             throw new NotImplementedException();
         }
+
     }
 }

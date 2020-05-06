@@ -19,11 +19,21 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "CustomerId", "IsDeleted", "ItemId", "MaximumAmount", "MinimumAmount", "Price", "UpdatedBy", "UpdatedDate" },
                 values: new object[,]
                 {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 1, "SYSTEM", new DateTime(2020, 5, 4, 14, 28, 46, 912, DateTimeKind.Local).AddTicks(104), null, false, 1, 100m, 0m, 1000m, "SYSTEM", new DateTime(2020, 5, 4, 14, 28, 46, 912, DateTimeKind.Local).AddTicks(104) },
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 2, "SYSTEM", new DateTime(2020, 5, 4, 14, 28, 46, 912, DateTimeKind.Local).AddTicks(104), null, false, 2, 100m, 0m, 1000m, "SYSTEM", new DateTime(2020, 5, 4, 14, 28, 46, 912, DateTimeKind.Local).AddTicks(104) },
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 3, "SYSTEM", new DateTime(2020, 5, 4, 14, 28, 46, 912, DateTimeKind.Local).AddTicks(104), null, false, 3, 100m, 0m, 1000m, "SYSTEM", new DateTime(2020, 5, 4, 14, 28, 46, 912, DateTimeKind.Local).AddTicks(104) },
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 4, "SYSTEM", new DateTime(2020, 5, 4, 14, 28, 46, 912, DateTimeKind.Local).AddTicks(104), null, false, 4, 100m, 0m, 1000m, "SYSTEM", new DateTime(2020, 5, 4, 14, 28, 46, 912, DateTimeKind.Local).AddTicks(104) },
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 5, "SYSTEM", new DateTime(2020, 5, 4, 14, 28, 46, 912, DateTimeKind.Local).AddTicks(104), null, false, 5, 100m, 0m, 1000m, "SYSTEM", new DateTime(2020, 5, 4, 14, 28, 46, 912, DateTimeKind.Local).AddTicks(104) }
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
                 });
 
             migrationBuilder.UpdateData(

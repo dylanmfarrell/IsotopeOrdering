@@ -4,10 +4,12 @@ using IsotopeOrdering.App.Managers;
 using IsotopeOrdering.App.Mappings;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
+using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -29,11 +31,12 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var mockOrderService = new Mock<IOrderService>();
 
             var mockCustomerService = new Mock<ICustomerService>();
+            mockCustomerService.Setup(x => x.GetAddressListForOrder<OrderAddressDetailModel>(It.IsAny<int>(), It.IsAny<int?>())).ReturnsAsync(new List<OrderAddressDetailModel>());
 
             var mockInstitutionService = new Mock<IInstitutionService>();
 
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
-            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, mockInstitutionService.Object, _eventService);
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, mockInstitutionService.Object, _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
 
             OrderDetailModel result = await manager.GetOrderForm(model);
         }

@@ -1,10 +1,53 @@
-﻿using IsotopeOrdering.Domain.Entities;
+﻿using AutoMapper;
+using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using MIR.Core.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace IsotopeOrdering.Infrastructure.DataServices {
     public class OrderService : ServiceBase<IsotopeOrderingDbContext, Order>, IOrderService {
-        public OrderService(IsotopeOrderingDbContext context) : base(context) {
+        private readonly IMapper _mapper;
+
+        public OrderService(IMapper mapper, IsotopeOrderingDbContext context) : base(context) {
+            _mapper = mapper;
+        }
+
+        public async Task<T?> Get<T>(int id) where T : class {
+            return await _mapper.ProjectTo<T>(
+                _context.Orders
+                .Include(x => x.Customer)
+                .Include(x => x.Items)
+                .ThenInclude(x => x.ItemConfiguration)
+                .Where(x => x.Id == id)
+                ).SingleOrDefaultAsync();
+        }
+
+        public async Task<T?> Get<T>(int id, int customerId, int? parentId) where T : class {
+            return await _mapper.ProjectTo<T>(
+                _context.Orders
+                .Include(x => x.Customer)
+                .Include(x => x.Items)
+                .ThenInclude(x => x.ItemConfiguration)
+                .Where(x => x.Id == id && x.CustomerId == parentId.GetValueOrDefault(customerId))
+                ).SingleOrDefaultAsync();
+        }
+
+        public async Task<List<T>> GetList<T>() {
+            return await _mapper.ProjectTo<T>(
+                _context.Orders
+                .Include(x => x.Customer)
+                ).ToListAsync();
+        }
+
+        public async Task<List<T>> GetListForCustomer<T>(int customerId, int? parentId) {
+            return await _mapper.ProjectTo<T>(
+                _context.Orders
+                .Include(x => x.Customer)
+                .Where(x => x.CustomerId == customerId || x.CustomerId == parentId.GetValueOrDefault(0)))
+                .ToListAsync();
         }
     }
 }

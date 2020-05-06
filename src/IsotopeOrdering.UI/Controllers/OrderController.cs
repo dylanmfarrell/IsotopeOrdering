@@ -28,11 +28,6 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index() {
-            return View(await _orderManager.GetList());
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Detail(int id) {
             OrderDetailModel? model = await _orderManager.Get(id);
             if (model == null) {
@@ -70,25 +65,35 @@ namespace IsotopeOrdering.UI.Controllers {
                 model.Status = OrderStatus.Sent;
                 await ApplyItemConfigurations(model);
                 ApplicationResult result = await _orderManager.Create(model);
-                return ApplicationResult(nameof(Index), result);
+                SetApplicationResult(result);
+                return RedirectToAction(nameof(Confirmation), "Order", new { orderId = (int)result.Data! });
             }
-            OrderDetailModel form = await _orderManager.GetOrderForm(model.Customer);
-            form.Cart = model.Cart;
-            form.BillingAddress = model.BillingAddress;
-            form.ShippingAddress = model.ShippingAddress;
-            form.FedExNumber = model.FedExNumber;
+            OrderDetailModel form = await _orderManager.GetOrderForm(model);
             return View(form);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateDraft(OrderDetailModel model) {
             if (ModelState.IsValid) {
                 model.Status = OrderStatus.Draft;
                 ApplicationResult result = await _orderManager.Create(model);
-                return ApplicationResult(nameof(Index), result);
+                return ApplicationResult(nameof(MyOrders), result);
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Confirmation(int orderId) {
+            OrderItemModel? order = await _orderManager.GetItem(orderId);
+            if(order == null) {
+                return NotFound();
+            }
+            return View(order);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyOrders() {
+            return View(await _orderManager.GetListForCurrentCustomer());
         }
 
         [HttpGet]
@@ -103,8 +108,10 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpPost]
         public async Task<IActionResult> Edit(OrderDetailModel model) {
             if (ModelState.IsValid) {
+                await ApplyItemConfigurations(model);
                 ApplicationResult result = await _orderManager.Edit(model);
-                return ApplicationResult(nameof(Index), result);
+                SetApplicationResult(result);
+                return RedirectToAction(nameof(Confirmation), "Order", new { orderId = (int)result.Data! });
             }
             return View(model);
         }
@@ -134,6 +141,4 @@ namespace IsotopeOrdering.UI.Controllers {
             }
         }
     }
-
-
 }

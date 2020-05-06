@@ -100,7 +100,8 @@ namespace IsotopeOrdering.Infrastructure {
                     CreatedBy = _systemUser,
                     UpdatedBy = _systemUser,
                     CreatedDate = _now,
-                    UpdatedDate = _now
+                    UpdatedDate = _now,
+                    IsDeleted = false
                 };
             }
 

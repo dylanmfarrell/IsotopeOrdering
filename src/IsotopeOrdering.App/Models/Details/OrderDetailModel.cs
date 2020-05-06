@@ -23,6 +23,7 @@ namespace IsotopeOrdering.App.Models.Details {
     public class OrderItemDetailModel : ModelBase {
         public ItemDetailModel Item { get; set; } = new ItemDetailModel();
         public List<ItemConfigurationDetailModel> ItemConfigurations { get; set; } = new List<ItemConfigurationDetailModel>();
+        public ItemConfigurationDetailModel ItemConfiguration { get; set; } = new ItemConfigurationDetailModel();
         public int ItemConfigurationId { get; set; }
         public decimal Quantity { get; set; }
         public string? SpecialInstructions { get; set; } = string.Empty;

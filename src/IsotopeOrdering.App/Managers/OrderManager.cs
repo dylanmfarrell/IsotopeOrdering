@@ -102,7 +102,7 @@ namespace IsotopeOrdering.App.Managers {
             }
             return await _service.Get<OrderDetailModel>(id, customer.Id, customer.ParentCustomerId);
         }
-     
+
         public async Task<OrderItemModel?> GetItem(int id) {
             return await _service.Get<OrderItemModel>(id);
         }
@@ -111,8 +111,14 @@ namespace IsotopeOrdering.App.Managers {
             throw new NotImplementedException();
         }
 
-        public Task<OrderDetailModel?> GetOrderForReview(int id) {
-            throw new NotImplementedException();
+        public async Task<OrderReviewDetailModel?> GetOrderForReview(int id) {
+            OrderDetailModel? order = await _service.Get<OrderDetailModel>(id);
+            if (order == null) {
+                return null;
+            }
+            return new OrderReviewDetailModel() {
+                Order = order
+            };
         }
 
         public Task<ApplicationResult> SubmitReview(OrderReviewDetailModel review) {

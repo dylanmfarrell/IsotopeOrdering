@@ -29,7 +29,7 @@ namespace IsotopeOrdering.App.Interfaces {
         Task<List<OrderItemModel>> GetCenterList();
         Task<OrderDetailModel?> Get(int id);
         Task<OrderItemModel?> GetItem(int id);
-        Task<OrderDetailModel?> GetOrderForReview(int id);
+        Task<OrderReviewDetailModel?> GetOrderForReview(int id);
         Task<ApplicationResult> SubmitReview(OrderReviewDetailModel review);
         Task<ApplicationResult> Edit(OrderDetailModel model);
 

@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="col-10">
-        <div class="card">
+        <div class="card shadow-sm border-0 mb-5">
             <div class="card-body">
                 <partial name="_CustomerItemView" for="Customer" />
             </div>
@@ -24,6 +24,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Select Materials</h5>
                         <partial name="_OrderItemList" for="Items" />
+                        <button class="btn btn-info col-12 mt-5" type="button" onclick="$('#shipping-tab').click();">Go to Shipping Information <i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -33,10 +34,11 @@
                         <h5 class="card-title">Shipping Information</h5>
                         <i>Select an existing address to ship to or enter a new address</i>
                         <partial name="_OrderAddressSelect" for="ShippingAddresses" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.AddressType, AddressType.Shipping} }" />
-                        <div class="form-group">
+                        <div class="form-group mt-3 shadow p-3">
                             <label>FedEx Number</label>
                             <input type="text" class="form-control form-control-sm" onblur="onFedexNumberChanged(this);" />
                         </div>
+                        <button class="btn btn-info col-12 mt-5" type="button" onclick="$('#billing-tab').click();">Go to Billing Information <i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -46,6 +48,7 @@
                         <h5 class="card-title">Billing Information</h5>
                         <i>Select an existing address to bill to or enter a new address</i>
                         <partial name="_OrderAddressSelect" for="BillingAddresses" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.AddressType, AddressType.Billing} }" />
+                        <button class="btn btn-info col-12 mt-5" type="button" onclick="$('#review-tab').click();">Review Your Order <i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -53,32 +56,36 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Review Order</h5>
-                        <div class="card">
+                        <div class="card  shadow border-0 m-3">
                             <div class="card-body">
                                 <h5 class="card-title">Selected Materials</h5>
                                 <partial name="_OrderCart" for="Cart" />
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-6">
-                                <div class="card">
+                            <div class="col-12">
+                                <div class="card shadow border-0 m-3">
                                     <div class="card-body" id="shipping-information">
                                         <h5 class="card-title">Shipping Information</h5>
                                         <partial name="_OrderAddress" for="ShippingAddress" />
                                         <div class="form-group">
                                             <label>FedEx Number</label>
-                                            <input type="text" class="form-control-plaintext form-control-sm" asp-for="FedExNumber" />
+                                            <input type="text" class="form-control-plaintext form-control-sm" asp-for="FedExNumber" readonly />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="card">
+                            <div class="col-12">
+                                <div class="card shadow border-0 m-3">
                                     <div class="card-body" id="billing-information">
                                         <h5 class="card-title">Billing Information</h5>
                                         <partial name="_OrderAddress" for="BillingAddress" />
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-group mt-3 shadow p-3">
+                                <label>Order Notes</label>
+                                <textarea asp-for="Notes" class="form-control form-control-sm" rows="5" />
                             </div>
                         </div>
                         <button type="submit" class="btn btn btn-success col-12 mt-5">Submit Order</button>

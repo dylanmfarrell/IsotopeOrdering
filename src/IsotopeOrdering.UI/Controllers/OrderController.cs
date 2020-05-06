@@ -125,7 +125,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpGet]
         [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Review(int id) {
-            OrderDetailModel? model = await _orderManager.GetOrderForReview(id);
+            OrderReviewDetailModel? model = await _orderManager.GetOrderForReview(id);
             if (model == null) {
                 return NotFound();
             }

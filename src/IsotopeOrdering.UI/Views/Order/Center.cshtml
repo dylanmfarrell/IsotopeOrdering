@@ -1,5 +1,5 @@
 ﻿@model List<OrderItemModel>
 @{
-    ViewData[ViewDataKeys.Title] = "Center";
+    ViewData[ViewDataKeys.Title] = "Order Center";
 }
-<partial name="_OrderList" model="Model" />
+<partial name="_OrderList" model="Model" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Action,nameof(OrderController.Review)} }"/>

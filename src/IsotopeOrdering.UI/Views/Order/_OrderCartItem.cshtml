@@ -1,5 +1,5 @@
 ﻿@model OrderItemDetailModel
-<li class="list-group-item">
+<li class="list-group-item shadow-sm border-0 mt-3">
     @using (Html.BeginCollectionItem("Cart")) {
         <partial name="_AuditInformation" for="@Model" />
         <partial name="_ItemInformation" for="Item" />

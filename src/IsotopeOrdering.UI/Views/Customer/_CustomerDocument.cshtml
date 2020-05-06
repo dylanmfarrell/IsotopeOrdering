@@ -1,5 +1,5 @@
 ﻿@model CustomerDocumentDetailModel
-<li class="list-group-item">
+<li class="list-group-item shadow border-0 m-3">
     @using (Html.BeginCollectionItem("Documents")) {
         <button type="button" class="btn btn-sm btn-danger collection-remove float-right" onclick="removeCollectionItem(this);" data-for=".list-group-item"><i class="fas fa-trash-alt"></i></button>
         <partial name="_AuditInformation" for="@Model" />

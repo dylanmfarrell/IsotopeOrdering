@@ -10,9 +10,9 @@ namespace IsotopeOrdering.UI.Utilities {
         }
 
         public static IEnumerable<SelectListItem> GetCustomerStatuses() {
-            yield return new SelectListItem(CustomerStatus.New.ToString(), ((int)CustomerStatus.New).ToString());
-            yield return new SelectListItem(CustomerStatus.Initiated.ToString(), ((int)CustomerStatus.Initiated).ToString());
-            yield return new SelectListItem(CustomerStatus.Locked.ToString(), ((int)CustomerStatus.Locked).ToString());
+            yield return new SelectListItem($"{CustomerStatus.New} - Customer cannot place orders but can submit a MTA and update their profile", ((int)CustomerStatus.New).ToString());
+            yield return new SelectListItem($"{CustomerStatus.Initiated} - Customer can place orders and update their profile", ((int)CustomerStatus.Initiated).ToString());
+            yield return new SelectListItem($"{CustomerStatus.Locked} - Customer cannot place orders or update their profile", ((int)CustomerStatus.Locked).ToString());
         }
     }
 }

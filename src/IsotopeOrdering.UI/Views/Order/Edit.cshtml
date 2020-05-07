@@ -1,7 +1,10 @@
-﻿
+﻿@model OrderDetailModel
 @{
-    ViewData[ViewDataKeys.Title] = "Edit";
+    ViewData[ViewDataKeys.Title] = "Edit Order";
 }
-
-<h1>Edit</h1>
-
+<form asp-action="@nameof(OrderController.Edit)" asp-controller="Order" method="post">
+    <partial name="_OrderForm" for="@Model" />
+</form>
+@section Scripts{
+    <script src="~/js/order.js" type="text/javascript"></script>
+}

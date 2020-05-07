@@ -20,6 +20,12 @@ namespace IsotopeOrdering.App.Interfaces {
         /// <returns></returns>
         Task<OrderDetailModel> GetOrderForm(OrderDetailModel order);
         /// <summary>
+        /// Gets the order form for an existing order. Returns null if the order is not found or the user does not have access to edit the order.
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        Task<OrderDetailModel?> GetOrderForm(int orderId);
+        /// <summary>
         /// Validates the order form. If valid, the order will be saved and reviewers will be notified. 
         /// </summary>
         /// <param name="model"></param>

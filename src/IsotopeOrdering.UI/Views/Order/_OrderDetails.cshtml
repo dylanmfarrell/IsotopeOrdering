@@ -2,7 +2,12 @@
 @model OrderDetailModel
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Order Details <span class="badge badge-primary">@Model.Status</span></h5>
+        <h5 class="card-title shadow p-4 mr-3 ml-3">
+            Order Details <span class="badge badge-primary">@Model.Status</span>
+            @if (Model.CanEdit) {
+                <a type="button" class="btn btn-info btn-sm float-right" asp-action="@nameof(OrderController.Edit)" asp-controller="Order" asp-route-id="@Model.Id">Edit Order</a>
+            }
+        </h5>
         <div class="card shadow border-0 m-3">
             <div class="card-body">
                 @if (await AuthorizationService.AuthorizeAsync(Policies.ReviewerPolicy)) {

@@ -57,6 +57,13 @@ namespace IsotopeOrdering.App.Managers {
             return await _service.GetList<ItemItemModel>();
         }
 
+        public async Task ApplyItemConfigurations(OrderDetailModel order) {
+            foreach (OrderItemDetailModel item in order.Cart) {
+                int configurationId = await GetItemConfigurationId(item.Item.Id, order.Customer.Id, order.Customer.ParentCustomerId, item.Quantity);
+                item.ItemConfigurationId = configurationId;
+            }
+        }
+
         public async Task<int> GetItemConfigurationId(int itemId, int customerId, int? parentCustomerId, decimal quantity) {
             List<ItemConfiguration> itemConfigurations = await _service.GetItemConfigurations(itemId, parentCustomerId.GetValueOrDefault(customerId));
 

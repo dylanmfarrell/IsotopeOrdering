@@ -3,6 +3,10 @@
     hookupTabs();
 });
 
+function moveTab(target) {
+    $(target).tab('show');
+}
+
 function hookupAutocomplete() {
     $('#customer-autocomplete').renderAutoComplete({
         onSelect: onSelectCustomer

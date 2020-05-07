@@ -28,15 +28,6 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(int id) {
-            OrderDetailModel? model = await _orderManager.Get(id);
-            if (model == null) {
-                return NotFound();
-            }
-            return View(model);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Create() {
             if (await _authorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
                 return View(null);
@@ -62,24 +53,14 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpPost]
         public async Task<IActionResult> Create(OrderDetailModel model) {
             if (ModelState.IsValid) {
-                model.Status = OrderStatus.Sent;
-                await ApplyItemConfigurations(model);
+                model.Status = model.SubmitAction;
+                await _itemManager.ApplyItemConfigurations(model);
                 ApplicationResult result = await _orderManager.Create(model);
                 SetApplicationResult(result);
                 return RedirectToAction(nameof(Confirmation), "Order", new { orderId = (int)result.Data! });
             }
             OrderDetailModel form = await _orderManager.GetOrderForm(model);
             return View(form);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateDraft(OrderDetailModel model) {
-            if (ModelState.IsValid) {
-                model.Status = OrderStatus.Draft;
-                ApplicationResult result = await _orderManager.Create(model);
-                return ApplicationResult(nameof(MyOrders), result);
-            }
-            return View(model);
         }
 
         [HttpGet]
@@ -91,14 +72,10 @@ namespace IsotopeOrdering.UI.Controllers {
             return View(order);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> MyOrders() {
-            return View(await _orderManager.GetListForCurrentCustomer());
-        }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id) {
-            OrderDetailModel? model = await _orderManager.Get(id);
+            OrderDetailModel? model = await _orderManager.GetOrderForm(id);
             if (model == null) {
                 return NotFound();
             }
@@ -108,12 +85,28 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpPost]
         public async Task<IActionResult> Edit(OrderDetailModel model) {
             if (ModelState.IsValid) {
-                await ApplyItemConfigurations(model);
+                model.Status = model.SubmitAction;
+                await _itemManager.ApplyItemConfigurations(model);
                 ApplicationResult result = await _orderManager.Edit(model);
                 SetApplicationResult(result);
                 return RedirectToAction(nameof(Confirmation), "Order", new { orderId = (int)result.Data! });
             }
+            OrderDetailModel form = await _orderManager.GetOrderForm(model);
+            return View(form);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id) {
+            OrderDetailModel? model = await _orderManager.Get(id);
+            if (model == null) {
+                return NotFound();
+            }
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyOrders() {
+            return View(await _orderManager.GetListForCurrentCustomer());
         }
 
         [HttpGet]
@@ -133,12 +126,5 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         public async Task<IActionResult> AddCartItem(OrderItemDetailModel model) => await Partial("_OrderCartItem", model);
-
-        private async Task ApplyItemConfigurations(OrderDetailModel order) {
-            foreach (OrderItemDetailModel item in order.Cart) {
-                int configurationId = await _itemManager.GetItemConfigurationId(item.Item.Id, order.Customer.Id, order.Customer.ParentCustomerId, item.Quantity);
-                item.ItemConfigurationId = configurationId;
-            }
-        }
     }
 }

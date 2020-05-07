@@ -1,4 +1,7 @@
 ﻿@model OrderItemDetailModel
+@{
+    bool canDelete = ViewData[ViewDataKeys.Readonly] == null || (bool)ViewData[ViewDataKeys.Readonly] == false;
+}
 <li class="list-group-item shadow-sm border-0 mt-3">
     @using (Html.BeginCollectionItem("Cart")) {
         <partial name="_AuditInformation" for="@Model" />
@@ -15,7 +18,7 @@
                 <span asp-validation-for="SpecialInstructions" class="text-danger"></span>
             </div>
         </div>
-        @if(ViewData[ViewDataKeys.Readonly] == null || (bool)ViewData[ViewDataKeys.Readonly] == false) {
+        @if (canDelete) {
             <button type="button" class="btn btn-sm btn-danger collection-remove" onclick="removeCollectionItem(this);" data-for=".list-group-item"><i class="fas fa-trash-alt"></i></button>
         }
     }

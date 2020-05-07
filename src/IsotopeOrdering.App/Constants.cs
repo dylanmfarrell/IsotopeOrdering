@@ -13,7 +13,9 @@
         }
 
         public static class Order {
-            public const string Created = "Order created with id {id}";
+            public const string Created = "Order created";
+            public const string Edited = "Order edited";
+            public const string Sent = "Order Sent";
         }
 
         public static class Shipping {
@@ -51,5 +53,6 @@
         public const string Customers = "Customers";
         public const string AddressType = "AddressType";
         public const string Action = "Action";
+        public const string CurrentAddress = "CurrentAddress";
     }
 }

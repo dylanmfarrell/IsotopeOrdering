@@ -52,27 +52,31 @@ namespace IsotopeOrdering.App.Managers {
         public async Task<OrderDetailModel> GetOrderForm(OrderDetailModel order) {
             CustomerItemModel customer = order.Customer;
             await _eventService.CreateEvent(EntityEventType.Customer, customer.Id, Events.Customer.ObtainedOrderForm);
-            OrderDetailModel model = new OrderDetailModel();
-            model.Customer = customer;
-            model.Institution = await _institutionService.GetInstitutionForCustomer<InstitutionItemModel>(customer.Id);
-            model.Items = await _itemService.GetListForOrder<OrderItemDetailModel>(customer.Id, customer.ParentCustomerId);
+            order.Items = await _itemService.GetListForOrder<OrderItemDetailModel>(customer.Id, customer.ParentCustomerId);
             List<OrderAddressDetailModel> addresses = await _customerService.GetAddressListForOrder<OrderAddressDetailModel>(customer.Id, customer.ParentCustomerId);
-            model.BillingAddresses = addresses.Where(x => x.Type == AddressType.Billing || x.Type == AddressType.Default).ToList();
-            model.ShippingAddresses = addresses.Where(x => x.Type == AddressType.Shipping || x.Type == AddressType.Default).ToList();
-            model.Cart = order.Cart;
-            model.BillingAddress = order.BillingAddress;
-            model.ShippingAddress = order.ShippingAddress;
-            model.FedExNumber = order.FedExNumber;
-            return model;
+            order.BillingAddresses = addresses.Where(x => x.Type == AddressType.Billing || x.Type == AddressType.Default).ToList();
+            order.ShippingAddresses = addresses.Where(x => x.Type == AddressType.Shipping || x.Type == AddressType.Default).ToList();
+            return order;
+        }
+
+        public async Task<OrderDetailModel?> GetOrderForm(int orderId) {
+            OrderDetailModel? order = await Get(orderId);
+            if(order == null || !order.CanEdit) {
+                return null;
+            }
+            return await GetOrderForm(order);
         }
 
         public async Task<ApplicationResult> Create(OrderDetailModel model) {
             OrderDetailModelValidator validator = new OrderDetailModelValidator();
             ValidationResult result = await validator.ValidateAsync(model);
             if (result.IsValid) {
-                Order item = _mapper.Map<Order>(model);
-                int id = await _service.Create(item);
+                Order order = _mapper.Map<Order>(model);
+                int id = await _service.Create(order);
                 await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Created);
+                if (order.Status == OrderStatus.Sent) {
+                    await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Sent);
+                }
                 return ApplicationResult.Success("Order created", id);
             }
             return ApplicationResult.Error(result);
@@ -107,8 +111,19 @@ namespace IsotopeOrdering.App.Managers {
             return await _service.Get<OrderItemModel>(id);
         }
 
-        public Task<ApplicationResult> Edit(OrderDetailModel model) {
-            throw new NotImplementedException();
+        public async Task<ApplicationResult> Edit(OrderDetailModel model) {
+            OrderDetailModelValidator validator = new OrderDetailModelValidator();
+            ValidationResult result = await validator.ValidateAsync(model);
+            if (result.IsValid) {
+                Order order = _mapper.Map<Order>(model);
+                int id = await _service.Update(order);
+                await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Edited);
+                if(order.Status == OrderStatus.Sent) {
+                    await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Sent);
+                }
+                return ApplicationResult.Success("Order edited", id);
+            }
+            return ApplicationResult.Error(result);
         }
 
         public async Task<OrderReviewDetailModel?> GetOrderForReview(int id) {

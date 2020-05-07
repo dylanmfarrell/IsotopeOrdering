@@ -28,8 +28,6 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Items, opt => opt.MapFrom(x => x.Cart))
                 .ForMember(x => x.CustomerId, opt => opt.MapFrom(x => x.Customer.Id))
                 .ForMember(x => x.Customer, opt => opt.Ignore())
-                .ForMember(x => x.InstitutionId, opt => opt.MapFrom(x => x.Institution.Id))
-                .ForMember(x => x.Institution, opt => opt.Ignore())
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.FedExNumber, opt => opt.MapFrom(x => x.FedExNumber))
                 .ForMember(x => x.Notes, opt => opt.MapFrom(x => x.Notes));

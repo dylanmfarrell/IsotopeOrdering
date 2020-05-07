@@ -7,8 +7,6 @@ namespace IsotopeOrdering.Domain.Entities {
     public class Order : ModelBase {
         public int CustomerId { get; set; }
         public Customer Customer { get; set; } = null!;
-        public int InstitutionId { get; set; }
-        public Institution Institution { get; set; } = null!;
         public OrderStatus Status { get; set; } = OrderStatus.Created;
         public string? FedExNumber { get; set; }
         public string? Notes { get; set; }

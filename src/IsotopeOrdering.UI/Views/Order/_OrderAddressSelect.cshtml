@@ -1,10 +1,11 @@
 ﻿@model List<OrderAddressDetailModel>
 @{
     AddressType type = (AddressType)ViewData[ViewDataKeys.AddressType];
+    AddressDetailModel currentAddress = ViewData[ViewDataKeys.CurrentAddress] == null ? new AddressDetailModel() : (AddressDetailModel)ViewData[ViewDataKeys.CurrentAddress];
 }
 <ul class="list-group" name="order-address-list">
     @foreach (var address in Model) {
         <partial name="_OrderAddressView" model="address" />
     }
-    <partial name="_OrderAddressAdd" model="new OrderAddressDetailModel() { Type = type }" />
+    <partial name="_OrderAddressAdd" model="new OrderAddressDetailModel() { Type = type,Address = currentAddress }" />
 </ul>

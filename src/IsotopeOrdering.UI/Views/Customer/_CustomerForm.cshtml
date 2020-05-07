@@ -22,21 +22,23 @@
             <div class="tab-pane fade show active" id="contact-content" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Contact Information</h5>
-                        <partial name="_Contact" for="Contact" />
-                        @if (!Model.ParentCustomerId.HasValue) {
-                            <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="@nameof(CustomerController.MyTeam)">
-                                <i class="fas fa-users"></i>
-                                View My Team
-                            </a>
-                        }
+                        <h5 class="card-title shadow p-4 mr-3 ml-3">Contact Information</h5>
+                        <div class="shadow p-4 mr-3 ml-3">
+                            <partial name="_Contact" for="Contact" />
+                            @if (!Model.ParentCustomerId.HasValue) {
+                                <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="@nameof(CustomerController.MyTeam)">
+                                    <i class="fas fa-users"></i>
+                                    View My Team
+                                </a>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="address-content" role="tabpanel" aria-labelledby="address-tab">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Addresses</h5>
+                        <h5 class="card-title shadow p-4 mr-3 ml-3">Addresses</h5>
                         <partial name="_CustomerAddressList" for="Addresses" />
                     </div>
                 </div>
@@ -44,7 +46,7 @@
             <div class="tab-pane fade" id="institution-content" role="tabpanel" aria-labelledby="institution-tab">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Institution Information</h5>
+                        <h5 class="card-title shadow p-4 mr-3 ml-3">Institution Information</h5>
                         <partial name="_CustomerInstitutionList" for="Institutions" />
                     </div>
                 </div>
@@ -52,7 +54,7 @@
             <div class="tab-pane fade" id="document-content" role="tabpanel" aria-labelledby="document-tab">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Documents</h5>
+                        <h5 class="card-title shadow p-4 mr-3 ml-3">Documents</h5>
                         <partial name="_CustomerDocumentList" for="Documents" />
                     </div>
                 </div>
@@ -61,7 +63,7 @@
                 <div class="tab-pane fade" id="admin-content" role="tabpanel" aria-labelledby="admin-tab">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Admin</h5>
+                            <h5 class="card-title shadow p-4 mr-3 ml-3">Admin</h5>
                             <partial name="_CustomerFormAdmin" for="@Model" />
                         </div>
                     </div>

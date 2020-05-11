@@ -22,7 +22,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '--configuration $(BuildConfiguration) --self-contained true --output $(build.artifactstagingdirectory) --no-restore'
+    arguments: '--configuration Release -r win-x64 --self-contained true --output $(build.artifactstagingdirectory)'
 
 - task: DotNetCoreCLI@2
   displayName: 'Running Tests'

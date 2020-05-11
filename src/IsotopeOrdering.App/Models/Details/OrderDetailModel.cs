@@ -2,6 +2,7 @@
 using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
+using System;
 using System.Collections.Generic;
 
 namespace IsotopeOrdering.App.Models.Details {
@@ -31,6 +32,7 @@ namespace IsotopeOrdering.App.Models.Details {
         public string? SpecialInstructions { get; set; } = string.Empty;
         public decimal Price => Quantity * ItemConfiguration.Price;
         public int CustomerId { get; set; }
+        public DateTime? RequestedDate { get; set; }
     }
 
     public class OrderAddressDetailModel {

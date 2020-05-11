@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class RemoveInstitutionFromOrder : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class RemoveInstitutionFromOrder : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropForeignKey(
                 name: "FK_Orders_Institutions_InstitutionId",
                 table: "Orders");
@@ -97,8 +94,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 values: new object[] { new DateTime(2020, 5, 7, 15, 3, 22, 9, DateTimeKind.Local).AddTicks(8094), new DateTime(2020, 5, 7, 15, 3, 22, 9, DateTimeKind.Local).AddTicks(8094) });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.AddColumn<int>(
                 name: "InstitutionId",
                 table: "Orders",

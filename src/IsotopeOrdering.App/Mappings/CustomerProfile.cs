@@ -31,7 +31,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForPath(x => x.Contact.LastName, opt => opt.MapFrom(src => src.LastName))
                 .ForAllOtherMembers(x => x.Ignore());
             CreateMap<CustomerInstitution, CustomerAddressDetailModel>()
-                .ForMember(x=>x.Type,opt => opt.MapFrom(x=> AddressType.Default))
+                .ForMember(x => x.Type, opt => opt.MapFrom(x => AddressType.Default))
                 .ForMember(x => x.Address, opt => opt.MapFrom(x => x.Institution.Address));
         }
     }

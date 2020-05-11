@@ -24,7 +24,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.UpdatedBy, opt => opt.Ignore())
                 .ForMember(x => x.UpdatedDate, opt => opt.Ignore())
                 .ForMember(x => x.IsDeleted, opt => opt.Ignore());
-            
+
             CreateMap<Item, FormInitiationItemModel>()
                 .ForMember(x => x.Item, opt => opt.MapFrom(x => x))
                 .ForMember(x => x.IsSelected, opt => opt.Ignore());

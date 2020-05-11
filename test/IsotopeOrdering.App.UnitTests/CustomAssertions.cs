@@ -1,6 +1,5 @@
 ﻿using FluentValidation.Results;
 using IsotopeOrdering.App.Models.Shared;
-using System;
 using System.Collections.Generic;
 using Xunit;
 

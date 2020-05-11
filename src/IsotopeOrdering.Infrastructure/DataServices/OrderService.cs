@@ -61,7 +61,7 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
                 .ToListAsync();
         }
 
-        public async Task UpdateStatus(int orderId,OrderStatus status) {
+        public async Task UpdateStatus(int orderId, OrderStatus status) {
             Order order = await _context.Orders.FindAsync(orderId);
             order.Status = status;
             await _context.SaveChangesAsync();

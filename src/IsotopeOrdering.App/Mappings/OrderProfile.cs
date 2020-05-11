@@ -12,6 +12,8 @@ namespace IsotopeOrdering.App.Mappings {
               .ForMember(x => x.SpecialInstructions, opt => opt.Ignore())
               .ForMember(x => x.ItemConfigurationId, opt => opt.Ignore())
               .ForMember(x => x.ItemConfiguration, opt => opt.Ignore())
+              .ForMember(x => x.CustomerId, opt => opt.Ignore())
+              .ForMember(x => x.RequestedDate, opt => opt.Ignore())
               .ForMember(x => x.Quantity, opt => opt.Ignore());
 
             CreateMap<OrderItemDetailModel, OrderItem>()
@@ -20,6 +22,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.OrderId, opt => opt.Ignore())
                 .ForMember(x => x.Order, opt => opt.Ignore())
                 .ForMember(x => x.Quantity, opt => opt.MapFrom(x => x.Quantity))
+                .ForMember(x => x.RequestedDate, opt => opt.MapFrom(x => x.RequestedDate))
                 .ForMember(x => x.SpecialInstructions, opt => opt.MapFrom(x => x.SpecialInstructions));
 
             CreateMap<OrderDetailModel, Order>()
@@ -45,12 +48,15 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Notes, opt => opt.MapFrom(x => x.Notes))
                 .ForMember(x => x.FedExNumber, opt => opt.MapFrom(x => x.FedExNumber))
                 .ForMember(x => x.Cart, opt => opt.MapFrom(x => x.Items))
-                .ForMember(x => x.Customer, opt => opt.MapFrom(x => x.Customer));
+                .ForMember(x => x.Customer, opt => opt.MapFrom(x => x.Customer))
+                .ForMember(x => x.SubmitAction, opt => opt.Ignore());
 
             CreateMap<OrderItem, OrderItemDetailModel>()
                 .ForMember(x => x.Quantity, opt => opt.MapFrom(x => x.Quantity))
                 .ForMember(x => x.ItemConfigurations, opt => opt.Ignore())
                 .ForMember(x => x.SpecialInstructions, opt => opt.MapFrom(x => x.SpecialInstructions))
+                .ForMember(x => x.RequestedDate, opt => opt.MapFrom(x => x.RequestedDate))
+                .ForMember(x => x.CustomerId, opt => opt.Ignore())
                 .ForMember(x => x.Item, opt => opt.MapFrom(x => x.ItemConfiguration.Item))
                 .ForMember(x => x.ItemConfiguration, opt => opt.MapFrom(x => x.ItemConfiguration))
                 .ForMember(x => x.ItemConfigurationId, opt => opt.MapFrom(x => x.ItemConfigurationId));

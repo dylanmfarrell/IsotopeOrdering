@@ -31,6 +31,7 @@
         public const string NoSelectedItems = "Must have at least one material selected";
         public const string MinQuantityGreaterThanMax = "Minimum quantity must be greater than or equal to maximum quantity";
         public const string MaxQuantityLessThanMin = "Maximum quantity must be less than or equal to minimum quantity";
+        public const string RequestedDateGreaterThanToday = "Requested date must be past today's date";
     }
 
     public static class Policies {

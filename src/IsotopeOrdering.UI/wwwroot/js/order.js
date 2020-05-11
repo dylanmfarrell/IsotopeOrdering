@@ -43,6 +43,7 @@ function onAddressSelect(el) {
 function addCartItem(el) {
     var options = getCollectionAddOptions(el);
     var model = {};
+    model.RequestedDate = options.context.find('[name$="RequestedDate"]').val();
     model.Quantity = options.context.find('[name$="Quantity"]').val();
     model.SpecialInstructions = options.context.find('[name$="SpecialInstructions"]').val();
     model.Item = getItem(options.context);

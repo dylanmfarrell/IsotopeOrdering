@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IsotopeOrdering.Domain.Entities;
+using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MIR.Core.Data;
@@ -22,6 +23,16 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
                 .Include(x => x.Items)
                 .ThenInclude(x => x.ItemConfiguration)
                 .Where(x => x.Id == id)
+                ).SingleOrDefaultAsync();
+        }
+
+        public async Task<T?> GetForReview<T>(int id) where T : class {
+            return await _mapper.ProjectTo<T>(
+                _context.Orders
+                .Include(x => x.Customer)
+                .Include(x => x.Items)
+                .ThenInclude(x => x.ItemConfiguration)
+                .Where(x => x.Id == id && x.Status == OrderStatus.Sent)
                 ).SingleOrDefaultAsync();
         }
 
@@ -48,6 +59,12 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
                 .Include(x => x.Customer)
                 .Where(x => x.CustomerId == customerId || x.CustomerId == parentId.GetValueOrDefault(0)))
                 .ToListAsync();
+        }
+
+        public async Task UpdateStatus(int orderId,OrderStatus status) {
+            Order order = await _context.Orders.FindAsync(orderId);
+            order.Status = status;
+            await _context.SaveChangesAsync();
         }
     }
 }

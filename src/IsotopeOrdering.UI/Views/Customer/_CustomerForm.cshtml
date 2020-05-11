@@ -5,7 +5,7 @@
 <input type="hidden" asp-for="UserId" />
 <div asp-validation-summary="All" class="alert alert-danger"></div>
 <div class="row">
-    <div class="col-2">
+    <div class="col-md-12 col-lg-2">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a class="nav-link active" id="contact-tab" data-toggle="pill" href="#contact-content" role="tab" aria-controls="contact-content" aria-selected="true">Contact Information</a>
             <a class="nav-link" id="address-tab" data-toggle="pill" href="#address-content" role="tab" aria-controls="address-content" aria-selected="false">Addresses</a>
@@ -17,11 +17,12 @@
             <input type="submit" class="nav-link btn btn-success btn-sm mt-5" value="Save Changes" />
         </div>
     </div>
-    <div class="col-10">
-        <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="contact-content" role="tabpanel" aria-labelledby="contact-tab">
-                <div class="card">
-                    <div class="card-body">
+    <div class="col-md-12 col-lg-10">
+        <div class="card">
+            <div class="card-body">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="contact-content" role="tabpanel" aria-labelledby="contact-tab">
+
                         <h5 class="card-title shadow p-4 mr-3 ml-3">Contact Information</h5>
                         <div class="shadow p-4 mr-3 ml-3">
                             <partial name="_Contact" for="Contact" />
@@ -33,49 +34,30 @@
                             }
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="address-content" role="tabpanel" aria-labelledby="address-tab">
-                <div class="card">
-                    <div class="card-body">
+                    <div class="tab-pane fade" id="address-content" role="tabpanel" aria-labelledby="address-tab">
                         <h5 class="card-title shadow p-4 mr-3 ml-3">Addresses</h5>
                         <partial name="_CustomerAddressList" for="Addresses" />
                     </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="institution-content" role="tabpanel" aria-labelledby="institution-tab">
-                <div class="card">
-                    <div class="card-body">
+                    <div class="tab-pane fade" id="institution-content" role="tabpanel" aria-labelledby="institution-tab">
                         <h5 class="card-title shadow p-4 mr-3 ml-3">Institution Information</h5>
                         <partial name="_CustomerInstitutionList" for="Institutions" />
                     </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="document-content" role="tabpanel" aria-labelledby="document-tab">
-                <div class="card">
-                    <div class="card-body">
+                    <div class="tab-pane fade" id="document-content" role="tabpanel" aria-labelledby="document-tab">
                         <h5 class="card-title shadow p-4 mr-3 ml-3">Documents</h5>
                         <partial name="_CustomerDocumentList" for="Documents" />
                     </div>
-                </div>
-            </div>
-            @if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
-                <div class="tab-pane fade" id="admin-content" role="tabpanel" aria-labelledby="admin-tab">
-                    <div class="card">
-                        <div class="card-body">
+                    @if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
+                        <div class="tab-pane fade" id="admin-content" role="tabpanel" aria-labelledby="admin-tab">
                             <h5 class="card-title shadow p-4 mr-3 ml-3">Admin</h5>
                             <partial name="_CustomerFormAdmin" for="@Model" />
                         </div>
-                    </div>
+                    }
+                    else {
+                        <input type="hidden" asp-for="Status" />
+                        <input type="hidden" asp-for="InternalNotes" />
+                    }
                 </div>
-            }
-            else {
-                <input type="hidden" asp-for="Status" />
-                <input type="hidden" asp-for="InternalNotes" />
-            }
-        </div>
-        <div class="row mt-5">
-
+            </div>
         </div>
     </div>
 </div>

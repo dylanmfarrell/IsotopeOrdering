@@ -9,7 +9,6 @@ using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +20,6 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IOrderService _service;
         private readonly IItemService _itemService;
         private readonly ICustomerService _customerService;
-        private readonly IInstitutionService _institutionService;
         private readonly IEventManager _eventService;
         private readonly IIsotopeOrderingAuthorizationService _authorizationService;
 
@@ -30,7 +28,6 @@ namespace IsotopeOrdering.App.Managers {
             IOrderService service,
             IItemService itemService,
             ICustomerService customerService,
-            IInstitutionService institutionService,
             IEventManager eventService,
             IIsotopeOrderingAuthorizationService authorizationService) {
             _logger = logger;
@@ -38,7 +35,6 @@ namespace IsotopeOrdering.App.Managers {
             _service = service;
             _itemService = itemService;
             _customerService = customerService;
-            _institutionService = institutionService;
             _eventService = eventService;
             _authorizationService = authorizationService;
         }
@@ -61,7 +57,7 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<OrderDetailModel?> GetOrderForm(int orderId) {
             OrderDetailModel? order = await Get(orderId);
-            if(order == null || !order.CanEdit) {
+            if (order == null || !order.CanEdit) {
                 return null;
             }
             return await GetOrderForm(order);
@@ -91,8 +87,10 @@ namespace IsotopeOrdering.App.Managers {
             return await _service.GetListForCustomer<OrderItemModel>(customer.Id, customer.ParentCustomerId);
         }
 
-        public async Task<List<OrderItemModel>> GetCenterList() {
-            return await _service.GetList<OrderItemModel>();
+        public async Task<OrderCenterModel> GetCenter() {
+            OrderCenterModel center = new OrderCenterModel();
+            center.Orders = await _service.GetList<OrderItemModel>();
+            return center;
         }
 
         public async Task<OrderDetailModel?> Get(int id) {
@@ -118,7 +116,7 @@ namespace IsotopeOrdering.App.Managers {
                 Order order = _mapper.Map<Order>(model);
                 int id = await _service.Update(order);
                 await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Edited);
-                if(order.Status == OrderStatus.Sent) {
+                if (order.Status == OrderStatus.Sent) {
                     await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Sent);
                 }
                 return ApplicationResult.Success("Order edited", id);
@@ -127,7 +125,7 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<OrderReviewDetailModel?> GetOrderForReview(int id) {
-            OrderDetailModel? order = await _service.Get<OrderDetailModel>(id);
+            OrderDetailModel? order = await _service.GetForReview<OrderDetailModel>(id);
             if (order == null) {
                 return null;
             }
@@ -136,9 +134,11 @@ namespace IsotopeOrdering.App.Managers {
             };
         }
 
-        public Task<ApplicationResult> SubmitReview(OrderReviewDetailModel review) {
-            throw new NotImplementedException();
+        public async Task<ApplicationResult> SubmitReview(OrderReviewDetailModel review) {
+            await _service.UpdateStatus(review.Order.Id, review.Action);
+            string eventDescription = review.Action == OrderStatus.Approved ? Events.Order.Approved : Events.Order.Denied;
+            await _eventService.CreateEvent(EntityEventType.Order, review.Order.Id, eventDescription);
+            return new ApplicationResult(eventDescription, true);
         }
-
     }
 }

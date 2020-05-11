@@ -2,17 +2,12 @@
 @{
     ViewData[ViewDataKeys.Title] = "Review";
 }
-<div class="row">
-    <div class="col-2">
-        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="order-tab" data-toggle="pill" href="#order-content" role="tab" aria-controls="order-content" aria-selected="true">Order Details</a>
-        </div>
-    </div>
-    <div class="col-10">
-        <div class="tab-content" id="order-content">
-            <partial name="_OrderDetails" model="Model.Order" />
-        </div>
-    </div>
-</div>
 
-
+<partial name="_OrderDetails" model="Model.Order" />
+<form asp-action="@nameof(OrderController.Review)" asp-controller="Order" method="post">
+    <input type="hidden" asp-for="Order.Id" />
+    <div class="btn btn-group col-12 mt-5">
+        <button type="submit" name="Action" value="@OrderStatus.Denied" class="btn btn-danger">Deny this order</button>
+        <button type="submit" name="Action" value="@OrderStatus.Approved" class="btn btn-success">Approve this order</button>
+    </div>
+</form>

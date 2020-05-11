@@ -32,7 +32,7 @@ namespace IsotopeOrdering.App.Interfaces {
         /// <returns></returns>
         Task<ApplicationResult> Create(OrderDetailModel model);
         Task<List<OrderItemModel>> GetListForCurrentCustomer();
-        Task<List<OrderItemModel>> GetCenterList();
+        Task<OrderCenterModel> GetCenter();
         Task<OrderDetailModel?> Get(int id);
         Task<OrderItemModel?> GetItem(int id);
         Task<OrderReviewDetailModel?> GetOrderForReview(int id);

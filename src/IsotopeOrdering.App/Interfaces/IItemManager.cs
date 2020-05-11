@@ -12,6 +12,6 @@ namespace IsotopeOrdering.App.Interfaces {
         Task<ApplicationResult> Edit(ItemDetailModel item);
         Task<ApplicationResult> Delete(int id);
         Task ApplyItemConfigurations(OrderDetailModel order);
-        Task<int> GetItemConfigurationId(int itemId, int customerId, int? parentCustomerId, decimal quantity);
+        Task<ItemConfigurationDetailModel> GetItemConfiguration(int itemId, int customerId, int? parentCustomerId, decimal quantity);
     }
 }

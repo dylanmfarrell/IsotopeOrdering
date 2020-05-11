@@ -4,7 +4,6 @@ using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.App.Security;
-using IsotopeOrdering.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -66,7 +65,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpGet]
         public async Task<IActionResult> Confirmation(int orderId) {
             OrderItemModel? order = await _orderManager.GetItem(orderId);
-            if(order == null) {
+            if (order == null) {
                 return NotFound();
             }
             return View(order);
@@ -112,7 +111,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpGet]
         [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Center() {
-            return View(await _orderManager.GetCenterList());
+            return View(await _orderManager.GetCenter());
         }
 
         [HttpGet]
@@ -125,6 +124,55 @@ namespace IsotopeOrdering.UI.Controllers {
             return View(model);
         }
 
-        public async Task<IActionResult> AddCartItem(OrderItemDetailModel model) => await Partial("_OrderCartItem", model);
+        [HttpPost]
+        [Authorize(Policies.ReviewerPolicy)]
+        public async Task<IActionResult> Review(OrderReviewDetailModel model) {
+            ApplicationResult result = await _orderManager.SubmitReview(model);
+            SetApplicationResult(result);
+            return RedirectToAction(nameof(Center), "Order");
+        }
+
+
+        [HttpGet]
+        [Authorize(Policies.ReviewerPolicy)]
+        public async Task<IActionResult> Process(int id) {
+            OrderReviewDetailModel? model = await _orderManager.GetOrderForReview(id);
+            if (model == null) {
+                return NotFound();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Policies.ReviewerPolicy)]
+        public async Task<IActionResult> Process(OrderReviewDetailModel model) {
+            ApplicationResult result = await _orderManager.SubmitReview(model);
+            SetApplicationResult(result);
+            return RedirectToAction(nameof(Center), "Order");
+        }
+
+        [HttpGet]
+        [Authorize(Policies.ReviewerPolicy)]
+        public async Task<IActionResult> Complete(int id) {
+            OrderReviewDetailModel? model = await _orderManager.GetOrderForReview(id);
+            if (model == null) {
+                return NotFound();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Policies.ReviewerPolicy)]
+        public async Task<IActionResult> Complete(OrderReviewDetailModel model) {
+            ApplicationResult result = await _orderManager.SubmitReview(model);
+            SetApplicationResult(result);
+            return RedirectToAction(nameof(Center), "Order");
+        }
+
+        public async Task<IActionResult> AddCartItem(OrderItemDetailModel model) {
+            model.ItemConfiguration = await _itemManager.GetItemConfiguration(model.Item.Id, model.CustomerId, null, model.Quantity);
+            model.ItemConfigurationId = model.ItemConfiguration.Id;
+            return await Partial("_OrderCartItem", model);
+        }
     }
 }

@@ -20,12 +20,16 @@
                 </div>
             </div>
         </div>
-        <partial name="_Nav"/>
+        <partial name="_Nav" />
     </header>
     <div class="bs-component">
         <ol class="breadcrumb">
             <li class="breadcrumb-item active">@ViewData[ViewDataKeys.Title]</li>
+            @if (ViewData[ViewDataKeys.Info] != null) {
+                <li class="breadcrumb-item"><i>@ViewData[ViewDataKeys.Info].ToString()</i></li>
+            }
         </ol>
+
         @if (TempData.Get<ApplicationResult>(ViewDataKeys.ApplicationResult) != null) {
             <partial name="_ApplicationResult" model="TempData.Get<ApplicationResult>(ViewDataKeys.ApplicationResult)" />
         }

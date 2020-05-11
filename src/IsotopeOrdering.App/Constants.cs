@@ -16,6 +16,8 @@
             public const string Created = "Order created";
             public const string Edited = "Order edited";
             public const string Sent = "Order Sent";
+            public const string Approved = "Order Approved";
+            public const string Denied = "Order Denied";
         }
 
         public static class Shipping {
@@ -53,6 +55,7 @@
         public const string Customers = "Customers";
         public const string AddressType = "AddressType";
         public const string Action = "Action";
+        public const string Info = "Info";
         public const string CurrentAddress = "CurrentAddress";
     }
 }

@@ -7,15 +7,25 @@
         <partial name="_AuditInformation" for="@Model" />
         <partial name="_ItemInformation" for="Item" />
         <div class="form-row">
+            <div class="form-group col-8">
+                <label asp-for="SpecialInstructions">Special Instructions</label>
+                <input class="form-control form-control-sm" readonly asp-for="SpecialInstructions">
+                <span asp-validation-for="SpecialInstructions" class="text-danger"></span>
+            </div>
             <div class="form-group col-2">
                 <label asp-for="Quantity">Quantity</label>
                 <input class="form-control form-control-sm" readonly type="number" asp-for="Quantity">
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
-            <div class="form-group col-10">
-                <label asp-for="SpecialInstructions">Special Instructions</label>
-                <input class="form-control form-control-sm" readonly asp-for="SpecialInstructions">
-                <span asp-validation-for="SpecialInstructions" class="text-danger"></span>
+
+            <div class="form-group col-2">
+                <label asp-for="Price">Price</label>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                    </div>
+                    <input type="number" readonly="readonly" asp-for="Price" class="form-control form-control-sm" />
+                </div>
             </div>
         </div>
         @if (canDelete) {

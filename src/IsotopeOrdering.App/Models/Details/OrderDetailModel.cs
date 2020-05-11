@@ -29,6 +29,8 @@ namespace IsotopeOrdering.App.Models.Details {
         public int ItemConfigurationId { get; set; }
         public decimal Quantity { get; set; }
         public string? SpecialInstructions { get; set; } = string.Empty;
+        public decimal Price => Quantity * ItemConfiguration.Price;
+        public int CustomerId { get; set; }
     }
 
     public class OrderAddressDetailModel {

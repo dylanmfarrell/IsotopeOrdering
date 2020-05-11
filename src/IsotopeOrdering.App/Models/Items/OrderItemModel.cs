@@ -5,5 +5,8 @@ namespace IsotopeOrdering.App.Models.Items {
     public class OrderItemModel:ModelBase {
         public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
         public OrderStatus Status { get; set; }
+        public bool ReadyToReview => Status == OrderStatus.Sent;
+        public bool ReadyToProcess => Status == OrderStatus.Approved;
+        public bool ReadyToComplete => Status == OrderStatus.InProcess;
     }
 }

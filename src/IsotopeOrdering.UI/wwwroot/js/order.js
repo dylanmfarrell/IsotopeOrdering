@@ -45,18 +45,17 @@ function addCartItem(el) {
     var model = {};
     model.Quantity = options.context.find('[name$="Quantity"]').val();
     model.SpecialInstructions = options.context.find('[name$="SpecialInstructions"]').val();
-    model.ItemConfiguration = getItemConfiguration(options.context);
     model.Item = getItem(options.context);
-    postCollectionAdd(options, model);
-}
-
-function getItemConfiguration(context) {
-    var config = {};
-    config.Id = context.find('[name$="Id"]').val();
-    config.Price = context.find('[name$="Price"]').val();
-    config.MinimumAmount = context.find('[name$="MinimumAmount"]').val();
-    config.MaximumAmount = context.find('[name$="MaximumAmount"]').val();
-    return config;
+    model.CustomerId = $('#Customer_Id').val();
+    postCollectionAdd(options, model, function (data) {
+        $(options.target).append(data);
+        $(el).popover({
+            content: 'Item added!',
+            placement: 'right',
+            trigger: 'focus'
+        });
+        $(el).popover('show');
+    });
 }
 
 function getItem(context) {

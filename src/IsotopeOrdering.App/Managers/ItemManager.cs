@@ -59,18 +59,18 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task ApplyItemConfigurations(OrderDetailModel order) {
             foreach (OrderItemDetailModel item in order.Cart) {
-                int configurationId = await GetItemConfigurationId(item.Item.Id, order.Customer.Id, order.Customer.ParentCustomerId, item.Quantity);
-                item.ItemConfigurationId = configurationId;
+                item.ItemConfiguration = await GetItemConfiguration(item.Item.Id, order.Customer.Id, order.Customer.ParentCustomerId, item.Quantity);
+                item.ItemConfigurationId = item.ItemConfiguration.Id;
             }
         }
 
-        public async Task<int> GetItemConfigurationId(int itemId, int customerId, int? parentCustomerId, decimal quantity) {
+        public async Task<ItemConfigurationDetailModel> GetItemConfiguration(int itemId, int customerId, int? parentCustomerId, decimal quantity) {
             List<ItemConfiguration> itemConfigurations = await _service.GetItemConfigurations(itemId, parentCustomerId.GetValueOrDefault(customerId));
 
             //Evaluate most restrictive
             foreach (ItemConfiguration configuration in itemConfigurations.Where(x => x.MaximumAmount.HasValue && x.MinimumAmount.HasValue)) {
                 if (quantity >= configuration.MinimumAmount!.Value && quantity <= configuration.MaximumAmount) {
-                    return configuration.Id;
+                    return _mapper.Map<ItemConfigurationDetailModel>(configuration);
                 }
             }
 
@@ -78,19 +78,19 @@ namespace IsotopeOrdering.App.Managers {
             //No minimum but has maximum
             foreach (ItemConfiguration configuration in itemConfigurations.Where(x => x.MaximumAmount.HasValue && !x.MinimumAmount.HasValue)) {
                 if (quantity <= configuration.MaximumAmount!.Value) {
-                    return configuration.Id;
+                    return _mapper.Map<ItemConfigurationDetailModel>(configuration);
                 }
             }
 
             //No maximum but has minimum
             foreach (ItemConfiguration configuration in itemConfigurations.Where(x => !x.MaximumAmount.HasValue && x.MinimumAmount.HasValue)) {
                 if (quantity >= configuration.MinimumAmount!.Value) {
-                    return configuration.Id;
+                    return _mapper.Map<ItemConfigurationDetailModel>(configuration);
                 }
             }
 
             //Return default, none restrictive
-            return itemConfigurations.First(x => x.ItemId == itemId && x.CustomerId == null).Id;
+            return _mapper.Map<ItemConfigurationDetailModel>(itemConfigurations.First(x => x.ItemId == itemId && x.CustomerId == null));
         }
     }
 }

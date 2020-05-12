@@ -7,7 +7,7 @@
         <div class="container">
             <h1 class="display-4"><i class="fas fa-check" style="font-size:3em;"></i>Order Submitted!</h1>
             <p class="lead">Thank you for your order. You will be emailed once this order has been received.</p>
-            <p>If you need to change your order before it has been received, <a asp-action="@nameof(OrderController.Edit)" asp-controller="Order" asp-route-orderId="@Model.Id">click here</a>.</p>
+            <p>If you need to change your order before it has been received, <a asp-action="@nameof(OrderController.Edit)" asp-controller="Order" asp-route-id="@Model.Id">click here</a>.</p>
             <p>You can always view your orders and see their status by going to <a asp-action="@nameof(OrderController.MyOrders)" asp-controller="Order">My Orders</a>.</p>
         </div>
     </div>

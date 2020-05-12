@@ -46,10 +46,14 @@ namespace IsotopeOrdering.App.Security {
                 if (customer != null && requirement.CustomerStatus == customer.Status) {
                     context.Succeed(requirement);
                 }
-                context.Fail();
+                else {
+                    context.Fail();
+                }
             }
-            //user's role does not apply to this requirement
-            context.Succeed(requirement);
+            else {
+                //user's role does not apply to this requirement
+                context.Succeed(requirement);
+            }
             await Task.CompletedTask;
         }
 

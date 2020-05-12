@@ -56,7 +56,7 @@ namespace IsotopeOrdering.Infrastructure {
                 services.AddSingleton<IRoleService, DevelopmentRoleService>();
             }
             else {
-                services.AddRoleService(x => {
+                services.AddIsotopeOrderingRoleService(x => {
                     x.Token = options.Token;
                     x.DefaultRole = UserRole.Customer.ToString();
                 });
@@ -112,7 +112,5 @@ namespace IsotopeOrdering.Infrastructure {
             services.AddTransient<INotificationService, NotificationService>();
             return services;
         }
-
-
     }
 }

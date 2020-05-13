@@ -114,6 +114,9 @@ namespace IsotopeOrdering.App.Managers {
             ValidationResult result = await validator.ValidateAsync(model);
             if (result.IsValid) {
                 Order order = _mapper.Map<Order>(model);
+                if(model.Status == OrderStatus.Cancelled) {
+                    order.IsDeleted = true;
+                }
                 int id = await _service.Update(order);
                 await _eventService.CreateEvent(EntityEventType.Order, id, Events.Order.Edited);
                 if (order.Status == OrderStatus.Sent) {
@@ -125,7 +128,7 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<OrderReviewDetailModel?> GetOrderForReview(int id) {
-            OrderDetailModel? order = await _service.GetForReview<OrderDetailModel>(id);
+            OrderDetailModel? order = await _service.GetForStatus<OrderDetailModel>(id, OrderStatus.Sent);
             if (order == null) {
                 return null;
             }
@@ -137,6 +140,24 @@ namespace IsotopeOrdering.App.Managers {
         public async Task<ApplicationResult> SubmitReview(OrderReviewDetailModel review) {
             await _service.UpdateStatus(review.Order.Id, review.Action);
             string eventDescription = review.Action == OrderStatus.Approved ? Events.Order.Approved : Events.Order.Denied;
+            await _eventService.CreateEvent(EntityEventType.Order, review.Order.Id, eventDescription);
+            return new ApplicationResult(eventDescription, true);
+        }
+
+        public async Task<OrderProcessDetailModel?> GetOrderForProcessing(int id) {
+            OrderDetailModel? order = await _service.GetForStatus<OrderDetailModel>(id, OrderStatus.Approved);
+            if (order == null) {
+                return null;
+            }
+            OrderProcessDetailModel model = new OrderProcessDetailModel();
+            model.OrderReview.Order = order;
+            model.Shipment = _mapper.Map<ShipmentDetailModel>(order);
+            return model;
+        }
+
+        public async Task<ApplicationResult> SubmitProcessing(OrderReviewDetailModel review) {
+            await _service.UpdateStatus(review.Order.Id, review.Action);
+            string eventDescription = review.Action == OrderStatus.InProcess? Events.Order.InProcess : Events.Order.Cancelled;
             await _eventService.CreateEvent(EntityEventType.Order, review.Order.Id, eventDescription);
             return new ApplicationResult(eventDescription, true);
         }

@@ -1,0 +1,18 @@
+﻿@model ShipmentItemDetailModel
+<li class="list-group-item p-2">
+    <div class="custom-control custom-checkbox">
+        <input type="hidden" asp-for="@Model.OrderItemId">
+        <input class="custom-control-input" asp-for="@Model.IsSelected" type="checkbox">
+        <label class="cursor-pointer font-weight-bold custom-control-label" asp-for="@Model.IsSelected" style="font-size:15px;">@Model.OrderItem.Item.Name</label>
+        <dl class="row cursor-pointer mb-0">
+            <dt class="col-sm-3">Quantity</dt>
+            <dd class="col-sm-9">@Model.OrderItem.Quantity</dd>
+            <dt class="col-sm-3">Price</dt>
+            <dd class="col-sm-9">@Model.OrderItem.Price</dd>
+            <dt class="col-sm-3">Special Instructions</dt>
+            <dd class="col-sm-9">@Model.OrderItem.SpecialInstructions</dd>
+            <dt class="col-sm-3">Requested Date</dt>
+            <dd class="col-sm-9">@(Model.OrderItem.RequestedDate.HasValue ? Model.OrderItem.RequestedDate.Value.ToString() : "N/A")</dd>
+        </dl>
+    </div>
+</li>

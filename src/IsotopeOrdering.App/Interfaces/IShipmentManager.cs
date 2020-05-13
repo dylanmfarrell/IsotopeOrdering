@@ -23,7 +23,6 @@ namespace IsotopeOrdering.App.Interfaces {
         Task<ApplicationResult> Create(ShipmentDetailModel model);
         Task<ApplicationResult> Edit(ShipmentDetailModel model);
         Task<List<ShipmentItemModel>> GetCenterList();
-
     }
 
 }

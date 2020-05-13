@@ -6,6 +6,7 @@
         Approved = 3,
         Denied = 4,
         InProcess = 5,
-        Complete = 6
+        Complete = 6,
+        Cancelled = 7
     }
 }

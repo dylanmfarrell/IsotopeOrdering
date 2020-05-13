@@ -1,0 +1,20 @@
+﻿@model OrderProcessDetailModel
+@{
+    ViewData[ViewDataKeys.Title] = "Process";
+}
+<partial name="_OrderDetails" model="Model.OrderReview.Order" />
+<div class="card mt-5 p-3">
+    <form asp-action="@nameof(OrderController.Process)" asp-controller="Order" method="post">
+        <input type="hidden" asp-for="OrderReview.Order.Id" />
+        <i>Select the materials include in the shipment</i>
+        <partial name="_ShipmentItemList" for="Shipment.Items" />
+        <div class="mt-5">
+            <i class="mt-4">Confirm the shipping information</i>
+            <partial name="_Address" for="Shipment.Shipping" />
+        </div>
+        <div class="btn btn-group col-12 mt-5">
+            <button type="submit" name="OrderReview.Action" value="@OrderStatus.Cancelled" class="btn btn-danger">Cancel this order</button>
+            <button type="submit" name="OrderReview.Action" value="@OrderStatus.InProcess" class="btn btn-success">Process this order and proceed to shipment details</button>
+        </div>
+    </form>
+</div>

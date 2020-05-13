@@ -4,6 +4,7 @@ using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.App.Security;
+using IsotopeOrdering.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -136,7 +137,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpGet]
         [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Process(int id) {
-            OrderReviewDetailModel? model = await _orderManager.GetOrderForReview(id);
+            OrderProcessDetailModel? model = await _orderManager.GetOrderForProcessing(id);
             if (model == null) {
                 return NotFound();
             }
@@ -145,10 +146,13 @@ namespace IsotopeOrdering.UI.Controllers {
 
         [HttpPost]
         [Authorize(Policies.ReviewerPolicy)]
-        public async Task<IActionResult> Process(OrderReviewDetailModel model) {
-            ApplicationResult result = await _orderManager.SubmitReview(model);
-            SetApplicationResult(result);
-            return RedirectToAction(nameof(Center), "Order");
+        public async Task<IActionResult> Process(OrderProcessDetailModel model) {
+            ApplicationResult result = await _orderManager.SubmitProcessing(model.OrderReview);
+            if (model.OrderReview.Action == OrderStatus.Cancelled) {
+                SetApplicationResult(result);
+                return RedirectToAction(nameof(Center), "Order");
+            }
+            return RedirectToAction(nameof(ShipmentController.Create), "Shipment", model.Shipment);
         }
 
         [HttpGet]

@@ -26,13 +26,13 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
                 ).SingleOrDefaultAsync();
         }
 
-        public async Task<T?> GetForReview<T>(int id) where T : class {
+        public async Task<T?> GetForStatus<T>(int id,OrderStatus status) where T : class {
             return await _mapper.ProjectTo<T>(
                 _context.Orders
                 .Include(x => x.Customer)
                 .Include(x => x.Items)
                 .ThenInclude(x => x.ItemConfiguration)
-                .Where(x => x.Id == id && x.Status == OrderStatus.Sent)
+                .Where(x => x.Id == id && x.Status == status)
                 ).SingleOrDefaultAsync();
         }
 

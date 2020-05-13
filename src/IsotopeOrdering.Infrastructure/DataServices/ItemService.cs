@@ -39,6 +39,7 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
                 _context.Items
                 .Include(x => x.ItemConfigurations)
                 .Where(x => x.ItemConfigurations.Any(y => y.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
+                .AsNoTracking()
                 ).ToListAsync();
         }
     }

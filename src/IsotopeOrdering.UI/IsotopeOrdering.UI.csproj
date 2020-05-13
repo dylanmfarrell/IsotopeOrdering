@@ -31,7 +31,4 @@
     <ProjectReference Include="..\IsotopeOrdering.App\IsotopeOrdering.App.csproj" />
     <ProjectReference Include="..\IsotopeOrdering.Infrastructure\IsotopeOrdering.Infrastructure.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Shipment\" />
-  </ItemGroup>
 </Project>

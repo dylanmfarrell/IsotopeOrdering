@@ -18,6 +18,8 @@
             public const string Sent = "Order Sent";
             public const string Approved = "Order Approved";
             public const string Denied = "Order Denied";
+            public const string InProcess = "Order In Process";
+            public const string Cancelled = "Order Cancelled";
         }
 
         public static class Shipping {
@@ -38,9 +40,6 @@
         public const string AdminPolicy = "AdminPolicy";
         public const string ReviewerPolicy = "ReviewPolicy";
         public const string CustomerPolicy = "CustomerPolicy";
-        /// <summary>
-        /// Enforces Admin, Reviewer user roles and Customer users that have been initiated
-        /// </summary>
         public const string OrderPolicy = "OrderPolicy";
     }
 

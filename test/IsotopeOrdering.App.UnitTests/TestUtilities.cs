@@ -1,5 +1,8 @@
-﻿using AutoMapper;
+﻿using AutoFixture;
+using AutoMapper;
 using IsotopeOrdering.App.Interfaces;
+using IsotopeOrdering.App.Models.Details;
+using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
@@ -27,19 +30,12 @@ namespace IsotopeOrdering.App.UnitTests {
             return mock.Object;
         }
 
-        public static IRoleService GetRoleService(params string[] roles) {
-            Mock<IRoleService> mock = new Mock<IRoleService>();
-            mock.Setup(x => x.UserRoles).Returns(roles);
-            return mock.Object;
-        }
-
         public static IMapper GetMapper(params Profile[] profiles) {
             var config = new MapperConfiguration(c =>
                 c.AddProfiles(profiles)
             );
             return new Mapper(config);
         }
-
 
         public static IIsotopeOrderingAuthorizationService GetAuthorizationService(string policy) {
             var mock = new Mock<IIsotopeOrderingAuthorizationService>();
@@ -48,6 +44,23 @@ namespace IsotopeOrdering.App.UnitTests {
             mock.Setup(x => x.AuthorizeAsync(It.Is<string>(x => x == policy)))
                 .ReturnsAsync(true);
             return mock.Object;
+        }
+
+        public static AddressDetailModel GetValidAddress() {
+            Fixture fixture = new Fixture();
+            return fixture.Build<AddressDetailModel>()
+                .With(x => x.ZipCode, "12345")
+                .With(x => x.State, "MO")
+                .Create();
+        }
+
+        public static OrderItemDetailModel GetValidOrderItem() {
+            Fixture fixture = new Fixture();
+            return fixture.Build<OrderItemDetailModel>()
+                .With(x => x.IsDeleted, false)
+                .With(x => x.Quantity, 100)
+                .With(x => x.RequestedDate, DateTime.Now.AddDays(1))
+                .Create();
         }
     }
 }

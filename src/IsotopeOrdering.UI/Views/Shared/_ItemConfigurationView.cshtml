@@ -1,35 +1,47 @@
 ﻿@model ItemConfigurationDetailModel
 <partial name="_AuditInformation" for="@Model" />
-<div class="form-row">
+<div class="form-row border rounded mb-1">
     @if (Model.MinimumAmount.HasValue) {
-    <div class="form-group col-3">
-        <label asp-for="MinimumAmount">Minimum Amount Required</label>
-        <input class="form-control form-control-sm" readonly="readonly" asp-for="MinimumAmount" />
-    </div>
-    }else{
-    <div class="form-group col-3">
-        <label asp-for="MinimumAmount">Minimum Amount Required</label>
-        <input class="form-control form-control-sm" readonly="readonly" value="N/A">
-    </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                <label asp-for="MinimumAmount">Minimum Amount Required</label>
+                <input class="form-control form-control-sm" readonly="readonly" asp-for="MinimumAmount" />
+            </div>
+        </div>
+    }
+    else {
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                <label asp-for="MinimumAmount">Minimum Amount Required</label>
+                <input class="form-control form-control-sm" readonly="readonly" value="N/A">
+            </div>
+        </div>
     }
     @if (Model.MaximumAmount.HasValue) {
-    <div class="form-group col-3">
-        <label asp-for="MaximumAmount">Maximum Amount Allowed</label>
-        <input class="form-control form-control-sm" readonly="readonly" asp-for="MaximumAmount" />
-    </div>
-    }else{
-    <div class="form-group col-3">
-        <label asp-for="MaximumAmount">Maximum Amount Allowed</label>
-        <input class="form-control form-control-sm" readonly="readonly" value="N/A">
-    </div>
-    }
-    <div class="form-group col-3">
-        <label asp-for="MaximumAmount">Price</label>
-        <div class="input-group input-group-sm">
-            <div class="input-group-prepend">
-                <div class="input-group-text">$</div>
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                <label asp-for="MaximumAmount">Maximum Amount Allowed</label>
+                <input class="form-control form-control-sm" readonly="readonly" asp-for="MaximumAmount" />
             </div>
-            <input type="number" readonly="readonly" asp-for="Price" class="form-control form-control-sm" />
+        </div>
+    }
+    else {
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                <label asp-for="MaximumAmount">Maximum Amount Allowed</label>
+                <input class="form-control form-control-sm" readonly="readonly" value="N/A">
+            </div>
+        </div>
+    }
+    <div class="col-sm-12 col-md-4">
+        <div class="form-group">
+            <label asp-for="MaximumAmount">Price</label>
+            <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                </div>
+                <input type="number" readonly="readonly" asp-for="Price" class="form-control form-control-sm" />
+            </div>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 ﻿@model CustomerAddressDetailModel
-<li class="list-group-item add-collection-item shadow border-0 m-3">
+<li class="list-group-item add-collection-item m-3 border-info">
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">Billing/Shipping</label>
         <select asp-for="Type" asp-items="@ListUtility.GetAddressTypes()" class="form-control form-control-sm w-25"></select>

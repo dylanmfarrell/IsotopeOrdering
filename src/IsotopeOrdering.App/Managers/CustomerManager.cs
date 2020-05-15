@@ -44,6 +44,7 @@ namespace IsotopeOrdering.App.Managers {
                 try {
                     Customer customer = _mapper.Map<Customer>(model);
                     int id = await _service.Update(customer);
+                    await _eventService.CreateEvent(EntityEventType.Customer, customer.Id, Events.Customer.Edited);
                     return ApplicationResult.Success("Customer updated successfully", id);
                 }
                 catch (Exception ex) {
@@ -116,7 +117,7 @@ namespace IsotopeOrdering.App.Managers {
             return await _service.GetCurrentCustomer<CustomerItemModel>();
         }
 
-        public async Task<CustomerItemModel?> GetItem(int id) {
+        public async Task<CustomerItemModel?> GetCustomerItem(int id) {
             return await _service.Get<CustomerItemModel>(id);
         }
 

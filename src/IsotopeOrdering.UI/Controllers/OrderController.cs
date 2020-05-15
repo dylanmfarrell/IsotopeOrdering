@@ -16,15 +16,18 @@ namespace IsotopeOrdering.UI.Controllers {
         private readonly ICustomerManager _customerManager;
         private readonly IItemManager _itemManager;
         private readonly IIsotopeOrderingAuthorizationService _authorizationService;
+        private readonly IShipmentManager _shipmentManager;
 
         public OrderController(IOrderManager orderManager,
             ICustomerManager customerManager,
             IItemManager itemManager,
-            IIsotopeOrderingAuthorizationService authorizationService) {
+            IIsotopeOrderingAuthorizationService authorizationService,
+            IShipmentManager shipmentManager) {
             _orderManager = orderManager;
             _customerManager = customerManager;
             _itemManager = itemManager;
             _authorizationService = authorizationService;
+            _shipmentManager = shipmentManager;
         }
 
         [HttpGet]
@@ -43,7 +46,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [Route("Order/Create/{customerId}")]
         [Authorize(Policies.AdminPolicy)]
         public async Task<IActionResult> Create(int customerId) {
-            CustomerItemModel? customer = await _customerManager.GetItem(customerId);
+            CustomerItemModel? customer = await _customerManager.GetCustomerItem(customerId);
             if (customer == null) {
                 return NotFound();
             }
@@ -152,7 +155,12 @@ namespace IsotopeOrdering.UI.Controllers {
                 SetApplicationResult(result);
                 return RedirectToAction(nameof(Center), "Order");
             }
-            return RedirectToAction(nameof(ShipmentController.Create), "Shipment", model.Shipment);
+            ApplicationResult shipmentResult = await _shipmentManager.Create(model.Shipment);
+            SetApplicationResult(shipmentResult);
+            if (!shipmentResult.IsSuccessful) {
+                return RedirectToAction(nameof(Center), "Order");
+            }
+            return RedirectToAction(nameof(ShipmentController.Detail), "Shipment", new { id = (int)shipmentResult.Data!});
         }
 
         [HttpGet]

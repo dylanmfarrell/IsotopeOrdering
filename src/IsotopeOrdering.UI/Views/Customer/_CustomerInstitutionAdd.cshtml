@@ -1,5 +1,5 @@
 ﻿@model CustomerInstitutionDetailModel
-<li class="list-group-item shadow border-0 m-3 add-collection-item">
+<li class="list-group-item border-info m-3 add-collection-item">
     <partial name="_Institution" model="new InstitutionDetailModel()" />
     <button type="button" class="btn btn-sm btn-success" onclick="addCustomerInstitution(this)" data-url="@Url.Action(nameof(CustomerController.AddCustomerInstituion))" data-target="#customer-institution-list">Add New Institution</button>
 </li>

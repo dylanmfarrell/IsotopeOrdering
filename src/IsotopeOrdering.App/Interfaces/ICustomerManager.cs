@@ -18,7 +18,7 @@ namespace IsotopeOrdering.App.Interfaces {
         Task<List<CustomerItemModel>> GetList();
         Task<List<CustomerSearchResult>> Search(string search);
         Task<CustomerDetailModel?> Get(int id);
-        Task<CustomerItemModel?> GetItem(int id);
+        Task<CustomerItemModel?> GetCustomerItem(int id);
         Task<CustomerItemModel?> GetCurrentCustomer();
         Task<ApplicationResult> Edit(CustomerDetailModel customer);
     }

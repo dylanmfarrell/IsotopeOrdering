@@ -14,51 +14,75 @@
             @if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
                 <a class="nav-link" id="admin-tab" data-toggle="pill" href="#admin-content" role="tab" aria-controls="admin-content" aria-selected="false">Admin</a>
             }
-            <input type="submit" class="nav-link btn btn-success btn-sm mt-5" value="Save Changes" />
+
         </div>
     </div>
     <div class="col-md-12 col-lg-10">
-        <div class="card">
-            <div class="card-body">
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="contact-content" role="tabpanel" aria-labelledby="contact-tab">
-
-                        <h5 class="card-title shadow p-4 mr-3 ml-3">Contact Information</h5>
-                        <div class="shadow p-4 mr-3 ml-3">
-                            <partial name="_Contact" for="Contact" />
-                            @if (!Model.ParentCustomerId.HasValue) {
-                                <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="@nameof(CustomerController.MyTeam)">
-                                    <i class="fas fa-users"></i>
-                                    View My Team
-                                </a>
-                            }
-                        </div>
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="contact-content" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Contact Information</h5>
                     </div>
-                    <div class="tab-pane fade" id="address-content" role="tabpanel" aria-labelledby="address-tab">
-                        <h5 class="card-title shadow p-4 mr-3 ml-3">Addresses</h5>
-                        <partial name="_CustomerAddressList" for="Addresses" />
+                    <div class="card-body">
+                        <partial name="_Contact" for="Contact" />
+                        @if (!Model.ParentCustomerId.HasValue) {
+                            <a class="btn btn-sm btn-info" asp-controller="Customer" asp-action="@nameof(CustomerController.MyTeam)">
+                                <i class="fas fa-users"></i>
+                                View My Team
+                            </a>
+                        }
                     </div>
-                    <div class="tab-pane fade" id="institution-content" role="tabpanel" aria-labelledby="institution-tab">
-                        <h5 class="card-title shadow p-4 mr-3 ml-3">Institution Information</h5>
-                        <partial name="_CustomerInstitutionList" for="Institutions" />
-                    </div>
-                    <div class="tab-pane fade" id="document-content" role="tabpanel" aria-labelledby="document-tab">
-                        <h5 class="card-title shadow p-4 mr-3 ml-3">Documents</h5>
-                        <partial name="_CustomerDocumentList" for="Documents" />
-                    </div>
-                    @if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
-                        <div class="tab-pane fade" id="admin-content" role="tabpanel" aria-labelledby="admin-tab">
-                            <h5 class="card-title shadow p-4 mr-3 ml-3">Admin</h5>
-                            <partial name="_CustomerFormAdmin" for="@Model" />
-                        </div>
-                    }
-                    else {
-                        <input type="hidden" asp-for="Status" />
-                        <input type="hidden" asp-for="InternalNotes" />
-                    }
                 </div>
             </div>
+            <div class="tab-pane fade" id="address-content" role="tabpanel" aria-labelledby="address-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Addresses</h5>
+                    </div>
+                    <div class="card-body">
+                        <partial name="_CustomerAddressList" for="Addresses" />
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="institution-content" role="tabpanel" aria-labelledby="institution-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Institution Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <partial name="_CustomerInstitutionList" for="Institutions" />
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="document-content" role="tabpanel" aria-labelledby="document-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Documents</h5>
+                    </div>
+                    <div class="card-body">
+                        <partial name="_CustomerDocumentList" for="Documents" />
+                    </div>
+                </div>
+            </div>
+            @if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
+                <div class="tab-pane fade" id="admin-content" role="tabpanel" aria-labelledby="admin-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Admin</h5>
+                        </div>
+                        <div class="card-body">
+                            <partial name="_CustomerFormAdmin" for="@Model" />
+                        </div>
+                    </div>
+                </div>
+            }
+            else {
+                <input type="hidden" asp-for="Status" />
+                <input type="hidden" asp-for="InternalNotes" />
+            }
         </div>
+        <input type="submit" class="btn btn-success col-12 mt-3" value="Save Changes" />
     </div>
 </div>
 

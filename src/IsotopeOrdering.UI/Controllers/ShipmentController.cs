@@ -17,8 +17,8 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index() {
-            return View(await _shipmentManager.GetList());
+        public async Task<IActionResult> MyShipmnents() {
+            return View(await _shipmentManager.GetListForCurrentCustomer());
         }
 
         [HttpGet]
@@ -30,35 +30,18 @@ namespace IsotopeOrdering.UI.Controllers {
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Create(int orderId) {
-            ShipmentDetailModel? model = await _shipmentManager.GetShipmentFormForOrder(orderId);
-            if (model == null) {
-                return NotFound();
-            }
-            return View(model);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Create(int[] orderItemIds) {
-            ShipmentDetailModel? model = await _shipmentManager.GetShipmentFormForItems(orderItemIds);
-            if (model == null) {
-                return NotFound();
-            }
-            return View(model);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Create(ShipmentDetailModel model) {
             if (ModelState.IsValid) {
                 model.Status = ShipmentStatus.Created;
                 ApplicationResult result = await _shipmentManager.Create(model);
-                return ApplicationResult(nameof(Index), result);
+                return ApplicationResult(nameof(MyShipmnents), result);
             }
             return View(model);
         }
 
         [HttpGet]
+        [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Edit(int id) {
             ShipmentDetailModel? model = await _shipmentManager.Get(id);
             if (model == null) {
@@ -68,10 +51,11 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpPost]
+        [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Edit(ShipmentDetailModel model) {
             if (ModelState.IsValid) {
                 ApplicationResult result = await _shipmentManager.Edit(model);
-                return ApplicationResult(nameof(Index), result);
+                return ApplicationResult(nameof(Center), result);
             }
             return View(model);
         }
@@ -79,10 +63,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpGet]
         [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Center() {
-            return View(await _shipmentManager.GetCenterList());
+            return View(await _shipmentManager.GetCenter());
         }
-
     }
-
-
 }

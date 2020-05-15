@@ -29,7 +29,7 @@ namespace IsotopeOrdering.Infrastructure {
 
         public string LastName => string.Empty;
 
-        public string EducationId => GetClaimValue(JwtClaimTypes.Subject);
+        public string EducationId => GetClaimValue(JwtClaimTypes.PreferredUserName);
 
         public string PhoneNumber => GetClaimValue(JwtClaimTypes.PhoneNumber);
 

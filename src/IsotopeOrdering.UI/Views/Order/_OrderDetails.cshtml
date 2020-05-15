@@ -1,44 +1,39 @@
 ﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
 @model OrderDetailModel
 <div class="card">
-    <div class="card-body">
-        <h5 class="card-title shadow p-4 mr-3 ml-3">
-            Order Details <span class="badge badge-primary">@Model.Status</span>
-            @if (Model.CanEdit) {
-                <a type="button" class="btn btn-info btn-sm float-right" asp-action="@nameof(OrderController.Edit)" asp-controller="Order" asp-route-id="@Model.Id">Edit Order</a>
-            }
+    <div class="card-header">
+        <h5 class="card-title mb-0">
+            Order Details
         </h5>
-        <div class="card shadow border-0 m-3">
-            <div class="card-body">
-                @if (await AuthorizationService.AuthorizeAsync(Policies.ReviewerPolicy)) {
-                    <h5 class="card-title">Customer</h5>
-                    <partial name="_CustomerItemView" for="Customer" />
-                }
-                <h5 class="card-title mt-3">Selected Materials</h5>
-                <partial name="_OrderCart" for="Cart" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }" />
+    </div>
+    <div class="card-body">
+        <div class="border rounded mb-3 p-3 mt-2">
+            <partial name="_CustomerItemView" for="Customer" />
+        </div>
+        <div class="border rounded p-3 mb-3">
+            <h6 class="card-subtitle text-muted">Selected Materials</h6>
+            <partial name="_OrderCart" for="Cart" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }" />
+        </div>
+        <div class="border rounded p-3 mb-3" id="shipping-information">
+            <h6 class="card-subtitle text-muted">Shipping Information</h6>
+            <partial name="_OrderAddress" for="ShippingAddress" />
+            <div class="form-group">
+                <label>FedEx Number</label>
+                <input type="text" class="form-control form-control-sm" asp-for="FedExNumber" readonly />
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-12">
-                <div class="card shadow border-0 m-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Shipping Information</h5>
-                        <partial name="_OrderAddress" for="ShippingAddress" />
-                        <div class="form-group">
-                            <label>FedEx Number</label>
-                            <input type="text" class="form-control-plaintext form-control-sm" asp-for="FedExNumber" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card shadow border-0 m-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Billing Information</h5>
-                        <partial name="_OrderAddress" for="BillingAddress" />
-                    </div>
-                </div>
-            </div>
+        <div class="border rounded p-3 mb-3" id="billing-information">
+            <h6 class="card-subtitle text-muted">Billing Information</h6>
+            <partial name="_OrderAddress" for="BillingAddress" />
+        </div>
+        <div class="form-group border rounded p-3">
+            <h6 class="card-subtitle text-muted">Order Notes</h6>
+            <textarea asp-for="Notes" class="form-control form-control-sm" rows="5" readonly></textarea>
         </div>
     </div>
+    @if (Model.CanEdit) {
+        <div class="card-footer p-0">
+            <a type="button" class="btn btn-info col-12" asp-action="@nameof(OrderController.Edit)" asp-controller="Order" asp-route-id="@Model.Id">Edit Order</a>
+        </div>
+    }
 </div>

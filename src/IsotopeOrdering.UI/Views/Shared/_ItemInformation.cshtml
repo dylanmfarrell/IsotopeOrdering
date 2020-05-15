@@ -1,26 +1,36 @@
 ﻿@model ItemDetailModel
 <partial name="_AuditInformation" for="@Model" />
 <div class="form-row">
-    <div class="form-group col-3">
-        <label asp-for="Name">Material</label>
-        <input class="form-control form-control-sm" readonly asp-for="Name">
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="Name">Material</label>
+            <input class="form-control form-control-sm" readonly asp-for="Name">
+        </div>
     </div>
-    <div class="form-group col-3">
-        <label asp-for="Target"></label>
-        <input class="form-control form-control-sm" readonly asp-for="Target">
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="Target"></label>
+            <input class="form-control form-control-sm" readonly asp-for="Target">
+        </div>
     </div>
-    <div class="form-group col-3">
-        <label asp-for="Reaction"></label>
-        <input class="form-control form-control-sm" readonly asp-for="Reaction">
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="Reaction"></label>
+            <input class="form-control form-control-sm" readonly asp-for="Reaction">
+        </div>
     </div>
-    <div class="form-group col-3">
-        <label asp-for="FinalComposition">Final Composition</label>
-        <input class="form-control form-control-sm" readonly asp-for="FinalComposition">
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="FinalComposition">Final Composition</label>
+            <input class="form-control form-control-sm" readonly asp-for="FinalComposition">
+        </div>
     </div>
+    @if (!string.IsNullOrEmpty(@Model.Description)) {
+        <div class="col-sm-12 col-md-3">
+            <div class="form-group">
+                <label asp-for="Description">Description</label>
+                <input class="form-control form-control-sm" readonly asp-for="Description">
+            </div>
+        </div>
+    }
 </div>
-@if (!string.IsNullOrEmpty(@Model.Description)) {
-    <div class="form-group">
-        <label asp-for="Description">Description</label>
-        <input class="form-control form-control-sm" readonly asp-for="Description">
-    </div>
-}

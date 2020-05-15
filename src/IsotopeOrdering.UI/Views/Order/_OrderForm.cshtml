@@ -13,81 +13,91 @@
         </div>
     </div>
     <div class="col-md-12 col-lg-10">
-        <div class="card">
-            <div class="card-body">
-                <div class="card shadow-sm border-0 mb-5">
+        <div class="border rounded mb-5 p-3 mt-2">
+            <partial name="_CustomerItemView" for="Customer" />
+        </div>
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="item-content" role="tabpanel" aria-labelledby="item-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Select Materials</h5>
+                    </div>
                     <div class="card-body">
-                        <partial name="_CustomerItemView" for="Customer" />
+                        <partial name="_OrderItemList" for="Items" />
+                    </div>
+                    <div class="card-footer p-0">
+                        <button class="btn btn-info col-12 border-0 rounded-0" type="button" onclick="moveTab('#shipping-tab')">Go to Shipping Information <i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="item-content" role="tabpanel" aria-labelledby="item-tab">
-                        <h5 class="card-title shadow p-4 mr-3 ml-3">Select Materials</h5>
-                        <partial name="_OrderItemList" for="Items" />
-                        <button class="btn btn-info col-12 mt-5" type="button" onclick="moveTab('#shipping-tab')">Go to Shipping Information <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="tab-pane fade" id="shipping-content" role="tabpanel" aria-labelledby="shipping-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Shipping Information</h5>
                     </div>
-                    <div class="tab-pane fade" id="shipping-content" role="tabpanel" aria-labelledby="shipping-tab">
-                        <h5 class="card-title shadow p-4 mr-3 ml-3">Shipping Information</h5>
+                    <div class="card-body">
                         <i>Select an existing address to ship to or enter a new address</i>
                         <partial name="_OrderAddressSelect" for="ShippingAddresses" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.AddressType, AddressType.Shipping} ,{ ViewDataKeys.CurrentAddress,Model.ShippingAddress }}" />
-                        <div class="form-group mt-3 shadow p-3">
+                        <div class="form-group mt-3 border-info border p-3">
                             <label>FedEx Number</label>
-                            <input type="text" class="form-control form-control-sm" onblur="onFedexNumberChanged(this);" asp-for="@Model.FedExNumber" />
+                            <input type="text" class="form-control form-control-sm" onblur="onFedexNumberChanged(this);" value="@Model.FedExNumber" />
                         </div>
-                        <div class="btn btn-group col-12 mt-5">
+                    </div>
+                    <div class="card-footer p-0">
+                        <div class="btn btn-group col-12 border-0 rounded-0 p-0">
                             <button class="btn btn-primary" type="button" onclick="moveTab('#item-tab')"><i class="fas fa-arrow-left"></i> Go back to Material Selection </button>
                             <button class="btn btn-info" type="button" onclick="moveTab('#billing-tab')">Go to Billing Information <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="billing-content" role="tabpanel" aria-labelledby="billing-tab">
-                        <h5 class="card-title shadow p-4 mr-3 ml-3">Billing Information</h5>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="billing-content" role="tabpanel" aria-labelledby="billing-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Billing Information</h5>
+                    </div>
+                    <div class="card-body">
                         <i>Select an existing address to bill to or enter a new address</i>
                         <partial name="_OrderAddressSelect" for="BillingAddresses" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.AddressType, AddressType.Billing},{ ViewDataKeys.CurrentAddress,Model.BillingAddress } }" />
-                        <div class="btn btn-group col-12 mt-5">
+                    </div>
+                    <div class="card-footer p-0">
+                        <div class="btn btn-group col-12 border-0 rounded-0 p-0">
                             <button class="btn btn-primary" type="button" onclick="moveTab('#shipping-tab')"><i class="fas fa-arrow-left"></i> Go back to Shipping Information </button>
                             <button class="btn btn-info" type="button" onclick="moveTab('#review-tab')">Review Your Order <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="review-content" role="tabpanel" aria-labelledby="review-tab">
-                        <h5 class="card-title shadow p-4 mr-3 ml-3">Review Order</h5>
-                        <div class="card  shadow border-0 m-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Selected Materials</h5>
-                                <partial name="_OrderCart" for="Cart" />
+                </div>
+            </div>
+            <div class="tab-pane fade" id="review-content" role="tabpanel" aria-labelledby="review-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Review Order</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="border rounded p-3 mb-3">
+                            <h6 class="card-subtitle text-muted">Selected Materials</h6>
+                            <partial name="_OrderCart" for="Cart" />
+                        </div>
+                        <div class="border rounded p-3 mb-3" id="shipping-information">
+                            <h6 class="card-subtitle text-muted">Shipping Information</h6>
+                            <partial name="_OrderAddress" for="ShippingAddress" />
+                            <div class="form-group">
+                                <label>FedEx Number</label>
+                                <input type="text" class="form-control form-control-sm" asp-for="FedExNumber" readonly />
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <div class="card shadow border-0 m-3">
-                                    <div class="card-body" id="shipping-information">
-                                        <h5 class="card-title">Shipping Information</h5>
-                                        <partial name="_OrderAddress" for="ShippingAddress" />
-                                        <div class="form-group">
-                                            <label>FedEx Number</label>
-                                            <input type="text" class="form-control-plaintext form-control-sm" asp-for="FedExNumber" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="card shadow border-0 m-3">
-                                    <div class="card-body" id="billing-information">
-                                        <h5 class="card-title">Billing Information</h5>
-                                        <partial name="_OrderAddress" for="BillingAddress" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 mt-3">
-                                <div class="card shadow border-0 m-3">
-                                    <div class="form-group p-3">
-                                        <label>Order Notes</label>
-                                        <textarea asp-for="Notes" class="form-control form-control-sm" rows="5"></textarea>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="border rounded p-3 mb-3" id="billing-information">
+                            <h6 class="card-subtitle text-muted">Billing Information</h6>
+                            <partial name="_OrderAddress" for="BillingAddress" />
                         </div>
-                        <div class="btn btn-group col-12 mt-5">
-                            <button class="btn btn-primary" type="button" onclick="moveTab('#shipping-tab')"><i class="fas fa-arrow-left"></i> Go back to Billing Information </button>
+                        <div class="form-group border rounded p-3">
+                            <label>Order Notes</label>
+                            <textarea asp-for="Notes" class="form-control form-control-sm" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="card-footer p-0">
+                        <div class="btn btn-group col-12 border-0 rounded-0 p-0">
+                            <button class="btn btn-primary" type="button" onclick="moveTab('#billing-tab')"><i class="fas fa-arrow-left"></i> Go back to Billing Information </button>
                             @if (Model.Id > 0) {
                                 <button name="SubmitAction" type="submit" class="btn btn btn-danger" value="@OrderStatus.Cancelled">Cancel Order</button>
                             }

@@ -1,7 +1,9 @@
 ﻿namespace IsotopeOrdering.App {
+
     public static class Events {
         public static class Customer {
             public const string Created = "Customer created";
+            public const string Edited = "Customer edited";
             public const string ObtainedInitiationForm = "Customer has obtained initiation form";
             public const string SubmittedInitiationForm = "Customer has submitted initiation form";
             public const string ResubmittedInitiationForm = "Customer has resubmitted initiation form";
@@ -23,7 +25,8 @@
         }
 
         public static class Shipping {
-
+            public const string Created = "Shipment created";
+            public const string Edited = "Shipment edited";
         }
     }
 

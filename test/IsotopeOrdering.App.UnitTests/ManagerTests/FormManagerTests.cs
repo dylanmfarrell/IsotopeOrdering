@@ -166,5 +166,37 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             ApplicationResult result = await manager.UpdateFormStatus(1, 1, CustomerFormStatus.Approved);
             CustomAssertions.AssertValidationErrorsDoNotExist(result);
         }
+
+        [Fact]
+        public async void Get_List_AsReviewer() {
+            var mockFormService = new Mock<IFormService>();
+            mockFormService.Setup(x => x.GetCustomerForms<FormItemModel>())
+                .ReturnsAsync(new List<FormItemModel>() { new FormItemModel() });
+
+            var mockAuthorizationService = TestUtilities.GetAuthorizationService(Policies.ReviewerPolicy);
+
+            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), Mock.Of<IInstitutionService>(), mockAuthorizationService, Mock.Of<ICustomerService>(), _eventService);
+
+            Assert.NotEmpty(await manager.GetList());
+        }
+
+        [Fact]
+        public async void Get_List_AsCustomer() {
+            var mockFormService = new Mock<IFormService>();
+            mockFormService.Setup(x => x.GetCustomerForms<FormItemModel>(It.IsAny<int>()))
+                .ReturnsAsync(new List<FormItemModel>() { new FormItemModel() });
+
+            var mockAuthorizationService = TestUtilities.GetAuthorizationService(Policies.CustomerPolicy);
+
+            var mockCustomerService = new Mock<ICustomerService>();
+            mockCustomerService.Setup(x => x.GetCurrentCustomer<CustomerItemModel>())
+                .ReturnsAsync(new CustomerItemModel());
+
+            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), Mock.Of<IInstitutionService>(), mockAuthorizationService, mockCustomerService.Object, _eventService);
+
+            Assert.NotEmpty(await manager.GetList());
+        }
     }
 }

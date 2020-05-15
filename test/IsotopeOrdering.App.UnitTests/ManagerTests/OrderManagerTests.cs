@@ -6,6 +6,7 @@ using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Entities;
+using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
@@ -41,5 +42,81 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             OrderDetailModel result = await manager.GetOrderForm(model);
         }
 
+        [Fact]
+        public async void Get_Order_Form_Can_Edit_As_Reviewer() {
+            var mockItemService = new Mock<IItemService>();
+            mockItemService.Setup(x => x.GetListForOrder<OrderItemDetailModel>(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(new List<OrderItemDetailModel>());
+
+            var mockCustomerService = new Mock<ICustomerService>();
+            mockCustomerService.Setup(x => x.GetAddressListForOrder<OrderAddressDetailModel>(It.IsAny<int>(), It.IsAny<int?>()))
+                .ReturnsAsync(new List<OrderAddressDetailModel>());
+
+            var mockOrderService = new Mock<IOrderService>();
+            mockOrderService.Setup(x => x.Get<OrderDetailModel>(It.IsAny<int>()))
+                .ReturnsAsync(new OrderDetailModel() {
+                    Status = OrderStatus.Sent,
+                    Customer = new CustomerItemModel()
+                });
+
+            var auth = TestUtilities.GetAuthorizationService(Policies.ReviewerPolicy);
+
+            IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, _eventService, auth);
+
+            Assert.NotNull(await manager.GetOrderForm(1));
+        }
+
+        [Fact]
+        public async void Get_Order_Form_Cannot_Edit() {
+            var mockItemService = new Mock<IItemService>();
+            mockItemService.Setup(x => x.GetListForOrder<OrderItemDetailModel>(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(new List<OrderItemDetailModel>());
+
+            var mockCustomerService = new Mock<ICustomerService>();
+            mockCustomerService.Setup(x => x.GetAddressListForOrder<OrderAddressDetailModel>(It.IsAny<int>(), It.IsAny<int?>()))
+                .ReturnsAsync(new List<OrderAddressDetailModel>());
+
+            var mockOrderService = new Mock<IOrderService>();
+            mockOrderService.Setup(x => x.Get<OrderDetailModel>(It.IsAny<int>()))
+                .ReturnsAsync(new OrderDetailModel() {
+                    Status = OrderStatus.Approved,
+                    Customer = new CustomerItemModel()
+                });
+
+            var auth = TestUtilities.GetAuthorizationService(Policies.ReviewerPolicy);
+
+            IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, _eventService, auth);
+
+            Assert.Null(await manager.GetOrderForm(1));
+        }
+
+        [Fact]
+        public async void Get_Order_Form_Can_Edit_AsCustomer() {
+            var mockItemService = new Mock<IItemService>();
+            mockItemService.Setup(x => x.GetListForOrder<OrderItemDetailModel>(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(new List<OrderItemDetailModel>());
+
+            var mockCustomerService = new Mock<ICustomerService>();
+            mockCustomerService.Setup(x => x.GetAddressListForOrder<OrderAddressDetailModel>(It.IsAny<int>(), It.IsAny<int?>()))
+                .ReturnsAsync(new List<OrderAddressDetailModel>());
+            mockCustomerService.Setup(x => x.GetCurrentCustomer<CustomerItemModel>())
+                .ReturnsAsync(new CustomerItemModel());
+
+            var mockOrderService = new Mock<IOrderService>();
+            mockOrderService.Setup(x => x.Get<OrderDetailModel>(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(new OrderDetailModel() {
+                    Status = OrderStatus.Approved,
+                    Customer = new CustomerItemModel()
+                });
+
+            var auth = TestUtilities.GetAuthorizationService(Policies.CustomerPolicy);
+
+            IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, _eventService, auth);
+
+            Assert.Null(await manager.GetOrderForm(1));
+        }
     }
 }

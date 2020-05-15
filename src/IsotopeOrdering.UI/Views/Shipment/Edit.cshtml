@@ -1,7 +1,7 @@
-﻿
+﻿@model ShipmentDetailModel
 @{
-    ViewData["Title"] = "Edit";
+    ViewData[ViewDataKeys.Title] = "Edit Shipment";
 }
-
-<h1>Edit</h1>
-
+<form method="post" asp-action="@nameof(ShipmentController.Edit)" asp-controller="Shipment">
+    <partial name="_ShipmentForm" for="@Model" />
+</form>

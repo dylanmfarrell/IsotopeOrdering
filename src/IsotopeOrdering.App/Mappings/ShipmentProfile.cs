@@ -5,8 +5,6 @@ using IsotopeOrdering.Domain.Entities;
 namespace IsotopeOrdering.App.Mappings {
     public class ShipmentProfile : Profile {
         public ShipmentProfile() {
-            CreateMap<Shipment, ShipmentDetailModel>();
-
             CreateMap<OrderDetailModel, ShipmentDetailModel>()
                 .ForMember(x => x.Items, opt => opt.MapFrom(x => x.Cart))
                 .ForMember(x => x.Shipping, opt => opt.MapFrom(x => x.ShippingAddress))
@@ -25,7 +23,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.CourierName, opt => opt.MapFrom(x => x.CourierName))
                 .ForMember(x => x.Document, opt => opt.MapFrom(x => x.Document))
                 .ForMember(x => x.ShippingCharge, opt => opt.MapFrom(x => x.ShippingCharge))
-                .ForAllOtherMembers(x => x.Ignore());
+                .ReverseMap();
 
             CreateMap<ShipmentItemDetailModel, ShipmentItem>()
                 .ForMember(x => x.OrderItemId, opt => opt.MapFrom(x => x.OrderItemId))
@@ -33,7 +31,9 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.ShippedRadioactivity, opt => opt.MapFrom(x => x.ShippedRadioactivity))
                 .ForMember(x => x.DamagedReason, opt => opt.MapFrom(x => x.DamagedReason))
-                .ForAllOtherMembers(x => x.Ignore());
+                .ForMember(x => x.Shipment, opt => opt.Ignore())
+                .ForMember(x => x.ShipmentId, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }

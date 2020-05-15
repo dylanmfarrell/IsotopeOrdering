@@ -24,7 +24,7 @@
             public const string Cancelled = "Order Cancelled";
         }
 
-        public static class Shipping {
+        public static class Shipment {
             public const string Created = "Shipment created";
             public const string Edited = "Shipment edited";
         }

@@ -5,13 +5,7 @@
         Shipments
     </a>
     <div class="dropdown-menu bg-dark" aria-labelledby="orderDropDown">
-        @if (await AuthorizationService.AuthorizeAsync(User, Policies.ReviewerPolicy)) {
-            <a class="dropdown-item" asp-controller="Shipment" asp-action="@nameof(ShipmentController.Create)">
-                <i class="fas fa-plus"></i>
-                Create Shipment
-            </a>
-        }
-        <a class="dropdown-item" asp-controller="Shipment" asp-action="@nameof(ShipmentController.Index)">
+        <a class="dropdown-item" asp-controller="Shipment" asp-action="@nameof(ShipmentController.MyShipmnents)">
             <i class="fas fa-boxes"></i>
             View My Shipments
         </a>

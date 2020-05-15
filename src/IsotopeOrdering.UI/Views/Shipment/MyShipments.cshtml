@@ -1,7 +1,5 @@
-﻿
+﻿@model List<ShipmentItemModel>
 @{
-    ViewData["Title"] = "MyShipments";
+    ViewData[ViewDataKeys.Title] = "My Shipments";
 }
-
-<h1>MyShipments</h1>
-
+<partial name="_ShipmentList" for="@Model"/>

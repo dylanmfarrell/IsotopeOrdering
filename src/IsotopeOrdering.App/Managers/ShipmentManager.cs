@@ -41,7 +41,7 @@ namespace IsotopeOrdering.App.Managers {
             if (result.IsValid) {
                 Shipment shipment = _mapper.Map<Shipment>(model);
                 int id = await _service.Create(shipment);
-                await _eventManager.CreateEvent(EntityEventType.Shipping, id, Events.Shipping.Created);
+                await _eventManager.CreateEvent(EntityEventType.Shipping, id, Events.Shipment.Created);
                 return ApplicationResult.Success("Shipment created", id);
             }
             return ApplicationResult.Error(result);
@@ -56,7 +56,7 @@ namespace IsotopeOrdering.App.Managers {
                     shipment.IsDeleted = true;
                 }
                 int id = await _service.Update(shipment);
-                await _eventManager.CreateEvent(EntityEventType.Shipping, id, Events.Shipping.Edited);
+                await _eventManager.CreateEvent(EntityEventType.Shipping, id, Events.Shipment.Edited);
                 return ApplicationResult.Success("Shipment edited", id);
             }
             return ApplicationResult.Error(result);

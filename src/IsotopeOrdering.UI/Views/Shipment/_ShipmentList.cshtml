@@ -1,1 +1,32 @@
-﻿
+﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
+@model List<ShipmentItemModel>
+@{
+    bool isAdmin = await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy);
+    string? action = ViewData[ViewDataKeys.Action] == null ? nameof(OrderController.Detail) : ViewData[ViewDataKeys.Action].ToString();
+}
+<div class="table-responsive table-fadein mt-3">
+    <table class="table table-hover table-bordered table-sm table-datatable">
+        <thead>
+            <tr>
+                <th>Shipment Number</th>
+                <th>Date Created</th>
+                <th>Status</th>
+                @if (isAdmin) {
+                    <th>Audit Information</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr class="clickable" onclick="window.location='@Url.Action(action,"Shipment",new { id = item.Id })'">
+                    <td>@item.Id</td>
+                    <td>@item.CreatedDate</td>
+                    <td>@item.Status.ToString()</td>
+                    @if (isAdmin) {
+                        <td><partial name="_AuditInformationView" for="@item" /></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

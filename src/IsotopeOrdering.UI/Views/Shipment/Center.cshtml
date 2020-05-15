@@ -1,7 +1,42 @@
-﻿
+﻿@model ShipmentCenterModel
 @{
-    ViewData["Title"] = "Center";
+    ViewData[ViewDataKeys.Title] = "Shipment Center";
 }
+<div class="row">
+    <div class="col-md-12 col-lg-2">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="ready-tab" data-toggle="pill" href="#ready-content" role="tab" aria-controls="ready-content" aria-selected="true">
+                Ready To Ship <span class="badge badge-light">@Model.ShipmentsReadyToShipCount</span>
+            </a>
+            <a class="nav-link" id="complete-tab" data-toggle="pill" href="#completed-content" role="tab" aria-controls="completed-content" aria-selected="true">
+                Completed Shipments <span class="badge badge-light">@Model.ShipmentsCompleteCount</span>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-10">
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="ready-content" role="tabpanel" aria-labelledby="ready-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Shipments Ready To Ship</h5>
+                    </div>
+                    <div class="card-body">
+                        <partial name="_ShipmentList" model="Model.ShipmentsReadyToShip" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Action,nameof(ShipmentController.Edit)} }" />
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="completed-content" role="tabpanel" aria-labelledby="completed-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Completed Shipments</h5>
+                    </div>
+                    <div class="card-body">
+                        <partial name="_ShipmentList" model="Model.ShipmentsCompleted" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h1>Center</h1>
 

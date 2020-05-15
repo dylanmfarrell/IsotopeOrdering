@@ -162,6 +162,49 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             Assert.NotNull(await manager.Get(1));
         }
 
+        [Fact]
+        public async void Get_Customer_Details_AsNonAdmin_AsParent() {
+            IUserService userService = TestUtilities.GetUserService();
+            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile());
+            IIsotopeOrderingAuthorizationService authorizationService = TestUtilities.GetAuthorizationService(Policies.CustomerPolicy);
+
+            var mock = new Mock<ICustomerService>();
+            mock.Setup(x => x.Get<CustomerDetailModel>(It.IsAny<int>()))
+                .ReturnsAsync(new Fixture().Create<CustomerDetailModel>());
+
+            mock.Setup(x => x.GetCurrentCustomer<CustomerItemModel>())
+                .ReturnsAsync(new CustomerItemModel() {
+                    Id = 1
+                });
+
+            mock.Setup(x => x.GetChild<CustomerDetailModel>(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(new CustomerDetailModel());
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService);
+
+            Assert.NotNull(await manager.Get(1));
+            Assert.NotNull(await manager.Get(2));
+        }
+
+        [Fact]
+        public async void Get_Customer_Details_AsNonAdmin_Child() {
+            IUserService userService = TestUtilities.GetUserService();
+            IMapper mapper = TestUtilities.GetMapper(new CustomerProfile());
+            IIsotopeOrderingAuthorizationService authorizationService = TestUtilities.GetAuthorizationService(Policies.CustomerPolicy);
+
+            var mock = new Mock<ICustomerService>();
+            mock.Setup(x => x.Get<CustomerDetailModel>(It.IsAny<int>()))
+                .ReturnsAsync(new Fixture().Create<CustomerDetailModel>());
+            mock.Setup(x => x.GetCurrentCustomer<CustomerItemModel>())
+                .ReturnsAsync(new CustomerItemModel() {
+                    Id = 2,
+                    ParentCustomerId = 1
+                });
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService);
+
+            Assert.NotNull(await manager.Get(2));
+        }
+
+
         [Theory, AutoMoqData]
         public async void Edit_Customer_With_Validation_Errors(CustomerDetailModel model) {
 

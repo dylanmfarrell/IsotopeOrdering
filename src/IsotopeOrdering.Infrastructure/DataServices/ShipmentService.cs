@@ -17,39 +17,29 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<T?> Get<T>(int id) where T : class {
-            return await _mapper.ProjectTo<T>(
-                _context.Shipments
-                .Include(x => x.Items)
-                    .ThenInclude(x => x.OrderItem)
-                        .ThenInclude(x => x.ItemConfiguration)
-                .Where(x => x.Id == id)
-                ).SingleOrDefaultAsync();
+            return await _mapper.ProjectTo<T>(_context.Shipments.Details().Where(x => x.Id == id)).SingleOrDefaultAsync();
         }
 
         public async Task<T?> Get<T>(int id, int customerId, int? parentId) where T : class {
-            return await _mapper.ProjectTo<T>(
-                _context.Shipments
-                .Include(x => x.Items)
-                    .ThenInclude(x => x.OrderItem)
-                        .ThenInclude(x => x.ItemConfiguration)
-                .Include(x => x.Items)
-                    .ThenInclude(x => x.OrderItem)
-                        .ThenInclude(x => x.Order)
-                .Where(x => x.Id == id 
-                    && x.Items.Select(x => x.OrderItem).All(x => x.Order.CustomerId == parentId.GetValueOrDefault(customerId)))
-                ).SingleOrDefaultAsync();
+            return await _mapper.ProjectTo<T>(_context.Shipments.Details().WhereForCustomer(customerId, parentId).Where(x => x.Id == id)).SingleOrDefaultAsync();
+        }
+
+        public async Task<List<T>> GetForOrder<T>(int orderId) where T : class {
+            return await _mapper.ProjectTo<T>(_context.Shipments.Details().WhereForOrder(orderId).AsNoTracking()).ToListAsync();
         }
 
         public async Task<List<T>> GetList<T>() {
-            throw new System.NotImplementedException();
+            return await _mapper.ProjectTo<T>(_context.Shipments.Details().AsNoTracking()).ToListAsync();
         }
 
         public async Task<List<T>> GetListForCustomer<T>(int customerId, int? parentId) {
-            throw new System.NotImplementedException();
+            return await _mapper.ProjectTo<T>(_context.Shipments.Details().WhereForCustomer(customerId, parentId).AsNoTracking()).ToListAsync();
         }
 
-        public async Task UpdateStatus(int orderId, ShipmentStatus status) {
-            throw new System.NotImplementedException();
+        public async Task UpdateStatus(int id, ShipmentStatus status) {
+            Shipment shipment = await _context.Shipments.FindAsync(id);
+            shipment.Status = status;
+            await _context.SaveChangesAsync();
         }
     }
 }

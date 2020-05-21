@@ -1,4 +1,5 @@
-﻿using IsotopeOrdering.App.Models.Shared;
+﻿using IsotopeOrdering.App.Models.Items;
+using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 
 namespace IsotopeOrdering.App.Models.Details {
     public class ShipmentDetailModel : ModelBase {
+        public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
         public AddressDetailModel Shipping { get; set; } = new AddressDetailModel();
         public DocumentDetailModel Document { get; set; } = new DocumentDetailModel();
         public string CourierName { get; set; } = null!;

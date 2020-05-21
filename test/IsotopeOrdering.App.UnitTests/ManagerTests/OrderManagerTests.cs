@@ -38,7 +38,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var mockInstitutionService = new Mock<IInstitutionService>();
 
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
-            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, Mock.Of<IShipmentService>(), _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
 
             OrderDetailModel result = await manager.GetOrderForm(model);
         }
@@ -63,7 +63,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var auth = TestUtilities.GetAuthorizationService(Policies.ReviewerPolicy);
 
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
-            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, _eventService, auth);
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, Mock.Of<IShipmentService>(), _eventService, auth);
 
             Assert.NotNull(await manager.GetOrderForm(1));
         }
@@ -88,7 +88,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var auth = TestUtilities.GetAuthorizationService(Policies.ReviewerPolicy);
 
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
-            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, _eventService, auth);
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, Mock.Of<IShipmentService>(), _eventService, auth);
 
             Assert.Null(await manager.GetOrderForm(1));
         }
@@ -115,7 +115,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var auth = TestUtilities.GetAuthorizationService(Policies.CustomerPolicy);
 
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
-            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, _eventService, auth);
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, Mock.Of<IShipmentService>(), _eventService, auth);
 
             Assert.Null(await manager.GetOrderForm(1));
         }
@@ -131,7 +131,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             order.Cart.Clear();
 
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile(), new OrderProfile());
-            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, Mock.Of<IShipmentService>(), _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
 
             CustomAssertions.AssertValidationErrorsExist(await manager.Create(order));
         }
@@ -152,8 +152,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             order.Cart.Add(TestUtilities.GetValidOrderItem());
             order.Status = OrderStatus.Sent;
 
-            IMapper mapper = TestUtilities.GetMapper(new ItemProfile(), new OrderProfile(),new SharedProfile());
-            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
+            IMapper mapper = TestUtilities.GetMapper(new ItemProfile(), new OrderProfile(), new SharedProfile());
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, Mock.Of<IShipmentService>(), _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
 
             ApplicationResult result = await manager.Create(order);
             _output.WriteLine(result.Message);
@@ -164,12 +164,12 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
         public async void Get_List_For_Customer() {
             var mockCustomerService = new Mock<ICustomerService>();
             mockCustomerService.Setup(x => x.GetCurrentCustomer<CustomerItemModel>())
-                .ReturnsAsync(new CustomerItemModel() { Id = 1,ParentCustomerId = null});
+                .ReturnsAsync(new CustomerItemModel() { Id = 1, ParentCustomerId = null });
 
             var mockOrderService = new Mock<IOrderService>();
             mockOrderService.Setup(x => x.GetListForCustomer<OrderItemModel>(It.IsAny<int>(), It.IsAny<int?>()))
                 .ReturnsAsync(new List<OrderItemModel>() { new OrderItemModel() });
-            OrderManager manager = new OrderManager(_logger, Mock.Of<IMapper>(),mockOrderService.Object, Mock.Of<IItemService>(), mockCustomerService.Object, _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
+            OrderManager manager = new OrderManager(_logger, Mock.Of<IMapper>(), mockOrderService.Object, Mock.Of<IItemService>(), mockCustomerService.Object, Mock.Of<IShipmentService>(), _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
 
             Assert.NotEmpty(await manager.GetListForCurrentCustomer());
         }
@@ -192,7 +192,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             order.Status = OrderStatus.Sent;
 
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile(), new OrderProfile(), new SharedProfile());
-            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
+            OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, Mock.Of<IShipmentService>(), _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
 
             ApplicationResult result = await manager.Edit(order);
             _output.WriteLine(result.Message);

@@ -1,7 +1,58 @@
-﻿
-@{
-    ViewData["Title"] = "_ShipmentForm";
-}
-
-<h1>_ShipmentForm</h1>
-
+﻿@model ShipmentDetailModel
+<partial name="_AuditInformation" for="@Model" />
+<input type="hidden" asp-for="Status" />
+<div asp-validation-summary="All" class="alert alert-danger"></div>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">
+            Shipment Details
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="border rounded mb-3 p-3 mt-2">
+            <partial name="_CustomerItemView" for="Customer" />
+        </div>
+        <div class="border rounded p-3 mb-3" id="shipping-information">
+            <h6 class="card-subtitle text-muted">Shipping Information</h6>
+            <partial name="_AddressView" for="Shipping" />
+        </div>
+        <div class="border rounded mb-3 p-3 mt-2 border-info">
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-6">
+                    <label>Shipping Status</label>
+                    <select asp-for="Status" asp-items="ListUtility.GetShipmentStatuses()" class="form-control form-control-sm"></select>
+                </div>
+                <div class="form-group col-sm-12 col-md-6">
+                    <label>Shipment Date</label>
+                    <input type="date" class="form-control form-control-sm" asp-for="ShipmentDate" />
+                </div>
+            </div>
+        </div>
+        <div class="border rounded p-3 mb-3">
+            <h6 class="card-subtitle text-muted">Items To Ship</h6>
+            <partial name="_ShipmentItemList" for="Items" />
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group border rounded p-3 border-info">
+                    <h6 class="card-subtitle text-muted">Courier Name</h6>
+                    <input type="text" asp-for="CourierName" class="form-control form-control-sm" />
+                </div>
+                <div class="form-group border rounded p-3 border-info">
+                    <h6 class="card-subtitle text-muted">Courier Details</h6>
+                    <textarea asp-for="CourierDetails" class="form-control form-control-sm" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="border rounded p-3 border-info">
+                    <partial name="_Document" for="Document" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.UploadModule,UploadModules.ShipmentDocument} }" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer p-0">
+        <div class="btn btn-group col-12 border-0 rounded-0 p-0">
+            <button type="submit" class="btn btn btn-success">Update Shipment</button>
+        </div>
+    </div>
+</div>

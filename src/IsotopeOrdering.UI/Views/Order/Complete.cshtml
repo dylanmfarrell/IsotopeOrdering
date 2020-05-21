@@ -1,0 +1,17 @@
+﻿@model OrderCompleteDetailModel
+@{
+    ViewData[ViewDataKeys.Title] = "Complete";
+}
+<partial name="_OrderDetails" model="Model.OrderReview.Order" />
+@foreach(var shipment in Model.Shipments) {
+    <partial name="_" model="shipment"/>
+}
+<div class="card mt-5 p-3">
+    <form asp-action="@nameof(OrderController.Complete)" asp-controller="Order" method="post">
+        <input type="hidden" asp-for="OrderReview.Order.Id" />
+        <div class="btn btn-group col-md-12 mt-5">
+            <button type="submit" name="OrderReview.Action" value="@OrderStatus.Cancelled" class="btn btn-danger">Cancel this order</button>
+            <button type="submit" name="OrderReview.Action" value="@OrderStatus.Complete" class="btn btn-success">Complete this order</button>
+        </div>
+    </form>
+</div>

@@ -20,6 +20,7 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IOrderService _service;
         private readonly IItemService _itemService;
         private readonly ICustomerService _customerService;
+        private readonly IShipmentService _shipmentService;
         private readonly IEventManager _eventService;
         private readonly IIsotopeOrderingAuthorizationService _authorizationService;
 
@@ -28,6 +29,7 @@ namespace IsotopeOrdering.App.Managers {
             IOrderService service,
             IItemService itemService,
             ICustomerService customerService,
+            IShipmentService shipmentService,
             IEventManager eventService,
             IIsotopeOrderingAuthorizationService authorizationService) {
             _logger = logger;
@@ -35,6 +37,7 @@ namespace IsotopeOrdering.App.Managers {
             _service = service;
             _itemService = itemService;
             _customerService = customerService;
+            _shipmentService = shipmentService;
             _eventService = eventService;
             _authorizationService = authorizationService;
         }
@@ -114,7 +117,7 @@ namespace IsotopeOrdering.App.Managers {
             ValidationResult result = await validator.ValidateAsync(model);
             if (result.IsValid) {
                 Order order = _mapper.Map<Order>(model);
-                if(model.Status == OrderStatus.Cancelled) {
+                if (model.Status == OrderStatus.Cancelled) {
                     order.IsDeleted = true;
                 }
                 int id = await _service.Update(order);
@@ -157,7 +160,25 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<ApplicationResult> SubmitProcessing(OrderReviewDetailModel review) {
             await _service.UpdateStatus(review.Order.Id, review.Action);
-            string eventDescription = review.Action == OrderStatus.InProcess? Events.Order.InProcess : Events.Order.Cancelled;
+            string eventDescription = review.Action == OrderStatus.InProcess ? Events.Order.InProcess : Events.Order.Cancelled;
+            await _eventService.CreateEvent(EntityEventType.Order, review.Order.Id, eventDescription);
+            return new ApplicationResult(eventDescription, true);
+        }
+
+        public async Task<OrderCompleteDetailModel?> GetOrderForCompletion(int id) {
+            OrderDetailModel? order = await _service.GetForStatus<OrderDetailModel>(id, OrderStatus.InProcess);
+            if (order == null) {
+                return null;
+            }
+            OrderCompleteDetailModel model = new OrderCompleteDetailModel();
+            model.OrderReview.Order = order;
+            model.Shipments = await _shipmentService.GetForOrder<ShipmentDetailModel>(order.Id);
+            return model;
+        }
+
+        public async Task<ApplicationResult> SubmitCompletion(OrderReviewDetailModel review) {
+            await _service.UpdateStatus(review.Order.Id, review.Action);
+            string eventDescription = review.Action == OrderStatus.Complete ? Events.Order.Complete : Events.Order.InProcess;
             await _eventService.CreateEvent(EntityEventType.Order, review.Order.Id, eventDescription);
             return new ApplicationResult(eventDescription, true);
         }

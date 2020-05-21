@@ -17,48 +17,23 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<T?> Get<T>(int id) where T : class {
-            return await _mapper.ProjectTo<T>(
-                _context.Orders
-                .Include(x => x.Customer)
-                .Include(x => x.Items)
-                .ThenInclude(x => x.ItemConfiguration)
-                .Where(x => x.Id == id)
-                ).SingleOrDefaultAsync();
+            return await _mapper.ProjectTo<T>(_context.Orders.Details().Where(x => x.Id == id)).SingleOrDefaultAsync();
         }
 
-        public async Task<T?> GetForStatus<T>(int id,OrderStatus status) where T : class {
-            return await _mapper.ProjectTo<T>(
-                _context.Orders
-                .Include(x => x.Customer)
-                .Include(x => x.Items)
-                .ThenInclude(x => x.ItemConfiguration)
-                .Where(x => x.Id == id && x.Status == status)
-                ).SingleOrDefaultAsync();
+        public async Task<T?> GetForStatus<T>(int id, OrderStatus status) where T : class {
+            return await _mapper.ProjectTo<T>(_context.Orders.Details().Where(x => x.Id == id && x.Status == status)).SingleOrDefaultAsync();
         }
 
         public async Task<T?> Get<T>(int id, int customerId, int? parentId) where T : class {
-            return await _mapper.ProjectTo<T>(
-                _context.Orders
-                .Include(x => x.Customer)
-                .Include(x => x.Items)
-                .ThenInclude(x => x.ItemConfiguration)
-                .Where(x => x.Id == id && x.CustomerId == parentId.GetValueOrDefault(customerId))
-                ).SingleOrDefaultAsync();
+            return await _mapper.ProjectTo<T>(_context.Orders.Details().Where(x => x.Id == id)).SingleOrDefaultAsync();
         }
 
         public async Task<List<T>> GetList<T>() {
-            return await _mapper.ProjectTo<T>(
-                _context.Orders
-                .Include(x => x.Customer)
-                ).ToListAsync();
+            return await _mapper.ProjectTo<T>(_context.Orders.List()).ToListAsync();
         }
 
         public async Task<List<T>> GetListForCustomer<T>(int customerId, int? parentId) {
-            return await _mapper.ProjectTo<T>(
-                _context.Orders
-                .Include(x => x.Customer)
-                .Where(x => x.CustomerId == customerId || x.CustomerId == parentId.GetValueOrDefault(0)))
-                .ToListAsync();
+            return await _mapper.ProjectTo<T>(_context.Orders.List().WhereForCustomer(customerId, parentId)).ToListAsync();
         }
 
         public async Task UpdateStatus(int orderId, OrderStatus status) {

@@ -1,7 +1,12 @@
-﻿@model ShipmentDetailModel
+﻿@inject IConfiguration Configuration
+@model ShipmentDetailModel
 @{
     ViewData[ViewDataKeys.Title] = "Edit Shipment";
 }
 <form method="post" asp-action="@nameof(ShipmentController.Edit)" asp-controller="Shipment">
     <partial name="_ShipmentForm" for="@Model" />
 </form>
+@section Scripts{
+    <script type="text/javascript" src="@Configuration["FileUploadUri"]"></script>
+    <script src="~/js/shipment.js"></script>
+}

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using IsotopeOrdering.Domain.Entities;
-using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MIR.Core.Data;
@@ -26,14 +25,7 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<T> Get<T>(int id) where T : class {
-            T value = await _mapper.ProjectTo<T>(_context.Customers
-                .Include(x => x.Documents)
-                .Include(x => x.Addresses)
-                .Include(x => x.Institutions)
-                .Include(x => x.ItemConfigurations)
-                    .ThenInclude(x => x.Item)
-                .Where(x => x.Id == id)).SingleOrDefaultAsync();
-            return value;
+            return await _mapper.ProjectTo<T>(_context.Customers.Details().Where(x => x.Id == id)).SingleOrDefaultAsync();
         }
 
         public async Task<List<T>> GetChildrenList<T>(int parentId) where T : class {
@@ -50,15 +42,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
 
         public async Task<List<T>> GetAddressListForOrder<T>(int customerId, int? parentCustomerId) where T : class {
             int targetCustomerId = parentCustomerId.GetValueOrDefault(customerId);
-            List<T> customerAddresses = await _mapper.ProjectTo<T>(_context.CustomerAddresses.Where(x => x.CustomerId == targetCustomerId))
-                .AsNoTracking()
-                .ToListAsync();
-            List<T> institutionAddresses = await _mapper.ProjectTo<T>(_context.CustomerInstitutions.Include(x => x.Institution).Where(x => x.CustomerId == targetCustomerId))
-                .AsNoTracking()
-                .ToListAsync();
+            List<T> customerAddresses = await _mapper.ProjectTo<T>(_context.CustomerAddresses.Where(x => x.CustomerId == targetCustomerId)).AsNoTracking().ToListAsync();
+            List<T> institutionAddresses = await _mapper.ProjectTo<T>(_context.CustomerInstitutions.Include(x => x.Institution).Where(x => x.CustomerId == targetCustomerId)).AsNoTracking().ToListAsync();
             customerAddresses.AddRange(institutionAddresses);
             return customerAddresses;
-
         }
 
         public async Task<T> GetChild<T>(int parentId, int childId) where T : class {
@@ -67,8 +54,7 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<List<T>> Search<T>(string search) where T : class {
-            IQueryable<Customer> customers = _context.Customers.Where(x => x.Status == CustomerStatus.Initiated && (x.Contact.FirstName.ToLower().Contains(search.ToLower()) || x.Contact.LastName!.ToLower().Contains(search.ToLower())));
-            return await _mapper.ProjectTo<T>(customers).ToListAsync();
+            return await _mapper.ProjectTo<T>(_context.Customers.Search(search).AsNoTracking()).ToListAsync();
         }
     }
 }

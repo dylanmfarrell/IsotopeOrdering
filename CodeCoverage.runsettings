@@ -17,6 +17,7 @@
             <Sources>
               <Exclude>
                 <Source>.*IsotopeOrdering.App.Models.*</Source>
+                <Source>.*IsotopeOrdering.Infrastructure.Migrations.*</Source>
               </Exclude>
             </Sources>
             <!-- We recommend you do not change the following values: -->

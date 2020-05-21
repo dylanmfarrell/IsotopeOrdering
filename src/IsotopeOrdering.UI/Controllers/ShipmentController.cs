@@ -17,7 +17,7 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> MyShipmnents() {
+        public async Task<IActionResult> MyShipments() {
             return View(await _shipmentManager.GetListForCurrentCustomer());
         }
 
@@ -31,11 +31,12 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpPost]
+        [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Create(ShipmentDetailModel model) {
             if (ModelState.IsValid) {
                 model.Status = ShipmentStatus.Created;
                 ApplicationResult result = await _shipmentManager.Create(model);
-                return ApplicationResult(nameof(MyShipmnents), result);
+                return ApplicationResult(nameof(Center), result);
             }
             return View(model);
         }

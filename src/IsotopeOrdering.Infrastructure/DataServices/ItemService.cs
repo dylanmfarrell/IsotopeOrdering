@@ -38,7 +38,7 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             return await _mapper.ProjectTo<T>(
                 _context.Items
                 .Include(x => x.ItemConfigurations)
-                .Where(x => x.ItemConfigurations.Any(y => y.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
+                    .Where(x => !x.Unavailable && x.ItemConfigurations.Any(y => y.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
                 .AsNoTracking()
                 ).ToListAsync();
         }

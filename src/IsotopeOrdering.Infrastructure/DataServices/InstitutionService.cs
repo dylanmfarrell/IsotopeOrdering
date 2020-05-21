@@ -15,12 +15,12 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             _mapper = mapper;
         }
 
-        public async Task<T> GetInstitutionForCustomer<T>(int customerId) {
+        public async Task<T?> GetInstitutionForCustomer<T>(int customerId) where T : class {
             return await _mapper.ProjectTo<T>(
                 _context.Institutions
                 .Include(x => x.Customers)
                 .Where(x => x.Customers.Any(x => x.CustomerId == customerId))
-                ).FirstAsync();
+                ).FirstOrDefaultAsync();
         }
 
         public async Task<List<T>> GetListForInitiation<T>() {

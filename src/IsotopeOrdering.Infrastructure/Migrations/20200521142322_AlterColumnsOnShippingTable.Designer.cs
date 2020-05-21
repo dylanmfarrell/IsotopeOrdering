@@ -4,14 +4,16 @@ using IsotopeOrdering.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IsotopeOrdering.Infrastructure.Migrations
 {
     [DbContext(typeof(IsotopeOrderingDbContext))]
-    partial class IsotopeOrderingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200521142322_AlterColumnsOnShippingTable")]
+    partial class AlterColumnsOnShippingTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

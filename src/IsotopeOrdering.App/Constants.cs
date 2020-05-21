@@ -21,6 +21,7 @@
             public const string Approved = "Order Approved";
             public const string Denied = "Order Denied";
             public const string InProcess = "Order In Process";
+            public const string Complete = "Order Completed";
             public const string Cancelled = "Order Cancelled";
         }
 
@@ -48,6 +49,7 @@
 
     public static class UploadModules {
         public const string CustomerDocument = "CustomerDocument";
+        public const string ShipmentDocument = "ShipmentDocument";
     }
 
     public static class ViewDataKeys {

@@ -52,7 +52,7 @@ namespace IsotopeOrdering.App.Managers {
             ValidationResult result = await validator.ValidateAsync(model);
             if (result.IsValid) {
                 Shipment shipment = _mapper.Map<Shipment>(model);
-                if(shipment.Status == ShipmentStatus.Cancelled) {
+                if (shipment.Status == ShipmentStatus.Cancelled) {
                     shipment.IsDeleted = true;
                 }
                 int id = await _service.Update(shipment);
@@ -75,7 +75,9 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<ShipmentCenterModel> GetCenter() {
-            return await Task.FromResult(new ShipmentCenterModel());
+            ShipmentCenterModel center = new ShipmentCenterModel();
+            center.Shipments = await _service.GetList<ShipmentItemModel>();
+            return center;
         }
 
         public async Task<List<ShipmentItemModel>> GetListForCurrentCustomer() {

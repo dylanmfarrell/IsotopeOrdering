@@ -4,14 +4,16 @@ using IsotopeOrdering.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IsotopeOrdering.Infrastructure.Migrations
 {
     [DbContext(typeof(IsotopeOrderingDbContext))]
-    partial class IsotopeOrderingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200520184007_AddShipmentDateToShipping")]
+    partial class AddShipmentDateToShipping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -282,12 +284,12 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             IsDeleted = false,
                             Name = "Material Transfer Agreement",
                             Type = 0,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         });
                 });
 
@@ -392,7 +394,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             FinalComposition = "Copper chloride",
                             IsDeleted = false,
                             Name = "Cu-64",
@@ -402,13 +404,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                             Target = "Ni-64",
                             Unavailable = false,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             FinalComposition = "Yttrium chloride",
                             IsDeleted = false,
                             Name = "Y-86",
@@ -418,13 +420,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                             Target = "Sr-86",
                             Unavailable = false,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             FinalComposition = "Bromide",
                             IsDeleted = false,
                             Name = "Br-76",
@@ -434,13 +436,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                             Target = "Se-76",
                             Unavailable = false,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         },
                         new
                         {
                             Id = 4,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             FinalComposition = "Bromide",
                             IsDeleted = false,
                             Name = "Br-77",
@@ -450,13 +452,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                             Target = "Se-77",
                             Unavailable = false,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         },
                         new
                         {
                             Id = 5,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             FinalComposition = "Zirconium Oxalate",
                             IsDeleted = false,
                             Name = "Zr-89",
@@ -466,7 +468,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                             Target = "Y-89",
                             Unavailable = false,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         });
                 });
 
@@ -520,66 +522,66 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             IsDeleted = false,
                             ItemId = 1,
                             MaximumAmount = 100m,
                             MinimumAmount = 0m,
                             Price = 1000m,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             IsDeleted = false,
                             ItemId = 2,
                             MaximumAmount = 100m,
                             MinimumAmount = 0m,
                             Price = 1000m,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             IsDeleted = false,
                             ItemId = 3,
                             MaximumAmount = 100m,
                             MinimumAmount = 0m,
                             Price = 1000m,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         },
                         new
                         {
                             Id = 4,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             IsDeleted = false,
                             ItemId = 4,
                             MaximumAmount = 100m,
                             MinimumAmount = 0m,
                             Price = 1000m,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         },
                         new
                         {
                             Id = 5,
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26),
+                            CreatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395),
                             IsDeleted = false,
                             ItemId = 5,
                             MaximumAmount = 100m,
                             MinimumAmount = 0m,
                             Price = 1000m,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26)
+                            UpdatedDate = new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395)
                         });
                 });
 
@@ -678,9 +680,11 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CourierDetails")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CourierName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -692,10 +696,10 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("ShipmentDate")
+                    b.Property<DateTime>("ShipmentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal?>("ShippingCharge")
+                    b.Property<decimal>("ShippingCharge")
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<int>("Status")

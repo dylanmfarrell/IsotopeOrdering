@@ -160,13 +160,13 @@ namespace IsotopeOrdering.UI.Controllers {
             if (!shipmentResult.IsSuccessful) {
                 return RedirectToAction(nameof(Center), "Order");
             }
-            return RedirectToAction(nameof(ShipmentController.Detail), "Shipment", new { id = (int)shipmentResult.Data!});
+            return RedirectToAction(nameof(ShipmentController.Detail), "Shipment", new { id = (int)shipmentResult.Data! });
         }
 
         [HttpGet]
         [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Complete(int id) {
-            OrderReviewDetailModel? model = await _orderManager.GetOrderForReview(id);
+            OrderCompleteDetailModel? model = await _orderManager.GetOrderForCompletion(id);
             if (model == null) {
                 return NotFound();
             }

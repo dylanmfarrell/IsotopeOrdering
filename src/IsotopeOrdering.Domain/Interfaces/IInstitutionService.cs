@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IsotopeOrdering.Domain.Interfaces {
     public interface IInstitutionService : IService<Institution> {
-        Task<T> GetInstitutionForCustomer<T>(int customerId);
+        Task<T?> GetInstitutionForCustomer<T>(int customerId) where T : class;
         Task<List<T>> GetListForInitiation<T>();
     }
 }

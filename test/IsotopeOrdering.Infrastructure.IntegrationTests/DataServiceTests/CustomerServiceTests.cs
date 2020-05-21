@@ -9,7 +9,6 @@ using Xunit;
 
 namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
     public class CustomerServiceTests {
-
         [Theory, AutoMoqData]
         public async void Get_Customer_Mapping_Correct(Customer customer) {
             string instanceName = Guid.NewGuid().ToString();
@@ -87,6 +86,36 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
 
                 result = await service.GetAddressListForOrder<CustomerAddressDetailModel>(child.Id, child.ParentCustomerId);
                 Assert.NotEmpty(result);
+            }
+        }
+
+        [Theory, AutoMoqData]
+        public async void Get_CurrentCustomer(Customer customer) {
+            string instanceName = Guid.NewGuid().ToString();
+            using (var context = TestUtilities.GetDbContext(instanceName, customer.UserId)) {
+                context.Customers.Add(customer);
+                await context.SaveChangesAsync();
+            }
+            using (var context = TestUtilities.GetDbContext(instanceName, customer.UserId)) {
+                CustomerService service = new CustomerService(context, TestUtilities.GetMapper());
+                CustomerItemModel? result = await service.GetCurrentCustomer<CustomerItemModel>();
+                Assert.NotNull(result);
+                Assert.Equal(customer.Contact.Email, result!.Contact.Email);
+            }
+        }
+
+        [Theory, AutoMoqData]
+        public async void Search_ReturnsResults(Customer customer) {
+            string instanceName = Guid.NewGuid().ToString();
+            using (var context = TestUtilities.GetDbContext(instanceName, customer.UserId)) {
+                customer.Status = Domain.Enums.CustomerStatus.Initiated;
+                context.Customers.Add(customer);
+                await context.SaveChangesAsync();
+            }
+            using (var context = TestUtilities.GetDbContext(instanceName, customer.UserId)) {
+                CustomerService service = new CustomerService(context, TestUtilities.GetMapper());
+                List<CustomerSearchResult> results = await service.Search<CustomerSearchResult>(customer.Contact.FirstName);
+                Assert.NotEmpty(results);
             }
         }
     }

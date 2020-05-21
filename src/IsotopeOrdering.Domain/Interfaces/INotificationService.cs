@@ -2,6 +2,6 @@
 
 namespace IsotopeOrdering.Domain.Interfaces {
     public interface INotificationService {
-        Task SendNotification(string recipientName, string recipientEmail, string message);
+        Task<bool> SendNotification(string recipientName, string recipientEmail, string title, string message);
     }
 }

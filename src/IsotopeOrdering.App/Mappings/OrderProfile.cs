@@ -2,6 +2,7 @@
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.Domain.Entities;
+using System.Linq;
 
 namespace IsotopeOrdering.App.Mappings {
     public class OrderProfile : Profile {
@@ -36,6 +37,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Notes, opt => opt.MapFrom(x => x.Notes));
 
             CreateMap<Order, OrderItemModel>()
+                .ForMember(x=>x.Institution,opt => opt.MapFrom(x=>x.Customer.Institutions.First()))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.Customer, opt => opt.MapFrom(x => x.Customer));
 
@@ -49,6 +51,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.FedExNumber, opt => opt.MapFrom(x => x.FedExNumber))
                 .ForMember(x => x.Cart, opt => opt.MapFrom(x => x.Items))
                 .ForMember(x => x.Customer, opt => opt.MapFrom(x => x.Customer))
+                .ForMember(x => x.Institution, opt => opt.MapFrom(x => x.Customer.Institutions.First()))
                 .ForMember(x => x.SubmitAction, opt => opt.Ignore());
 
             CreateMap<OrderItem, OrderItemDetailModel>()

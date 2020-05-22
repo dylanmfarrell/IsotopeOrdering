@@ -7,7 +7,6 @@ namespace IsotopeOrdering.Infrastructure.Configurations {
             builder.Property(x => x.MaximumAmount).HasColumnType("decimal(18,4)");
             builder.Property(x => x.MinimumAmount).HasColumnType("decimal(18,4)");
             builder.Property(x => x.Price).HasColumnType("decimal(18,4)");
-            builder.HasData(DataSeeding.GetItemConfigurationSeedData());
             builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }

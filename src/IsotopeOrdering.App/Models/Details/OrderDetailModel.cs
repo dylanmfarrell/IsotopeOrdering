@@ -4,10 +4,12 @@ using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace IsotopeOrdering.App.Models.Details {
     public class OrderDetailModel : ModelBase {
         public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
+        public InstitutionItemModel Institution{ get; set; } = new InstitutionItemModel();
         public List<OrderItemDetailModel> Items { get; set; } = new List<OrderItemDetailModel>();
         public List<OrderAddressDetailModel> ShippingAddresses { get; set; } = new List<OrderAddressDetailModel>();
         public List<OrderAddressDetailModel> BillingAddresses { get; set; } = new List<OrderAddressDetailModel>();
@@ -28,8 +30,10 @@ namespace IsotopeOrdering.App.Models.Details {
         public List<ItemConfigurationDetailModel> ItemConfigurations { get; set; } = new List<ItemConfigurationDetailModel>();
         public ItemConfigurationDetailModel ItemConfiguration { get; set; } = new ItemConfigurationDetailModel();
         public int ItemConfigurationId { get; set; }
+        [DisplayName("Quantity (mCi)")]
         public decimal Quantity { get; set; }
         public string? SpecialInstructions { get; set; } = string.Empty;
+        [DisplayName("Price per mCi")]
         public decimal Price => Quantity * ItemConfiguration.Price;
         public int CustomerId { get; set; }
         public DateTime? RequestedDate { get; set; }

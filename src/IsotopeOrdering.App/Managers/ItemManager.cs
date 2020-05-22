@@ -57,14 +57,19 @@ namespace IsotopeOrdering.App.Managers {
             return await _service.GetList<ItemItemModel>();
         }
 
-        public async Task ApplyItemConfigurations(OrderDetailModel order) {
+        public async Task<ApplicationResult> ApplyItemConfigurations(OrderDetailModel order) {
             foreach (OrderItemDetailModel item in order.Cart) {
-                item.ItemConfiguration = await GetItemConfiguration(item.Item.Id, order.Customer.Id, order.Customer.ParentCustomerId, item.Quantity);
-                item.ItemConfigurationId = item.ItemConfiguration.Id;
+                ItemConfigurationDetailModel? config = await GetItemConfiguration(item.Item.Id, order.Customer.Id, order.Customer.ParentCustomerId, item.Quantity);
+                if(config == null) {
+                    return ApplicationResult.Error("Failed to find item configuration for customer");
+                }
+                item.ItemConfiguration = config;
+                item.ItemConfigurationId = config.Id;
             }
+            return ApplicationResult.Success();
         }
 
-        public async Task<ItemConfigurationDetailModel> GetItemConfiguration(int itemId, int customerId, int? parentCustomerId, decimal quantity) {
+        public async Task<ItemConfigurationDetailModel?> GetItemConfiguration(int itemId, int customerId, int? parentCustomerId, decimal quantity) {
             List<ItemConfiguration> itemConfigurations = await _service.GetItemConfigurations(itemId, parentCustomerId.GetValueOrDefault(customerId));
 
             //Evaluate most restrictive
@@ -89,8 +94,7 @@ namespace IsotopeOrdering.App.Managers {
                 }
             }
 
-            //Return default, none restrictive
-            return _mapper.Map<ItemConfigurationDetailModel>(itemConfigurations.First(x => x.ItemId == itemId && x.CustomerId == null));
+            return null;
         }
     }
 }

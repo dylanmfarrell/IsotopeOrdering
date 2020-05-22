@@ -28,6 +28,10 @@ namespace IsotopeOrdering.App.Models.Shared {
             return new ApplicationResult(message, false) { };
         }
 
+        public static ApplicationResult Success() {
+            return new ApplicationResult(string.Empty, true) { Data = null };
+        }
+
         public static ApplicationResult Success(string message, object data) {
             return new ApplicationResult(message, true) { Data = data };
         }

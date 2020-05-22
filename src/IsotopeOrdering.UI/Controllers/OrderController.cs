@@ -57,13 +57,16 @@ namespace IsotopeOrdering.UI.Controllers {
         public async Task<IActionResult> Create(OrderDetailModel model) {
             if (ModelState.IsValid) {
                 model.Status = model.SubmitAction;
-                await _itemManager.ApplyItemConfigurations(model);
+                ApplicationResult itemConfigurationResult = await _itemManager.ApplyItemConfigurations(model);
+                if (!itemConfigurationResult.IsSuccessful) {
+                    SetApplicationResult(itemConfigurationResult);
+                    return View(await _orderManager.GetOrderForm(model));
+                }
                 ApplicationResult result = await _orderManager.Create(model);
                 SetApplicationResult(result);
                 return RedirectToAction(nameof(Confirmation), "Order", new { orderId = (int)result.Data! });
             }
-            OrderDetailModel form = await _orderManager.GetOrderForm(model);
-            return View(form);
+            return View(await _orderManager.GetOrderForm(model));
         }
 
         [HttpGet]
@@ -182,8 +185,13 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         public async Task<IActionResult> AddCartItem(OrderItemDetailModel model) {
-            model.ItemConfiguration = await _itemManager.GetItemConfiguration(model.Item.Id, model.CustomerId, null, model.Quantity);
-            model.ItemConfigurationId = model.ItemConfiguration.Id;
+            ItemConfigurationDetailModel? config =  await _itemManager.GetItemConfiguration(model.Item.Id, model.CustomerId, null, model.Quantity);
+            if(config == null) {
+                ModelState.AddModelError("ItemConfigurationNotFound", "Item configuration not found for customer");
+                return JsonValidationErrorResult(ModelState);
+            }
+            model.ItemConfiguration = config;
+            model.ItemConfigurationId = config.Id;
             return await Partial("_OrderCartItem", model);
         }
     }

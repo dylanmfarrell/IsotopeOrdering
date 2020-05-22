@@ -31,7 +31,8 @@ namespace IsotopeOrdering.Infrastructure {
         }
 
         internal static IQueryable<Order> List(this IQueryable<Order> orders) {
-            return orders.Include(x => x.Customer);
+            return orders.Include(x => x.Customer)
+                .ThenInclude(x=>x.Institutions);
         }
 
         internal static IQueryable<Shipment> WhereForCustomer(this IQueryable<Shipment> shipments, int customerId, int? parentId) {

@@ -87,24 +87,5 @@ namespace IsotopeOrdering.Infrastructure {
                 UpdatedDate = _now
             };
         }
-
-        public static IEnumerable<ItemConfiguration> GetItemConfigurationSeedData() {
-            foreach (Item item in GetItemSeedData()) {
-                yield return new ItemConfiguration() {
-                    Id = item.Id,
-                    ItemId = item.Id,
-                    CustomerId = null,
-                    MinimumAmount = 0m,
-                    MaximumAmount = 100m,
-                    Price = 1000,
-                    CreatedBy = _systemUser,
-                    UpdatedBy = _systemUser,
-                    CreatedDate = _now,
-                    UpdatedDate = _now,
-                    IsDeleted = false
-                };
-            }
-
-        }
     }
 }

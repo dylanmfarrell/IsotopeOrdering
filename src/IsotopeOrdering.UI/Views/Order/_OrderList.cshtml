@@ -13,6 +13,7 @@
                 <th>Status</th>
                 @if (isAdmin) {
                     <th>Customer</th>
+                    <th>Institution</th>
                     <th>Audit Information</th>
                 }
             </tr>
@@ -25,6 +26,7 @@
                     <td>@item.Status.ToString()</td>
                     @if (isAdmin) {
                         <td>@item.Customer.Contact.FullName</td>
+                        <td>@item.Institution.Name</td>
                         <td><partial name="_AuditInformationView" for="@item" /></td>
                     }
                 </tr>

@@ -15,6 +15,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.ItemName, opt => opt.MapFrom(x => x.Item.Name));
 
             CreateMap<ItemConfigurationDetailModel, ItemConfiguration>()
+                .ForMember(x => x.Customer, opt => opt.Ignore())
                 .ForMember(x => x.Item, opt => opt.Ignore());
 
             CreateMap<ItemDetailModel, Item>()

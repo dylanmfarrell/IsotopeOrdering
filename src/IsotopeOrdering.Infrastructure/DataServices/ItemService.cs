@@ -6,6 +6,7 @@ using MIR.Core.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace IsotopeOrdering.Infrastructure.DataServices {
     public class ItemService : ServiceBase<IsotopeOrderingDbContext, Item>, IItemService {
@@ -20,10 +21,7 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<List<ItemConfiguration>> GetItemConfigurations(int itemId, int customerId) {
-            List<ItemConfiguration> itemConfigurations = await _context.ItemConfigurations.Where(x => x.ItemId == itemId && x.CustomerId == customerId).ToListAsync();
-            ItemConfiguration defaultConfiguration = await _context.ItemConfigurations.FirstOrDefaultAsync(x => x.ItemId == itemId && x.CustomerId == null);
-            itemConfigurations.Add(defaultConfiguration);
-            return itemConfigurations;
+            return await _context.ItemConfigurations.Where(x => x.ItemId == itemId && x.CustomerId == customerId).ToListAsync();
         }
 
         public async Task<List<T>> GetList<T>() {
@@ -35,12 +33,12 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<List<T>> GetListForOrder<T>(int customerId, int? parentCustomerId) {
-            return await _mapper.ProjectTo<T>(
-                _context.Items
-                .Include(x => x.ItemConfigurations)
-                    .Where(x => !x.Unavailable && x.ItemConfigurations.Any(y => y.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
+            List<Item> items = await _context.Items
+                    .IncludeFilter(x => x.ItemConfigurations.Where(x => x.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
+                .Where(x => !x.Unavailable)
                 .AsNoTracking()
-                ).ToListAsync();
+                .ToListAsync();
+            return _mapper.Map<List<T>>(items);
         }
     }
 }

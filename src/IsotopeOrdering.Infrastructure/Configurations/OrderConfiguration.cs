@@ -7,6 +7,7 @@ namespace IsotopeOrdering.Infrastructure.Configurations {
         public void Configure(EntityTypeBuilder<Order> builder) {
             builder.OwnsOne(x => x.Shipping);
             builder.OwnsOne(x => x.Billing);
+            builder.OwnsOne(x => x.BillingContact);
             builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }

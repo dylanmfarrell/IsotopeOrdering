@@ -9,16 +9,17 @@ using System.ComponentModel;
 namespace IsotopeOrdering.App.Models.Details {
     public class OrderDetailModel : ModelBase {
         public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
-        public InstitutionItemModel Institution{ get; set; } = new InstitutionItemModel();
+        public InstitutionItemModel Institution { get; set; } = new InstitutionItemModel();
         public List<OrderItemDetailModel> Items { get; set; } = new List<OrderItemDetailModel>();
         public List<OrderAddressDetailModel> ShippingAddresses { get; set; } = new List<OrderAddressDetailModel>();
         public List<OrderAddressDetailModel> BillingAddresses { get; set; } = new List<OrderAddressDetailModel>();
+        public ContactDetailModel BillingContact { get; set; } = new ContactDetailModel();
 
         public List<OrderItemDetailModel> Cart { get; set; } = new List<OrderItemDetailModel>();
         public AddressDetailModel ShippingAddress { get; set; } = new AddressDetailModel();
         public AddressDetailModel BillingAddress { get; set; } = new AddressDetailModel();
         public string? Notes { get; set; } = string.Empty;
-        public string FedExNumber { get; set; } = string.Empty;
+        public string? FedExNumber { get; set; } = string.Empty;
         public OrderStatus Status { get; set; }
 
         public bool CanEdit => Status == OrderStatus.Sent || Status == OrderStatus.Draft;

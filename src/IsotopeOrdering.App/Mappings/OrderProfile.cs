@@ -28,6 +28,7 @@ namespace IsotopeOrdering.App.Mappings {
 
             CreateMap<OrderDetailModel, Order>()
                 .ForMember(x => x.Billing, opt => opt.MapFrom(x => x.BillingAddress))
+                .ForMember(x => x.BillingContact, opt => opt.MapFrom(x => x.BillingContact))
                 .ForMember(x => x.Shipping, opt => opt.MapFrom(x => x.ShippingAddress))
                 .ForMember(x => x.Items, opt => opt.MapFrom(x => x.Cart))
                 .ForMember(x => x.CustomerId, opt => opt.MapFrom(x => x.Customer.Id))
@@ -45,6 +46,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.ShippingAddresses, opt => opt.Ignore())
                 .ForMember(x => x.BillingAddresses, opt => opt.Ignore())
                 .ForMember(x => x.BillingAddress, opt => opt.MapFrom(x => x.Billing))
+                .ForMember(x => x.BillingContact, opt => opt.MapFrom(x => x.BillingContact))
                 .ForMember(x => x.ShippingAddress, opt => opt.MapFrom(x => x.Shipping))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.Notes, opt => opt.MapFrom(x => x.Notes))

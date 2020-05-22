@@ -7,6 +7,7 @@ using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.UI.Controllers {
@@ -184,6 +185,7 @@ namespace IsotopeOrdering.UI.Controllers {
             return RedirectToAction(nameof(Center), "Order");
         }
 
+        [HttpPost]
         public async Task<IActionResult> AddCartItem(OrderItemDetailModel model) {
             ItemConfigurationDetailModel? config =  await _itemManager.GetItemConfiguration(model.Item.Id, model.CustomerId, null, model.Quantity);
             if(config == null) {

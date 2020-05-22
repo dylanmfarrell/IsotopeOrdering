@@ -35,7 +35,7 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         public async Task<List<T>> GetListForOrder<T>(int customerId, int? parentCustomerId) {
             List<Item> items = await _context.Items
                     .IncludeFilter(x => x.ItemConfigurations.Where(x => x.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
-                .Where(x => !x.Unavailable)
+                .Where(x => !x.Unavailable && x.ItemConfigurations.Any())
                 .AsNoTracking()
                 .ToListAsync();
             return _mapper.Map<List<T>>(items);

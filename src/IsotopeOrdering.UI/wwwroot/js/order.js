@@ -18,8 +18,10 @@ function hookupTabs() {
         var context = $($(e.target).attr('href'));
         var shipping = $('#shipping-content .add-collection-item').getAddress();
         var billing = $('#billing-content .add-collection-item').getAddress();
+        var billingContact = $('#billing-content').getContact();
         context.find('#shipping-information').setAddress(shipping);
         context.find('#billing-information').setAddress(billing);
+        contact.find('#billing-information').setAddress(billingContact);
     })
 }
 

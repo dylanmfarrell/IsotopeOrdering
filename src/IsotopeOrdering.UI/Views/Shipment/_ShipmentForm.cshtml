@@ -14,7 +14,7 @@
         </div>
         <div class="border rounded p-3 mb-3" id="shipping-information">
             <h6 class="card-subtitle text-muted">Shipping Information</h6>
-            <partial name="_AddressView" for="Shipping" />
+            <partial name="_Address" for="Shipping" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }"/>
         </div>
         <div class="border rounded mb-3 p-3 mt-2 border-info">
             <div class="row">

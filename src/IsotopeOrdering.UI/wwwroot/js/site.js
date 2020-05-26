@@ -127,5 +127,23 @@ $.fn.extend({
         $el.find('[name$="Address1"]').val(address.Address1);
         $el.find('[name$="Address2"]').val(address.Address2);
         $el.find('[name$="Address3"]').val(address.Address3);
+    },
+    getContact: function () {
+        var $el = $(this);
+        var contact = {};
+        contact.FirstName = $el.find('[name$="FirstName"]').val();
+        contact.LastName = $el.find('[name$="LastName"]').val();
+        contact.Email = $el.find('[name$="Email"]').val();
+        contact.PhoneNumber = $el.find('[name$="PhoneNumber"]').val();
+        contact.Fax = $el.find('[name$="Fax"]').val();
+        return contact;
+    },
+    setContact: function (contact) {
+        var $el = $(this);
+        $el.find('[name$="FirstName"]').val(contact.Name);
+        $el.find('[name$="LastName"]').val(contact.State);
+        $el.find('[name$="Email"]').val(contact.City);
+        $el.find('[name$="PhoneNumber"]').val(contact.ZipCode);
+        $el.find('[name$="Fax"]').val(contact.Address1);
     }
 })

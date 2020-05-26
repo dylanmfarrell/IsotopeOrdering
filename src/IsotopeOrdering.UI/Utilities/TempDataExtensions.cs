@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
+﻿using IsotopeOrdering.App;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Text.Json;
 
 namespace IsotopeOrdering.UI.Utilities {
@@ -28,5 +29,7 @@ namespace IsotopeOrdering.UI.Utilities {
             }
             return null;
         }
+
+        public static bool IsReadonly(this ViewDataDictionary tempData) => !tempData.ContainsKey(ViewDataKeys.Readonly) ? false : bool.Parse(tempData[ViewDataKeys.Readonly].ToString()!);
     }
 }

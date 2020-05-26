@@ -23,8 +23,7 @@ namespace IsotopeOrdering.UI.Utilities {
         /// <param name="key"></param>
         /// <returns></returns>
         public static T? Get<T>(this ITempDataDictionary tempData, string key) where T : class {
-            object? value;
-            if (tempData.TryGetValue(key, out value)) {
+            if (tempData.TryGetValue(key, out object? value)) {
                 return value == null ? null : JsonSerializer.Deserialize<T>((string)value);
             }
             return null;

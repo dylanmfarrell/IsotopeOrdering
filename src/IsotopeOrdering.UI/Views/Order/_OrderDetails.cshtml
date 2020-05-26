@@ -7,30 +7,36 @@
         </h5>
     </div>
     <div class="card-body">
-        <div class="border rounded mb-3 p-3 mt-2">
-            <partial name="_CustomerItemView" for="Customer" />
-        </div>
         <div class="border rounded p-3 mb-3">
             <h6 class="card-subtitle text-muted">Selected Materials</h6>
             <partial name="_OrderCart" for="Cart" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }" />
         </div>
         <div class="border rounded p-3 mb-3" id="shipping-information">
             <h6 class="card-subtitle text-muted">Shipping Information</h6>
-            <partial name="_Address" for="ShippingAddress" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }"/>
+            <partial name="_Address" for="ShippingAddress" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }" />
             <div class="form-group">
                 <label>FedEx Number</label>
                 <input type="text" class="form-control form-control-sm" asp-for="FedExNumber" readonly />
             </div>
         </div>
-        <div class="border rounded p-3 mb-3" id="billing-information">
-            <h6 class="card-subtitle text-muted">Billing Information</h6>
-            <partial name="_Address" for="BillingAddress" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }"/>
-            <h6 class="card-subtitle text-muted">Billing Contact</h6>
-            <partial name="_Contact" for="BillingContact" />
+        <div class="border rounded p-3 mb-3">
+            <div id="billing-information">
+                <h6 class="card-subtitle text-muted">Billing Information</h6>
+                <partial name="_Address" for="BillingAddress" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }" />
+            </div>
+            <div id="billing-contact">
+                <h6 class="card-subtitle text-muted">Billing Contact</h6>
+                <partial name="_Contact" for="BillingContact" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }" />
+            </div>
         </div>
         <div class="form-group border rounded p-3">
             <h6 class="card-subtitle text-muted">Order Notes</h6>
-            <textarea asp-for="Notes" class="form-control form-control-sm" rows="5" readonly></textarea>
+            @if (ViewData.IsReadonly()) {
+                <textarea asp-for="Notes" class="form-control form-control-sm" rows="5" readonly></textarea>
+            }
+            else {
+                <textarea asp-for="Notes" class="form-control form-control-sm" rows="5"></textarea>
+            }
         </div>
     </div>
     @if (Model.CanEdit) {

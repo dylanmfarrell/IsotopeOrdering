@@ -18,10 +18,10 @@ function hookupTabs() {
         var context = $($(e.target).attr('href'));
         var shipping = $('#shipping-content .add-collection-item').getAddress();
         var billing = $('#billing-content .add-collection-item').getAddress();
-        var billingContact = $('#billing-content').getContact();
+        var billingContact = $('#billing-content-contact').getContact();
         context.find('#shipping-information').setAddress(shipping);
         context.find('#billing-information').setAddress(billing);
-        contact.find('#billing-information').setAddress(billingContact);
+        context.find('#billing-contact').setContact(billingContact);
     })
 }
 
@@ -45,6 +45,7 @@ function onAddressSelect(el) {
 function addCartItem(el) {
     var options = getCollectionAddOptions(el);
     var model = {};
+    $(el).popover('dispose');
     model.RequestedDate = options.context.find('[name$="RequestedDate"]').val();
     model.Quantity = options.context.find('[name$="Quantity"]').val();
     model.SpecialInstructions = options.context.find('[name$="SpecialInstructions"]').val();
@@ -58,6 +59,7 @@ function addCartItem(el) {
             trigger: 'focus'
         });
         $(el).popover('show');
+
     });
 }
 

@@ -26,7 +26,7 @@
                     <td>@item.Status.ToString()</td>
                     @if (isAdmin) {
                         <td>@item.Customer.Contact.FullName</td>
-                        <td>@item.Institution.Name</td>
+                        <td>@(item.Institution == null ? "N/A" : item.Institution.Name)</td>
                         <td><partial name="_AuditInformationView" for="@item" /></td>
                     }
                 </tr>

@@ -20,10 +20,14 @@ function getCollectionAddOptions(el) {
     return options;
 }
 
-function postCollectionAdd(options, model, successCallback) {
+function postCollectionAdd(options, model, successCallback,failureCallback) {
     $.post(options.url, { model }, function (data) {
         if (toggleErrorState(options.context, data)) {
-            return;
+            if (typeof successCallback === 'function') {
+                failureCallback();
+            } else {
+                return;
+            }
         }
         if (typeof successCallback === 'function') {
             successCallback(data);
@@ -140,10 +144,10 @@ $.fn.extend({
     },
     setContact: function (contact) {
         var $el = $(this);
-        $el.find('[name$="FirstName"]').val(contact.Name);
-        $el.find('[name$="LastName"]').val(contact.State);
-        $el.find('[name$="Email"]').val(contact.City);
-        $el.find('[name$="PhoneNumber"]').val(contact.ZipCode);
-        $el.find('[name$="Fax"]').val(contact.Address1);
+        $el.find('[name$="FirstName"]').val(contact.FirstName);
+        $el.find('[name$="LastName"]').val(contact.LastName);
+        $el.find('[name$="Email"]').val(contact.Email);
+        $el.find('[name$="PhoneNumber"]').val(contact.PhoneNumber);
+        $el.find('[name$="Fax"]').val(contact.Fax);
     }
 })

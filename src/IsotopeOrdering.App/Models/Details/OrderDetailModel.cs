@@ -8,8 +8,12 @@ using System.ComponentModel;
 
 namespace IsotopeOrdering.App.Models.Details {
     public class OrderDetailModel : ModelBase {
+        public OrderDetailModel() {
+            CanEdit = Status == OrderStatus.Sent || Status == OrderStatus.Draft;
+        }
         public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
         public InstitutionItemModel Institution { get; set; } = new InstitutionItemModel();
+        [DisplayName("Select Materials")]
         public List<OrderItemDetailModel> Items { get; set; } = new List<OrderItemDetailModel>();
         public List<OrderAddressDetailModel> ShippingAddresses { get; set; } = new List<OrderAddressDetailModel>();
         public List<OrderAddressDetailModel> BillingAddresses { get; set; } = new List<OrderAddressDetailModel>();
@@ -22,7 +26,8 @@ namespace IsotopeOrdering.App.Models.Details {
         public string? FedExNumber { get; set; } = string.Empty;
         public OrderStatus Status { get; set; }
 
-        public bool CanEdit => Status == OrderStatus.Sent || Status == OrderStatus.Draft;
+
+        public bool CanEdit { get; set; }
         public OrderStatus SubmitAction { get; set; }
     }
 
@@ -34,7 +39,7 @@ namespace IsotopeOrdering.App.Models.Details {
         [DisplayName("Quantity (mCi)")]
         public decimal Quantity { get; set; }
         public string? SpecialInstructions { get; set; } = string.Empty;
-        [DisplayName("Price per mCi")]
+        [DisplayName("Price")]
         public decimal Price => Quantity * ItemConfiguration.Price;
         public int CustomerId { get; set; }
         public DateTime? RequestedDate { get; set; }

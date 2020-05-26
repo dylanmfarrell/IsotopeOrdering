@@ -7,7 +7,7 @@ namespace IsotopeOrdering.Domain.Entities {
         public Order Order { get; set; } = null!;
         public int ItemConfigurationId { get; set; }
         public ItemConfiguration ItemConfiguration { get; set; } = null!;
-        public DateTime RequestedDate { get; set; }
+        public DateTime? RequestedDate { get; set; }
         public decimal Quantity { get; set; }
         public string? SpecialInstructions { get; set; }
     }

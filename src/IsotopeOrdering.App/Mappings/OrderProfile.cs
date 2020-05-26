@@ -38,7 +38,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Notes, opt => opt.MapFrom(x => x.Notes));
 
             CreateMap<Order, OrderItemModel>()
-                .ForMember(x=>x.Institution,opt => opt.MapFrom(x=>x.Customer.Institutions.First()))
+                .ForMember(x=>x.Institution,opt => opt.MapFrom(x=>x.Customer.Institutions.FirstOrDefault()))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.Customer, opt => opt.MapFrom(x => x.Customer));
 

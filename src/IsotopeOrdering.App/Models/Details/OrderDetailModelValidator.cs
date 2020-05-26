@@ -18,7 +18,7 @@ namespace IsotopeOrdering.App.Models.Details {
             RuleFor(x => x.Quantity).GreaterThan(0);
             RuleFor(x => x.RequestedDate).Custom((x, context) => {
                 if (x.HasValue) {
-                    if (x > DateTime.Now.AddDays(2)) {
+                    if (x < DateTime.Now.AddDays(2)) {
                         context.AddFailure(ValidationMessages.RequestedDateGreaterThanToday);
                     }
                     if (x.Value.DayOfWeek == DayOfWeek.Saturday || x.Value.DayOfWeek == DayOfWeek.Sunday) {

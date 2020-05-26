@@ -86,6 +86,7 @@ namespace IsotopeOrdering.UI.Controllers {
             if (model == null) {
                 return NotFound();
             }
+            model.CanEdit = false;
             return View(model);
         }
 
@@ -93,7 +94,11 @@ namespace IsotopeOrdering.UI.Controllers {
         public async Task<IActionResult> Edit(OrderDetailModel model) {
             if (ModelState.IsValid) {
                 model.Status = model.SubmitAction;
-                await _itemManager.ApplyItemConfigurations(model);
+                ApplicationResult itemConfigurationResult = await _itemManager.ApplyItemConfigurations(model);
+                if (!itemConfigurationResult.IsSuccessful) {
+                    SetApplicationResult(itemConfigurationResult);
+                    return View(await _orderManager.GetOrderForm(model));
+                }
                 ApplicationResult result = await _orderManager.Edit(model);
                 SetApplicationResult(result);
                 return RedirectToAction(nameof(Confirmation), "Order", new { orderId = (int)result.Data! });

@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     renderDatatables();
+    hookupModals();
 });
 
 function renderDatatables() {
@@ -36,6 +37,22 @@ function postCollectionAdd(options, model, successCallback,failureCallback) {
         }
     });
 }
+function hookupModals() {
+    $('.modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var title = button.data('title');
+        var content = button.data('content');
+        var submittext = button.data('submittext');
+        var submitvalue = button.data('submitvalue');
+        var modal = $(this)
+        modal.find('.modal-title').text(title);
+        modal.find('.modal-body').text(content);
+        var actionBtn = modal.find('button[name="Action"]');
+        actionBtn.text(submittext);
+        actionBtn.val(submitvalue);
+    });
+}
+
 
 function removeCollectionItem(el) {
     var $el = $(el);

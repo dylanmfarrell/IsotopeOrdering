@@ -13,8 +13,17 @@
             <partial name="_Address" for="Shipment.Shipping" />
         </div>
         <div class="btn btn-group col-md-12 mt-5">
-            <button type="submit" name="OrderReview.Action" value="@OrderStatus.Cancelled" class="btn btn-danger">Cancel this order</button>
+            <button type="button" class="btn btn-danger"
+                    data-toggle="modal"
+                    data-target="#siteModal"
+                    data-title="Confirm cancel order"
+                    data-content="Are you sure you want to cancel this order?"
+                    data-submittext="Cancel this order"
+                    data-submitvalue="@OrderStatus.Cancelled">
+                Cancel this order
+            </button>
             <button type="submit" name="OrderReview.Action" value="@OrderStatus.InProcess" class="btn btn-success">Proceed to shipment details</button>
         </div>
+        <partial name="_Prompt" />
     </form>
 </div>

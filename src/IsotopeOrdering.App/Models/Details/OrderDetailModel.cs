@@ -8,9 +8,6 @@ using System.ComponentModel;
 
 namespace IsotopeOrdering.App.Models.Details {
     public class OrderDetailModel : ModelBase {
-        public OrderDetailModel() {
-            CanEdit = Status == OrderStatus.Sent || Status == OrderStatus.Draft;
-        }
         public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
         public InstitutionItemModel Institution { get; set; } = new InstitutionItemModel();
         [DisplayName("Select Materials")]
@@ -24,7 +21,15 @@ namespace IsotopeOrdering.App.Models.Details {
         public AddressDetailModel BillingAddress { get; set; } = new AddressDetailModel();
         public string? Notes { get; set; } = string.Empty;
         public string? FedExNumber { get; set; } = string.Empty;
-        public OrderStatus Status { get; set; }
+
+        private OrderStatus _status;
+        public OrderStatus Status {
+            get { return _status; }
+            set {
+                _status = value;
+                CanEdit = Status == OrderStatus.Sent || Status == OrderStatus.Draft;
+            }
+        }
 
 
         public bool CanEdit { get; set; }

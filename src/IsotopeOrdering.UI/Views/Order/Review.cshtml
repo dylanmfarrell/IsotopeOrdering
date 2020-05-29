@@ -7,7 +7,18 @@
 <form asp-action="@nameof(OrderController.Review)" asp-controller="Order" method="post">
     <input type="hidden" asp-for="Order.Id" />
     <div class="btn btn-group col-12 mt-5">
-        <button type="submit" name="Action" value="@OrderStatus.Denied" class="btn btn-danger">Deny this order</button>
+        @*<button type="submit" name="Action" value="@OrderStatus.Denied" class="btn btn-danger">Deny this order</button>*@
+
+        <button type="button" class="btn btn-danger"
+                data-toggle="modal"
+                data-target="#siteModal"
+                data-title="Confirm deny order"
+                data-content="Are you sure you want to deny this order?"
+                data-submittext="Deny this order"
+                data-submitvalue="@OrderStatus.Denied">
+            Deny this order
+        </button>
         <button type="submit" name="Action" value="@OrderStatus.Approved" class="btn btn-success">Approve this order</button>
     </div>
+    <partial name="_Prompt" />
 </form>

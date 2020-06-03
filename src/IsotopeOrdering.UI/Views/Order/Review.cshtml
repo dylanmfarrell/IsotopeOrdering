@@ -7,8 +7,6 @@
 <form asp-action="@nameof(OrderController.Review)" asp-controller="Order" method="post">
     <input type="hidden" asp-for="Order.Id" />
     <div class="btn btn-group col-12 mt-5">
-        @*<button type="submit" name="Action" value="@OrderStatus.Denied" class="btn btn-danger">Deny this order</button>*@
-
         <button type="button" class="btn btn-danger"
                 data-toggle="modal"
                 data-target="#siteModal"

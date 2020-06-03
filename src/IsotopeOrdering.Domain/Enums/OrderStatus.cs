@@ -7,6 +7,7 @@
         Denied = 4,
         InProcess = 5,
         Complete = 6,
-        Cancelled = 7
+        Cancelled = 7,
+        AwaitingCustomerApproval = 8
     }
 }

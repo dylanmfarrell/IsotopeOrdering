@@ -22,8 +22,13 @@
                     data-submitvalue="@OrderStatus.Cancelled">
                 Cancel this order
             </button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#amendModal">Amend this order</button>
             <button type="submit" name="OrderReview.Action" value="@OrderStatus.InProcess" class="btn btn-success">Proceed to shipment details</button>
         </div>
         <partial name="_Prompt" />
+        <partial name="_OrderAmendPrompt" for="OrderReview" />
     </form>
 </div>
+@section Scripts{
+    <script src="~/js/order.js" type="text/javascript"></script>
+}

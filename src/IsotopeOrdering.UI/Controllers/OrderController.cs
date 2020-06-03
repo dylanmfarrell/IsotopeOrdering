@@ -160,7 +160,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Process(OrderProcessDetailModel model) {
             ApplicationResult result = await _orderManager.SubmitProcessing(model.OrderReview);
-            if (model.OrderReview.Action == OrderStatus.Cancelled) {
+            if (model.OrderReview.Action == OrderStatus.Cancelled || model.OrderReview.Action == OrderStatus.AwaitingCustomerApproval) {
                 SetApplicationResult(result);
                 return RedirectToAction(nameof(Center), "Order");
             }
@@ -170,6 +170,23 @@ namespace IsotopeOrdering.UI.Controllers {
                 return RedirectToAction(nameof(Center), "Order");
             }
             return RedirectToAction(nameof(ShipmentController.Detail), "Shipment", new { id = (int)shipmentResult.Data! });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ReviewAmendment(int id) {
+            OrderReviewDetailModel? model = await _orderManager.GetReviewAmendment(id);
+            if(model == null) {
+                return NotFound();
+            }
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ReviewAmendment(OrderReviewDetailModel model) {
+            ApplicationResult result = await _orderManager.SubmitAmendmentReview(model);
+            SetApplicationResult(result);
+            return RedirectToAction(nameof(MyOrders), "Order");
         }
 
         [HttpGet]
@@ -184,8 +201,8 @@ namespace IsotopeOrdering.UI.Controllers {
 
         [HttpPost]
         [Authorize(Policies.ReviewerPolicy)]
-        public async Task<IActionResult> Complete(OrderReviewDetailModel model) {
-            ApplicationResult result = await _orderManager.SubmitReview(model);
+        public async Task<IActionResult> Complete(OrderCompleteDetailModel model) {
+            ApplicationResult result = await _orderManager.SubmitReview(model.OrderReview);
             SetApplicationResult(result);
             return RedirectToAction(nameof(Center), "Order");
         }

@@ -63,6 +63,13 @@ function addCartItem(el) {
     });
 }
 
+function onQuantityChange(el) {
+    var context = $(el).parents('.add-collection-item');
+    var price = context.find('[name$="ItemConfiguration.Price"]').val();
+    var quantity = $(el).val();
+    context.find('[name="ItemPrice"]').val(price * quantity);
+}
+
 function getItem(context) {
     var item = {};
     item.Id = context.find('[name$="Id"]').val();

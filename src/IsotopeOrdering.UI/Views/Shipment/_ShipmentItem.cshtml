@@ -2,6 +2,7 @@
     <li class="list-group-item p-2">
         <partial name="_AuditInformation" for="@Model" />
         <partial name="_ItemInformation" for="OrderItem.Item" />
+        <input asp-for="OrderItemId" type="hidden"/>
         <div class="form-row">
             <div class="col-sm-12 col-md-3">
                 <div class="form-group">

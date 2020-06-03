@@ -8,11 +8,17 @@
             <a class="nav-link active" id="review-tab" data-toggle="pill" href="#review-content" role="tab" aria-controls="review-content" aria-selected="true">
                 Ready To Review <span class="badge badge-light">@Model.OrdersReadyToReviewCount</span>
             </a>
+            <a class="nav-link" id="awaiting-tab" data-toggle="pill" href="#awaiting-content" role="tab" aria-controls="awaiting-content" aria-selected="true">
+                Awaiting Customer Approval <span class="badge badge-light">@Model.OrdersAwaitingCustomerApprovalCount</span>
+            </a>
             <a class="nav-link" id="process-tab" data-toggle="pill" href="#process-content" role="tab" aria-controls="process-content" aria-selected="true">
                 Ready To Process <span class="badge badge-light">@Model.OrdersReadyToProcessCount</span>
             </a>
             <a class="nav-link" id="complete-tab" data-toggle="pill" href="#complete-content" role="tab" aria-controls="complete-content" aria-selected="true">
                 Ready To Complete <span class="badge badge-light">@Model.OrdersReadyToCompleteCount</span>
+            </a>
+            <a class="nav-link" id="archive-tab" data-toggle="pill" href="#archive-content" role="tab" aria-controls="archive-content" aria-selected="true">
+                Order Archive <span class="badge badge-light">@Model.OrdersArchiveCount</span>
             </a>
         </div>
     </div>
@@ -25,6 +31,16 @@
                     </div>
                     <div class="card-body">
                         <partial name="_OrderList" model="Model.OrdersReadyToReview" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Action,nameof(OrderController.Review)} }" />
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="awaiting-content" role="tabpanel" aria-labelledby="awaiting-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Orders Awaiting Customer Approval</h5>
+                    </div>
+                    <div class="card-body">
+                        <partial name="_OrderList" model="Model.OrdersAwaitingCustomerApproval" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Action,nameof(OrderController.Detail)} }" />
                     </div>
                 </div>
             </div>
@@ -45,6 +61,16 @@
                     </div>
                     <div class="card-body">
                         <partial name="_OrderList" model="Model.OrdersReadyToComplete" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Action,nameof(OrderController.Complete)} }" />
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="archive-content" role="tabpanel" aria-labelledby="complete-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Orders Archive</h5>
+                    </div>
+                    <div class="card-body">
+                        <partial name="_OrderList" model="Model.OrdersArchive" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Action,nameof(OrderController.Detail)} }" />
                     </div>
                 </div>
             </div>

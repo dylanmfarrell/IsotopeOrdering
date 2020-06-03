@@ -160,7 +160,15 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<ApplicationResult> SubmitProcessing(OrderReviewDetailModel review) {
             await _service.UpdateStatus(review.Order.Id, review.Action);
-            string eventDescription = review.Action == OrderStatus.InProcess ? Events.Order.InProcess : Events.Order.Cancelled;
+            string eventDescription = Events.Order.InProcess;
+            if (review.Action == OrderStatus.Cancelled) {
+                eventDescription = Events.Order.Cancelled;
+            }
+            else if (review.Action == OrderStatus.AwaitingCustomerApproval) {
+                eventDescription = Events.Order.Amended;
+                List<OrderItem> items = _mapper.Map<List<OrderItem>>(review.Order.Cart);
+                await _service.AmendOrderItems(items);
+            }
             await _eventService.CreateEvent(EntityEventType.Order, review.Order.Id, eventDescription);
             return new ApplicationResult(eventDescription, true);
         }
@@ -181,6 +189,26 @@ namespace IsotopeOrdering.App.Managers {
             string eventDescription = review.Action == OrderStatus.Complete ? Events.Order.Complete : Events.Order.InProcess;
             await _eventService.CreateEvent(EntityEventType.Order, review.Order.Id, eventDescription);
             return new ApplicationResult(eventDescription, true);
+        }
+
+        public async Task<OrderReviewDetailModel?> GetReviewAmendment(int id) {
+            CustomerItemModel? customer = await _customerService.GetCurrentCustomer<CustomerItemModel>();
+            if (customer == null) {
+                return null;
+            }
+            OrderDetailModel? order = await _service.Get<OrderDetailModel>(id, customer.Id, customer.ParentCustomerId);
+            if (order == null || order.Status != OrderStatus.AwaitingCustomerApproval) {
+                return null;
+            }
+            return new OrderReviewDetailModel() {
+                Order = order
+            };
+        }
+
+        public async Task<ApplicationResult> SubmitAmendmentReview(OrderReviewDetailModel review) {
+            await _service.UpdateStatus(review.Order.Id, review.Action);
+            await _eventService.CreateEvent(EntityEventType.Order, review.Order.Id, Events.Order.ApprovedAmendedOrder);
+            return new ApplicationResult(Events.Order.ApprovedAmendedOrder, true);
         }
     }
 }

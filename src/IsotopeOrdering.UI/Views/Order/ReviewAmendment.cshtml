@@ -1,0 +1,12 @@
+﻿@model OrderReviewDetailModel
+@{
+    ViewData[ViewDataKeys.Title] = "Review Order Amendment";
+}
+<i>Please review your order, the quantities have been updated to reflect the end result of the manufacturing process.</i>
+<partial name="_OrderDetails" model="Model.Order" />
+<form asp-action="@nameof(OrderController.ReviewAmendment)" asp-controller="Order" method="post">
+    <input type="hidden" asp-for="Order.Id" />
+    <div class="btn btn-group col-12 mt-5">
+        <button type="submit" name="Action" value="@OrderStatus.Approved" class="btn btn-success">Approve Amendment</button>
+    </div>
+</form>

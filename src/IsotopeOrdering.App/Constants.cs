@@ -21,6 +21,8 @@
             public const string Approved = "Order Approved";
             public const string Denied = "Order Denied";
             public const string InProcess = "Order In Process";
+            public const string Amended = "Order Amended";
+            public const string ApprovedAmendedOrder = "Approved amended order";
             public const string Complete = "Order Completed";
             public const string Cancelled = "Order Cancelled";
         }

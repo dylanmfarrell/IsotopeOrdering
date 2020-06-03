@@ -41,5 +41,15 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             order.Status = status;
             await _context.SaveChangesAsync();
         }
+
+        public async Task AmendOrderItems(List<OrderItem> items) {
+            foreach (OrderItem item in items) {
+                OrderItem orderItem = await _context.OrderItems.FindAsync(item.Id);
+                orderItem.Quantity = item.Quantity;
+                orderItem.SpecialInstructions = item.SpecialInstructions;
+                _context.OrderItems.Update(orderItem);
+            }
+            await _context.SaveChangesAsync();
+        }
     }
 }

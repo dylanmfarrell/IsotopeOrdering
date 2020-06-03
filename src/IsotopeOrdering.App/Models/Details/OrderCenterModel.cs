@@ -12,7 +12,13 @@ namespace IsotopeOrdering.App.Models.Details {
         public List<OrderItemModel> OrdersReadyToProcess => Orders.Where(x => x.ReadyToProcess).ToList();
         public int OrdersReadyToProcessCount => Orders.Count(x => x.ReadyToProcess);
 
+        public List<OrderItemModel> OrdersAwaitingCustomerApproval => Orders.Where(x => x.AwaitingCustomerApproval).ToList();
+        public int OrdersAwaitingCustomerApprovalCount => Orders.Count(x => x.AwaitingCustomerApproval);
+
         public List<OrderItemModel> OrdersReadyToComplete => Orders.Where(x => x.ReadyToComplete).ToList();
         public int OrdersReadyToCompleteCount => Orders.Count(x => x.ReadyToComplete);
+
+        public List<OrderItemModel> OrdersArchive => Orders.Where(x => x.Complete).ToList();
+        public int OrdersArchiveCount => Orders.Count(x => x.Complete);
     }
 }

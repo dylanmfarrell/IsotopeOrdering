@@ -42,6 +42,7 @@ namespace IsotopeOrdering.App.Interfaces {
         Task<OrderCompleteDetailModel?> GetOrderForCompletion(int id);
         Task<ApplicationResult> SubmitCompletion(OrderReviewDetailModel review);
         Task<ApplicationResult> Edit(OrderDetailModel model);
-
+        Task<OrderReviewDetailModel?> GetReviewAmendment(int id);
+        Task<ApplicationResult> SubmitAmendmentReview(OrderReviewDetailModel review);
     }
 }

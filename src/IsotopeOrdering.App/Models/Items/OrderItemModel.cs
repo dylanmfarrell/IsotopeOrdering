@@ -8,6 +8,8 @@ namespace IsotopeOrdering.App.Models.Items {
         public OrderStatus Status { get; set; }
         public bool ReadyToReview => Status == OrderStatus.Sent;
         public bool ReadyToProcess => Status == OrderStatus.Approved;
+        public bool AwaitingCustomerApproval => Status == OrderStatus.AwaitingCustomerApproval;
         public bool ReadyToComplete => Status == OrderStatus.InProcess;
+        public bool Complete => Status == OrderStatus.Complete || Status == OrderStatus.Cancelled || Status == OrderStatus.Denied;
     }
 }

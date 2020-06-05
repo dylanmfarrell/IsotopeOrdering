@@ -4,6 +4,7 @@ using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MIR.Core.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,6 +41,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             Shipment shipment = await _context.Shipments.FindAsync(id);
             shipment.Status = status;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<T>> GetRecipients<T>(int id) where T : class {
+            throw new NotImplementedException();
         }
     }
 }

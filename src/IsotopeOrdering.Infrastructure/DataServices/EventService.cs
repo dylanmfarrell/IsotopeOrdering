@@ -3,6 +3,7 @@ using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,6 +31,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             return await _mapper.ProjectTo<T>(
                 _context.EntityEvents.Where(x => x.EntityId == entityId && x.Type == type).OrderBy(x => x.EventDateTime)
                 ).ToListAsync();
+        }
+
+        public async Task<List<EntityEvent>> GetEvents(string eventDescription, DateTime? startDate) {
+            return await _context.EntityEvents.Where(x => x.Description == eventDescription && x.EventDateTime > startDate.GetValueOrDefault(DateTime.Now.AddMinutes(-10))).ToListAsync();
         }
     }
 }

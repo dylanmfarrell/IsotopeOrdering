@@ -12,5 +12,6 @@ namespace IsotopeOrdering.Domain.Interfaces {
         Task<List<T>> GetList<T>();
         Task<List<T>> GetListForCustomer<T>(int customerId, int? parentId);
         Task UpdateStatus(int id, ShipmentStatus status);
+        Task<List<T>> GetRecipients<T>(int id) where T : class;
     }
 }

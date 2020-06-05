@@ -1,47 +1,66 @@
 ﻿@model ShipmentItemDetailModel
-<li class="list-group-item p-2">
-    <partial name="_AuditInformation" for="@Model" />
-    <partial name="_ItemInformation" for="OrderItem.Item" />
-    <input asp-for="OrderItemId" type="hidden" />
-    <div class="form-row">
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label>Special Instructions</label>
-                <input value="@Model.OrderItem.SpecialInstructions" class="form-control form-control-sm" readonly />
+    <li class="list-group-item p-2">
+        <partial name="_AuditInformation" for="@Model" />
+        <partial name="_ItemInformation" for="OrderItem.Item" />
+        <input asp-for="OrderItemId" type="hidden" />
+        <div class="form-row">
+            <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                    <label>Special Instructions</label>
+                    <input value="@Model.OrderItem.SpecialInstructions" class="form-control form-control-sm" readonly />
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                    <label>Requested Date</label>
+                    <input value="@(Model.OrderItem.RequestedDate.HasValue ? Model.OrderItem.RequestedDate.Value.ToString() : "N/A")" class="form-control form-control-sm" readonly />
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input value="@Model.OrderItem.Quantity" class="form-control form-control-sm" readonly />
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                    <label>Price</label>
+                    <input value="@Model.OrderItem.Price" class="form-control form-control-sm" readonly />
+                </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label>Requested Date</label>
-                <input value="@(Model.OrderItem.RequestedDate.HasValue ? Model.OrderItem.RequestedDate.Value.ToString() : "N/A")" class="form-control form-control-sm" readonly />
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label>Quantity</label>
-                <input value="@Model.OrderItem.Quantity" class="form-control form-control-sm" readonly />
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label>Price</label>
-                <input value="@Model.OrderItem.Price" class="form-control form-control-sm" readonly />
-            </div>
-        </div>
-    </div>
-    <div class="row border border-info m-0 rounded">
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group">
-                <label>Shipment Item Status</label>
-                <select asp-for="Status" asp-items="ListUtility.GetShipmentItemStatuses()" class="form-control form-control-sm"></select>
-            </div>
+        @if (ViewData.IsReadonly()) {
+            <div class="row border m-0 rounded">
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group">
+                        <label>Shipment Item Status</label>
+                        <input asp-for="Status" class="form-control form-control-sm" readonly/>
+                    </div>
 
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group">
-                <label>Shipped Radioactivity</label>
-                <input type="number" asp-for="ShippedRadioactivity" class="form-control form-control-sm" />
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group">
+                        <label>Shipped Radioactivity</label>
+                        <input type="number" asp-for="ShippedRadioactivity" class="form-control form-control-sm" readonly/>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</li>
+        }
+        else {
+            <div class="row border border-info m-0 rounded">
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group">
+                        <label>Shipment Item Status</label>
+                        <select asp-for="Status" asp-items="ListUtility.GetShipmentItemStatuses()" class="form-control form-control-sm"></select>
+                    </div>
+
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group">
+                        <label>Shipped Radioactivity</label>
+                        <input type="number" asp-for="ShippedRadioactivity" class="form-control form-control-sm" />
+                    </div>
+                </div>
+            </div>
+        }
+    </li>

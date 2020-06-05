@@ -25,12 +25,33 @@
         </div>
         <div class="border rounded p-3 mb-3" id="shipping-information">
             <h6 class="card-subtitle text-muted">Shipping Information</h6>
-            <partial name="_Address" for="Shipping" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }"/>
+            <partial name="_Address" for="Shipping" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }" />
         </div>
-
-        <div class="form-group border rounded p-3">
-            <h6 class="card-subtitle text-muted">Courier Details</h6>
-            <textarea asp-for="CourierDetails" class="form-control form-control-sm" rows="5" readonly></textarea>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group border rounded p-3">
+                    <h6 class="card-subtitle text-muted">Courier Name</h6>
+                    <input type="text" asp-for="CourierName" class="form-control form-control-sm" readonly />
+                </div>
+                <div class="form-group border rounded p-3">
+                    <h6 class="card-subtitle text-muted">Courier Details</h6>
+                    <textarea asp-for="CourierDetails" class="form-control form-control-sm" rows="5" readonly></textarea>
+                </div>
+                <div class="form-group border rounded p-3">
+                    <label asp-for="ShippingCharge"></label>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">$</div>
+                        </div>
+                        <input type="number" asp-for="ShippingCharge" class="form-control form-control-sm" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="border rounded p-3">
+                    <partial name="_Document" for="Document" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.UploadModule,UploadModules.ShipmentDocument} ,{ ViewDataKeys.Readonly,true} }" />
+                </div>
+            </div>
         </div>
     </div>
 </div>

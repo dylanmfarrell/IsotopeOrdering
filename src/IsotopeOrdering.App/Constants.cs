@@ -27,8 +27,10 @@
         }
 
         public static class Shipment {
-            public const string Created = "Shipment created";
-            public const string Edited = "Shipment edited";
+            public const string Created = "Shipment Created";
+            public const string Edited = "Shipment Edited";
+            public const string Cancelled = "Shipment cancelled";
+            public const string Shipped = "Shipment Shipped";
         }
     }
 

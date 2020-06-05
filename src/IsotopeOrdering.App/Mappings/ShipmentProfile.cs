@@ -18,6 +18,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForAllOtherMembers(x => x.Ignore());
 
             CreateMap<ShipmentDetailModel, Shipment>()
+                .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.Items, opt => opt.MapFrom(x => x.Items))
                 .ForMember(x => x.Shipping, opt => opt.MapFrom(x => x.Shipping))
                 .ForMember(x => x.ShipmentDate, opt => opt.MapFrom(x => x.ShipmentDate))

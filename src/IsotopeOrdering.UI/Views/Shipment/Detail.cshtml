@@ -1,5 +1,10 @@
-﻿@model ShipmentDetailModel
+﻿@inject IConfiguration Configuration
+@model ShipmentDetailModel
 @{
     ViewData[ViewDataKeys.Title] = "Shipment Details";
 }
 <partial name="_ShipmentDetails" model="Model" />
+@section Scripts{
+    <script type="text/javascript" src="@Configuration["FileUploadUri"]"></script>
+    <script src="~/js/shipment.js"></script>
+}

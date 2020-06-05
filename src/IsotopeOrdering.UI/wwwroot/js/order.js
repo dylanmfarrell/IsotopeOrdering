@@ -22,6 +22,7 @@ function hookupTabs() {
         context.find('#shipping-information').setAddress(shipping);
         context.find('#billing-information').setAddress(billing);
         context.find('#billing-contact').setContact(billingContact);
+        context.find('#Notes').val($('#order-notes').val());
     })
 }
 

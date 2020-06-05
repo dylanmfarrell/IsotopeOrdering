@@ -1,4 +1,5 @@
-﻿using IsotopeOrdering.Domain.Entities;
+﻿using AutoMapper;
+using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,11 @@ using System.Threading.Tasks;
 namespace IsotopeOrdering.Infrastructure.DataServices {
     public class EventService : IEventService {
         private readonly IsotopeOrderingDbContext _context;
+        private readonly IMapper _mapper;
 
-        public EventService(IsotopeOrderingDbContext context) {
+        public EventService(IsotopeOrderingDbContext context, IMapper mapper) {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task CreateEvent(EntityEventType type, int id, string eventDescription) {
@@ -23,8 +26,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             await _context.SaveChangesAsync();
         }
 
-        public Task<List<EntityEvent>> GetEvents(int entityId) {
-            return _context.EntityEvents.Where(x => x.EntityId == entityId).ToListAsync();
+        public async Task<List<T>> GetEvents<T>(int entityId, EntityEventType type) {
+            return await _mapper.ProjectTo<T>(
+                _context.EntityEvents.Where(x => x.EntityId == entityId && x.Type == type).OrderBy(x => x.EventDateTime)
+                ).ToListAsync();
         }
     }
 }

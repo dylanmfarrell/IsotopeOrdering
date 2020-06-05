@@ -1,0 +1,27 @@
+﻿@model IsotopeOrdering.UI.Views.Shared.Components.EventList.EventListViewModel
+@if (Model.HasEvents) {
+    <button type="button" class="btn btn-sm btn-info float-right" data-toggle="modal" data-target="#historyModal">
+        <i class="fa fa-history" aria-hidden="true"></i>
+    </button>
+    <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="historyModalTitle">@Model.Title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        @foreach (EventItemModel eventItem in Model.Events) {
+                            <li class="list-group-item">@eventItem.Display</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+}

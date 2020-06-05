@@ -50,7 +50,6 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<OrderDetailModel> GetOrderForm(OrderDetailModel order) {
             CustomerItemModel customer = order.Customer;
-            await _eventService.CreateEvent(EntityEventType.Customer, customer.Id, Events.Customer.ObtainedOrderForm);
             order.Items = await _itemService.GetListForOrder<OrderItemDetailModel>(customer.Id, customer.ParentCustomerId);
             List<OrderAddressDetailModel> addresses = await _customerService.GetAddressListForOrder<OrderAddressDetailModel>(customer.Id, customer.ParentCustomerId);
             order.BillingAddresses = addresses.Where(x => x.Type == AddressType.Billing || x.Type == AddressType.Default).ToList();

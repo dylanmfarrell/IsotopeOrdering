@@ -4,6 +4,7 @@
 <div asp-validation-summary="All" class="alert alert-danger"></div>
 <div class="card">
     <div class="card-header">
+        @await Component.InvokeAsync("EventList", new { id = Model.Id, eventType = EntityEventType.Shipping })
         <h5 class="card-title mb-0">
             Shipment Details
         </h5>

@@ -2,6 +2,7 @@
 @model OrderDetailModel
 <div class="card">
     <div class="card-header">
+        @await Component.InvokeAsync("EventList", new { id = Model.Id, eventType = EntityEventType.Order })
         <h5 class="card-title mb-0">
             Order Details
         </h5>
@@ -31,12 +32,7 @@
         </div>
         <div class="form-group border rounded p-3">
             <h6 class="card-subtitle text-muted">Order Notes</h6>
-            @if (ViewData.IsReadonly()) {
-                <textarea asp-for="Notes" class="form-control form-control-sm" rows="5" readonly></textarea>
-            }
-            else {
-                <textarea asp-for="Notes" class="form-control form-control-sm" rows="5"></textarea>
-            }
+            <textarea asp-for="Notes" class="form-control form-control-sm" rows="5" readonly></textarea>
         </div>
     </div>
     @if (Model.CanEdit) {

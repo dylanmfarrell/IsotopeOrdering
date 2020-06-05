@@ -1,6 +1,6 @@
 ﻿@model List<ShipmentItemDetailModel>
 <ul class="list-group">
     @for (var i = 0; i < Model.Count; i++) {
-        <partial name="_ShipmentItem" for="@Model[i]" />
+        <partial name="~/Views/Shipment/_ShipmentItem.cshtml" for="@Model[i]" />
     }
 </ul>

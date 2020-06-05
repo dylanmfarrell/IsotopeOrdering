@@ -1,6 +1,8 @@
 ﻿using IsotopeOrdering.App.Interfaces;
+using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Managers {
@@ -17,6 +19,10 @@ namespace IsotopeOrdering.App.Managers {
             await _eventService.CreateEvent(type, id, eventDescription);
             //TODO check event type, send notification based on event type
             //if type == x, _notificaitonService.SendNotification(...)
+        }
+
+        public async Task<List<EventItemModel>> GetEvents(EntityEventType type, int id) {
+            return await _eventService.GetEvents<EventItemModel>(id, type);
         }
     }
 }

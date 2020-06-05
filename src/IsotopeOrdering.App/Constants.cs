@@ -10,7 +10,6 @@
             public const string ValidationFailedInitiationForm = "Customer has submitted an invalid initiation form";
             public const string SubmissionSuccessInitiationForm = "Customer has submitted a valid initiation form";
             public const string FormStatusChanged = "Form status changed";
-            public const string ObtainedOrderForm = "Customer has obtained order form";
             public const string SubmittedOrderForm = "Customer has submitted order form";
         }
 

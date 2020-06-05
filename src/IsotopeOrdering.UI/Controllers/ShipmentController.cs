@@ -36,7 +36,8 @@ namespace IsotopeOrdering.UI.Controllers {
             if (ModelState.IsValid) {
                 model.Status = ShipmentStatus.Created;
                 ApplicationResult result = await _shipmentManager.Create(model);
-                return ApplicationResult(nameof(Center), result);
+                SetApplicationResult(result);
+                return RedirectToAction(nameof(Center), "Shipment");
             }
             return View(model);
         }
@@ -56,7 +57,8 @@ namespace IsotopeOrdering.UI.Controllers {
         public async Task<IActionResult> Edit(ShipmentDetailModel model) {
             if (ModelState.IsValid) {
                 ApplicationResult result = await _shipmentManager.Edit(model);
-                return ApplicationResult(nameof(Center), result);
+                SetApplicationResult(result);
+                return RedirectToAction(nameof(Center), "Shipment");
             }
             return View(model);
         }

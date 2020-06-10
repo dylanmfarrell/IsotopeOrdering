@@ -30,11 +30,14 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         public async Task<List<T>> GetEvents<T>(int entityId, EntityEventType type) {
             return await _mapper.ProjectTo<T>(
                 _context.EntityEvents.Where(x => x.EntityId == entityId && x.Type == type).OrderBy(x => x.EventDateTime)
-                ).ToListAsync();
+            ).ToListAsync();
         }
 
         public async Task<List<EntityEvent>> GetEvents(string eventDescription, DateTime? startDate) {
-            return await _context.EntityEvents.Where(x => x.Description == eventDescription && x.EventDateTime > startDate.GetValueOrDefault(DateTime.Now.AddMinutes(-10))).ToListAsync();
+            return await _context.EntityEvents
+                .Where(x => x.Description == eventDescription && x.EventDateTime > startDate.GetValueOrDefault(DateTime.Now.AddMinutes(-10)))
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }

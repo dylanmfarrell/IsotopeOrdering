@@ -22,5 +22,15 @@ namespace IsotopeOrdering.App.Managers {
                 .Build();
             return await engine.CompileRenderAsync(templatePath, model);
         }
+
+        public async Task<string> GetContent(NotificationTarget target, string templatePath, object model) {
+            string templateTypePath = "Template/" + target.ToString();
+            string basePath = Path.Combine(_hostingEnvironment.ContentRootPath, templateTypePath);
+            var engine = new RazorLightEngineBuilder()
+                .UseFileSystemProject(basePath)
+                .UseMemoryCachingProvider()
+                .Build();
+            return await engine.CompileRenderAsync(templatePath, model);
+        }
     }
 }

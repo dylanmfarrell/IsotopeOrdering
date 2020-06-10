@@ -31,7 +31,8 @@ namespace IsotopeOrdering.Infrastructure {
         public DbSet<ItemConfiguration> ItemConfigurations { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<OrderItem> OrderItems { get; set; } = null!;
-        public DbSet<Notification> Notifications { get; set; } = null!;
+        public DbSet<Notification> Notifications{ get; set; } = null!;
+        public DbSet<NotificationConfiguration> NotificationConfigurations { get; set; } = null!;
         public DbSet<NotificationSubscription> NotificationSubscriptions { get; set; } = null!;
         public DbSet<Shipment> Shipments { get; set; } = null!;
         public DbSet<ShipmentItem> ShipmentItems { get; set; } = null!;

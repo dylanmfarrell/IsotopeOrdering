@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Interfaces {
     public interface INotificationManager {
-        Task ProcessNotifications();
-        Task ProcessNotification(Notification notification);
+        Task SendNotifications();
+        Task ProcessNotificationConfigurations();
+        Task ProcessNotificationConfiguration(NotificationConfiguration notification);
     }
 }

@@ -4,7 +4,10 @@ using System.Threading.Tasks;
 
 namespace IsotopeOrdering.Domain.Interfaces {
     public interface INotificationService {
-        Task<List<Notification>> GetNotifications();
-        Task<bool> SendNotification(string recipientName, string recipientEmail, string title, string message);
+        Task<List<NotificationConfiguration>> GetNotificationConfigurations();
+        Task UpdateLastProcessedDate(int notificationConfigurationId);
+        Task UpdateSentDates(List<int> notificationIds);
+        Task CreateNotifications(List<Notification> notifications);
+        Task<List<Notification>> GetNotificationsForProcessing();
     }
 }

@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Configuration\" />
     <Folder Include="Templates\Admin\" />
   </ItemGroup>
 

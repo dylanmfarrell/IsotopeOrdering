@@ -19,7 +19,6 @@ namespace IsotopeOrdering.UI.Utilities {
         public static IEnumerable<SelectListItem> GetShipmentStatuses() {
             yield return ShipmentStatus.Created.ToSelectListItem();
             yield return ShipmentStatus.Cancelled.ToSelectListItem();
-            yield return ShipmentStatus.PartiallyShipped.ToSelectListItem();
             yield return ShipmentStatus.Shipped.ToSelectListItem();
         }
 

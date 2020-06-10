@@ -19,7 +19,6 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IMapper _mapper;
         private readonly IFormService _service;
         private readonly IItemService _itemService;
-        private readonly IInstitutionService _institutionService;
         private readonly IIsotopeOrderingAuthorizationService _authenticationService;
         private readonly ICustomerService _customerService;
         private readonly IEventManager _eventService;
@@ -36,7 +35,6 @@ namespace IsotopeOrdering.App.Managers {
             _mapper = mapper;
             _service = service;
             _itemService = itemService;
-            _institutionService = institutionService;
             _authenticationService = authenticationService;
             _customerService = customerService;
             _eventService = eventService;

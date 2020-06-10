@@ -34,27 +34,32 @@ namespace IsotopeOrdering.App.Managers {
             _emailService = emailService;
         }
 
-        public async Task ProcessNotificationConfigurations() {
-            List<NotificationConfiguration> notificationConfigurations = await _service.GetNotificationConfigurations();
-            foreach (NotificationConfiguration notificationConfiguration in notificationConfigurations) {
-                await ProcessNotificationConfiguration(notificationConfiguration);
-            }
-        }
-
-        public async Task SendNotifications() {
+        public async Task<int> SendNotifications() {
             List<Notification> notifications = await _service.GetNotificationsForProcessing();
             Dictionary<int, bool> notificationsSent = await _emailService.SendNotifications(notifications);
             List<int> notificationIdsSent = notificationsSent.ToList().Where(x => x.Value).Select(x => x.Key).ToList();
             await _service.UpdateSentDates(notificationIdsSent);
+            return notificationIdsSent.Count();
         }
 
-        public async Task ProcessNotificationConfiguration(NotificationConfiguration notificationConfiguration) {
+        public async Task<int> ProcessNotificationConfigurations() {
+            int processedNotificationsCount = 0;
+            List<NotificationConfiguration> notificationConfigurations = await _service.GetNotificationConfigurations();
+            foreach (NotificationConfiguration notificationConfiguration in notificationConfigurations) {
+                processedNotificationsCount += await ProcessNotificationConfiguration(notificationConfiguration);
+            }
+            return processedNotificationsCount;
+        }
+
+        public async Task<int> ProcessNotificationConfiguration(NotificationConfiguration notificationConfiguration) {
+            int processedNotificationsCount = 0;
             List<EntityEvent> events = await _eventService.GetEvents(notificationConfiguration.EventTrigger, notificationConfiguration.LastProcessed);
             foreach (EntityEvent entityEvent in events) {
                 NotificationDto notificationDto = await GetNotificationDto(notificationConfiguration, entityEvent);
-                await _service.CreateNotifications(notificationDto.ToNotifications());
+                processedNotificationsCount += await _service.CreateNotifications(notificationDto.ToNotifications());
             }
             await _service.UpdateLastProcessedDate(notificationConfiguration.Id);
+            return processedNotificationsCount;
         }
 
         public async Task<NotificationDto> GetNotificationDto(NotificationConfiguration notificationConfiguration, EntityEvent entityEvent) {

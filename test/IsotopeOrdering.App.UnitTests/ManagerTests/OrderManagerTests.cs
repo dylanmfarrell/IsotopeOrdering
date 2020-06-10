@@ -151,6 +151,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             order.Cart.Clear();
             order.Cart.Add(TestUtilities.GetValidOrderItem());
             order.Status = OrderStatus.Sent;
+            order.BillingContact = TestUtilities.GetValidContact();
 
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile(), new OrderProfile(), new SharedProfile());
             OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, Mock.Of<IShipmentService>(), _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());
@@ -190,6 +191,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             order.Cart.Clear();
             order.Cart.Add(TestUtilities.GetValidOrderItem());
             order.Status = OrderStatus.Sent;
+            order.BillingContact = TestUtilities.GetValidContact();
 
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile(), new OrderProfile(), new SharedProfile());
             OrderManager manager = new OrderManager(_logger, mapper, mockOrderService.Object, mockItemService.Object, mockCustomerService.Object, Mock.Of<IShipmentService>(), _eventService, Mock.Of<IIsotopeOrderingAuthorizationService>());

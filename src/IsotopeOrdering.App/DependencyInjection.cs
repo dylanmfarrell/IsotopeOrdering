@@ -40,6 +40,8 @@ namespace IsotopeOrdering.App {
             services.AddTransient<IOrderManager, OrderManager>();
             services.AddTransient<IShipmentManager, ShipmentManager>();
             services.AddTransient<IEventManager, EventManager>();
+            services.AddTransient<ITemplateManager, TemplateManager>();
+            services.AddTransient<INotificationManager, NotificationManager>();
             return services;
         }
     }

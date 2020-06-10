@@ -56,5 +56,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         public async Task<List<T>> Search<T>(string search) where T : class {
             return await _mapper.ProjectTo<T>(_context.Customers.Search(search).AsNoTracking()).ToListAsync();
         }
+
+        public async Task<List<T>> GetRecipients<T>(int id) where T : class {
+            Customer customer = await _context.Customers.FindAsync(id);
+            return _mapper.Map<List<T>>(customer);
+        }
     }
 }

@@ -12,9 +12,9 @@ namespace IsotopeOrdering.Infrastructure.Services {
         private readonly IAppManCoreService _service;
         private readonly IUserService _userService;
         private readonly IMemoryCache _cache;
-        private readonly IOptionsMonitor<RoleServiceOptions> _options;
+        private readonly IOptions<RoleServiceOptions> _options;
 
-        public IsotopeOrderingRoleService(IAppManCoreService appmanService, IUserService userService, IMemoryCache cache, IOptionsMonitor<RoleServiceOptions> options) {
+        public IsotopeOrderingRoleService(IAppManCoreService appmanService, IUserService userService, IMemoryCache cache, IOptions<RoleServiceOptions> options) {
             _service = appmanService;
             _userService = userService;
             _cache = cache;
@@ -23,11 +23,11 @@ namespace IsotopeOrdering.Infrastructure.Services {
         public IEnumerable<string> UserRoles => GetUserRoles().Result;
 
         private async Task<IEnumerable<string>> GetUserRoles() {
-            string key = $"{_options.CurrentValue.Token}|{_userService.User.Email}";
+            string key = $"{_options.Value.Token}|{_userService.User.Email}";
             if (_cache.TryGetValue(key, out IEnumerable<string> roles)) {
                 return roles;
             }
-            roles = await _service.GetUserRolesByEmail(_userService.User.Email, _options.CurrentValue.Token, _options.CurrentValue.DefaultRole);
+            roles = await _service.GetUserRolesByEmail(_userService.User.Email, _options.Value.Token, _options.Value.DefaultRole);
             return _cache.Set(key, roles, new TimeSpan(0, 10, 0));
         }
     }

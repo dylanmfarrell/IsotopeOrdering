@@ -14,9 +14,9 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             _context = context;
         }
 
-        public async Task CreateNotifications(List<Notification> notifications) {
+        public async Task<int> CreateNotifications(List<Notification> notifications) {
             _context.Notifications.AddRange(notifications);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<List<NotificationConfiguration>> GetNotificationConfigurations() {

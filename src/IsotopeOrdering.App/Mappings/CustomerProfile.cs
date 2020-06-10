@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
+using IsotopeOrdering.App.Models.Notifications;
 using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
@@ -33,6 +34,10 @@ namespace IsotopeOrdering.App.Mappings {
             CreateMap<CustomerInstitution, CustomerAddressDetailModel>()
                 .ForMember(x => x.Type, opt => opt.MapFrom(x => AddressType.Default))
                 .ForMember(x => x.Address, opt => opt.MapFrom(x => x.Institution.Address));
+
+            CreateMap<Customer, RecipientDto>()
+                .ForMember(x => x.EmailAddress, opt => opt.MapFrom(x => x.Contact.Email))
+                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Contact.FirstName + " " + x.Contact.LastName));
         }
     }
 }

@@ -7,7 +7,7 @@ namespace IsotopeOrdering.Domain.Interfaces {
         Task<List<NotificationConfiguration>> GetNotificationConfigurations();
         Task UpdateLastProcessedDate(int notificationConfigurationId);
         Task UpdateSentDates(List<int> notificationIds);
-        Task CreateNotifications(List<Notification> notifications);
+        Task<int> CreateNotifications(List<Notification> notifications);
         Task<List<Notification>> GetNotificationsForProcessing();
     }
 }

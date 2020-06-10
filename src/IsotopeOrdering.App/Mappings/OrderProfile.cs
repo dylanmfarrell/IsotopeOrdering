@@ -54,7 +54,8 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Cart, opt => opt.MapFrom(x => x.Items))
                 .ForMember(x => x.Customer, opt => opt.MapFrom(x => x.Customer))
                 .ForMember(x => x.Institution, opt => opt.MapFrom(x => x.Customer.Institutions.First()))
-                .ForMember(x => x.SubmitAction, opt => opt.Ignore());
+                .ForMember(x => x.SubmitAction, opt => opt.Ignore())
+                .ForMember(x=>x.CanEdit,opt=> opt.Ignore());
 
             CreateMap<OrderItem, OrderItemDetailModel>()
                 .ForMember(x => x.Quantity, opt => opt.MapFrom(x => x.Quantity))

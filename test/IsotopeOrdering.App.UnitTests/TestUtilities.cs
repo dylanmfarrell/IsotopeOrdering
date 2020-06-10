@@ -54,12 +54,21 @@ namespace IsotopeOrdering.App.UnitTests {
                 .Create();
         }
 
+        public static ContactDetailModel GetValidContact() {
+            Fixture fixture = new Fixture();
+            return fixture.Build<ContactDetailModel>()
+                .With(x => x.PhoneNumber, "123-123-1234")
+                .With(x => x.Email, "test@test.com")
+                .Without(x => x.Fax)
+                .Create();
+        }
+
         public static OrderItemDetailModel GetValidOrderItem() {
             Fixture fixture = new Fixture();
             return fixture.Build<OrderItemDetailModel>()
                 .With(x => x.IsDeleted, false)
                 .With(x => x.Quantity, 100)
-                .With(x => x.RequestedDate, DateTime.Now.AddDays(1))
+                .With(x => x.RequestedDate, new DateTime(2050,10,6))
                 .Create();
         }
     }

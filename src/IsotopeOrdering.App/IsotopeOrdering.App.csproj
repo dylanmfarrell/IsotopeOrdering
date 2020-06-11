@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="FluentValidation" Version="8.6.2" />
@@ -21,6 +21,12 @@
 
   <ItemGroup>
     <Folder Include="Templates\Admin\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\Customer\DefaultTemplate.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

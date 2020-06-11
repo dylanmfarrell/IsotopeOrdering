@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace IsotopeOrdering.Infrastructure.Options {
-    public class EmailSettings {
+    public class EmailOptions {
         public string Host { get; set; } = null!;
         public int Port { get; set; }
         public bool Send { get; set; }
@@ -11,7 +11,7 @@ namespace IsotopeOrdering.Infrastructure.Options {
     }
 
     public class EmailAdmin {
-        public string Name { get; set; }
-        public string Email { get; set; }
+        public string Name { get; set; } = null!;
+        public string Email { get; set; } = null!;
     }
 }

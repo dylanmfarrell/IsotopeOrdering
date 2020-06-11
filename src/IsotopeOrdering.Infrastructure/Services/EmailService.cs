@@ -5,53 +5,52 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.Infrastructure.Services {
     public class EmailService : IEmailService {
-        private readonly IOptions<EmailOptions> _options;
-        private readonly SmtpClient _smtpClient;
+        private readonly IOptions<EmailOptions> _emailOptions;
 
-        public EmailService(IOptions<EmailOptions> options) {
-            _options = options;
-            _smtpClient = new SmtpClient {
-                ServerCertificateValidationCallback = (s, c, h, e) => true
-            };
+        public EmailService(IOptions<EmailOptions> emailOptions) {
+            _emailOptions = emailOptions;
         }
 
-        public Task<Dictionary<int, bool>> SendNotifications(List<Notification> notifications) {
-            throw new NotImplementedException();
+        public async Task<bool> Send(Notification notification) {
+            return (await Send(new List<Notification>() { notification })).First().Value;
         }
 
-        public async Task<bool> SendNotification(Notification notification) {
+        public async Task<Dictionary<int, bool>> Send(List<Notification> notifications) {
+            Dictionary<int, bool> results = new Dictionary<int, bool>();
+            using SmtpClient client = new SmtpClient { ServerCertificateValidationCallback = (s, c, h, e) => true };
+            client.AuthenticationMechanisms.Remove("XOAUTH2");
+            await client.ConnectAsync(_emailOptions.Value.Host, _emailOptions.Value.Port, SecureSocketOptions.Auto);
+            foreach (Notification notification in notifications) {
+                results.Add(notification.Id, await Send(client, notification));
+            }
+            if (client.IsConnected) {
+                await client.DisconnectAsync(true);
+            }
+            return results;
+        }
+
+        private async Task<bool> Send(SmtpClient client, Notification notification) {
+            MimeMessage message = GetMimeMessage(notification);
             try {
-                MimeMessage mimeMessage = GetMimeMessage(notification);
-                if (_options.Value.Send) {
-                    await _smtpClient.SendAsync(mimeMessage);
+                if (_emailOptions.Value.Send) {
+                    await client.SendAsync(message);
                 }
                 return true;
             }
             catch {
-            }
-            return false;
-        }
-
-        public async Task Connect() {
-            await _smtpClient.ConnectAsync(_options.Value.Host, _options.Value.Port, SecureSocketOptions.Auto);
-            _smtpClient.AuthenticationMechanisms.Remove("XOAUTH2");
-        }
-
-        public async ValueTask DisposeAsync() {
-            if (_smtpClient.IsConnected) {
-                await _smtpClient.DisconnectAsync(true);
+                return false;
             }
         }
 
         private MimeMessage GetMimeMessage(Notification notification) {
             MimeMessage mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(new MailboxAddress(_options.Value.SenderName, _options.Value.SenderEmail));
+            mimeMessage.From.Add(new MailboxAddress(_emailOptions.Value.SenderName, _emailOptions.Value.SenderAddress));
             mimeMessage.To.Add(new MailboxAddress(notification.RecipientName, notification.RecipientEmail));
             mimeMessage.Subject = notification.Subject;
             BodyBuilder builder = new BodyBuilder {

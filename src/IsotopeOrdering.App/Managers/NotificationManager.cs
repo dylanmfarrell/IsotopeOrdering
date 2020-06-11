@@ -36,7 +36,7 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<int> SendNotifications() {
             List<Notification> notifications = await _service.GetNotificationsForProcessing();
-            Dictionary<int, bool> notificationsSent = await _emailService.SendNotifications(notifications);
+            Dictionary<int, bool> notificationsSent = await _emailService.Send(notifications);
             List<int> notificationIdsSent = notificationsSent.ToList().Where(x => x.Value).Select(x => x.Key).ToList();
             await _service.UpdateSentDates(notificationIdsSent);
             return notificationIdsSent.Count();

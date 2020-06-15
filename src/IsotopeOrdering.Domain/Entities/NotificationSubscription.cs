@@ -2,8 +2,8 @@
 
 namespace IsotopeOrdering.Domain.Entities {
     public class NotificationSubscription : ModelBase {
-        public NotificationConfiguration Notification { get; set; } = null!;
-        public int NotificationId { get; set; }
+        public NotificationConfiguration NotificationConfiguration { get; set; } = null!;
+        public int NotificationConfigurationId { get; set; }
         public Customer Customer { get; set; } = null!;
         public int CustomerId { get; set; }
     }

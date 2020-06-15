@@ -1,10 +1,12 @@
-﻿using IsotopeOrdering.Domain.Entities;
+﻿using IsotopeOrdering.Domain;
+using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IsotopeOrdering.Infrastructure {
-    public static class DataSeeding {
+    internal static class DataSeeding {
         private const string _systemUser = "SYSTEM";
         private static readonly DateTime _now = DateTime.Now;
 
@@ -18,6 +20,42 @@ namespace IsotopeOrdering.Infrastructure {
                 CreatedDate = _now,
                 UpdatedDate = _now
             };
+        }
+
+        public static IEnumerable<NotificationConfiguration> GetNotificationConfigurationSeedData() {
+            Dictionary<string, string> events = Events.GetEvents();
+            int id = 1;
+            for (int i = 0; i < events.Count; i++) {
+                KeyValuePair<string, string> eventPair = events.ElementAt(i);
+                yield return new NotificationConfiguration() {
+                    Id = id,
+                    EventTrigger = eventPair.Value,
+                    LastProcessed = null,
+                    Title = eventPair.Value,
+                    TemplatePath = eventPair.Key,
+                    IsDeleted = false,
+                    Target = NotificationTarget.Admin,
+                    CreatedBy = _systemUser,
+                    UpdatedBy = _systemUser,
+                    CreatedDate = _now,
+                    UpdatedDate = _now
+                };
+                id++;
+                yield return new NotificationConfiguration() {
+                    Id = id,
+                    EventTrigger = eventPair.Value,
+                    LastProcessed = null,
+                    Title = eventPair.Value,
+                    TemplatePath = eventPair.Key,
+                    IsDeleted = false,
+                    Target = NotificationTarget.Customer,
+                    CreatedBy = _systemUser,
+                    UpdatedBy = _systemUser,
+                    CreatedDate = _now,
+                    UpdatedDate = _now
+                };
+                id++;
+            }
         }
 
         public static IEnumerable<Item> GetItemSeedData() {

@@ -1,39 +1,4 @@
 ﻿namespace IsotopeOrdering.App {
-
-    public static class Events {
-        public static class Customer {
-            public const string Created = "Customer created";
-            public const string Edited = "Customer edited";
-            public const string ObtainedInitiationForm = "Customer has obtained initiation form";
-            public const string SubmittedInitiationForm = "Customer has submitted initiation form";
-            public const string ResubmittedInitiationForm = "Customer has resubmitted initiation form";
-            public const string ValidationFailedInitiationForm = "Customer has submitted an invalid initiation form";
-            public const string SubmissionSuccessInitiationForm = "Customer has submitted a valid initiation form";
-            public const string FormStatusChanged = "Form status changed";
-            public const string SubmittedOrderForm = "Customer has submitted order form";
-        }
-
-        public static class Order {
-            public const string Created = "Order created";
-            public const string Edited = "Order edited";
-            public const string Sent = "Order Sent";
-            public const string Approved = "Order Approved";
-            public const string Denied = "Order Denied";
-            public const string InProcess = "Order In Process";
-            public const string Amended = "Order Amended";
-            public const string ApprovedAmendedOrder = "Approved amended order";
-            public const string Complete = "Order Completed";
-            public const string Cancelled = "Order Cancelled";
-        }
-
-        public static class Shipment {
-            public const string Created = "Shipment Created";
-            public const string Edited = "Shipment Edited";
-            public const string Cancelled = "Shipment cancelled";
-            public const string Shipped = "Shipment Shipped";
-        }
-    }
-
     public static class ValidationMessages {
         public const string NoShippingAddress = "Must have at least one shipping address";
         public const string NoBillingAddress = "Must have at least one billing address";

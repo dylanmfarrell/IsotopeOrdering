@@ -36,10 +36,10 @@ namespace IsotopeOrdering.App.Mappings {
             CreateMap<CustomerForm, FormItemModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => x.FormId))
                 .ForMember(x => x.CustomerDetailFormId, opt => opt.MapFrom(x => x.CustomerId))
-                .ForMember(x => x.Customer, opt => opt.MapFrom(x => x.Customer))
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Form.Name))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
-                .ForMember(x => x.Type, opt => opt.MapFrom(x => x.Form.Type));
+                .ForMember(x => x.Type, opt => opt.MapFrom(x => x.Form.Type))
+                .ReverseMap();
         }
     }
 

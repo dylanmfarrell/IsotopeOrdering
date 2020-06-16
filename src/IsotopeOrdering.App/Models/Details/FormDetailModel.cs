@@ -26,7 +26,7 @@ namespace IsotopeOrdering.App.Models.Details {
         public Guid FormIdentifier { get; set; } = Guid.NewGuid();
         public InstitutionDetailModel Institution { get; set; } = new InstitutionDetailModel();
         public AddressDetailModel ShippingAddress { get; set; } = new AddressDetailModel();
-        public string FedExNumber { get; set; } = string.Empty;
+        public string? FedExNumber { get; set; } = string.Empty;
         public List<FormInitiationItemModel> Items { get; set; } = new List<FormInitiationItemModel>();
         public FormInitiationSignatureModel CustomerAdminSignature { get; set; } = new FormInitiationSignatureModel();
         public FormInitiationSignatureModel AdminSignature { get; set; } = new FormInitiationSignatureModel();

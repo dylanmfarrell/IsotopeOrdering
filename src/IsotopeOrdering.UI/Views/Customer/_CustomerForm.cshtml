@@ -11,6 +11,7 @@
             <a class="nav-link" id="address-tab" data-toggle="pill" href="#address-content" role="tab" aria-controls="address-content" aria-selected="false">Addresses</a>
             <a class="nav-link" id="institution-tab" data-toggle="pill" href="#institution-content" role="tab" aria-controls="institution-content" aria-selected="false">Institutions</a>
             <a class="nav-link" id="document-tab" data-toggle="pill" href="#document-content" role="tab" aria-controls="document-content" aria-selected="false">Documents</a>
+            <a class="nav-link" id="forms-tab" data-toggle="pill" href="#forms-content" role="tab" aria-controls="forms-content" aria-selected="false">Forms</a>
             @if (await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
                 <a class="nav-link" id="admin-tab" data-toggle="pill" href="#admin-content" role="tab" aria-controls="admin-content" aria-selected="false">Admin</a>
             }
@@ -63,6 +64,16 @@
                     </div>
                     <div class="card-body">
                         <partial name="_CustomerDocumentList" for="Documents" />
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="forms-content" role="tabpanel" aria-labelledby="forms-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Forms</h5>
+                    </div>
+                    <div class="card-body">
+                        <partial name="_CustomerFormList" for="Forms" />
                     </div>
                 </div>
             </div>

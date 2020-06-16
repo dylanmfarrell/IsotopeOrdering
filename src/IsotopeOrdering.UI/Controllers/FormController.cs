@@ -37,7 +37,7 @@ namespace IsotopeOrdering.UI.Controllers {
             }
             return View(await _formManager.GetInitiationForm(customer));
         }
-
+      
         [HttpPost]
         public async Task<IActionResult> InitiationForm(FormDetailModel model) {
             if (ModelState.IsValid) {

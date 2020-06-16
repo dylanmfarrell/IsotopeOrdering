@@ -1,4 +1,5 @@
-﻿using IsotopeOrdering.App.Models.Shared;
+﻿using IsotopeOrdering.App.Models.Items;
+using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
 using System;
@@ -15,6 +16,7 @@ namespace IsotopeOrdering.App.Models.Details {
         public List<CustomerDocumentDetailModel> Documents { get; set; } = new List<CustomerDocumentDetailModel>();
         public List<ItemConfigurationDetailModel> ItemConfigurations { get; set; } = new List<ItemConfigurationDetailModel>();
         public List<CustomerInstitutionDetailModel> Institutions { get; set; } = new List<CustomerInstitutionDetailModel>();
+        public List<FormItemModel> Forms { get; set; } = new List<FormItemModel>();
         [DisplayName("Internal Notes")]
         public string? InternalNotes { get; set; } = string.Empty;
     }
@@ -41,5 +43,4 @@ namespace IsotopeOrdering.App.Models.Details {
         [DisplayName("Expiration Date")]
         public DateTime? ExpirationDate { get; set; }
     }
-
 }

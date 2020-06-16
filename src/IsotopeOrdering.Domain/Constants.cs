@@ -16,11 +16,7 @@ namespace IsotopeOrdering.Domain {
         public static class Customer {
             public const string Created = "Customer created";
             public const string Edited = "Customer edited";
-            public const string ObtainedInitiationForm = "Customer has obtained initiation form";
             public const string SubmittedInitiationForm = "Customer has submitted initiation form";
-            public const string ResubmittedInitiationForm = "Customer has resubmitted initiation form";
-            public const string ValidationFailedInitiationForm = "Customer has submitted an invalid initiation form";
-            public const string SubmissionSuccessInitiationForm = "Customer has submitted a valid initiation form";
             public const string FormStatusChanged = "Form status changed";
         }
 

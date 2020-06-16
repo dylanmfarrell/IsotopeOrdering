@@ -42,7 +42,6 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<FormDetailModel> GetInitiationForm(CustomerItemModel customer) {
-            await _eventService.CreateEvent(EntityEventType.Customer, customer.Id, Events.Customer.ObtainedInitiationForm);
             FormDetailModel formDetailModel = await _service.Get<FormDetailModel>(FormType.Initiation);
             formDetailModel.InitiationModel = new FormInitiationDetailModel();
             formDetailModel.InitiationModel.Items = await _itemService.GetListForInitiation<FormInitiationItemModel>();
@@ -59,25 +58,14 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<ApplicationResult> SubmitInitiationForm(FormDetailModel form) {
-            await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
             var validator = new FormDetailModelValidator();
             ValidationResult result = await validator.ValidateAsync(form);
             if (result.IsValid) {
-                if (form.CustomerDetailFormId != 0) {
-                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.ResubmittedInitiationForm);
-                    form.CustomerFormStatus = CustomerFormStatus.Completed;
-                }
-                else {
-                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
-                }
                 CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
-                int updated = await _service.SubmitCustomerForm(customerForm);
-                if (updated > 0) {
-                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmissionSuccessInitiationForm);
-                    return ApplicationResult.Success("Form submitted", updated);
-                }
+                int formId = await _service.SubmitCustomerForm(customerForm);
+                await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
+                return ApplicationResult.Success("Form submitted", formId);
             }
-            await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.ValidationFailedInitiationForm);
             return ApplicationResult.Error(result);
         }
 

@@ -15,6 +15,7 @@ namespace IsotopeOrdering.Domain.Entities {
         public List<CustomerDocument> Documents { get; set; } = new List<CustomerDocument>();
         public List<ItemConfiguration> ItemConfigurations { get; set; } = new List<ItemConfiguration>();
         public List<CustomerInstitution> Institutions { get; set; } = new List<CustomerInstitution>();
+        public List<CustomerForm> Forms { get; set; } = new List<CustomerForm>();
         public string? InternalNotes { get; set; }
     }
 }

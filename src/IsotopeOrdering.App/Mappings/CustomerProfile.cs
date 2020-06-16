@@ -15,6 +15,7 @@ namespace IsotopeOrdering.App.Mappings {
             CreateMap<Customer, CustomerDetailModel>()
                 .ForMember(x => x.Contact, opt => opt.MapFrom(x => x.Contact))
                 .ReverseMap();
+
             CreateMap<CustomerAddress, CustomerAddressDetailModel>()
                 .ReverseMap();
             CreateMap<CustomerAddress, OrderAddressDetailModel>();

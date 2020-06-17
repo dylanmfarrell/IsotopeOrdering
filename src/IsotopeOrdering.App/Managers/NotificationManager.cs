@@ -3,12 +3,15 @@ using IsotopeOrdering.App.Models.Notifications;
 using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Managers {
     public class NotificationManager : INotificationManager {
+        private readonly ILogger<NotificationManager> _logger;
         private readonly INotificationService _service;
         private readonly IEventService _eventService;
         private readonly ICustomerService _customerService;
@@ -18,6 +21,7 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IEmailService _emailService;
 
         public NotificationManager(
+            ILogger<NotificationManager> logger,
             INotificationService service,
             IEventService eventService,
             ICustomerService customerService,
@@ -25,6 +29,7 @@ namespace IsotopeOrdering.App.Managers {
             IOrderService orderService,
             ITemplateManager templateManager,
             IEmailService emailService) {
+            _logger = logger;
             _service = service;
             _eventService = eventService;
             _customerService = customerService;
@@ -55,18 +60,27 @@ namespace IsotopeOrdering.App.Managers {
             int processedNotificationsCount = 0;
             List<EntityEvent> events = await _eventService.GetEvents(notificationConfiguration.EventTrigger, notificationConfiguration.LastProcessed);
             foreach (EntityEvent entityEvent in events) {
-                NotificationDto notificationDto = await GetNotificationDto(notificationConfiguration, entityEvent);
-                processedNotificationsCount += await _service.CreateNotifications(notificationDto.ToNotifications());
+                NotificationDto notificationDto;
+                if (TryGetNotificationDto(notificationConfiguration, entityEvent, out notificationDto)) {
+                    processedNotificationsCount += await _service.CreateNotifications(notificationDto.ToNotifications());
+                }
             }
-            await _service.UpdateLastProcessedDate(notificationConfiguration.Id);
+            if (processedNotificationsCount > 0) {
+                await _service.UpdateLastProcessedDate(notificationConfiguration.Id);
+            }
             return processedNotificationsCount;
         }
 
-        public async Task<NotificationDto> GetNotificationDto(NotificationConfiguration notificationConfiguration, EntityEvent entityEvent) {
-            NotificationDto notificationDto = new NotificationDto(entityEvent, notificationConfiguration.Subscriptions, notificationConfiguration.Title);
-            notificationDto.AddRecipients(await GetRecipients(notificationConfiguration.Target, entityEvent));
-            notificationDto.Body = await _templateManager.GetContent(notificationConfiguration.Target, notificationConfiguration.TemplatePath, entityEvent);
-            return notificationDto;
+        public bool TryGetNotificationDto(NotificationConfiguration notificationConfiguration, EntityEvent entityEvent, out NotificationDto notificationDto) {
+            notificationDto = new NotificationDto(entityEvent, notificationConfiguration.Subscriptions, notificationConfiguration.Title);
+            try {
+                notificationDto.AddRecipients(GetRecipients(notificationConfiguration.Target, entityEvent).Result);
+                notificationDto.Body = _templateManager.GetContent(notificationConfiguration.Target, notificationConfiguration.TemplatePath, entityEvent).Result;
+                return true;
+            }catch(Exception ex) {
+                _logger.LogError(ex, "Failed to process notification configuration {notificationConfiguration}", notificationConfiguration);
+            }
+            return false;
         }
 
         private async Task<List<RecipientDto>> GetRecipients(NotificationTarget notificationTarget, EntityEvent entityEvent) {

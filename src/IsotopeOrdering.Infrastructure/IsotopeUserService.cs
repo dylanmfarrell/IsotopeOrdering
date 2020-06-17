@@ -11,7 +11,8 @@ namespace IsotopeOrdering.Infrastructure {
         public IsotopeUserService(IHttpContextAccessor accessor) {
             _accessor = accessor;
         }
-        public IUser User => new IsotopeUser(_accessor.HttpContext.User);
+
+        public IUser User =>  new IsotopeUser(_accessor.HttpContext.User);
     }
 
     public class IsotopeUser : IUser {
@@ -39,6 +40,22 @@ namespace IsotopeOrdering.Infrastructure {
             Claim? claim = _claimsPrincipal.Claims.FirstOrDefault(x => x.Type == jwtType);
             return claim?.Value ?? string.Empty;
         }
+    }
+
+    public class SystemUser : IUser {
+        public ClaimsPrincipal ClaimsPrincipal => throw new System.NotImplementedException();
+
+        public string UserName => "SYSTEM";
+
+        public string FirstName => "SYSTEM";
+
+        public string LastName => "SYSTEM";
+
+        public string EducationId => throw new System.NotImplementedException();
+
+        public string PhoneNumber => throw new System.NotImplementedException();
+
+        public string Email => throw new System.NotImplementedException();
     }
 
 

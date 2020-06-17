@@ -16,7 +16,7 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
 
         public async Task<int> CreateNotifications(List<Notification> notifications) {
             _context.Notifications.AddRange(notifications);
-            return await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync("SYSTEM");
         }
 
         public async Task<List<NotificationConfiguration>> GetNotificationConfigurations() {
@@ -33,13 +33,13 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         public async Task UpdateLastProcessedDate(int notificationConfigurationId) {
             NotificationConfiguration notificationConfiguration = await _context.NotificationConfigurations.FindAsync(notificationConfigurationId);
             notificationConfiguration.LastProcessed = DateTime.Now;
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync("SYSTEM");
         }
 
         public async Task UpdateSentDates(List<int> notificationIds) {
             List<Notification> notifications = await _context.Notifications.Where(x => notificationIds.Contains(x.Id)).ToListAsync();
             notifications.ForEach(x => x.SentDateTime = DateTime.Now);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync("SYSTEM");
         }
     }
 }

@@ -5,6 +5,7 @@ using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Entities.Shared;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,9 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             Mock<ITemplateManager> mockTemplateManager = new Mock<ITemplateManager>();
             mockTemplateManager.Setup(x => x.GetContent(It.IsAny<NotificationTarget>(), It.IsAny<string>(), It.IsAny<EntityEvent>())).ReturnsAsync(string.Empty);
 
-            NotificationManager manager = new NotificationManager(mockNotificationService.Object,
+            NotificationManager manager = new NotificationManager(
+                new NullLogger<NotificationManager>(),
+                mockNotificationService.Object,
                 mockEventService.Object,
                 mockCustomerService.Object,
                 mockShipmentService.Object,
@@ -74,7 +77,9 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             Mock<IOrderService> mockOrderService = new Mock<IOrderService>();
             Mock<ITemplateManager> mockTemplateManager = new Mock<ITemplateManager>();
 
-            NotificationManager manager = new NotificationManager(mockNotificationService.Object,
+            NotificationManager manager = new NotificationManager(
+                new NullLogger<NotificationManager>(),
+                mockNotificationService.Object,
                 mockEventService.Object,
                 mockCustomerService.Object,
                 mockShipmentService.Object,

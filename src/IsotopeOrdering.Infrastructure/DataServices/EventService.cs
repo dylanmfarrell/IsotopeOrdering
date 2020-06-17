@@ -34,8 +34,9 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<List<EntityEvent>> GetEvents(string eventDescription, DateTime? startDate) {
+            DateTime eventStartDate = startDate.GetValueOrDefault(DateTime.Now.AddMinutes(-10));
             return await _context.EntityEvents
-                .Where(x => x.Description == eventDescription && x.EventDateTime > startDate.GetValueOrDefault(DateTime.Now.AddMinutes(-10)))
+                .Where(x => x.Description == eventDescription && x.EventDateTime > eventStartDate)
                 .AsNoTracking()
                 .ToListAsync();
         }

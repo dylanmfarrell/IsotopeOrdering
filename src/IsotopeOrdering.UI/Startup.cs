@@ -2,6 +2,7 @@ using FluentValidation.AspNetCore;
 using IsotopeOrdering.App;
 using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.Infrastructure;
+using IsotopeOrdering.UI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +36,9 @@ namespace IsotopeOrdering.UI {
             services.AddApplication();
 
             services.AddHealthChecks().AddDbContextCheck<IsotopeOrderingDbContext>();
+
+            services.AddHostedService<NotificationBackgroundService>();
+            services.AddScoped<IScopedNotificationProcessingService, ScopedNotificationProcessingService>();
 
             services.AddControllersWithViews(x => {
                 AuthorizationPolicy policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();

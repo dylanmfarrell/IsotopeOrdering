@@ -12,6 +12,7 @@ namespace IsotopeOrdering.App.Models.Details {
         public int? ParentCustomerId { get; set; }
         public string UserId { get; set; } = null!;
         public CustomerStatus Status { get; set; }
+        public string? FedExNumber { get; set; }
         public List<CustomerAddressDetailModel> Addresses { get; set; } = new List<CustomerAddressDetailModel>();
         public List<CustomerDocumentDetailModel> Documents { get; set; } = new List<CustomerDocumentDetailModel>();
         public List<ItemConfigurationDetailModel> ItemConfigurations { get; set; } = new List<ItemConfigurationDetailModel>();

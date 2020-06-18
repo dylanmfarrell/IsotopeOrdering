@@ -1,0 +1,9 @@
+﻿@model CustomerSubscriptionConfigurationModel
+@for (var i = 0; i < Model.NotificationConfigurations.Count; i++) {
+    NotificationConfigurationItemModel configuration = Model.NotificationConfigurations[i];
+    CustomerSubscriptionDetailModel subscription = Model.Subscriptions.SingleOrDefault(x => x.Configuration.Id == configuration.Id);
+    if (subscription == null) {
+        subscription = new CustomerSubscriptionDetailModel(configuration);
+    }
+    <partial name="_CustomerSubscription" model="subscription" />
+}

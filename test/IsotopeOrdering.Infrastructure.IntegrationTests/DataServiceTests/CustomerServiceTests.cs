@@ -10,16 +10,24 @@ using Xunit;
 namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
     public class CustomerServiceTests {
         [Theory, AutoMoqData]
-        public async void Get_Customer_Mapping_Correct(Customer customer) {
+        public async void Get_Customer_Mapping_Correct(Customer customer,NotificationConfiguration configuration) {
             string instanceName = Guid.NewGuid().ToString();
             using (var context = TestUtilities.GetDbContext(instanceName)) {
+                customer.Subscriptions.Add(new NotificationSubscription() {
+                    NotificationConfiguration = configuration,
+                    IsDeleted = false
+                });
                 context.Customers.Add(customer);
                 await context.SaveChangesAsync();
             }
             using (var context = TestUtilities.GetDbContext(instanceName)) {
                 CustomerService service = new CustomerService(context, TestUtilities.GetMapper());
-                CustomerItemModel model = await service.Get<CustomerItemModel>(customer.Id);
-                Assert.Equal(customer.Contact.FirstName, model.Contact.FirstName);
+
+                CustomerItemModel item = await service.Get<CustomerItemModel>(customer.Id);
+                Assert.Equal(customer.Contact.FirstName, item.Contact.FirstName);
+
+                CustomerDetailModel model = await service.Get<CustomerDetailModel>(customer.Id);
+                Assert.NotEmpty(model.Subscriptions);
             }
         }
 

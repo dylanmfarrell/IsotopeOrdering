@@ -11,7 +11,9 @@ namespace IsotopeOrdering.Infrastructure {
                 .Include(x => x.Addresses)
                 .Include(x => x.Institutions)
                 .Include(x => x.ItemConfigurations)
-                    .ThenInclude(x => x.Item);
+                    .ThenInclude(x => x.Item)
+                .Include(x => x.Subscriptions)
+                    .ThenInclude(x=>x.NotificationConfiguration);
         }
 
         internal static IQueryable<Customer> Search(this IQueryable<Customer> customers, string search) {
@@ -32,7 +34,7 @@ namespace IsotopeOrdering.Infrastructure {
 
         internal static IQueryable<Order> List(this IQueryable<Order> orders) {
             return orders.Include(x => x.Customer)
-                .ThenInclude(x=>x.Institutions);
+                .ThenInclude(x => x.Institutions);
         }
 
         internal static IQueryable<Shipment> WhereForCustomer(this IQueryable<Shipment> shipments, int customerId, int? parentId) {

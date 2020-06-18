@@ -1,4 +1,5 @@
 ﻿using IsotopeOrdering.Domain.Entities;
+using IsotopeOrdering.Domain.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,5 +10,6 @@ namespace IsotopeOrdering.Domain.Interfaces {
         Task UpdateSentDates(List<int> notificationIds);
         Task<int> CreateNotifications(List<Notification> notifications);
         Task<List<Notification>> GetNotificationsForProcessing();
+        Task<List<T>> GetConfigurationList<T>(NotificationTarget target);
     }
 }

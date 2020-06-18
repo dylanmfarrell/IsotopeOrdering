@@ -1,4 +1,7 @@
-﻿using IsotopeOrdering.Domain.Entities;
+﻿using IsotopeOrdering.App.Models.Items;
+using IsotopeOrdering.Domain.Entities;
+using IsotopeOrdering.Domain.Enums;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Interfaces {
@@ -19,5 +22,7 @@ namespace IsotopeOrdering.App.Interfaces {
         /// <param name="notification"></param>
         /// <returns>The number of notifications created</returns>
         Task<int> ProcessNotificationConfiguration(NotificationConfiguration notification);
+
+        Task<List<NotificationConfigurationItemModel>> GetNotificationConfigurations(NotificationTarget target);
     }
 }

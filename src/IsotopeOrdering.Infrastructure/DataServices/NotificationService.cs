@@ -1,4 +1,6 @@
-﻿using IsotopeOrdering.Domain.Entities;
+﻿using AutoMapper;
+using IsotopeOrdering.Domain.Entities;
+using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,15 +10,21 @@ using System.Threading.Tasks;
 
 namespace IsotopeOrdering.Infrastructure.DataServices {
     public class NotificationService : INotificationService {
+        private readonly IMapper _mapper;
         private readonly IsotopeOrderingDbContext _context;
 
-        public NotificationService(IsotopeOrderingDbContext context) {
+        public NotificationService(IMapper mapper, IsotopeOrderingDbContext context) {
+            _mapper = mapper;
             _context = context;
         }
 
         public async Task<int> CreateNotifications(List<Notification> notifications) {
             _context.Notifications.AddRange(notifications);
             return await _context.SaveChangesAsync("SYSTEM");
+        }
+
+        public async Task<List<T>> GetConfigurationList<T>(NotificationTarget target) {
+            return await _mapper.ProjectTo<T>(_context.NotificationConfigurations.Where(x => x.Target == target)).ToListAsync();
         }
 
         public async Task<List<NotificationConfiguration>> GetNotificationConfigurations() {

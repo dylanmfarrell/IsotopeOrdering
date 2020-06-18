@@ -18,6 +18,8 @@ namespace IsotopeOrdering.App.Models.Details {
         public List<ItemConfigurationDetailModel> ItemConfigurations { get; set; } = new List<ItemConfigurationDetailModel>();
         public List<CustomerInstitutionDetailModel> Institutions { get; set; } = new List<CustomerInstitutionDetailModel>();
         public List<FormItemModel> Forms { get; set; } = new List<FormItemModel>();
+        public List<CustomerSubscriptionDetailModel> Subscriptions { get; set; } = new List<CustomerSubscriptionDetailModel>();
+        public CustomerSubscriptionConfigurationModel SubscriptionConfiguration { get; set; } = new CustomerSubscriptionConfigurationModel();
         [DisplayName("Internal Notes")]
         public string? InternalNotes { get; set; } = string.Empty;
     }
@@ -43,5 +45,25 @@ namespace IsotopeOrdering.App.Models.Details {
         public DocumentDetailModel Document { get; set; } = new DocumentDetailModel();
         [DisplayName("Expiration Date")]
         public DateTime? ExpirationDate { get; set; }
+    }
+
+    public class CustomerSubscriptionConfigurationModel {
+        public List<CustomerSubscriptionDetailModel> Subscriptions { get; set; } = new List<CustomerSubscriptionDetailModel>();
+        public List<NotificationConfigurationItemModel> NotificationConfigurations { get; set; } = new List<NotificationConfigurationItemModel>();
+    }
+
+    public class CustomerSubscriptionDetailModel : ModelBase {
+        public int CustomerId { get; set; }
+        private bool _isSelected;
+        public bool IsSelected {
+            get {
+                return _isSelected;
+            }
+            set {
+                IsDeleted = !value;
+                _isSelected = value;
+            }
+        }
+        public NotificationConfigurationItemModel Configuration { get; set; } = new NotificationConfigurationItemModel();
     }
 }

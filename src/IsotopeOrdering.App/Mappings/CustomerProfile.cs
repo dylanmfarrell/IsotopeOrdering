@@ -12,10 +12,13 @@ namespace IsotopeOrdering.App.Mappings {
             CreateMap<Customer, CustomerItemModel>()
                 .ReverseMap();
 
-            CreateMap<Customer, CustomerDetailModel>();
+            CreateMap<Customer, CustomerDetailModel>()
+                .ForPath(x => x.SubscriptionConfiguration.Subscriptions, opt => opt.MapFrom(x => x.Subscriptions))
+                .ForMember(x => x.Subscriptions, opt => opt.MapFrom(x => x.Subscriptions));
 
             CreateMap<CustomerDetailModel, Customer>()
-                .ForMember(x=>x.Forms,opt=> opt.Ignore())
+                .ForMember(x => x.Forms, opt => opt.Ignore())
+                .ForMember(x => x.Subscriptions, opt => opt.MapFrom(x => x.SubscriptionConfiguration.Subscriptions))
                 .ForMember(x => x.ParentCustomer, opt => opt.Ignore());
 
             CreateMap<CustomerAddress, CustomerAddressDetailModel>()
@@ -47,6 +50,22 @@ namespace IsotopeOrdering.App.Mappings {
             CreateMap<Customer, RecipientDto>()
                 .ForMember(x => x.EmailAddress, opt => opt.MapFrom(x => x.Contact.Email))
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Contact.FirstName + " " + x.Contact.LastName));
+
+            CreateMap<CustomerSubscriptionDetailModel, NotificationSubscription>()
+                .ForMember(x => x.NotificationConfigurationId, opt => opt.MapFrom(x => x.Configuration.Id))
+                .ForMember(x => x.IsDeleted, opt => opt.MapFrom(x => x.IsDeleted))
+                .ForMember(x => x.CustomerId, opt => opt.MapFrom(x => x.CustomerId))
+                .ForMember(x => x.Customer, opt => opt.Ignore())
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.Id))
+                .ForMember(x => x.NotificationConfiguration, opt => opt.Ignore());
+
+            CreateMap<NotificationSubscription, CustomerSubscriptionDetailModel>()
+               .ForMember(x => x.Id, opt => opt.MapFrom(x => x.Id))
+               .ForMember(x => x.IsDeleted, opt => opt.MapFrom(x => x.IsDeleted))
+               .ForMember(x => x.IsSelected, opt => opt.MapFrom(x => !x.IsDeleted))
+               .ForMember(x => x.CustomerId, opt => opt.MapFrom(x => x.CustomerId))
+               .ForMember(x => x.Configuration, opt => opt.MapFrom(x => x.NotificationConfiguration));
+
         }
     }
 }

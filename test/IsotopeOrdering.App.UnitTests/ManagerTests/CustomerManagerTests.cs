@@ -48,7 +48,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                         LastName = userService.User.LastName,
                    }
                 }));
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService,Mock.Of<INotificationService>());
 
             CustomerItemModel customer = await manager.InitializeCustomerForCurrentUser();
 
@@ -73,7 +73,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                    }
                 }));
 
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService, Mock.Of<INotificationService>());
 
             CustomerItemModel customer = await manager.InitializeCustomerForCurrentUser();
 
@@ -94,7 +94,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mock.Setup(x => x.GetList<CustomerItemModel>())
                 .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>().ToList()));
 
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService, Mock.Of<INotificationService>());
 
             Assert.NotEmpty(await manager.GetList());
         }
@@ -118,7 +118,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                    ParentCustomerId = 1
                }));
 
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService, Mock.Of<INotificationService>());
             List<CustomerItemModel> customers = await manager.GetList();
             Assert.True(customers.Count == 1);
         }
@@ -144,7 +144,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mock.Setup(x => x.GetChildrenList<CustomerItemModel>(It.IsAny<int>()))
                .Returns(Task.FromResult(new Fixture().CreateMany<CustomerItemModel>().ToList()));
 
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService, Mock.Of<INotificationService>());
 
             Assert.NotEmpty(await manager.GetList());
         }
@@ -157,7 +157,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var mock = new Mock<ICustomerService>();
             mock.Setup(x => x.Get<CustomerDetailModel>(It.IsAny<int>()))
                 .ReturnsAsync(new Fixture().Create<CustomerDetailModel>());
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService, Mock.Of<INotificationService>());
 
             Assert.NotNull(await manager.Get(1));
         }
@@ -179,7 +179,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
             mock.Setup(x => x.GetChild<CustomerDetailModel>(It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new CustomerDetailModel());
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService, Mock.Of<INotificationService>());
 
             Assert.NotNull(await manager.Get(1));
             Assert.NotNull(await manager.Get(2));
@@ -199,7 +199,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                     Id = 2,
                     ParentCustomerId = 1
                 });
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, authorizationService, _eventService, Mock.Of<INotificationService>());
 
             Assert.NotNull(await manager.Get(2));
         }
@@ -209,7 +209,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
         public async void Edit_Customer_With_Validation_Errors(CustomerDetailModel model) {
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile());
-            CustomerManager manager = new CustomerManager(_logger, mapper, Mock.Of<ICustomerService>(), Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, Mock.Of<ICustomerService>(), Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService, Mock.Of<INotificationService>());
             model.Addresses.Clear();
 
             ApplicationResult applicationResult = await manager.Edit(model);
@@ -236,7 +236,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.Institutions.Clear();
             model.ItemConfigurations.Clear();
             model.Documents.Clear();
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService, Mock.Of<INotificationService>());
 
             ApplicationResult applicationResult = await manager.Edit(model);
 
@@ -263,7 +263,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             model.Institutions.Clear();
             model.ItemConfigurations.Clear();
             model.Documents.Clear();
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService);
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, Mock.Of<IUserService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService, Mock.Of<INotificationService>());
             ApplicationResult applicationResult = await manager.Edit(model);
             CustomAssertions.AssertExcpetionErrorsExist(applicationResult);
         }

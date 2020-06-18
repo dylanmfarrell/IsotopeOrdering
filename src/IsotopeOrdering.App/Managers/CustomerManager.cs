@@ -23,19 +23,22 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IUserService _userService;
         private readonly IIsotopeOrderingAuthorizationService _authorization;
         private readonly IEventManager _eventService;
+        private readonly INotificationService _notificationService;
 
         public CustomerManager(ILogger<CustomerManager> logger,
             IMapper mapper,
             ICustomerService service,
             IUserService userService,
             IIsotopeOrderingAuthorizationService authorization,
-            IEventManager eventService) {
+            IEventManager eventService,
+            INotificationService notificationService) {
             _logger = logger;
             _mapper = mapper;
             _service = service;
             _userService = userService;
             _authorization = authorization;
             _eventService = eventService;
+            _notificationService = notificationService;
         }
 
         public async Task<ApplicationResult> Edit(CustomerDetailModel model) {
@@ -58,26 +61,10 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<CustomerDetailModel?> Get(int id) {
             bool isAdmin = await _authorization.AuthorizeAsync(Policies.AdminPolicy);
-            //user is admin
-            if (isAdmin) {
-                return await _service.Get<CustomerDetailModel>(id);
-            }
-            CustomerItemModel? customer = await _service.GetCurrentCustomer<CustomerItemModel>();
-            if (customer == null) {
-                return null;
-            }
-            //if a child customer is requesting their profile
-            if (customer.IsChild && customer.Id == id) {
-                return await _service.Get<CustomerDetailModel>(id);
-            }
-            //if parent is requesting their profile or their children's
-            if (!customer.IsChild) {
-                if (customer.Id == id) {
-                    return await _service.Get<CustomerDetailModel>(id);
-                }
-                else {
-                    return await _service.GetChild<CustomerDetailModel>(customer.Id, id);
-                }
+            CustomerDetailModel? model = await GetCustomerDetailModel(id);
+            if (model != null) {
+                model.SubscriptionConfiguration.NotificationConfigurations = await _notificationService.GetConfigurationList<NotificationConfigurationItemModel>(isAdmin ? NotificationTarget.Admin : NotificationTarget.Customer);
+                return model;
             }
             //bad request return no customer profile
             return null;
@@ -124,6 +111,30 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<List<CustomerSearchResult>> Search(string search) {
             return await _service.Search<CustomerSearchResult>(search);
+        }
+
+        private async Task<CustomerDetailModel?> GetCustomerDetailModel(int id) {
+            //user is admin
+            if (await _authorization.AuthorizeAsync(Policies.AdminPolicy)) {
+                return await _service.Get<CustomerDetailModel>(id);
+            }
+            CustomerItemModel? customer = await _service.GetCurrentCustomer<CustomerItemModel>();
+            if (customer == null) {
+                return null;
+            }
+            if (customer.IsChild && customer.Id == id) {
+                return await _service.Get<CustomerDetailModel>(id);
+            }
+            //if parent is requesting their profile or their children's
+            if (!customer.IsChild) {
+                if (customer.Id == id) {
+                    return await _service.Get<CustomerDetailModel>(id);
+                }
+                else {
+                    return await _service.GetChild<CustomerDetailModel>(customer.Id, id);
+                }
+            }
+            return null;
         }
 
         private async Task<CustomerItemModel> Create() {

@@ -1,5 +1,7 @@
 ﻿using IsotopeOrdering.App.Interfaces;
+using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Notifications;
+using IsotopeOrdering.Domain;
 using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
@@ -71,13 +73,18 @@ namespace IsotopeOrdering.App.Managers {
             return processedNotificationsCount;
         }
 
-        public bool TryGetNotificationDto(NotificationConfiguration notificationConfiguration, EntityEvent entityEvent, out NotificationDto notificationDto) {
+        public async Task<List<NotificationConfigurationItemModel>> GetNotificationConfigurations(NotificationTarget target) {
+            return await _service.GetConfigurationList<NotificationConfigurationItemModel>(target);
+        }
+
+        private bool TryGetNotificationDto(NotificationConfiguration notificationConfiguration, EntityEvent entityEvent, out NotificationDto notificationDto) {
             notificationDto = new NotificationDto(entityEvent, notificationConfiguration.Subscriptions, notificationConfiguration.Title);
             try {
                 notificationDto.AddRecipients(GetRecipients(notificationConfiguration.Target, entityEvent).Result);
                 notificationDto.Body = _templateManager.GetContent(notificationConfiguration.Target, notificationConfiguration.TemplatePath, entityEvent).Result;
                 return true;
-            }catch(Exception ex) {
+            }
+            catch (Exception ex) {
                 _logger.LogError(ex, "Failed to process notification configuration {notificationConfiguration}", notificationConfiguration);
             }
             return false;

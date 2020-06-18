@@ -25,6 +25,8 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<T> Get<T>(int id) where T : class {
+            Customer test = await _context.Customers.Details().Where(x => x.Id == id).SingleOrDefaultAsync();
+
             return await _mapper.ProjectTo<T>(_context.Customers.Details().Where(x => x.Id == id)).SingleOrDefaultAsync();
         }
 
@@ -59,7 +61,7 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
 
         public async Task<List<T>> GetRecipients<T>(int id) where T : class {
             Customer customer = await _context.Customers.FindAsync(id);
-            return _mapper.Map<List<T>>(customer);
+            return new List<T>() { _mapper.Map<T>(customer) };
         }
     }
 }

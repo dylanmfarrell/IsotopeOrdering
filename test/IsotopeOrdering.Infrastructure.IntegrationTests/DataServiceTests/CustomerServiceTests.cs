@@ -27,7 +27,7 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
                 Assert.Equal(customer.Contact.FirstName, item.Contact.FirstName);
 
                 CustomerDetailModel model = await service.Get<CustomerDetailModel>(customer.Id);
-                Assert.NotEmpty(model.Subscriptions);
+                Assert.NotEmpty(model.SubscriptionConfiguration.Subscriptions);
             }
         }
 

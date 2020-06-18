@@ -13,7 +13,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ReverseMap();
 
             CreateMap<Customer, CustomerDetailModel>()
-                .ForPath(x => x.SubscriptionConfiguration.Subscriptions, opt => opt.MapFrom(x => x.Subscriptions))
+                .ForMember(x => x.SubscriptionConfiguration, opt => opt.Ignore())
                 .ForMember(x => x.Subscriptions, opt => opt.MapFrom(x => x.Subscriptions));
 
             CreateMap<CustomerDetailModel, Customer>()
@@ -53,7 +53,7 @@ namespace IsotopeOrdering.App.Mappings {
 
             CreateMap<CustomerSubscriptionDetailModel, NotificationSubscription>()
                 .ForMember(x => x.NotificationConfigurationId, opt => opt.MapFrom(x => x.Configuration.Id))
-                .ForMember(x => x.IsDeleted, opt => opt.MapFrom(x => x.IsDeleted))
+                .ForMember(x => x.IsDeleted, opt => opt.MapFrom(x => !x.IsSelected))
                 .ForMember(x => x.CustomerId, opt => opt.MapFrom(x => x.CustomerId))
                 .ForMember(x => x.Customer, opt => opt.Ignore())
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => x.Id))

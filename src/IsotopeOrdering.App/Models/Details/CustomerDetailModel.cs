@@ -8,6 +8,8 @@ using System.ComponentModel;
 
 namespace IsotopeOrdering.App.Models.Details {
     public class CustomerDetailModel : ModelBase {
+        private List<CustomerSubscriptionDetailModel> _subscriptions = new List<CustomerSubscriptionDetailModel>();
+
         public ContactDetailModel Contact { get; set; } = new ContactDetailModel();
         public int? ParentCustomerId { get; set; }
         public string UserId { get; set; } = null!;
@@ -18,7 +20,13 @@ namespace IsotopeOrdering.App.Models.Details {
         public List<ItemConfigurationDetailModel> ItemConfigurations { get; set; } = new List<ItemConfigurationDetailModel>();
         public List<CustomerInstitutionDetailModel> Institutions { get; set; } = new List<CustomerInstitutionDetailModel>();
         public List<FormItemModel> Forms { get; set; } = new List<FormItemModel>();
-        public List<CustomerSubscriptionDetailModel> Subscriptions { get; set; } = new List<CustomerSubscriptionDetailModel>();
+        public List<CustomerSubscriptionDetailModel> Subscriptions {
+            get => _subscriptions;
+            set {
+                SubscriptionConfiguration.Subscriptions = value;
+                _subscriptions = value;
+            }
+        }
         public CustomerSubscriptionConfigurationModel SubscriptionConfiguration { get; set; } = new CustomerSubscriptionConfigurationModel();
         [DisplayName("Internal Notes")]
         public string? InternalNotes { get; set; } = string.Empty;
@@ -53,6 +61,13 @@ namespace IsotopeOrdering.App.Models.Details {
     }
 
     public class CustomerSubscriptionDetailModel : ModelBase {
+        public CustomerSubscriptionDetailModel() {
+        }
+
+        public CustomerSubscriptionDetailModel(NotificationConfigurationItemModel configuration) {
+            Configuration = configuration;
+        }
+
         public int CustomerId { get; set; }
         private bool _isSelected;
         public bool IsSelected {

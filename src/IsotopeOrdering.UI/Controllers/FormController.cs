@@ -21,15 +21,6 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(int id) {
-            FormDetailModel? model = await _formManager.Get(id);
-            if (model == null) {
-                return NotFound();
-            }
-            return View(model);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> InitiationForm() {
             CustomerItemModel? customer = await _customerManager.GetCurrentCustomer();
             if (customer == null) {
@@ -37,7 +28,17 @@ namespace IsotopeOrdering.UI.Controllers {
             }
             return View(await _formManager.GetInitiationForm(customer));
         }
-      
+
+        [HttpGet]
+        [Route("Form/InitiationForm/{customerFormId}")]
+        public async Task<IActionResult> InitiationForm(int customerFormId) {
+            FormDetailModel? form = await _formManager.GetInitiationForm(customerFormId);
+            if (form == null) {
+                return NotFound();
+            }
+            return View(form);
+        }
+
         [HttpPost]
         public async Task<IActionResult> InitiationForm(FormDetailModel model) {
             if (ModelState.IsValid) {

@@ -12,6 +12,7 @@ namespace IsotopeOrdering.App.Interfaces {
         /// </summary>
         /// <returns></returns>
         Task<FormDetailModel> GetInitiationForm(CustomerItemModel customer);
+        Task<FormDetailModel?> GetInitiationForm(int id);
         /// <summary>
         /// Validate and save the Initiation Form
         /// </summary>
@@ -19,18 +20,13 @@ namespace IsotopeOrdering.App.Interfaces {
         /// <returns>Validation errors and IsSucessful false, otherwise IsSuccessful true</returns>
         Task<ApplicationResult> SubmitInitiationForm(FormDetailModel form);
         /// <summary>
-        /// Get the completed form for the customer
-        /// </summary>
-        /// <param name="customerFormId"></param>
-        /// <returns>The completed form or null if one does not exist</returns>
-        Task<FormDetailModel?> Get(int customerFormId);
-        /// <summary>
         /// Sets the status of the MTA form, creates an entity event
         /// </summary>
         /// <param name="customerFormId"></param>
         /// <returns></returns>
         Task<ApplicationResult> UpdateFormStatus(int customerId, int customerFormId, CustomerFormStatus status);
         Task<List<FormItemModel>> GetList();
+        Task<CustomerFormStatus> GetCustomerInitiationFormStatus(int customerId);
 
     }
 }

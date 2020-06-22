@@ -60,7 +60,7 @@ namespace IsotopeOrdering.App.Managers {
         public async Task<ApplicationResult> ApplyItemConfigurations(OrderDetailModel order) {
             foreach (OrderItemDetailModel item in order.Cart) {
                 ItemConfigurationDetailModel? config = await GetItemConfiguration(item.Item.Id, order.Customer.Id, order.Customer.ParentCustomerId, item.Quantity);
-                if(config == null) {
+                if (config == null) {
                     return ApplicationResult.Error("Failed to find item configuration for customer");
                 }
                 item.ItemConfiguration = config;

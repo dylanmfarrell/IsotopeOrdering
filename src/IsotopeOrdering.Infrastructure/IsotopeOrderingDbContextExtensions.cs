@@ -13,7 +13,7 @@ namespace IsotopeOrdering.Infrastructure {
                 .Include(x => x.ItemConfigurations)
                     .ThenInclude(x => x.Item)
                 .Include(x => x.Subscriptions)
-                    .ThenInclude(x=>x.NotificationConfiguration);
+                    .ThenInclude(x => x.NotificationConfiguration);
         }
 
         internal static IQueryable<Customer> Search(this IQueryable<Customer> customers, string search) {

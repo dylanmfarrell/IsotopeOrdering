@@ -23,7 +23,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
 
         }
 
-        [Theory,AutoMoqData]
+        [Theory, AutoMoqData]
         public async void Create(ShipmentDetailModel shipment) {
 
         }

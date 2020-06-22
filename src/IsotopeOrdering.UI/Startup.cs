@@ -24,7 +24,6 @@ namespace IsotopeOrdering.UI {
             _environment = environment;
         }
 
-
         public void ConfigureServices(IServiceCollection services) {
             services.AddHttpContextAccessor();
             services.AddHttpClient();
@@ -56,7 +55,6 @@ namespace IsotopeOrdering.UI {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            app.UseNotFoundHandler();
             app.Use((context, next) => {
                 if (!context.Request.Scheme.Contains("https")) {
                     context.Request.Scheme = "https";

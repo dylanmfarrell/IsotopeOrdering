@@ -1,7 +1,6 @@
 ﻿using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Notifications;
-using IsotopeOrdering.Domain;
 using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;

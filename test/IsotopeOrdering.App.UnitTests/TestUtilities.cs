@@ -68,7 +68,7 @@ namespace IsotopeOrdering.App.UnitTests {
             return fixture.Build<OrderItemDetailModel>()
                 .With(x => x.IsDeleted, false)
                 .With(x => x.Quantity, 100)
-                .With(x => x.RequestedDate, new DateTime(2050,10,6))
+                .With(x => x.RequestedDate, new DateTime(2050, 10, 6))
                 .Create();
         }
     }

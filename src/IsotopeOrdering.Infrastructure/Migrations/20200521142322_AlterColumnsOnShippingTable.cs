@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class AlterColumnsOnShippingTable : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class AlterColumnsOnShippingTable : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.AlterColumn<decimal>(
                 name: "ShippingCharge",
                 table: "Shipments",
@@ -114,8 +111,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 values: new object[] { new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26), new DateTime(2020, 5, 21, 9, 23, 22, 74, DateTimeKind.Local).AddTicks(26) });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.AlterColumn<decimal>(
                 name: "ShippingCharge",
                 table: "Shipments",

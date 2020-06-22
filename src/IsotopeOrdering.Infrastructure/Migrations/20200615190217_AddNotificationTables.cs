@@ -1,16 +1,12 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class AddNotificationTables : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class AddNotificationTables : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.CreateTable(
                 name: "NotificationConfigurations",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -24,15 +20,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     TemplatePath = table.Column<string>(nullable: false),
                     LastProcessed = table.Column<DateTime>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_NotificationConfigurations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Notifications",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -46,15 +40,13 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     Body = table.Column<string>(nullable: false),
                     SentDateTime = table.Column<DateTime>(nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Notifications", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "NotificationSubscriptions",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedBy = table.Column<string>(nullable: true),
@@ -65,8 +57,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                     NotificationConfigurationId = table.Column<int>(nullable: false),
                     CustomerId = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_NotificationSubscriptions", x => x.Id);
                     table.ForeignKey(
                         name: "FK_NotificationSubscriptions_Customers_CustomerId",
@@ -274,8 +265,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 column: "NotificationConfigurationId");
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "Notifications");
 

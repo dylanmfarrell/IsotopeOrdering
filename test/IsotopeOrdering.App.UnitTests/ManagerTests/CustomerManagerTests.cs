@@ -48,7 +48,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                         LastName = userService.User.LastName,
                    }
                 }));
-            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService,Mock.Of<INotificationService>());
+            CustomerManager manager = new CustomerManager(_logger, mapper, mock.Object, userService, Mock.Of<IIsotopeOrderingAuthorizationService>(), _eventService, Mock.Of<INotificationService>());
 
             CustomerItemModel customer = await manager.InitializeCustomerForCurrentUser();
 

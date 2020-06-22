@@ -20,7 +20,7 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IMapper _mapper;
         private readonly IFormService _service;
         private readonly IItemService _itemService;
-        private readonly IIsotopeOrderingAuthorizationService _authenticationService;
+        private readonly IIsotopeOrderingAuthorizationService _authorizationService;
         private readonly ICustomerService _customerService;
         private readonly IEventManager _eventService;
 
@@ -29,16 +29,20 @@ namespace IsotopeOrdering.App.Managers {
             IFormService service,
             IItemService itemService,
             IInstitutionService institutionService,
-            IIsotopeOrderingAuthorizationService authenticationService,
+            IIsotopeOrderingAuthorizationService authorizationService,
             ICustomerService customerService,
             IEventManager eventService) {
             _logger = logger;
             _mapper = mapper;
             _service = service;
             _itemService = itemService;
-            _authenticationService = authenticationService;
+            _authorizationService = authorizationService;
             _customerService = customerService;
             _eventService = eventService;
+        }
+
+        public async Task<CustomerFormStatus> GetCustomerInitiationFormStatus(int customerId) {
+            return await _service.GetInitiationFormStatus(customerId);
         }
 
         public async Task<FormDetailModel> GetInitiationForm(CustomerItemModel customer) {
@@ -49,9 +53,12 @@ namespace IsotopeOrdering.App.Managers {
             return formDetailModel;
         }
 
-        public async Task<FormDetailModel?> Get(int customerFormId) {
-            FormDetailModel? form = await _service.GetCustomerForm<FormDetailModel>(customerFormId);
-            if (form != null && !string.IsNullOrEmpty(form.FormData)) {
+        public async Task<FormDetailModel?> GetInitiationForm(int id) {
+            FormDetailModel? form = await GetForm(id);
+            if(form == null) {
+                return null;
+            }
+            if (!string.IsNullOrEmpty(form.FormData)) {
                 form.InitiationModel = JsonSerializer.Deserialize<FormInitiationDetailModel>(form.FormData);
             }
             return form;
@@ -76,7 +83,7 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<List<FormItemModel>> GetList() {
-            if (await _authenticationService.AuthorizeAsync(Policies.ReviewerPolicy)) {
+            if (await _authorizationService.AuthorizeAsync(Policies.ReviewerPolicy)) {
                 return await _service.GetCustomerForms<FormItemModel>();
             }
             CustomerItemModel? customer = await _customerService.GetCurrentCustomer<CustomerItemModel>();
@@ -84,6 +91,18 @@ namespace IsotopeOrdering.App.Managers {
                 return new List<FormItemModel>();
             }
             return await _service.GetCustomerForms<FormItemModel>(customer.Id);
+        }
+
+        private async Task<FormDetailModel?> GetForm(int id) {
+            bool isReviewer = await _authorizationService.AuthorizeAsync(Policies.ReviewerPolicy);
+            if (isReviewer) {
+                return await _service.GetCustomerForm<FormDetailModel>(id);
+            }
+            CustomerItemModel? customer = await _customerService.GetCurrentCustomer<CustomerItemModel>();
+            if (customer == null) {
+                return null;
+            }
+            return await _service.GetCustomerForm<FormDetailModel>(customer.Id, id);
         }
     }
 }

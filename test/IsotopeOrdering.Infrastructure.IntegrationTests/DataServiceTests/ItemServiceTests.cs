@@ -38,10 +38,10 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
             }
             using (var context = TestUtilities.GetDbContext(instanceName)) {
                 ItemService service = new ItemService(context, TestUtilities.GetMapper());
-                IEnumerable<OrderItemDetailModel> items1 = await service.GetListForOrder<OrderItemDetailModel>(customer1.Id,null);
-                IEnumerable<OrderItemDetailModel> items2 = await service.GetListForOrder<OrderItemDetailModel>(customer2.Id,null);
-                foreach(ItemConfigurationDetailModel item1Config in items1.SelectMany(x=>x.ItemConfigurations)) {
-                    Assert.DoesNotContain(item1Config, items2.Select(x=>x.ItemConfiguration));
+                IEnumerable<OrderItemDetailModel> items1 = await service.GetListForOrder<OrderItemDetailModel>(customer1.Id, null);
+                IEnumerable<OrderItemDetailModel> items2 = await service.GetListForOrder<OrderItemDetailModel>(customer2.Id, null);
+                foreach (ItemConfigurationDetailModel item1Config in items1.SelectMany(x => x.ItemConfigurations)) {
+                    Assert.DoesNotContain(item1Config, items2.Select(x => x.ItemConfiguration));
                 }
             }
         }

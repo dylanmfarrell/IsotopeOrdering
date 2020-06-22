@@ -1,0 +1,37 @@
+﻿@model CustomerFormStatus
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container" style="text-align:center;text-align:left; margin-right:auto;margin-left:auto;">
+            <h1 class="display-4">MTA status</h1>
+            <div class="row">
+                <div class="col-12">
+                    <p class="lead">
+                        @if (Model == CustomerFormStatus.AwaitingCustomerSupervisorApproval) {
+                            <i class="fa fa-check text-success" aria-hidden="true"></i>
+                        }
+                        else {
+                            <i class="fa fa-ban text-danger" aria-hidden="true"></i>
+                        }
+                        Submitted MTA
+                    </p>
+                    <p class="lead">
+                        @if (Model == CustomerFormStatus.AwaitingAdminApproval) {
+                            <i class="fa fa-check text-success" aria-hidden="true"></i>
+                        }
+                        else {
+                            <i class="fa fa-ban text-danger" aria-hidden="true"></i>
+                        }
+                        Supervisor approved MTA
+                    </p>
+                    <p class="lead">
+                        @if (Model == CustomerFormStatus.Approved) {
+                            <i class="fa fa-check text-success" aria-hidden="true"></i>
+                        }
+                        else {
+                            <i class="fa fa-ban text-danger" aria-hidden="true"></i>
+                        }
+                        Admin approved MTA
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>

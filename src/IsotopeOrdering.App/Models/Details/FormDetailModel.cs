@@ -14,11 +14,11 @@ namespace IsotopeOrdering.App.Models.Details {
         public CustomerFormStatus CustomerFormStatus { get; set; }
         public string? FormData { get; set; }
         public FormInitiationDetailModel? InitiationModel { get; set; }
-        public bool RequiresEmailForCustomerAdmin => CustomerFormStatus == CustomerFormStatus.Assigned;
-        public bool RequiresSignatureFromCustomerAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingSignature;
-        public bool ShowSignatureFromCustomerAdmin => CustomerFormStatus > CustomerFormStatus.AwaitingSignature;
-        public bool RequiresSignatureFromAdmin => CustomerFormStatus == CustomerFormStatus.SignedBySafetyContact;
-        public bool ShowSignatureFromAdmin => CustomerFormStatus == CustomerFormStatus.Completed;
+        public bool RequiresEmailForCustomerAdmin => CustomerFormStatus == CustomerFormStatus.New;
+        public bool RequiresSignatureFromCustomerAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingCustomerSupervisorApproval;
+        public bool ShowSignatureFromCustomerAdmin => CustomerFormStatus > CustomerFormStatus.AwaitingAdminApproval;
+        public bool RequiresSignatureFromAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingAdminApproval;
+        public bool ShowSignatureFromAdmin => CustomerFormStatus == CustomerFormStatus.Approved;
         public bool CanEdit => CustomerFormStatus != CustomerFormStatus.Approved && CustomerFormStatus != CustomerFormStatus.Denied;
     }
 

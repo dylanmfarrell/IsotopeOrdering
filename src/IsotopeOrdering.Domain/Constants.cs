@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace IsotopeOrdering.Domain {
     public static class Events {
-        public static Dictionary<string,string> GetEvents() {
+        public static Dictionary<string, string> GetEvents() {
             Type[] subtypes = typeof(Events).Assembly.GetTypes().Where(type => type == typeof(Customer)
             || type == typeof(Order)
             || type == typeof(Shipment)).ToArray();

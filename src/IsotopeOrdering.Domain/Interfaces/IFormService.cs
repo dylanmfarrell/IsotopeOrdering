@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace IsotopeOrdering.Domain.Interfaces {
     public interface IFormService : IService<Form> {
         Task<T> Get<T>(FormType formType);
-        Task<T?> GetCustomerForm<T>(int customerFormId) where T : class;
         /// <summary>
         /// Creates customer form entry if one does not exist for the form type, 
         /// otherwise updates existing form.
@@ -18,5 +17,8 @@ namespace IsotopeOrdering.Domain.Interfaces {
         Task UpdateCustomerFormStatus(int customerFormId, CustomerFormStatus status);
         Task<List<T>> GetCustomerForms<T>();
         Task<List<T>> GetCustomerForms<T>(int customerId);
+        Task<T?> GetCustomerForm<T>(int customerId, int customerFormId) where T : class;
+        Task<T?> GetCustomerForm<T>(int customerFormId) where T : class;
+        Task<CustomerFormStatus> GetInitiationFormStatus(int customerId);
     }
 }

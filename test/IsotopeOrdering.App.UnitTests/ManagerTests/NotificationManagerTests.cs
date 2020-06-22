@@ -16,7 +16,7 @@ using Xunit;
 namespace IsotopeOrdering.App.UnitTests.ManagerTests {
     public class NotificationManagerTests {
         [Theory, AutoMoqData]
-        public async void ProcessNotificationConfiguration_ReturnsNumberOfNotificationsCreated(NotificationConfiguration notificationConfiguration,List<RecipientDto> recipients, List<EntityEvent> entityEvents) {
+        public async void ProcessNotificationConfiguration_ReturnsNumberOfNotificationsCreated(NotificationConfiguration notificationConfiguration, List<RecipientDto> recipients, List<EntityEvent> entityEvents) {
             entityEvents.ForEach(x => x.EventDateTime = DateTime.Now);
             entityEvents.ForEach(x => x.Type = EntityEventType.Customer);
 

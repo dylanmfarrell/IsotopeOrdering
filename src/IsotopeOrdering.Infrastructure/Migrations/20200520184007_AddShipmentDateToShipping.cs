@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class AddShipmentDateToShipping : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class AddShipmentDateToShipping : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.AddColumn<DateTime>(
                 name: "ShipmentDate",
                 table: "Shipments",
@@ -91,8 +88,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 values: new object[] { new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395), new DateTime(2020, 5, 20, 13, 40, 7, 255, DateTimeKind.Local).AddTicks(2395) });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropColumn(
                 name: "ShipmentDate",
                 table: "Shipments");

@@ -1,9 +1,15 @@
 ﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
+@model HomeViewModel
 @{
     ViewData[ViewDataKeys.Title] = "Home Page";
 }
 @if (!await AuthorizationService.AuthorizeAsync(Policies.CustomerPolicy)) {
-    <partial name="_InitiationMessage" />
+    if (Model.ShowInitiationMessage) {
+        <partial name="_InitiationMessage" />
+    }
+    else if (Model.ShowInitiationStatus) {
+        <partial name="_InitiationStatus" for="FormStatus" />
+    }
 }
 else {
 

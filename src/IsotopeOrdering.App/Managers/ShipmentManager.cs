@@ -55,13 +55,14 @@ namespace IsotopeOrdering.App.Managers {
                 Shipment shipment = _mapper.Map<Shipment>(model);
                 if (shipment.Status == ShipmentStatus.Cancelled) {
                     shipment.IsDeleted = true;
-                  
+
                 }
                 int id = await _service.Update(shipment);
                 await _eventManager.CreateEvent(EntityEventType.Shipping, id, Events.Shipment.Edited);
                 if (model.Status == ShipmentStatus.Cancelled) {
                     await _eventManager.CreateEvent(EntityEventType.Shipping, model.Id, Events.Shipment.Cancelled);
-                }else if (model.Status == ShipmentStatus.Shipped) {
+                }
+                else if (model.Status == ShipmentStatus.Shipped) {
                     await _eventManager.CreateEvent(EntityEventType.Shipping, model.Id, Events.Shipment.Shipped);
                 }
                 return ApplicationResult.Success("Shipment edited", id);

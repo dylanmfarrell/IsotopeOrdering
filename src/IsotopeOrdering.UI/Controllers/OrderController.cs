@@ -7,7 +7,6 @@ using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.UI.Controllers {
@@ -175,7 +174,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpGet]
         public async Task<IActionResult> ReviewAmendment(int id) {
             OrderReviewDetailModel? model = await _orderManager.GetReviewAmendment(id);
-            if(model == null) {
+            if (model == null) {
                 return NotFound();
             }
             return View(model);
@@ -209,8 +208,8 @@ namespace IsotopeOrdering.UI.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> AddCartItem(OrderItemDetailModel model) {
-            ItemConfigurationDetailModel? config =  await _itemManager.GetItemConfiguration(model.Item.Id, model.CustomerId, null, model.Quantity);
-            if(config == null) {
+            ItemConfigurationDetailModel? config = await _itemManager.GetItemConfiguration(model.Item.Id, model.CustomerId, null, model.Quantity);
+            if (config == null) {
                 ModelState.AddModelError("ItemConfigurationNotFound", "Item configuration not found for customer");
                 return JsonValidationErrorResult(ModelState);
             }

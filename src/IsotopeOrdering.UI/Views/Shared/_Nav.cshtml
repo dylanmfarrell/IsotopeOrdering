@@ -1,5 +1,5 @@
 ﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
-@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Options.IOptions<IsotopeOrdering.Infrastructure.Options.OpenIdOptions> openIdOptions
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MIR Isotope Ordering</a>
@@ -35,7 +35,7 @@
             </span>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="@($"{Configuration["OpenId:Authority"]}/Account/Logout")">Logout</a>
+                    <a class="nav-link" href="@openIdOptions.Value.LogoutUri">Logout</a>
                 </li>
             </ul>
         </div>

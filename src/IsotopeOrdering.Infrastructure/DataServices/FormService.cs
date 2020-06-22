@@ -21,10 +21,16 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             return await _mapper.ProjectTo<T>(_context.Forms.Where(x => x.Type == formType)).SingleAsync();
         }
 
+        public async Task<T?> GetCustomerForm<T>(int customerId,int customerFormId) where T : class {
+            return await _mapper.ProjectTo<T>(_context.CustomerForms.Where(x => x.Id == customerFormId && x.CustomerId == customerId))
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<T?> GetCustomerForm<T>(int customerFormId) where T : class {
             return await _mapper.ProjectTo<T>(_context.CustomerForms.Where(x => x.Id == customerFormId))
                 .SingleOrDefaultAsync();
         }
+
 
         public async Task<List<T>> GetCustomerForms<T>() {
             return await _mapper.ProjectTo<T>(_context.CustomerForms).ToListAsync();
@@ -32,6 +38,15 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
 
         public async Task<List<T>> GetCustomerForms<T>(int customerId) {
             return await _mapper.ProjectTo<T>(_context.CustomerForms.Where(x => x.CustomerId == customerId)).ToListAsync();
+        }
+
+        public async Task<CustomerFormStatus> GetInitiationFormStatus(int customerId) {
+            CustomerFormStatus? status = await _context.CustomerForms
+                .Include(x => x.Form)
+                .Where(x => x.CustomerId == customerId && x.Form.Type == FormType.Initiation)
+                .Select(x => x.Status)
+                .FirstOrDefaultAsync();
+            return status.GetValueOrDefault(CustomerFormStatus.New);
         }
 
         public async Task<int> SubmitCustomerForm(CustomerForm form) {

@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class AddBillingContactToOrder : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class AddBillingContactToOrder : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.AddColumn<string>(
                 name: "BillingContact_Email",
                 table: "Orders",
@@ -75,8 +72,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 values: new object[] { new DateTime(2020, 5, 26, 9, 9, 57, 787, DateTimeKind.Local).AddTicks(7135), new DateTime(2020, 5, 26, 9, 9, 57, 787, DateTimeKind.Local).AddTicks(7135) });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropColumn(
                 name: "BillingContact_Email",
                 table: "Orders");

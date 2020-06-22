@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace IsotopeOrdering.UI.Services {
     public class ScopedNotificationProcessingService : IScopedNotificationProcessingService {
-        private int executionCount = 0;
         private readonly ILogger _logger;
         private readonly INotificationManager _notificationManager;
         private int _taskIntervalSeconds = 30;
@@ -17,17 +16,13 @@ namespace IsotopeOrdering.UI.Services {
 
         public async Task DoWork(CancellationToken stoppingToken) {
             while (!stoppingToken.IsCancellationRequested) {
-                executionCount++;
 
-                _logger.LogInformation("Processing events/notifications");
-                await _notificationManager.ProcessNotificationConfigurations();
-                _logger.LogInformation("Processing events/notifications complete");
+                int notificationsProcessed = await _notificationManager.ProcessNotificationConfigurations();
 
-                _logger.LogInformation("Sending notifications");
-                await _notificationManager.SendNotifications();
-                _logger.LogInformation("Sending notifications complete");
+                int notificationSent = await _notificationManager.SendNotifications();
 
-                _logger.LogInformation("Timed Hosted Service is working. Count: {Count}", executionCount);
+                _logger.LogInformation("Processed {notificationsProcessed} events/notifications.Sent {emailsSent} notifications.", notificationsProcessed, notificationSent);
+
                 await Task.Delay(_taskIntervalSeconds * 1000, stoppingToken);
             }
         }

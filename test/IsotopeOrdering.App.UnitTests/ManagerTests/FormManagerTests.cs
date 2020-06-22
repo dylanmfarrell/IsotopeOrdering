@@ -41,8 +41,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
             FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, mockItemService.Object, mockInstitutionService.Object, Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService);
 
-            FormDetailModel model = await manager.GetInitiationForm(customer);
-            Assert.Equal(model.Customer, customer);
+            FormDetailModel? model = await manager.GetInitiationForm(customer);
+            Assert.Equal(model?.Customer, customer);
         }
 
         [Theory, AutoMoqData]
@@ -151,7 +151,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
             FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, mockItemService.Object, mockInstitutionService.Object, Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService);
 
-            FormDetailModel? model = await manager.Get(1);
+            FormDetailModel? model = await manager.GetInitiationForm(1);
             Assert.NotNull(model);
         }
 

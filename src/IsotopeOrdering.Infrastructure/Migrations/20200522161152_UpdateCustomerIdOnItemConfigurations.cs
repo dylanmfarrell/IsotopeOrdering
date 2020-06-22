@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class UpdateCustomerIdOnItemConfigurations : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class UpdateCustomerIdOnItemConfigurations : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropForeignKey(
                 name: "FK_ItemConfigurations_Customers_CustomerId",
                 table: "ItemConfigurations");
@@ -95,8 +92,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 onDelete: ReferentialAction.NoAction);
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropForeignKey(
                 name: "FK_ItemConfigurations_Customers_CustomerId",
                 table: "ItemConfigurations");

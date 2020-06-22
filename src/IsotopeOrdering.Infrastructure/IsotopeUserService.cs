@@ -12,7 +12,7 @@ namespace IsotopeOrdering.Infrastructure {
             _accessor = accessor;
         }
 
-        public IUser User =>  new IsotopeUser(_accessor.HttpContext.User);
+        public IUser User => new IsotopeUser(_accessor.HttpContext.User);
     }
 
     public class IsotopeUser : IUser {

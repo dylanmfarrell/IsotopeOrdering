@@ -1,4 +1,5 @@
 ﻿using IsotopeOrdering.App.Interfaces;
+using IsotopeOrdering.App.Models.Details;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Notifications;
 using IsotopeOrdering.Domain.Entities;
@@ -40,6 +41,10 @@ namespace IsotopeOrdering.App.Managers {
             _emailService = emailService;
         }
 
+        public async Task<List<NotificationConfigurationItemModel>> GetNotificationConfigurations(NotificationTarget target) {
+            return await _service.GetConfigurationList<NotificationConfigurationItemModel>(target);
+        }
+
         public async Task<int> SendNotifications() {
             List<Notification> notifications = await _service.GetNotificationsForProcessing();
             Dictionary<int, bool> notificationsSent = await _emailService.Send(notifications);
@@ -71,13 +76,31 @@ namespace IsotopeOrdering.App.Managers {
             }
             return processedNotificationsCount;
         }
-
-        public async Task<List<NotificationConfigurationItemModel>> GetNotificationConfigurations(NotificationTarget target) {
-            return await _service.GetConfigurationList<NotificationConfigurationItemModel>(target);
+       
+        public async Task<bool> ProcessExternalMtaNotification(FormDetailModel form) {
+            NotificationConfiguration notificationConfiguration = await _service.GetExternalMtaNotificationConfiguration();
+            NotificationDto notificationDto = new NotificationDto(notificationConfiguration.Title);
+            RecipientDto recipientDto = new RecipientDto() {
+                EmailAddress = form.InitiationModel!.CustomerAdminSignature.Email,
+                Name = form.InitiationModel!.CustomerAdminSignature.PrintedName
+            };
+            notificationDto.AddRecipient(recipientDto);
+            try {
+                notificationDto.Body = _templateManager.GetContent(notificationConfiguration.Target, notificationConfiguration.TemplatePath, form).Result;
+                int processedCount = await _service.CreateNotifications(notificationDto.ToNotifications());
+                if (processedCount > 0) {
+                    await _service.UpdateLastProcessedDate(notificationConfiguration.Id);
+                    return true;
+                }
+            }
+            catch (Exception ex) {
+                _logger.LogError(ex, "Failed to process notification configuration {notificationConfiguration}", notificationConfiguration);
+            }
+            return false;
         }
 
         private bool TryGetNotificationDto(NotificationConfiguration notificationConfiguration, EntityEvent entityEvent, out NotificationDto notificationDto) {
-            notificationDto = new NotificationDto(entityEvent, notificationConfiguration.Subscriptions, notificationConfiguration.Title);
+            notificationDto = new NotificationDto(notificationConfiguration.Subscriptions, notificationConfiguration.Title);
             try {
                 notificationDto.AddRecipients(GetRecipients(notificationConfiguration.Target, entityEvent).Result);
                 notificationDto.Body = _templateManager.GetContent(notificationConfiguration.Target, notificationConfiguration.TemplatePath, entityEvent).Result;
@@ -95,10 +118,6 @@ namespace IsotopeOrdering.App.Managers {
             }
             if (notificationTarget == NotificationTarget.Admin) {
                 //TODO: get admin recipients
-                return new List<RecipientDto>();
-            }
-            if (notificationTarget == NotificationTarget.External) {
-                //TODO: get external recipients
                 return new List<RecipientDto>();
             }
             return new List<RecipientDto>();

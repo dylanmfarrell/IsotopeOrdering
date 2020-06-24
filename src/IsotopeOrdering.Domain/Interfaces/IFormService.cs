@@ -1,6 +1,7 @@
 ﻿using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using MIR.Core.Domain;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,6 +20,13 @@ namespace IsotopeOrdering.Domain.Interfaces {
         Task<List<T>> GetCustomerForms<T>(int customerId);
         Task<T?> GetCustomerForm<T>(int customerId, int customerFormId) where T : class;
         Task<T?> GetCustomerForm<T>(int customerFormId) where T : class;
+        /// <summary>
+        /// Gets form where status is awaiting customer supervisor approval by form identifier
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="formIdentifier"></param>
+        /// <returns></returns>
+        Task<T?> GetCustomerForm<T>(Guid formIdentifier) where T : class;
         Task<CustomerFormStatus> GetInitiationFormStatus(int customerId);
     }
 }

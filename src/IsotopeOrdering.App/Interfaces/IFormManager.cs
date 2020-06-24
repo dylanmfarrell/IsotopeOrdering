@@ -2,6 +2,7 @@
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +14,12 @@ namespace IsotopeOrdering.App.Interfaces {
         /// <returns></returns>
         Task<FormDetailModel> GetInitiationForm(CustomerItemModel customer);
         Task<FormDetailModel?> GetInitiationForm(int id);
+        /// <summary>
+        /// Gets the form for an external user
+        /// </summary>
+        /// <param name="formIdentifier"></param>
+        /// <returns></returns>
+        Task<FormDetailModel?> GetInitiationForm(Guid formIdentifier);
         /// <summary>
         /// Validate and save the Initiation Form
         /// </summary>

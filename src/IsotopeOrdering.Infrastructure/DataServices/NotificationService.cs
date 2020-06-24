@@ -34,6 +34,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
                           .ToListAsync();
         }
 
+        public async Task<NotificationConfiguration> GetExternalMtaNotificationConfiguration() {
+            return await _context.NotificationConfigurations.SingleAsync(x=>x.Target == NotificationTarget.External);
+        }
+
         public async Task<List<Notification>> GetNotificationsForProcessing() {
             return await _context.Notifications.Where(x => !x.SentDateTime.HasValue).ToListAsync();
         }

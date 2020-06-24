@@ -1,48 +1,44 @@
 ﻿@model FormInitiationDetailModel
-    <input type="hidden" asp-for="FormIdentifier" />
-    <div class="mx-auto w-75 border rounded p-3">
-        <h4 class="font-weight-bold text-center">
-            Washington University in St. Louis
-            Agreement for supply of Radioisotope
-        </h4>
-        <p class="lead">
-            <b>Provider: THE WASHINGTON UNIVERSITY,</b> a corporation established by special act of the
-            Missouri General Assembly approved February 22, 1853 and acts amendatory thereto, having its principal
-            office at One Brookings Drive, St. Louis, MO 63130 <b>(Hereinafter referred to as “WU”)</b>
-        </p>
-        <div class="form-group row">
-            <label for="providingScientists" class="col-sm-3 col-form-label">WU’s Providing Scientists:</label>
-            <div class="col-sm-9">
-                <input type="text" readonly class="form-control form-control-sm-plaintext" id="providingScientists" value="Mike Nichels, MS BCNP Department of Radiology – Rad. Sciences">
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Institution Information</h5>
-                <partial name="_Institution" for="Institution" />
-            </div>
-        </div>
-        <div class="card mt-1">
-            <div class="card-body">
-                <h5 class="card-title">Shipping Information</h5>
-                <div class="form-group row">
-                    <label asp-for="FedExNumber" class="col-sm-2 col-form-label">FedEx Account Number</label>
-                    <div class="col-sm-10">
-                        <input asp-for="FedExNumber" class="form-control form-control-sm" />
-                        <span asp-validation-for="FedExNumber" class="text-danger"></span>
-                    </div>
-                </div>
-                <partial name="_Address" for="ShippingAddress" />
-            </div>
-        </div>
-        <div class="card mt-1">
-            <div class="card-body">
-                <h5 class="card-title">Materials Requested</h5>
-                <i>Check all that apply</i>
-                <span asp-validation-for="Items" class="text-danger"></span>
-                <partial name="_ItemSelectList" for="Items" />
-            </div>
-        </div>
-        <partial name="_MtaContract" />
-        <partial name="_MtaSignature" />
+<h4 class="font-weight-bold text-center">
+    Washington University in St. Louis
+    Agreement for supply of Radioisotope
+</h4>
+<p class="lead">
+    <b>Provider: THE WASHINGTON UNIVERSITY,</b> a corporation established by special act of the
+    Missouri General Assembly approved February 22, 1853 and acts amendatory thereto, having its principal
+    office at One Brookings Drive, St. Louis, MO 63130 <b>(Hereinafter referred to as “WU”)</b>
+</p>
+<div class="form-group row">
+    <label for="providingScientists" class="col-sm-3 col-form-label">WU’s Providing Scientists:</label>
+    <div class="col-sm-9">
+        <input type="text" readonly class="form-control form-control-sm-plaintext" id="providingScientists" value="Mike Nichels, MS BCNP Department of Radiology – Rad. Sciences">
     </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Institution Information</h5>
+        <partial name="_Institution" for="Institution" />
+    </div>
+</div>
+<div class="card mt-1">
+    <div class="card-body">
+        <h5 class="card-title">Shipping Information</h5>
+        <div class="form-group row">
+            <label asp-for="FedExNumber" class="col-sm-2 col-form-label">FedEx Account Number</label>
+            <div class="col-sm-10">
+                <input asp-for="FedExNumber" class="form-control form-control-sm" />
+                <span asp-validation-for="FedExNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <partial name="_Address" for="ShippingAddress" />
+    </div>
+</div>
+<div class="card mt-1">
+    <div class="card-body">
+        <h5 class="card-title">Materials Requested</h5>
+        <i>Check all that apply</i>
+        <span asp-validation-for="Items" class="text-danger"></span>
+        <partial name="_ItemSelectList" for="Items" />
+    </div>
+</div>
+<partial name="_MtaContract" />

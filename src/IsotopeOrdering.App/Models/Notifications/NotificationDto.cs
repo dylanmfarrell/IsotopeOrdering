@@ -4,17 +4,19 @@ using System.Linq;
 
 namespace IsotopeOrdering.App.Models.Notifications {
     public class NotificationDto {
-        private readonly EntityEvent _entityEvent;
-        private readonly List<NotificationSubscription> _subscriptions;
+        private readonly List<NotificationSubscription> _subscriptions = new List<NotificationSubscription>();
         private readonly string _title;
 
-        public NotificationDto(EntityEvent entityEvent, List<NotificationSubscription> subscriptions, string title) {
-            _entityEvent = entityEvent;
+        public NotificationDto(List<NotificationSubscription> subscriptions, string title) {
             _subscriptions = subscriptions;
             _title = title;
         }
+
+        public NotificationDto(string title) {
+            _title = title;
+        }
+
         public List<RecipientDto> Recipients { get; private set; } = new List<RecipientDto>();
-        public string Subject => _title + " " + _entityEvent.Description;
         public string Body { get; set; } = null!;
 
         public List<Notification> ToNotifications() {
@@ -24,14 +26,18 @@ namespace IsotopeOrdering.App.Models.Notifications {
                     Body = Body,
                     RecipientEmail = recipient.EmailAddress,
                     RecipientName = recipient.Name,
-                    Subject = Subject
+                    Subject = _title
                 });
             }
             return notifications;
         }
 
-        public void AddRecipients(List<RecipientDto> recipientDtos, bool checkSubscription = true) {
-            if (!checkSubscription) {
+        public void AddRecipient(RecipientDto recipientDto) {
+            AddRecipients(new List<RecipientDto>() { recipientDto });
+        }
+
+        public void AddRecipients(List<RecipientDto> recipientDtos) {
+            if (!_subscriptions.Any()) {
                 Recipients.AddRange(recipientDtos);
                 return;
             }

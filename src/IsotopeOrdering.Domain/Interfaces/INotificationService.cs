@@ -11,5 +11,6 @@ namespace IsotopeOrdering.Domain.Interfaces {
         Task<int> CreateNotifications(List<Notification> notifications);
         Task<List<Notification>> GetNotificationsForProcessing();
         Task<List<T>> GetConfigurationList<T>(NotificationTarget target);
+        Task<NotificationConfiguration> GetExternalMtaNotificationConfiguration();
     }
 }

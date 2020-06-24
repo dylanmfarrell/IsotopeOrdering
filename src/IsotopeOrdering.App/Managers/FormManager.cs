@@ -10,6 +10,7 @@ using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IIsotopeOrderingAuthorizationService _authorizationService;
         private readonly ICustomerService _customerService;
         private readonly IEventManager _eventService;
+        private readonly INotificationManager _notificationManager;
 
         public FormManager(ILogger<FormManager> logger,
             IMapper mapper,
@@ -31,7 +33,8 @@ namespace IsotopeOrdering.App.Managers {
             IInstitutionService institutionService,
             IIsotopeOrderingAuthorizationService authorizationService,
             ICustomerService customerService,
-            IEventManager eventService) {
+            IEventManager eventService,
+            INotificationManager notificationManager) {
             _logger = logger;
             _mapper = mapper;
             _service = service;
@@ -39,6 +42,7 @@ namespace IsotopeOrdering.App.Managers {
             _authorizationService = authorizationService;
             _customerService = customerService;
             _eventService = eventService;
+            _notificationManager = notificationManager;
         }
 
         public async Task<CustomerFormStatus> GetCustomerInitiationFormStatus(int customerId) {
@@ -55,12 +59,19 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<FormDetailModel?> GetInitiationForm(int id) {
             FormDetailModel? form = await GetForm(id);
-            if(form == null) {
+            if (form == null) {
                 return null;
             }
-            if (!string.IsNullOrEmpty(form.FormData)) {
-                form.InitiationModel = JsonSerializer.Deserialize<FormInitiationDetailModel>(form.FormData);
+            form.InitiationModel = JsonSerializer.Deserialize<FormInitiationDetailModel>(form.FormData);
+            return form;
+        }
+
+        public async Task<FormDetailModel?> GetInitiationForm(Guid formIdentifier) {
+            FormDetailModel? form = await _service.GetCustomerForm<FormDetailModel>(formIdentifier);
+            if (form == null) {
+                return null;
             }
+            form.InitiationModel = JsonSerializer.Deserialize<FormInitiationDetailModel>(form.FormData);
             return form;
         }
 
@@ -70,7 +81,13 @@ namespace IsotopeOrdering.App.Managers {
             if (result.IsValid) {
                 CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
                 int formId = await _service.SubmitCustomerForm(customerForm);
-                await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
+                if (form.Id == 0) {
+                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
+                }
+                if (form.Action == CustomerFormStatus.AwaitingCustomerSupervisorApproval) {
+                    await UpdateFormStatus(form.Customer.Id, formId, form.Action);
+                    await _notificationManager.ProcessExternalMtaNotification(form);
+                }
                 return ApplicationResult.Success("Form submitted", formId);
             }
             return ApplicationResult.Error(result);

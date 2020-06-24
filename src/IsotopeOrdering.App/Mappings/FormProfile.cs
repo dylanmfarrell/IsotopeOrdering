@@ -22,6 +22,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Form.Name))
                 .ForMember(x => x.CustomerDetailFormId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.CustomerFormStatus, opt => opt.MapFrom(x => x.Status))
+                .ForMember(x => x.FormIdentifier, opt => opt.MapFrom(x => x.FormIdentifier))
                 .ForMember(x => x.FormData, opt => opt.MapFrom(x => x.FormData))
                 .ForMember(x => x.InitiationModel, opt => opt.Ignore());
 
@@ -31,6 +32,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.FormId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.FormData, opt => opt.ConvertUsing<FormInitiationDetailModelToStringFormatter, FormInitiationDetailModel?>(x => x.InitiationModel))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.CustomerFormStatus))
+                .ForMember(x => x.FormIdentifier, opt => opt.MapFrom(x => x.FormIdentifier))
                 .ForAllOtherMembers(x => x.Ignore());
 
             CreateMap<CustomerForm, FormItemModel>()

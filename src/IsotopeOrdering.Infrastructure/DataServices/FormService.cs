@@ -5,6 +5,7 @@ using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MIR.Core.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,11 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
 
         public async Task<T?> GetCustomerForm<T>(int customerId,int customerFormId) where T : class {
             return await _mapper.ProjectTo<T>(_context.CustomerForms.Where(x => x.Id == customerFormId && x.CustomerId == customerId))
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<T?> GetCustomerForm<T>(Guid formIdentifier) where T :class {
+            return await _mapper.ProjectTo<T>(_context.CustomerForms.Where(x => x.FormIdentifier == formIdentifier && x.Status == CustomerFormStatus.AwaitingCustomerSupervisorApproval))
                 .SingleOrDefaultAsync();
         }
 

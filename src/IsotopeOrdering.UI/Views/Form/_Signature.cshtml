@@ -1,0 +1,65 @@
+﻿@model FormInitiationSignatureModel
+@if (ViewData.IsReadonly()) {
+    <div class="form-row mt-4">
+        <div class="col">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control form-control-sm" readonly/>
+        </div>
+        <div class="col">
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" class="form-control form-control-sm" readonly/>
+        </div>
+        <div class="col">
+            <label asp-for="Position"></label>
+            <input asp-for="Position" class="form-control form-control-sm" type="date" readonly/>
+        </div>
+    </div>
+    <div class="form-row mt-4">
+        <div class="col">
+            <label asp-for="PrintedName">Printed Name</label>
+            <input asp-for="PrintedName" class="form-control form-control-sm" readonly/>
+        </div>
+        <div class="col">
+            <label asp-for="Date">Signed Date</label>
+            <input asp-for="Date" class="form-control form-control-sm" type="date" readonly/>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="Signature" class="col-sm-2 col-form-label">Sign Below:</label>
+        <div class="col-sm-12">
+            <div class="shadow signature" data-signature="@Model.Signature" data-readonly></div>
+        </div>
+    </div>
+}
+else {
+    <div class="form-row mt-4">
+        <div class="col">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control form-control-sm" />
+        </div>
+        <div class="col">
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" class="form-control form-control-sm" />
+        </div>
+        <div class="col">
+            <label asp-for="Position"></label>
+            <input asp-for="Position" class="form-control form-control-sm" type="date" />
+        </div>
+    </div>
+    <div class="form-row mt-4">
+        <div class="col">
+            <label asp-for="PrintedName">Printed Name</label>
+            <input asp-for="PrintedName" class="form-control form-control-sm" />
+        </div>
+        <div class="col">
+            <label asp-for="Date">Signed Date</label>
+            <input asp-for="Date" class="form-control form-control-sm" type="date" />
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="Signature" class="col-sm-2 col-form-label">Sign Below:</label>
+        <div class="col-sm-12">
+            <div class="shadow signature" data-signature="@Model.Signature"></div>
+        </div>
+    </div>
+}

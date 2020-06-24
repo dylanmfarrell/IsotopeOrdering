@@ -56,6 +56,19 @@ namespace IsotopeOrdering.Infrastructure {
                 };
                 id++;
             }
+            yield return new NotificationConfiguration() {
+                Id = id,
+                EventTrigger = "",
+                LastProcessed = null,
+                Title = "A customer has requested approval for their material transfer agreement",
+                TemplatePath = "MaterialTransferAgreement.cshtml",
+                IsDeleted = false,
+                Target = NotificationTarget.External,
+                CreatedBy = _systemUser,
+                UpdatedBy = _systemUser,
+                CreatedDate = _now,
+                UpdatedDate = _now
+            };
         }
 
         public static IEnumerable<Item> GetItemSeedData() {

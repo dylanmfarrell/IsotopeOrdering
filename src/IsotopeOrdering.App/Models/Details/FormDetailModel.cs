@@ -12,8 +12,10 @@ namespace IsotopeOrdering.App.Models.Details {
         public int CustomerDetailFormId { get; set; }
         public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
         public CustomerFormStatus CustomerFormStatus { get; set; }
+        public Guid FormIdentifier { get; set; } = Guid.NewGuid();
         public string? FormData { get; set; }
         public FormInitiationDetailModel? InitiationModel { get; set; }
+        public CustomerFormStatus Action { get; set; }
         public bool RequiresEmailForCustomerAdmin => CustomerFormStatus == CustomerFormStatus.New;
         public bool RequiresSignatureFromCustomerAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingCustomerSupervisorApproval;
         public bool ShowSignatureFromCustomerAdmin => CustomerFormStatus > CustomerFormStatus.AwaitingAdminApproval;
@@ -23,7 +25,6 @@ namespace IsotopeOrdering.App.Models.Details {
     }
 
     public class FormInitiationDetailModel {
-        public Guid FormIdentifier { get; set; } = Guid.NewGuid();
         public InstitutionDetailModel Institution { get; set; } = new InstitutionDetailModel();
         public AddressDetailModel ShippingAddress { get; set; } = new AddressDetailModel();
         public string? FedExNumber { get; set; } = string.Empty;

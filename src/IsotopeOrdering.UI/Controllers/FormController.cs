@@ -43,7 +43,8 @@ namespace IsotopeOrdering.UI.Controllers {
         public async Task<IActionResult> InitiationForm(FormDetailModel model) {
             if (ModelState.IsValid) {
                 ApplicationResult result = await _formManager.SubmitInitiationForm(model);
-                return ApplicationResult(nameof(HomeController.Index), result);
+                SetApplicationResult(result);
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             return View(model);
         }

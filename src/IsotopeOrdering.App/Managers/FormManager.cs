@@ -62,7 +62,9 @@ namespace IsotopeOrdering.App.Managers {
             if (form == null) {
                 return null;
             }
-            form.InitiationModel = JsonSerializer.Deserialize<FormInitiationDetailModel>(form.FormData);
+            if (!string.IsNullOrEmpty(form.FormData)) {
+                form.InitiationModel = JsonSerializer.Deserialize<FormInitiationDetailModel>(form.FormData);
+            }
             return form;
         }
 
@@ -81,7 +83,7 @@ namespace IsotopeOrdering.App.Managers {
             if (result.IsValid) {
                 CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
                 int formId = await _service.SubmitCustomerForm(customerForm);
-                if (form.Id == 0) {
+                if (form.CustomerDetailFormId == 0) {
                     await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
                 }
                 if (form.Action == CustomerFormStatus.AwaitingCustomerSupervisorApproval) {

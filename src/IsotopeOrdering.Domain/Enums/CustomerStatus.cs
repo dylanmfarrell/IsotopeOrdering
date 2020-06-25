@@ -5,16 +5,12 @@
         /// </summary>
         New = 0,
         /// <summary>
-        /// Customer has submitted their MTA and is awaiting approval
-        /// </summary>
-        Pending = 1,
-        /// <summary>
         /// Customer's MTA has been reviewed and accepted
         /// </summary>
-        Initiated = 2,
+        Initiated = 1,
         /// <summary>
         /// Customer cannot order or alter any information
         /// </summary>
-        Locked = 3,
+        Locked = 2,
     }
 }

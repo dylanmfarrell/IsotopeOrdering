@@ -14,6 +14,8 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.CustomerDetailFormId, opt => opt.Ignore())
                 .ForMember(x => x.CustomerFormStatus, opt => opt.Ignore())
                 .ForMember(x => x.FormData, opt => opt.Ignore())
+                .ForMember(x=>x.FormIdentifier, opt => opt.Ignore())
+                .ForMember(x=>x.Action, opt => opt.Ignore())
                 .ForPath(x => x.InitiationModel, opt => opt.Ignore());
 
             CreateMap<CustomerForm, FormDetailModel>()
@@ -24,7 +26,8 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.CustomerFormStatus, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.FormIdentifier, opt => opt.MapFrom(x => x.FormIdentifier))
                 .ForMember(x => x.FormData, opt => opt.MapFrom(x => x.FormData))
-                .ForMember(x => x.InitiationModel, opt => opt.Ignore());
+                .ForMember(x => x.InitiationModel, opt => opt.Ignore())
+                .ForMember(x => x.Action, opt => opt.Ignore());
 
             CreateMap<FormDetailModel, CustomerForm>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => x.CustomerDetailFormId))
@@ -37,7 +40,7 @@ namespace IsotopeOrdering.App.Mappings {
 
             CreateMap<CustomerForm, FormItemModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => x.FormId))
-                .ForMember(x => x.CustomerDetailFormId, opt => opt.MapFrom(x => x.CustomerId))
+                .ForMember(x => x.CustomerDetailFormId, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Form.Name))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.Type, opt => opt.MapFrom(x => x.Form.Type))

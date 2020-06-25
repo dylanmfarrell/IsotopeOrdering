@@ -1,12 +1,12 @@
 ﻿using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Enums;
+using MIR.Core.Domain;
 using System;
 using System.Collections.Generic;
 
 namespace IsotopeOrdering.App.Models.Details {
-    public class FormDetailModel {
-        public int Id { get; set; }
+    public class FormDetailModel : ModelBase {
         public FormType Type { get; set; }
         public string Name { get; set; } = string.Empty;
         public int CustomerDetailFormId { get; set; }

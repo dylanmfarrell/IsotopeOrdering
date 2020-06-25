@@ -43,7 +43,7 @@ namespace IsotopeOrdering.UI.Controllers {
     public class HomeViewModel {
         public CustomerItemModel Customer { get; set; } = new CustomerItemModel();
         public CustomerFormStatus FormStatus { get; set; }
-        public bool ShowInitiationMessage => Customer.Status == CustomerStatus.New;
-        public bool ShowInitiationStatus => Customer.Status == CustomerStatus.Pending;
+        public bool ShowInitiationMessage => FormStatus == CustomerFormStatus.New;
+        public bool ShowInitiationStatus => FormStatus != CustomerFormStatus.New;
     }
 }

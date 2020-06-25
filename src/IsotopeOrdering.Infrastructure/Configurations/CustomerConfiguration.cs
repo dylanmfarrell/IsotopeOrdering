@@ -14,7 +14,7 @@ namespace IsotopeOrdering.Infrastructure.Configurations {
                     sa.Property(x => x.LastName).HasColumnName("LastName");
                     sa.Property(x => x.Fax).HasColumnName("Fax");
                 });
-            builder.Property(x => x.Status).HasDefaultValue(CustomerStatus.Pending);
+            builder.Property(x => x.Status).HasDefaultValue(CustomerStatus.New);
             builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }

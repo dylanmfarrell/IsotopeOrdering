@@ -6,6 +6,7 @@
     <div class="mx-auto w-75 border rounded p-3">
         <div asp-validation-summary="ModelOnly"></div>
         <partial name="_FormInformation" for="@Model" />
+        <partial name="_AuditInformation" for="@Model" />
         <partial name="_InitiationForm" for="InitiationModel" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly, Model.CustomerFormStatus != CustomerFormStatus.New} }" />
         @if (Model.RequiresEmailForCustomerAdmin) {
             <p>Please provide the email address of your supervisor for approval:</p>
@@ -45,9 +46,10 @@
 </form>
 @section Scripts{
     <script src="~/lib/jSignature/jSignature.min.js"></script>
+    <script src="~/js/form.js"></script>
     <script>
         $(document).ready(function () {
-            $("#signature").jSignature()
+            $(".signature").jSignature()
         })
     </script>
 }

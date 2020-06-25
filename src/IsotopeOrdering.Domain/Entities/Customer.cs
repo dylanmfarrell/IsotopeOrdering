@@ -8,7 +8,7 @@ namespace IsotopeOrdering.Domain.Entities {
         public string UserId { get; set; } = null!;
         public int? ParentCustomerId { get; set; }
         public Customer? ParentCustomer { get; set; }
-        public CustomerStatus Status { get; set; } = CustomerStatus.Pending;
+        public CustomerStatus Status { get; set; } = CustomerStatus.New;
         public string? FedExNumber { get; set; }
         public Contact Contact { get; set; } = new Contact();
         public List<CustomerAddress> Addresses { get; set; } = new List<CustomerAddress>();

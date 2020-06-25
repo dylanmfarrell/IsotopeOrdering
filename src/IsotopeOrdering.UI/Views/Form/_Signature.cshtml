@@ -57,9 +57,10 @@ else {
         </div>
     </div>
     <div class="form-group row mb-3">
+        <input asp-for="Signature" type="hidden"/>
         <label asp-for="Signature" class="col-sm-2 col-form-label">Sign Below:</label>
         <div class="col-sm-12">
-            <div class="shadow signature" data-signature="@Model.Signature"></div>
+            <div class="shadow signature"></div>
         </div>
     </div>
 }

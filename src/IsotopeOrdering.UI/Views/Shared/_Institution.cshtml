@@ -4,20 +4,20 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label" asp-for="Name">Institution Name</label>
         <div class="col-sm-10">
-            <input asp-for="Name" class="form-control form-control-sm" readonly/>
+            <input asp-for="Name" class="form-control form-control-sm" readonly />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
     </div>
     <h6 class="mb-2 text-muted"><i class="fas fa-home pr-1"></i>Institution Address</h6>
-    <partial name="_Address" for="Address" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly, true } }"/>
+    <partial name="_Address" for="Address" />
     <div class="row">
         <div class="col-6">
             <h6 class="mb-2 text-muted"><i class="fas fa-id-card pr-1"></i>Safety Contact Information</h6>
-            <partial name="_Contact" for="SafetyContact" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly, true } }"/>
+            <partial name="_Contact" for="SafetyContact" />
         </div>
         <div class="col-6">
             <h6 class="mb-2 text-muted"><i class="fas fa-id-card pr-1"></i>Financial Contact Information</h6>
-            <partial name="_Contact" for="FinancialContact" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly, true } }"/>
+            <partial name="_Contact" for="FinancialContact" />
         </div>
     </div>
 }

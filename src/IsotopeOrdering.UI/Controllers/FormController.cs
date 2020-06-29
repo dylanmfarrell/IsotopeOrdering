@@ -58,7 +58,7 @@ namespace IsotopeOrdering.UI.Controllers {
             if (ModelState.IsValid) {
                 ApplicationResult result = await _formManager.SubmitInitiationFormSignature(supervisorEmailAddress, formIdentifier, model.InitiationModel!.CustomerAdminSignature);
                 SetApplicationResult(result);
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Confirmation), "Home");
             }
             return View(model);
         }

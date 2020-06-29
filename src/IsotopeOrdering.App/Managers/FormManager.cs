@@ -83,23 +83,27 @@ namespace IsotopeOrdering.App.Managers {
             var validator = new FormDetailModelValidator();
             ValidationResult result = await validator.ValidateAsync(form);
             if (result.IsValid) {
-                CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
-                int formId = await _service.SubmitCustomerForm(customerForm);
-                if (form.CustomerDetailFormId == 0) {
-                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
+                if (form.Action == CustomerFormStatus.Approved) {
+                    return await ApproveInitiationForm(form.CustomerDetailFormId, form.InitiationModel!.AdminSignature);
+                }
+                if (form.Action == CustomerFormStatus.Denied) {
+                    return await DenyInitiationForm(form.Customer.Id, form.CustomerDetailFormId);
                 }
                 if (form.Action == CustomerFormStatus.AwaitingCustomerSupervisorApproval) {
-                    await UpdateFormStatus(form.Customer.Id, formId, form.Action);
+                    CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
+                    await _service.SubmitCustomerForm(customerForm);
+                    await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
+                    await UpdateFormStatus(form.Customer.Id, form.CustomerDetailFormId, form.Action);
                     await _notificationManager.ProcessExternalMtaNotification(form);
                 }
-                return ApplicationResult.Success("Form submitted", formId);
+                return ApplicationResult.Success("Form submitted", form.CustomerDetailFormId);
             }
             return ApplicationResult.Error(result);
         }
 
-        public async Task<ApplicationResult> SubmitInitiationFormSignature(string supervisorEmailAddress, Guid formIdentifier,FormInitiationSignatureModel signature) {
+        public async Task<ApplicationResult> SubmitInitiationFormSignature(string supervisorEmailAddress, Guid formIdentifier, FormInitiationSignatureModel signature) {
             FormDetailModel? form = await GetInitiationForm(supervisorEmailAddress, formIdentifier);
-            if(form == null || form.InitiationModel == null) {
+            if (form == null || form.InitiationModel == null) {
                 return ApplicationResult.Error("Unable to find form for supervisor email");
             }
             form.InitiationModel.CustomerAdminSignature = signature;
@@ -124,6 +128,23 @@ namespace IsotopeOrdering.App.Managers {
                 return new List<FormItemModel>();
             }
             return await _service.GetCustomerForms<FormItemModel>(customer.Id);
+        }
+
+        private async Task<ApplicationResult> ApproveInitiationForm(int formId, FormInitiationSignatureModel signature) {
+            FormDetailModel? form = await GetForm(formId);
+            if (form == null || form.InitiationModel == null) {
+                return ApplicationResult.Error("Unable to find form for admin approval email");
+            }
+            form.InitiationModel.AdminSignature = signature;
+            CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
+            await _service.SubmitCustomerForm(customerForm);
+            await UpdateFormStatus(form.Customer.Id, form.CustomerDetailFormId, CustomerFormStatus.Approved);
+            return ApplicationResult.Success("Form signed", form.CustomerDetailFormId);
+        }
+
+        public async Task<ApplicationResult> DenyInitiationForm(int customerId, int formId) {
+            await UpdateFormStatus(customerId, formId, CustomerFormStatus.Denied);
+            return ApplicationResult.Success("Initiation Form Denied", formId);
         }
 
         private async Task<FormDetailModel?> GetForm(int id) {

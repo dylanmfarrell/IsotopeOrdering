@@ -44,7 +44,7 @@ namespace IsotopeOrdering.App {
                     new AuthorizationRequirement(true)
                 ));
                 options.AddPolicy(Policies.PrivatePolicy, policy => policy.AddRequirements(
-                     new AuthorizationRequirement(false)
+                     new AuthorizationRequirement(true)
                 ));
                 options.AddPolicy(Policies.PublicPolicy, policy => policy.AddRequirements(
                      new AuthorizationRequirement(false)

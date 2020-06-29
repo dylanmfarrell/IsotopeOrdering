@@ -33,11 +33,16 @@ namespace IsotopeOrdering.App.Security {
         }
 
         private async Task HandleAuthorizationRequirement(AuthorizationHandlerContext context, AuthorizationRequirement requirement) {
-            if (context.User.Identity.IsAuthenticated == requirement.RequiresAuthorization) {
-                context.Succeed(requirement);
+            if (requirement.RequiresAuthorization) {
+                if (context.User.Identity.IsAuthenticated) {
+                    context.Succeed(requirement);
+                }
+                else {
+                    context.Fail();
+                }
             }
             else {
-                context.Fail();
+                context.Succeed(requirement);
             }
             await Task.CompletedTask;
         }

@@ -25,9 +25,9 @@
         </div>
     </div>
     <div class="form-group row mb-3">
-        <label asp-for="Signature" class="col-sm-2 col-form-label">Sign Below:</label>
+        <input asp-for="Signature" type="hidden" />
         <div class="col-sm-12">
-            <div class="shadow signature" data-signature="@Model.Signature" data-readonly></div>
+            <div class="shadow signature mt-5" data-signature="@Model.Signature"></div>
         </div>
     </div>
 }

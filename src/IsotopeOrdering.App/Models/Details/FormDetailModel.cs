@@ -19,7 +19,7 @@ namespace IsotopeOrdering.App.Models.Details {
         public bool AllowSignatureFromCustomerAdmin { get; set; }
         public bool RequiresEmailForCustomerAdmin => CustomerFormStatus == CustomerFormStatus.New;
         public bool RequiresSignatureFromCustomerAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingCustomerSupervisorApproval && AllowSignatureFromCustomerAdmin;
-        public bool ShowSignatureFromCustomerAdmin => CustomerFormStatus > CustomerFormStatus.AwaitingAdminApproval;
+        public bool ShowSignatureFromCustomerAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingAdminApproval;
         public bool RequiresSignatureFromAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingAdminApproval;
         public bool ShowSignatureFromAdmin => CustomerFormStatus == CustomerFormStatus.Approved;
         public bool CanEdit => CustomerFormStatus != CustomerFormStatus.Approved && CustomerFormStatus != CustomerFormStatus.Denied;

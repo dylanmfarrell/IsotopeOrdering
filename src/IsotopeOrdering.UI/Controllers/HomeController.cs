@@ -29,6 +29,10 @@ namespace IsotopeOrdering.UI.Controllers {
             return View(model);
         }
 
+        public IActionResult Confirmation() {
+            return View();
+        }
+
         public IActionResult PageNotFound() {
             return View();
         }

@@ -15,6 +15,8 @@
         public const string ReviewerPolicy = "ReviewPolicy";
         public const string CustomerPolicy = "CustomerPolicy";
         public const string OrderPolicy = "OrderPolicy";
+        public const string PrivatePolicy = "PrivatePolicy";
+        public const string PublicPolicy = "PublicPolicy";
     }
 
     public static class UploadModules {

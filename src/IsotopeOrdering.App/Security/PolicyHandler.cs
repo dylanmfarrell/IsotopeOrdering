@@ -26,7 +26,20 @@ namespace IsotopeOrdering.App.Security {
                 if (requirement is InitiationRequirement initiationRequirement) {
                     await HandleInitiationRequirement(context, initiationRequirement);
                 }
+                if (requirement is AuthorizationRequirement authorizationRequirement) {
+                    await HandleAuthorizationRequirement(context, authorizationRequirement);
+                }
             }
+        }
+
+        private async Task HandleAuthorizationRequirement(AuthorizationHandlerContext context, AuthorizationRequirement requirement) {
+            if (context.User.Identity.IsAuthenticated == requirement.RequiresAuthorization) {
+                context.Succeed(requirement);
+            }
+            else {
+                context.Fail();
+            }
+            await Task.CompletedTask;
         }
 
         private async Task HandleRoleRequirement(AuthorizationHandlerContext context, RoleRequirement requirement) {

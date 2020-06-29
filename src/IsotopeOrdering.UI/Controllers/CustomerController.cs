@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.UI.Controllers {
+    [Authorize(Policies.PrivatePolicy)]
     public class CustomerController : BaseController {
         private readonly ICustomerManager _customerManager;
 
@@ -50,6 +51,7 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
+        [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Edit(int id) {
             CustomerDetailModel? model = await _customerManager.Get(id);
             if (model == null) {
@@ -59,12 +61,13 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
-        [Authorize(Policies.AdminPolicy)]
+        [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Search(string search) {
             return Json(await _customerManager.Search(search));
         }
 
         [HttpPost]
+        [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Edit(CustomerDetailModel model) {
             if (ModelState.IsValid) {
                 ApplicationResult result = await _customerManager.Edit(model);

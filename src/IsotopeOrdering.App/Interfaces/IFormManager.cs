@@ -19,13 +19,14 @@ namespace IsotopeOrdering.App.Interfaces {
         /// </summary>
         /// <param name="formIdentifier"></param>
         /// <returns></returns>
-        Task<FormDetailModel?> GetInitiationForm(Guid formIdentifier);
+        Task<FormDetailModel?> GetInitiationForm(string supervisorEmailAddress,Guid formIdentifier);
         /// <summary>
         /// Validate and save the Initiation Form
         /// </summary>
         /// <param name="form"></param>
         /// <returns>Validation errors and IsSucessful false, otherwise IsSuccessful true</returns>
         Task<ApplicationResult> SubmitInitiationForm(FormDetailModel form);
+        Task<ApplicationResult> SubmitInitiationFormSignature(string supervisorEmailAddress, Guid formIdentifier, FormInitiationSignatureModel signature);
         /// <summary>
         /// Sets the status of the MTA form, creates an entity event
         /// </summary>

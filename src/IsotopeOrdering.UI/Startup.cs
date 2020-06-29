@@ -39,10 +39,7 @@ namespace IsotopeOrdering.UI {
             services.AddHostedService<NotificationBackgroundService>();
             services.AddScoped<IScopedNotificationProcessingService, ScopedNotificationProcessingService>();
 
-            services.AddControllersWithViews(x => {
-                AuthorizationPolicy policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                x.Filters.Add(new AuthorizeFilter(policy));
-            })
+            services.AddControllersWithViews()
             .AddRazorRuntimeCompilation()
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerDetailModelValidator>());
         }

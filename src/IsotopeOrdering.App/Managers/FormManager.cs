@@ -68,13 +68,15 @@ namespace IsotopeOrdering.App.Managers {
             return form;
         }
 
-        public async Task<FormDetailModel?> GetInitiationForm(Guid formIdentifier) {
+        public async Task<FormDetailModel?> GetInitiationForm(string supervisorEmailAddress, Guid formIdentifier) {
             FormDetailModel? form = await _service.GetCustomerForm<FormDetailModel>(formIdentifier);
-            if (form == null) {
-                return null;
+            if (form != null && !string.IsNullOrEmpty(form.FormData)) {
+                form.InitiationModel = JsonSerializer.Deserialize<FormInitiationDetailModel>(form.FormData);
+                if (form.InitiationModel.CustomerAdminSignature.Email.Trim().Contains(supervisorEmailAddress.Trim(), StringComparison.OrdinalIgnoreCase)) {
+                    return form;
+                }
             }
-            form.InitiationModel = JsonSerializer.Deserialize<FormInitiationDetailModel>(form.FormData);
-            return form;
+            return null;
         }
 
         public async Task<ApplicationResult> SubmitInitiationForm(FormDetailModel form) {
@@ -93,6 +95,18 @@ namespace IsotopeOrdering.App.Managers {
                 return ApplicationResult.Success("Form submitted", formId);
             }
             return ApplicationResult.Error(result);
+        }
+
+        public async Task<ApplicationResult> SubmitInitiationFormSignature(string supervisorEmailAddress, Guid formIdentifier,FormInitiationSignatureModel signature) {
+            FormDetailModel? form = await GetInitiationForm(supervisorEmailAddress, formIdentifier);
+            if(form == null || form.InitiationModel == null) {
+                return ApplicationResult.Error("Unable to find form for supervisor email");
+            }
+            form.InitiationModel.CustomerAdminSignature = signature;
+            CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
+            await _service.SubmitCustomerForm(customerForm);
+            await UpdateFormStatus(form.Customer.Id, form.CustomerDetailFormId, CustomerFormStatus.AwaitingAdminApproval);
+            return ApplicationResult.Success("Form signed", form.CustomerDetailFormId);
         }
 
         public async Task<ApplicationResult> UpdateFormStatus(int customerId, int customerFormId, CustomerFormStatus status) {

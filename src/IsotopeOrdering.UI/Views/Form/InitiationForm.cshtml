@@ -18,7 +18,7 @@
         }
         @if (Model.RequiresSignatureFromCustomerAdmin) {
             <partial name="_Signature" for="InitiationModel!.CustomerAdminSignature" />
-            <button type="submit" name="Action" value="@CustomerFormStatus.AwaitingAdminApproval" class="btn btn-sm btn-sm btn-success col-12 mt-4">Submit siganture for admin approval</button>
+            <button type="submit" name="Action" value="@CustomerFormStatus.AwaitingAdminApproval" action="" class="btn btn-sm btn-sm btn-success col-12 mt-4">Submit siganture for admin approval</button>
         }
         @if (Model.ShowSignatureFromCustomerAdmin) {
             <partial name="_Signature" for="InitiationModel!.CustomerAdminSignature" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }" />
@@ -47,9 +47,4 @@
 @section Scripts{
     <script src="~/lib/jSignature/jSignature.min.js"></script>
     <script src="~/js/form.js"></script>
-    <script>
-        $(document).ready(function () {
-            $(".signature").jSignature()
-        })
-    </script>
 }

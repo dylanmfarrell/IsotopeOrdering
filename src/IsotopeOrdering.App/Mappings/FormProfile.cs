@@ -27,6 +27,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.FormIdentifier, opt => opt.MapFrom(x => x.FormIdentifier))
                 .ForMember(x => x.FormData, opt => opt.MapFrom(x => x.FormData))
                 .ForMember(x => x.InitiationModel, opt => opt.Ignore())
+                .ForMember(x => x.AllowSignatureFromCustomerAdmin, opt => opt.Ignore())
                 .ForMember(x => x.Action, opt => opt.Ignore());
 
             CreateMap<FormDetailModel, CustomerForm>()

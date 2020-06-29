@@ -16,8 +16,9 @@ namespace IsotopeOrdering.App.Models.Details {
         public string? FormData { get; set; }
         public FormInitiationDetailModel? InitiationModel { get; set; }
         public CustomerFormStatus Action { get; set; }
+        public bool AllowSignatureFromCustomerAdmin { get; set; }
         public bool RequiresEmailForCustomerAdmin => CustomerFormStatus == CustomerFormStatus.New;
-        public bool RequiresSignatureFromCustomerAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingCustomerSupervisorApproval;
+        public bool RequiresSignatureFromCustomerAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingCustomerSupervisorApproval && AllowSignatureFromCustomerAdmin;
         public bool ShowSignatureFromCustomerAdmin => CustomerFormStatus > CustomerFormStatus.AwaitingAdminApproval;
         public bool RequiresSignatureFromAdmin => CustomerFormStatus == CustomerFormStatus.AwaitingAdminApproval;
         public bool ShowSignatureFromAdmin => CustomerFormStatus == CustomerFormStatus.Approved;

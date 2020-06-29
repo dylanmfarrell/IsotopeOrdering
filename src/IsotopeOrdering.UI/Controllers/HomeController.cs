@@ -1,7 +1,9 @@
-﻿using IsotopeOrdering.App.Interfaces;
+﻿using IsotopeOrdering.App;
+using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.App.Models.Shared;
 using IsotopeOrdering.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -19,6 +21,7 @@ namespace IsotopeOrdering.UI.Controllers {
             _formManager = formManager;
         }
 
+        [Authorize(Policies.PrivatePolicy)]
         public async Task<IActionResult> Index() {
             HomeViewModel model = new HomeViewModel();
             model.Customer = await _customerManager.InitializeCustomerForCurrentUser();

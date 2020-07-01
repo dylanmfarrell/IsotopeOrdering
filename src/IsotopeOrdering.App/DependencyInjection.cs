@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using IsotopeOrdering.App.Interfaces;
 using IsotopeOrdering.App.Managers;
+using IsotopeOrdering.App.Models.Notifications;
 using IsotopeOrdering.App.Security;
 using IsotopeOrdering.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IsotopeOrdering.App {
     public static class DependencyInjection {
-        public static IServiceCollection AddApplication(this IServiceCollection services) {
+        public static IServiceCollection AddApplication(this IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration configuration) {
+
+            services.Configure<NotificationSettings>(configuration.GetSection("NotificationSettings"));
+
             //Add all logic managers
             services.AddManagers();
 

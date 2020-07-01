@@ -6,6 +6,7 @@ using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IOrderService _orderService;
         private readonly ITemplateManager _templateManager;
         private readonly IEmailService _emailService;
+        private readonly IOptionsMonitor<NotificationSettings> _settings;
 
         public NotificationManager(
             ILogger<NotificationManager> logger,
@@ -30,7 +32,8 @@ namespace IsotopeOrdering.App.Managers {
             IShipmentService shipmentService,
             IOrderService orderService,
             ITemplateManager templateManager,
-            IEmailService emailService) {
+            IEmailService emailService,
+            IOptionsMonitor<NotificationSettings> settings) {
             _logger = logger;
             _service = service;
             _eventService = eventService;
@@ -39,6 +42,7 @@ namespace IsotopeOrdering.App.Managers {
             _orderService = orderService;
             _templateManager = templateManager;
             _emailService = emailService;
+            _settings = settings;
         }
 
         public async Task<List<NotificationConfigurationItemModel>> GetNotificationConfigurations(NotificationTarget target) {
@@ -76,7 +80,7 @@ namespace IsotopeOrdering.App.Managers {
             }
             return processedNotificationsCount;
         }
-       
+
         public async Task<bool> ProcessExternalMtaNotification(FormDetailModel form) {
             NotificationConfiguration notificationConfiguration = await _service.GetExternalMtaNotificationConfiguration();
             NotificationDto notificationDto = new NotificationDto(notificationConfiguration.Title);
@@ -117,8 +121,7 @@ namespace IsotopeOrdering.App.Managers {
                 return await GetRecipientsForEvent(entityEvent);
             }
             if (notificationTarget == NotificationTarget.Admin) {
-                //TODO: get admin recipients
-                return new List<RecipientDto>();
+                return _settings.CurrentValue.Admins.Select(x => new RecipientDto() { Name = x.Name, EmailAddress = x.Email }).ToList();
             }
             return new List<RecipientDto>();
         }

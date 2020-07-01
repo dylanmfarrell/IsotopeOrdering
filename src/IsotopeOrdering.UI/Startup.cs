@@ -32,7 +32,7 @@ namespace IsotopeOrdering.UI {
             services.AddInfrastructure(_configuration, _environment.IsDevelopment());
 
             //Add logical managers, policies, automapper mappings
-            services.AddApplication();
+            services.AddApplication(_configuration);
 
             services.AddHealthChecks().AddDbContextCheck<IsotopeOrderingDbContext>();
 

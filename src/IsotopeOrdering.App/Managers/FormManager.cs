@@ -91,9 +91,9 @@ namespace IsotopeOrdering.App.Managers {
                 }
                 if (form.Action == CustomerFormStatus.AwaitingCustomerSupervisorApproval) {
                     CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
-                    await _service.SubmitCustomerForm(customerForm);
+                    int customerFormId = await _service.SubmitCustomerForm(customerForm);
                     await _eventService.CreateEvent(EntityEventType.Customer, form.Customer.Id, Events.Customer.SubmittedInitiationForm);
-                    await UpdateFormStatus(form.Customer.Id, form.CustomerDetailFormId, form.Action);
+                    await UpdateFormStatus(form.Customer.Id, customerFormId, form.Action);
                     await _notificationManager.ProcessExternalMtaNotification(form);
                 }
                 return ApplicationResult.Success("Form submitted", form.CustomerDetailFormId);

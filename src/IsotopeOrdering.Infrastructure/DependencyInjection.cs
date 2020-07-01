@@ -26,6 +26,7 @@ namespace IsotopeOrdering.Infrastructure {
             services.AddApplicationManagerRoleServices(applicationManagerOptions, isDevelopment);
 
             OpenIdOptions oidcOptions = configuration.GetSection("OpenId").Get<OpenIdOptions>();
+            services.Configure<OpenIdOptions>(configuration.GetSection("OpenId"));
             services.AddOidcAuthentication(oidcOptions);
 
             services.Configure<EmailOptions>(configuration.GetSection("EmailSettings"));
@@ -69,6 +70,7 @@ namespace IsotopeOrdering.Infrastructure {
 
         private static IServiceCollection AddOidcAuthentication(this IServiceCollection services, OpenIdOptions oidcOptions) {
             //Add identity server
+
             services.AddSingleton<IDiscoveryCache>(r => {
                 IHttpClientFactory factory = r.GetRequiredService<IHttpClientFactory>();
                 return new DiscoveryCache(oidcOptions.Authority, () => factory.CreateClient());

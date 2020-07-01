@@ -30,32 +30,34 @@
                 }
             </div>
         </div>
-        <div class="card mt-5">
-            <div class="card-header">
-                Admin Signature
+        @if (Model.RequiresSignatureFromAdmin || Model.ShowSignatureFromAdmin) {
+            <div class="card mt-5">
+                <div class="card-header">
+                    Admin Signature
+                </div>
+                <div class="card-body">
+                    @if (Model.RequiresSignatureFromAdmin) {
+                        <partial name="_Signature" for="InitiationModel!.AdminSignature" />
+                        <div class="btn btn-group col-md-12 mt-5">
+                            <button type="button" class="btn btn-danger btn-sm"
+                                    data-toggle="modal"
+                                    data-target="#siteModal"
+                                    data-title="Deny Material Transfer Agreement"
+                                    data-content="Are you sure you want to deny this Material Transfer Agreement?"
+                                    data-submittext="Deny Material Transfer Agreement"
+                                    data-submitvalue="@CustomerFormStatus.Denied">
+                                Deny Material Transfer Agreement
+                            </button>
+                            <button type="submit" name="Action" value="@CustomerFormStatus.Approved" class="btn btn-sm btn-success">Approve Material Transfer Agreement</button>
+                        </div>
+                        <partial name="_Prompt" />
+                    }
+                    @if (Model.ShowSignatureFromAdmin) {
+                        <partial name="_Signature" for="InitiationModel!.AdminSignature" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly, true } }" />
+                    }
+                </div>
             </div>
-            <div class="card-body">
-                @if (Model.RequiresSignatureFromAdmin) {
-                    <partial name="_Signature" for="InitiationModel!.AdminSignature" />
-                    <div class="btn btn-group col-md-12 mt-5">
-                        <button type="button" class="btn btn-danger btn-sm"
-                                data-toggle="modal"
-                                data-target="#siteModal"
-                                data-title="Deny Material Transfer Agreement"
-                                data-content="Are you sure you want to deny this Material Transfer Agreement?"
-                                data-submittext="Deny Material Transfer Agreement"
-                                data-submitvalue="@CustomerFormStatus.Denied">
-                            Deny Material Transfer Agreement
-                        </button>
-                        <button type="submit" name="Action" value="@CustomerFormStatus.Approved" class="btn btn-sm btn-success">Approve Material Transfer Agreement</button>
-                    </div>
-                    <partial name="_Prompt" />
-                }
-                @if (Model.ShowSignatureFromAdmin) {
-                    <partial name="_Signature" for="InitiationModel!.AdminSignature" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }" />
-                }
-            </div>
-        </div>
+        }
     </div>
 </form>
 @section Scripts{

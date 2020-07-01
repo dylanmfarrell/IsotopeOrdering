@@ -6,6 +6,7 @@ using IsotopeOrdering.Domain.Entities.Shared;
 using IsotopeOrdering.Domain.Enums;
 using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,11 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             Mock<IOrderService> mockOrderService = new Mock<IOrderService>();
             Mock<ITemplateManager> mockTemplateManager = new Mock<ITemplateManager>();
             mockTemplateManager.Setup(x => x.GetContent(It.IsAny<NotificationTarget>(), It.IsAny<string>(), It.IsAny<EntityEvent>())).ReturnsAsync(string.Empty);
-
+            Mock<IOptionsMonitor<NotificationSettings>> mockSettings = new Mock<IOptionsMonitor<NotificationSettings>>();
+            mockSettings.SetupGet(x => x.CurrentValue).Returns(new NotificationSettings() {
+                Admins = new List<NotificationAdmin>(),
+                BaseUrl = "Test"
+            });
             NotificationManager manager = new NotificationManager(
                 new NullLogger<NotificationManager>(),
                 mockNotificationService.Object,
@@ -56,7 +61,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                 mockShipmentService.Object,
                 mockOrderService.Object,
                 mockTemplateManager.Object,
-                mockEmailService.Object);
+                mockEmailService.Object,
+                mockSettings.Object);
 
             Assert.Equal(entityEvents.Count * recipients.Count, await manager.ProcessNotificationConfiguration(notificationConfiguration));
         }
@@ -76,6 +82,11 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             Mock<IShipmentService> mockShipmentService = new Mock<IShipmentService>();
             Mock<IOrderService> mockOrderService = new Mock<IOrderService>();
             Mock<ITemplateManager> mockTemplateManager = new Mock<ITemplateManager>();
+            Mock<IOptionsMonitor<NotificationSettings>> mockSettings = new Mock<IOptionsMonitor<NotificationSettings>>();
+            mockSettings.SetupGet(x => x.CurrentValue).Returns(new NotificationSettings() {
+                Admins = new List<NotificationAdmin>(),
+                BaseUrl = "Test"
+            });
 
             NotificationManager manager = new NotificationManager(
                 new NullLogger<NotificationManager>(),
@@ -85,7 +96,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                 mockShipmentService.Object,
                 mockOrderService.Object,
                 mockTemplateManager.Object,
-                mockEmailService.Object);
+                mockEmailService.Object,
+                mockSettings.Object);
 
             Assert.Equal(notifications.Count, await manager.SendNotifications());
         }

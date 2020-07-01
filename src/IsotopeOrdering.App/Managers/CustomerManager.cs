@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using MIR.Core.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Managers {
@@ -141,6 +142,8 @@ namespace IsotopeOrdering.App.Managers {
             IUser user = _userService.User;
             _logger.LogInformation("Creating new customer for {user}", user);
             Customer newCustomer = _mapper.Map<Customer>(user);
+            List<NotificationConfigurationItemModel> configurations = await _notificationService.GetConfigurationList<NotificationConfigurationItemModel>(NotificationTarget.Customer);
+            newCustomer.Subscriptions.AddRange(configurations.Select(x => new NotificationSubscription() { NotificationConfigurationId = x.Id }));
             int id = await _service.Create(newCustomer);
             await _eventService.CreateEvent(EntityEventType.Customer, id, Events.Customer.Created);
             _logger.LogInformation("New customer created {id}", id);

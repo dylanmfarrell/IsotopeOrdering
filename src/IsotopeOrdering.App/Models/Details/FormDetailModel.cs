@@ -44,7 +44,7 @@ namespace IsotopeOrdering.App.Models.Details {
         public string PhoneNumber { get; set; } = string.Empty;
         public string PrintedName { get; set; } = string.Empty;
         public string Signature { get; set; } = string.Empty;
-        public string Position { get; set; } = string.Empty;
+        public string? Position { get; set; } = string.Empty;
         public DateTime Date { get; set; } = DateTime.Now;
     }
 }

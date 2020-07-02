@@ -12,6 +12,7 @@ using IsotopeOrdering.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -139,8 +140,33 @@ namespace IsotopeOrdering.App.Managers {
             CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
             await _service.SubmitCustomerForm(customerForm);
             await UpdateFormStatus(form.Customer.Id, form.CustomerDetailFormId, CustomerFormStatus.Approved);
-            //await UpdateCustomerFromInitiationForm(form);
+            await UpdateCustomerFromInitiationForm(form);
             return ApplicationResult.Success("Form signed", form.CustomerDetailFormId);
+        }
+
+        private async Task UpdateCustomerFromInitiationForm(FormDetailModel form) {
+            CustomerDetailModel customerModel = await _customerService.Get<CustomerDetailModel>(form.Customer.Id);
+            FormInitiationDetailModel initiationModel = form.InitiationModel!;
+            customerModel.Institutions.Add(new CustomerInstitutionDetailModel() {
+                Institution = initiationModel.Institution,
+                Relationship = CustomerInstitutionRelationship.Primary
+            });
+            customerModel.Addresses.Add(new CustomerAddressDetailModel() {
+                Address = initiationModel.ShippingAddress,
+                Type = AddressType.Shipping
+            });
+            customerModel.Addresses.Add(new CustomerAddressDetailModel() {
+                Address = initiationModel.ShippingAddress,
+                Type = AddressType.Billing
+            });
+            customerModel.Status = CustomerStatus.Initiated;
+            foreach (FormInitiationItemModel item in initiationModel.Items.Where(x=>x.IsSelected)) {
+                customerModel.ItemConfigurations.Add(new ItemConfigurationDetailModel() {
+                    ItemId = item.Item.Id
+                });
+            }
+            Customer customer = _mapper.Map<Customer>(customerModel);
+            await _customerService.Update(customer);
         }
 
         public async Task<ApplicationResult> DenyInitiationForm(int customerId, int formId) {

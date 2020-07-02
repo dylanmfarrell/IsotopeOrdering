@@ -165,6 +165,7 @@ namespace IsotopeOrdering.App.Managers {
                     ItemId = item.Item.Id
                 });
             }
+            customerModel.Contact = initiationModel.Contact;
             Customer customer = _mapper.Map<Customer>(customerModel);
             await _customerService.Update(customer);
         }

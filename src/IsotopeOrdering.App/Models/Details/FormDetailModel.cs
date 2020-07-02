@@ -26,6 +26,7 @@ namespace IsotopeOrdering.App.Models.Details {
     }
 
     public class FormInitiationDetailModel {
+        public ContactDetailModel Contact { get; set; } = new ContactDetailModel();
         public InstitutionDetailModel Institution { get; set; } = new InstitutionDetailModel();
         public AddressDetailModel ShippingAddress { get; set; } = new AddressDetailModel();
         public string? FedExNumber { get; set; } = string.Empty;

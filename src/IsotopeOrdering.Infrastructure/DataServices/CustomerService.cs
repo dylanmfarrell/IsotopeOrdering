@@ -58,7 +58,10 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         }
 
         public async Task<List<T>> GetRecipients<T>(int id) where T : class {
-            Customer customer = await _context.Customers.FindAsync(id);
+            Customer? customer = await _context.Customers.SingleOrDefaultAsync(x=>x.Id == id);
+            if (customer == null) {
+                return new List<T>();
+            }
             return new List<T>() { _mapper.Map<T>(customer) };
         }
     }

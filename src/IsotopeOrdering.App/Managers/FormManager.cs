@@ -131,14 +131,15 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         private async Task<ApplicationResult> ApproveInitiationForm(int formId, FormInitiationSignatureModel signature) {
-            FormDetailModel? form = await GetForm(formId);
-            if (form == null || form.InitiationModel == null) {
+            FormDetailModel? form = await GetInitiationForm(formId);
+            if (form == null) {
                 return ApplicationResult.Error("Unable to find form for admin approval email");
             }
-            form.InitiationModel.AdminSignature = signature;
+            form.InitiationModel!.AdminSignature = signature;
             CustomerForm customerForm = _mapper.Map<CustomerForm>(form);
             await _service.SubmitCustomerForm(customerForm);
             await UpdateFormStatus(form.Customer.Id, form.CustomerDetailFormId, CustomerFormStatus.Approved);
+            //await UpdateCustomerFromInitiationForm(form);
             return ApplicationResult.Success("Form signed", form.CustomerDetailFormId);
         }
 

@@ -55,12 +55,9 @@ namespace IsotopeOrdering.UI.Controllers {
         [Authorize(Policies.PublicPolicy)]
         [Route("Form/InitiationForm/{supervisorEmailAddress}/{formIdentifier}")]
         public async Task<IActionResult> InitiationForm(string supervisorEmailAddress, Guid formIdentifier, FormDetailModel model) {
-            if (ModelState.IsValid) {
-                ApplicationResult result = await _formManager.SubmitInitiationFormSignature(supervisorEmailAddress, formIdentifier, model.InitiationModel!.CustomerAdminSignature);
-                SetApplicationResult(result);
-                return RedirectToAction(nameof(HomeController.Confirmation), "Home");
-            }
-            return View(model);
+            ApplicationResult result = await _formManager.SubmitInitiationFormSignature(supervisorEmailAddress, formIdentifier, model.InitiationModel!.CustomerAdminSignature);
+            SetApplicationResult(result);
+            return RedirectToAction(nameof(HomeController.Confirmation), "Home");
         }
 
         [HttpPost]

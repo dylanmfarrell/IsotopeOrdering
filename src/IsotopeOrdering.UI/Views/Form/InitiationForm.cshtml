@@ -1,4 +1,5 @@
-﻿@model FormDetailModel
+﻿@inject IIsotopeOrderingAuthorizationService AuthorizationService
+@model FormDetailModel
 @{
     ViewData[ViewDataKeys.Title] = "Material Transfer Agreement";
 }
@@ -36,7 +37,7 @@
                     Admin Signature
                 </div>
                 <div class="card-body">
-                    @if (Model.RequiresSignatureFromAdmin) {
+                    @if (Model.RequiresSignatureFromAdmin && await AuthorizationService.AuthorizeAsync(Policies.AdminPolicy)) {
                         <partial name="_Signature" for="InitiationModel!.AdminSignature" />
                         <div class="btn btn-group col-md-12 mt-5">
                             <button type="button" class="btn btn-danger btn-sm"

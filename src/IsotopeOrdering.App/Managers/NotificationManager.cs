@@ -90,7 +90,8 @@ namespace IsotopeOrdering.App.Managers {
             };
             notificationDto.AddRecipient(recipientDto);
             try {
-                notificationDto.Body = _templateManager.GetContent(notificationConfiguration.Target, notificationConfiguration.TemplatePath, form).Result;
+                ExternalMtaNotification notificationModel = new ExternalMtaNotification(_settings.CurrentValue.BaseUrl, form);
+                notificationDto.Body = _templateManager.GetContent(notificationConfiguration.Target, notificationConfiguration.TemplatePath, notificationModel).Result;
                 int processedCount = await _service.CreateNotifications(notificationDto.ToNotifications());
                 if (processedCount > 0) {
                     await _service.UpdateLastProcessedDate(notificationConfiguration.Id);
@@ -106,7 +107,11 @@ namespace IsotopeOrdering.App.Managers {
         private bool TryGetNotificationDto(NotificationConfiguration notificationConfiguration, EntityEvent entityEvent, out NotificationDto notificationDto) {
             notificationDto = new NotificationDto(notificationConfiguration.Subscriptions, notificationConfiguration.Title);
             try {
-                notificationDto.AddRecipients(GetRecipients(notificationConfiguration.Target, entityEvent).Result);
+                List<RecipientDto> recipients = GetRecipients(notificationConfiguration.Target, entityEvent).Result;
+                if (!recipients.Any()) {
+                    return false;
+                }
+                notificationDto.AddRecipients(recipients);
                 notificationDto.Body = _templateManager.GetContent(notificationConfiguration.Target, notificationConfiguration.TemplatePath, entityEvent).Result;
                 return true;
             }

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12">
                     <p class="lead">
-                        @if (Model == CustomerFormStatus.AwaitingCustomerSupervisorApproval) {
+                        @if (Model >= CustomerFormStatus.AwaitingCustomerSupervisorApproval) {
                             <i class="fa fa-check text-success" aria-hidden="true"></i>
                         }
                         else {
@@ -14,7 +14,7 @@
                         Submitted MTA
                     </p>
                     <p class="lead">
-                        @if (Model == CustomerFormStatus.AwaitingAdminApproval) {
+                        @if (Model >= CustomerFormStatus.AwaitingAdminApproval) {
                             <i class="fa fa-check text-success" aria-hidden="true"></i>
                         }
                         else {

@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20200417155756_DecimalColumnFixesAndInternalNotesUpdate.Designer.cs" />
     <Compile Remove="Migrations\20200424151530_RemoveFaxNullValue.cs" />
     <Compile Remove="Migrations\20200424151530_RemoveFaxNullValue.Designer.cs" />
+    <Compile Remove="Migrations\20200706171924_AddCountryToAddress.cs" />
+    <Compile Remove="Migrations\20200706171924_AddCountryToAddress.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

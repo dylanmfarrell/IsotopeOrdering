@@ -8,6 +8,7 @@ namespace IsotopeOrdering.Infrastructure.Configurations {
             builder.OwnsOne(x => x.Address,
                 sa => {
                     sa.Property(x => x.Name).HasColumnName("Name").IsRequired();
+                    sa.Property(x => x.Country).HasColumnName("Country").IsRequired();
                     sa.Property(x => x.State).HasColumnName("State").IsRequired();
                     sa.Property(x => x.City).HasColumnName("City").IsRequired();
                     sa.Property(x => x.ZipCode).HasColumnName("ZipCode").IsRequired();

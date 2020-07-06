@@ -28,14 +28,20 @@
         </div>
         <div class="col-sm-12 col-md-3">
             <div class="form-group">
-                <label asp-for="City"></label>
-                <input asp-for="City" class="form-control form-control-sm" readonly />
+                <label asp-for="Country"></label>
+                <input asp-for="Country" class="form-control form-control-sm" readonly />
             </div>
         </div>
         <div class="col-sm-12 col-md-3">
             <div class="form-group">
                 <label asp-for="State"></label>
                 <input asp-for="State" class="form-control form-control-sm" readonly />
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-3">
+            <div class="form-group">
+                <label asp-for="City"></label>
+                <input asp-for="City" class="form-control form-control-sm" readonly />
             </div>
         </div>
         <div class="col-sm-12 col-md-3">
@@ -47,53 +53,60 @@
     </div>
 }
 else {
-    <div class="row">
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label asp-for="Name"></label>
-                <textarea asp-for="Name" class="form-control form-control-sm" rows="3"></textarea>
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label asp-for="Address1"></label>
-                <textarea asp-for="Address1" class="form-control form-control-sm" rows="3"></textarea>
-                <span asp-validation-for="Address1" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label asp-for="Address2"></label>
-                <input asp-for="Address2" class="form-control form-control-sm" />
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label asp-for="Address3"></label>
-                <input asp-for="Address3" class="form-control form-control-sm" />
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label asp-for="City"></label>
-                <input asp-for="City" class="form-control form-control-sm" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label asp-for="State"></label>
-                <input asp-for="State" class="form-control form-control-sm" />
-                <span asp-validation-for="State" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3">
-            <div class="form-group">
-                <label asp-for="ZipCode"></label>
-                <input asp-for="ZipCode" class="form-control form-control-sm" />
-                <span asp-validation-for="ZipCode" class="text-danger"></span>
-            </div>
+<div class="row">
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <textarea asp-for="Name" class="form-control form-control-sm" rows="3"></textarea>
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
     </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="Address1"></label>
+            <textarea asp-for="Address1" class="form-control form-control-sm" rows="3"></textarea>
+            <span asp-validation-for="Address1" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="Address2"></label>
+            <input asp-for="Address2" class="form-control form-control-sm" />
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="Address3"></label>
+            <input asp-for="Address3" class="form-control form-control-sm" />
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="Country"></label>
+            <input asp-for="Country" class="form-control form-control-sm" />
+            <span asp-validation-for="Country" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="State"></label>
+            <input asp-for="State" class="form-control form-control-sm" />
+            <span asp-validation-for="State" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="City"></label>
+            <input asp-for="City" class="form-control form-control-sm" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <div class="form-group">
+            <label asp-for="ZipCode"></label>
+            <input asp-for="ZipCode" class="form-control form-control-sm" />
+            <span asp-validation-for="ZipCode" class="text-danger"></span>
+        </div>
+    </div>
+</div>
 }

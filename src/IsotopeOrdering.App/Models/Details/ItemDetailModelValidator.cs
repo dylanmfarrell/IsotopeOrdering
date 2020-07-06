@@ -7,8 +7,8 @@ namespace IsotopeOrdering.App.Models.Details {
             RuleFor(x => x.Target).NotEmpty();
             RuleFor(x => x.Reaction).NotEmpty();
             RuleFor(x => x.FinalComposition).NotEmpty();
-            RuleFor(x => x.MinQuantity).LessThanOrEqualTo(x => x.MaxQuantity).WithMessage(ValidationMessages.MinQuantityGreaterThanMax);
-            RuleFor(x => x.MaxQuantity).GreaterThanOrEqualTo(x => x.MinQuantity).WithMessage(ValidationMessages.MaxQuantityLessThanMin);
+            RuleFor(x => x.DefaultMinQuantity).LessThanOrEqualTo(x => x.DefaultMaxQuantity).WithMessage(ValidationMessages.MinQuantityGreaterThanMax);
+            RuleFor(x => x.DefaultMaxQuantity).GreaterThanOrEqualTo(x => x.DefaultMinQuantity).WithMessage(ValidationMessages.MaxQuantityLessThanMin);
         }
     }
 }

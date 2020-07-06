@@ -26,10 +26,9 @@ namespace IsotopeOrdering.UI.Services {
         }
 
         private async Task DoWork(CancellationToken stoppingToken) {
-            using (var scope = _serviceProvider.CreateScope()) {
-                var scopedProcessingService = scope.ServiceProvider.GetRequiredService<IScopedNotificationProcessingService>();
-                await scopedProcessingService.DoWork(stoppingToken);
-            }
+            using var scope = _serviceProvider.CreateScope();
+            var scopedProcessingService = scope.ServiceProvider.GetRequiredService<IScopedNotificationProcessingService>();
+            await scopedProcessingService.DoWork(stoppingToken);
         }
     }
 }

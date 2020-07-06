@@ -31,8 +31,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
             ItemManager manager = new ItemManager(_logger, mapper, mockItemService.Object);
 
-            model.MinQuantity = 10;
-            model.MaxQuantity = 5;
+            model.DefaultMinQuantity = 10;
+            model.DefaultMaxQuantity = 5;
 
             ApplicationResult result = await manager.Create(model);
             _output.WriteLine(result.Message);
@@ -48,8 +48,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             ItemManager manager = new ItemManager(_logger, mapper, mockItemService.Object);
 
             model.Name = string.Empty;
-            model.MinQuantity = 10;
-            model.MaxQuantity = 10;
+            model.DefaultMinQuantity = 10;
+            model.DefaultMaxQuantity = 10;
 
             ApplicationResult result = await manager.Create(model);
             _output.WriteLine(result.Message);
@@ -64,8 +64,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
             ItemManager manager = new ItemManager(_logger, mapper, mockItemService.Object);
 
-            model.MinQuantity = 10;
-            model.MaxQuantity = 10;
+            model.DefaultMinQuantity = 10;
+            model.DefaultMaxQuantity = 10;
 
             ApplicationResult result = await manager.Create(model);
             _output.WriteLine(result.Message);
@@ -80,8 +80,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
             ItemManager manager = new ItemManager(_logger, mapper, mockItemService.Object);
 
-            model.MinQuantity = 10;
-            model.MaxQuantity = 5;
+            model.DefaultMinQuantity = 10;
+            model.DefaultMaxQuantity = 5;
 
             ApplicationResult result = await manager.Edit(model);
             _output.WriteLine(result.Message);
@@ -96,8 +96,8 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             IMapper mapper = TestUtilities.GetMapper(new ItemProfile());
             ItemManager manager = new ItemManager(_logger, mapper, mockItemService.Object);
 
-            model.MinQuantity = 10;
-            model.MaxQuantity = 10;
+            model.DefaultMinQuantity = 10;
+            model.DefaultMaxQuantity = 10;
 
             ApplicationResult result = await manager.Edit(model);
             _output.WriteLine(result.Message);

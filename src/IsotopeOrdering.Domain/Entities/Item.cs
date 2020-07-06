@@ -11,8 +11,9 @@ namespace IsotopeOrdering.Domain.Entities {
         public string FinalComposition { get; set; } = null!;
         public string SpecificActivity { get; set; } = null!;
         public string QualityControlAnalysis { get; set; } = null!;
-        public decimal? MinQuantity { get; set; }
-        public decimal? MaxQuantity { get; set; }
+        public decimal? DefaultPrice { get; set; }
+        public decimal? DefaultMinQuantity { get; set; }
+        public decimal? DefaultMaxQuantity { get; set; }
         public List<ItemConfiguration> ItemConfigurations { get; set; } = new List<ItemConfiguration>();
     }
 }

@@ -7,7 +7,7 @@ namespace IsotopeOrdering.UI.Services {
     public class ScopedNotificationProcessingService : IScopedNotificationProcessingService {
         private readonly ILogger _logger;
         private readonly INotificationManager _notificationManager;
-        private int _taskIntervalSeconds = 30;
+        private readonly int _taskIntervalSeconds = 30;
 
         public ScopedNotificationProcessingService(ILogger<ScopedNotificationProcessingService> logger, INotificationManager notificationManager) {
             _logger = logger;

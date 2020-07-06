@@ -70,8 +70,7 @@ namespace IsotopeOrdering.App.Managers {
             int processedNotificationsCount = 0;
             List<EntityEvent> events = await _eventService.GetEvents(notificationConfiguration.EventTrigger, notificationConfiguration.LastProcessed);
             foreach (EntityEvent entityEvent in events) {
-                NotificationDto notificationDto;
-                if (TryGetNotificationDto(notificationConfiguration, entityEvent, out notificationDto)) {
+                if (TryGetNotificationDto(notificationConfiguration, entityEvent, out NotificationDto notificationDto)) {
                     processedNotificationsCount += await _service.CreateNotifications(notificationDto.ToNotifications());
                 }
             }

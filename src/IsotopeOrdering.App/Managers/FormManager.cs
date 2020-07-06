@@ -31,7 +31,6 @@ namespace IsotopeOrdering.App.Managers {
             IMapper mapper,
             IFormService service,
             IItemService itemService,
-            IInstitutionService institutionService,
             IIsotopeOrderingAuthorizationService authorizationService,
             ICustomerService customerService,
             IEventManager eventService,
@@ -160,9 +159,12 @@ namespace IsotopeOrdering.App.Managers {
                 Type = AddressType.Billing
             });
             customerModel.Status = CustomerStatus.Initiated;
-            foreach (FormInitiationItemModel item in initiationModel.Items.Where(x=>x.IsSelected)) {
+            foreach (FormInitiationItemModel item in initiationModel.Items.Where(x => x.IsSelected)) {
                 customerModel.ItemConfigurations.Add(new ItemConfigurationDetailModel() {
-                    ItemId = item.Item.Id
+                    ItemId = item.Item.Id,
+                    MinimumAmount = item.Item.DefaultMinQuantity,
+                    MaximumAmount = item.Item.DefaultMaxQuantity,
+                    Price = item.Item.DefaultPrice.GetValueOrDefault(0)
                 });
             }
             customerModel.Contact = initiationModel.Contact;

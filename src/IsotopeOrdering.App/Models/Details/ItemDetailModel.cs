@@ -10,7 +10,8 @@ namespace IsotopeOrdering.App.Models.Details {
         public string FinalComposition { get; set; } = null!;
         public string? SpecificActivity { get; set; }
         public string? QualityControlAnalysis { get; set; }
-        public decimal? MinQuantity { get; set; }
-        public decimal? MaxQuantity { get; set; }
+        public decimal? DefaultPrice { get; set; }
+        public decimal? DefaultMinQuantity { get; set; }
+        public decimal? DefaultMaxQuantity { get; set; }
     }
 }

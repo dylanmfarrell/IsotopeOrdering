@@ -662,13 +662,27 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "EventTrigger", "IsDeleted", "LastProcessed", "Target", "TemplatePath", "Title", "UpdatedBy", "UpdatedDate" },
                 values: new object[,]
                 {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 39, "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546), "Shipment edited", false, null, 1, "ShipmentEdited", "Shipment edited", "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546) },
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 40, "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546), "Shipment edited", false, null, 0, "ShipmentEdited", "Shipment edited", "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546) },
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 43, "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546), "Shipment shipped", false, null, 1, "ShipmentShipped", "Shipment shipped", "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546) },
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 42, "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546), "Shipment cancelled", false, null, 0, "ShipmentCancelled", "Shipment cancelled", "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546) },
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 44, "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546), "Shipment shipped", false, null, 0, "ShipmentShipped", "Shipment shipped", "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546) },
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 41, "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546), "Shipment cancelled", false, null, 1, "ShipmentCancelled", "Shipment cancelled", "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546) },
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                     { 38, "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546), "Shipment created", false, null, 0, "ShipmentCreated", "Shipment created", "SYSTEM", new DateTime(2020, 6, 15, 14, 2, 17, 424, DateTimeKind.Local).AddTicks(546) }
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
                 });
         }
     }

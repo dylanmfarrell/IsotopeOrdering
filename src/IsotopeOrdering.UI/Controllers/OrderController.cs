@@ -210,7 +210,7 @@ namespace IsotopeOrdering.UI.Controllers {
         public async Task<IActionResult> AddCartItem(OrderItemDetailModel model) {
             ItemConfigurationDetailModel? config = await _itemManager.GetItemConfiguration(model.Item.Id, model.CustomerId, null, model.Quantity);
             if (config == null) {
-                ModelState.AddModelError("ItemConfigurationNotFound", "Item configuration not found for customer");
+                ModelState.AddModelError("ItemConfigurationNotFound", ValidationMessages.ItemConfigurationNotFound);
                 return JsonValidationErrorResult(ModelState);
             }
             model.ItemConfiguration = config;

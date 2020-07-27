@@ -19,7 +19,7 @@ namespace IsotopeOrdering.App.Interfaces {
         /// </summary>
         /// <param name="formIdentifier"></param>
         /// <returns></returns>
-        Task<FormDetailModel?> GetInitiationForm(string supervisorEmailAddress,Guid formIdentifier);
+        Task<FormDetailModel?> GetInitiationForm(string supervisorEmailAddress, Guid formIdentifier);
         /// <summary>
         /// Validate and save the Initiation Form
         /// </summary>

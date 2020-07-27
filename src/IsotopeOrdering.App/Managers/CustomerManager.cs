@@ -61,10 +61,10 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         public async Task<CustomerDetailModel?> Get(int id) {
-            bool isAdmin = await _authorization.AuthorizeAsync(Policies.AdminPolicy);
             CustomerDetailModel? model = await GetCustomerDetailModel(id);
             if (model != null) {
-                model.SubscriptionConfiguration.NotificationConfigurations = await _notificationService.GetConfigurationList<NotificationConfigurationItemModel>(isAdmin ? NotificationTarget.Admin : NotificationTarget.Customer);
+                bool isAdmin = await _authorization.AuthorizeAsync(Policies.AdminPolicy);
+                model.SubscriptionConfiguration.NotificationConfigurations= await _notificationService.GetConfigurationList<NotificationConfigurationItemModel>(isAdmin ? NotificationTarget.Admin : NotificationTarget.Customer);
                 return model;
             }
             //bad request return no customer profile

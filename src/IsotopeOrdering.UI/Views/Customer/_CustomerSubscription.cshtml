@@ -3,7 +3,12 @@
 @using (Html.BeginCollectionItem("SubscriptionConfiguration.Subscriptions")) {
     <div class="custom-control custom-switch">
         <partial name="_AuditInformation" for="@Model" />
-        <input type="checkbox" class="custom-control-input" asp-for="IsSelected">
+        @if (Model.IsSelected) {
+            <input type="checkbox" class="custom-control-input" asp-for="IsSelected" checked="checked">
+        }
+        else {
+        <input type="checkbox" class="custom-control-input" asp-for="IsSelected" >
+        }
         <label class="custom-control-label" asp-for="IsSelected">@Model.Configuration.Title</label>
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="CustomerId" />

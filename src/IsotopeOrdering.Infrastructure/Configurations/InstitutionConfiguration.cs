@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace IsotopeOrdering.Infrastructure.Configurations {
     internal class InstitutionConfiguration : IEntityTypeConfiguration<Institution> {
         public void Configure(EntityTypeBuilder<Institution> builder) {
-            builder.Property(x => x.MaxLimit).HasColumnType("decimal(18,4)");
+            builder.Property(x => x.MaxLimit).HasColumnType("decimal(18,2)");
             builder.OwnsOne(x => x.FinancialContact);
             builder.OwnsOne(x => x.SafetyContact);
             builder.OwnsOne(x => x.Address, sa => {

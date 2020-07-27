@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class UpdateFormTable : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class UpdateFormTable : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.DeleteData(
                 table: "NotificationConfigurations",
                 keyColumn: "Id",
@@ -350,8 +347,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 values: new object[] { new DateTime(2020, 6, 24, 13, 48, 55, 477, DateTimeKind.Local).AddTicks(3266), "", 2, "MaterialTransferAgreement.cshtml", "A customer has requested approval for their material transfer agreement", new DateTime(2020, 6, 24, 13, 48, 55, 477, DateTimeKind.Local).AddTicks(3266) });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropColumn(
                 name: "FormIdentifier",
                 table: "CustomerForms");

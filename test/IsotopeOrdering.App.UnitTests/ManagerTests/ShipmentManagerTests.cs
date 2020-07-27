@@ -1,7 +1,4 @@
-﻿using IsotopeOrdering.App.Models.Details;
-using Xunit;
-
-namespace IsotopeOrdering.App.UnitTests.ManagerTests {
+﻿namespace IsotopeOrdering.App.UnitTests.ManagerTests {
     //public class ShipmentManagerTests {
     //    [Fact]
     //    public async void GetListForCurrentCustomer_ReturnsList() {

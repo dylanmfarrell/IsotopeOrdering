@@ -14,8 +14,8 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.CustomerDetailFormId, opt => opt.Ignore())
                 .ForMember(x => x.CustomerFormStatus, opt => opt.Ignore())
                 .ForMember(x => x.FormData, opt => opt.Ignore())
-                .ForMember(x=>x.FormIdentifier, opt => opt.Ignore())
-                .ForMember(x=>x.Action, opt => opt.Ignore())
+                .ForMember(x => x.FormIdentifier, opt => opt.Ignore())
+                .ForMember(x => x.Action, opt => opt.Ignore())
                 .ForMember(x => x.AllowSignatureFromCustomerAdmin, opt => opt.Ignore())
                 .ForPath(x => x.InitiationModel, opt => opt.Ignore());
 

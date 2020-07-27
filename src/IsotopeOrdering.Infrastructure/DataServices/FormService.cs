@@ -22,12 +22,12 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             return await _mapper.ProjectTo<T>(_context.Forms.Where(x => x.Type == formType)).SingleAsync();
         }
 
-        public async Task<T?> GetCustomerForm<T>(int customerId,int customerFormId) where T : class {
+        public async Task<T?> GetCustomerForm<T>(int customerId, int customerFormId) where T : class {
             return await _mapper.ProjectTo<T>(_context.CustomerForms.Where(x => x.Id == customerFormId && x.CustomerId == customerId))
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<T?> GetCustomerForm<T>(Guid formIdentifier) where T :class {
+        public async Task<T?> GetCustomerForm<T>(Guid formIdentifier) where T : class {
             return await _mapper.ProjectTo<T>(_context.CustomerForms.Where(x => x.FormIdentifier == formIdentifier && x.Status == CustomerFormStatus.AwaitingCustomerSupervisorApproval))
                 .SingleOrDefaultAsync();
         }

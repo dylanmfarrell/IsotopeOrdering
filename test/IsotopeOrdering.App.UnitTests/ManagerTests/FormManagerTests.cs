@@ -36,7 +36,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mockItemService.Setup(x => x.GetListForInitiation<FormInitiationItemModel>()).ReturnsAsync(new List<FormInitiationItemModel>());
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, mockItemService.Object, Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService,Mock.Of<INotificationManager>());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, mockItemService.Object, Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
 
             FormDetailModel? model = await manager.GetInitiationForm(customer);
             Assert.Equal(model?.Customer, customer);
@@ -48,7 +48,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mockFormService.Setup(x => x.SubmitCustomerForm(It.IsAny<CustomerForm>())).ReturnsAsync(1);
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(),  Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
 
             List<FormInitiationItemModel> items = new List<FormInitiationItemModel>();
 
@@ -72,7 +72,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mockFormService.Setup(x => x.SubmitCustomerForm(It.IsAny<CustomerForm>())).ReturnsAsync(1);
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(),  Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
 
             List<FormInitiationItemModel> items = new List<FormInitiationItemModel>() {
                 new FormInitiationItemModel() {
@@ -101,7 +101,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mockFormService.Setup(x => x.SubmitCustomerForm(It.IsAny<CustomerForm>())).ReturnsAsync(1);
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(),  Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
 
             List<FormInitiationItemModel> items = new List<FormInitiationItemModel>() {
                 new FormInitiationItemModel() {
@@ -158,7 +158,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             mockFormService.Setup(x => x.UpdateCustomerFormStatus(It.IsAny<int>(), It.IsAny<CustomerFormStatus>())).Returns(Task.CompletedTask);
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(),  Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), Mock.Of<IIsotopeOrderingAuthorizationService>(), Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
 
             ApplicationResult result = await manager.UpdateFormStatus(1, 1, CustomerFormStatus.Approved);
             CustomAssertions.AssertValidationErrorsDoNotExist(result);
@@ -173,7 +173,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
             var mockAuthorizationService = TestUtilities.GetAuthorizationService(Policies.ReviewerPolicy);
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(),  mockAuthorizationService, Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), mockAuthorizationService, Mock.Of<ICustomerService>(), _eventService, Mock.Of<INotificationManager>());
 
             Assert.NotEmpty(await manager.GetList());
         }
@@ -191,7 +191,7 @@ namespace IsotopeOrdering.App.UnitTests.ManagerTests {
                 .ReturnsAsync(new CustomerItemModel());
 
             IMapper mapper = TestUtilities.GetMapper(new CustomerProfile(), new FormProfile(), new InstitutionProfile());
-            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(),  mockAuthorizationService, mockCustomerService.Object, _eventService, Mock.Of<INotificationManager>());
+            FormManager manager = new FormManager(_logger, mapper, mockFormService.Object, Mock.Of<IItemService>(), mockAuthorizationService, mockCustomerService.Object, _eventService, Mock.Of<INotificationManager>());
 
             Assert.NotEmpty(await manager.GetList());
         }

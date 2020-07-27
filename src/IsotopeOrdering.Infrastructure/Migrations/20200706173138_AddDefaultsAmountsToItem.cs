@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class AddDefaultsAmountsToItem : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class AddDefaultsAmountsToItem : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.RenameColumn(
                 name: "MinQuantity",
                 table: "Items",
@@ -324,8 +321,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 values: new object[] { new DateTime(2020, 7, 6, 12, 31, 38, 235, DateTimeKind.Local).AddTicks(5437), new DateTime(2020, 7, 6, 12, 31, 38, 235, DateTimeKind.Local).AddTicks(5437) });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropColumn(
                 name: "DefaultPrice",
                 table: "Items");

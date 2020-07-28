@@ -6,18 +6,15 @@ namespace IsotopeOrdering.App.Models.Shared {
             RuleFor(x => x.Name)
                 .NotEmpty();
             RuleFor(x => x.State)
-                .MaximumLength(2)
-                .MinimumLength(2)
                 .NotEmpty();
             RuleFor(x => x.City)
                 .NotEmpty();
+            RuleFor(x => x.Country)
+               .NotEmpty();
             RuleFor(x => x.ZipCode)
                 .Must(PropertyValidators.BeValidZipCode);
             RuleFor(x => x.Address1)
                 .NotEmpty();
         }
-
-
     }
-
 }

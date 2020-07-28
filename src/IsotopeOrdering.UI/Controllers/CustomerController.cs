@@ -18,7 +18,7 @@ namespace IsotopeOrdering.UI.Controllers {
 
         [HttpGet]
         [Authorize(Policies.ReviewerPolicy)]
-        public async Task<IActionResult> ManageCustomers() {
+        public async Task<IActionResult> Manage() {
             return View(await _customerManager.GetList());
         }
 

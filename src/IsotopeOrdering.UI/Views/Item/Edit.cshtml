@@ -1,7 +1,7 @@
-﻿
+﻿@model ItemDetailModel
 @{
-    ViewData[ViewDataKeys.Title] = "Edit";
+    ViewData[ViewDataKeys.Title] = "Edit Item";
 }
-
-<h1>Edit</h1>
-
+<form asp-action="@nameof(ItemController.Edit)" asp-controller="Item" method="post">
+    <partial name="_ItemForm" for="@Model" />
+</form>

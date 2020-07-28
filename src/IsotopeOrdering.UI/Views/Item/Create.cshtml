@@ -1,7 +1,7 @@
-﻿
+﻿@model ItemDetailModel
 @{
-    ViewData[ViewDataKeys.Title] = "Create";
+    ViewData[ViewDataKeys.Title] = "Create Item";
 }
-
-<h1>Create</h1>
-
+<form asp-action="@nameof(ItemController.Create)" asp-controller="Item" method="post">
+    <partial name="_ItemForm" for="@Model" />
+</form>

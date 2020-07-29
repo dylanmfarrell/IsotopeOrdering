@@ -137,6 +137,7 @@ $.fn.extend({
         address.Address1 = $el.find('[name$="Address1"]').val();
         address.Address2 = $el.find('[name$="Address2"]').val();
         address.Address3 = $el.find('[name$="Address3"]').val();
+        address.Country = $el.find('[name$="Country"]').val();
         return address;
     },
     setAddress: function (address) {
@@ -148,6 +149,7 @@ $.fn.extend({
         $el.find('[name$="Address1"]').val(address.Address1);
         $el.find('[name$="Address2"]').val(address.Address2);
         $el.find('[name$="Address3"]').val(address.Address3);
+        $el.find('[name$="Country"]').val(address.Country);
     },
     getContact: function () {
         var $el = $(this);

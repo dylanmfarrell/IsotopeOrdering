@@ -108,10 +108,13 @@ namespace IsotopeOrdering.UI.Controllers {
 
         [HttpGet]
         public async Task<IActionResult> Detail(int id) {
-            OrderDetailModel? model = await _orderManager.Get(id);
-            if (model == null) {
+            OrderDetailModel? order = await _orderManager.Get(id);
+            if (order == null) {
                 return NotFound();
             }
+            OrderCompleteDetailModel model = new OrderCompleteDetailModel();
+            model.OrderReview.Order = order;
+            model.Shipments = await _shipmentManager.GetShipmentsForOrder(order.Id);
             return View(model);
         }
 

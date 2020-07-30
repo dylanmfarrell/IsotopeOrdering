@@ -1,6 +1,12 @@
-﻿@model OrderDetailModel
+﻿@inject IConfiguration Configuration
+@model OrderCompleteDetailModel
 @{
     ViewData[ViewDataKeys.Title] = "Order Details";
 }
-<partial name="_OrderDetails" model="Model" />
-
+<partial name="_OrderDetails" model="Model.OrderReview.Order" />
+@foreach (var shipment in Model.Shipments) {
+    <partial name="~/Views/Shipment/_ShipmentDetails.cshtml" model="shipment" />
+}
+@section Scripts{
+    <script type="text/javascript" src="@Configuration["FileUploadUri"]"></script>
+}

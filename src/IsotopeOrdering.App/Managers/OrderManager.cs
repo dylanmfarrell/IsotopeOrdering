@@ -142,7 +142,15 @@ namespace IsotopeOrdering.App.Managers {
 
         public async Task<ApplicationResult> SubmitReview(OrderReviewDetailModel review) {
             await _service.UpdateStatus(review.Order.Id, review.Action);
-            string eventDescription = review.Action == OrderStatus.Approved ? Events.Order.Approved : Events.Order.Denied;
+            string eventDescription = string.Empty;
+            if(review.Action == OrderStatus.Approved) {
+                eventDescription = Events.Order.Approved;
+            }else if (review.Action == OrderStatus.Denied) {
+                eventDescription = Events.Order.Denied;
+            }
+            else if (review.Action == OrderStatus.Complete) {
+                eventDescription = Events.Order.Complete;
+            }
             await _eventService.CreateEvent(EntityEventType.Order, review.Order.Id, eventDescription);
             return new ApplicationResult(eventDescription, true);
         }

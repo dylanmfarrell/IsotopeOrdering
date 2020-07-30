@@ -1,15 +1,4 @@
-﻿$(document).ready(function () {
-    renderUploaders();
-});
-
-function renderUploaders() {
-    var uploaders = $('.document-upload');
-    uploaders.each(function () {
-        $(this).renderFileUpload().init();
-    });
-}
-
-function addCustomerDocument(el) {
+﻿function addCustomerDocument(el) {
     var options = getCollectionAddOptions(el);
     var model = {};
     var expirationDate = $('#Documents_ExpirationDate').val();

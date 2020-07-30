@@ -44,8 +44,8 @@ namespace IsotopeOrdering.App.Models.Details {
         [DisplayName("Quantity (mCi)")]
         public decimal Quantity { get; set; }
         public string? SpecialInstructions { get; set; } = string.Empty;
-        [DisplayName("Price")]
-        public decimal Price => Quantity * ItemConfiguration.Price;
+        [DisplayName("Estimated Price")]
+        public decimal Price => decimal.Round(Quantity * ItemConfiguration.Price, 2);
         public int CustomerId { get; set; }
         public DateTime? RequestedDate { get; set; }
     }

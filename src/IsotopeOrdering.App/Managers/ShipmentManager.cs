@@ -96,5 +96,9 @@ namespace IsotopeOrdering.App.Managers {
             }
             return await _service.GetListForCustomer<ShipmentItemModel>(customer.Id, customer.ParentCustomerId);
         }
+
+        public async Task<List<ShipmentDetailModel>> GetShipmentsForOrder(int id) {
+            return await _service.GetForOrder<ShipmentDetailModel>(id);
+        }
     }
 }

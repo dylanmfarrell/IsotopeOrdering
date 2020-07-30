@@ -1,10 +1,11 @@
-﻿@model OrderCompleteDetailModel
+﻿@inject IConfiguration Configuration
+@model OrderCompleteDetailModel
 @{
     ViewData[ViewDataKeys.Title] = "Complete";
 }
 <partial name="_OrderDetails" model="Model.OrderReview.Order" />
-@foreach(var shipment in Model.Shipments) {
-    <partial name="~/Views/Shipment/_ShipmentDetails.cshtml" model="shipment"/>
+@foreach (var shipment in Model.Shipments) {
+    <partial name="~/Views/Shipment/_ShipmentDetails.cshtml" model="shipment" />
 }
 <div class="card mt-5 p-3">
     <form asp-action="@nameof(OrderController.Complete)" asp-controller="Order" method="post">
@@ -24,3 +25,6 @@
         <partial name="_Prompt" />
     </form>
 </div>
+@section Scripts{
+    <script type="text/javascript" src="@Configuration["FileUploadUri"]"></script>
+}

@@ -1,6 +1,5 @@
 ﻿@model ShipmentDetailModel
 <partial name="_AuditInformation" for="@Model" />
-<input type="hidden" asp-for="Status" />
 <div asp-validation-summary="All" class="alert alert-danger"></div>
 <div class="card">
     <div class="card-header">
@@ -15,19 +14,7 @@
         </div>
         <div class="border rounded p-3 mb-3" id="shipping-information">
             <h6 class="card-subtitle text-muted">Shipping Information</h6>
-            <partial name="_Address" for="Shipping" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }"/>
-        </div>
-        <div class="border rounded mb-3 p-3 mt-2 border-info">
-            <div class="row">
-                <div class="form-group col-sm-12 col-md-6">
-                    <label>Shipping Status</label>
-                    <select asp-for="Status" asp-items="ListUtility.GetShipmentStatuses()" class="form-control form-control-sm"></select>
-                </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label>Shipment Date</label>
-                    <input type="date" class="form-control form-control-sm" asp-for="ShipmentDate" />
-                </div>
-            </div>
+            <partial name="_Address" for="Shipping" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.Readonly , true } }" />
         </div>
         <div class="border rounded p-3 mb-3">
             <h6 class="card-subtitle text-muted">Items To Ship</h6>
@@ -53,9 +40,23 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-6" >
+            <div class="col-sm-12 col-md-6">
                 <div class="border rounded p-3 border-info">
                     <partial name="_Document" for="Document" view-data="new ViewDataDictionary(ViewData) { { ViewDataKeys.UploadModule,UploadModules.ShipmentDocument} }" />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="border rounded mb-3 p-3 mt-2 border-info">
+                    <div class="row">
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label>Shipping Status</label>
+                            <select asp-for="Status" asp-items="ListUtility.GetShipmentStatuses()" class="form-control form-control-sm"></select>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label>Shipment Date</label>
+                            <input type="date" class="form-control form-control-sm" asp-for="ShipmentDate" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

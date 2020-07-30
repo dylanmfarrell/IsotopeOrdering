@@ -68,7 +68,7 @@
                     <div class="card-footer p-0">
                         <div class="btn btn-group col-12 border-0 rounded-0 p-0">
                             <button class="btn btn-primary" type="button" onclick="moveTab('#shipping-tab')"><i class="fas fa-arrow-left"></i> Go back to Shipping Information </button>
-                            <button class="btn btn-info" type="button" onclick="moveTab('#review-tab')">Review Your Order <i class="fas fa-arrow-right"></i></button>
+                            <button class="btn btn-info" type="button" onclick="moveTab('#notes-tab')">Go to Additional Order Information<i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                     </div>
                     <div class="card-footer p-0">
                         <div class="btn btn-group col-12 border-0 rounded-0 p-0">
-                            <button class="btn btn-primary" type="button" onclick="moveTab('#shipping-tab')"><i class="fas fa-arrow-left"></i> Go back to Shipping Information </button>
+                            <button class="btn btn-primary" type="button" onclick="moveTab('#billing-tab')"><i class="fas fa-arrow-left"></i> Go back to Billing Information </button>
                             <button class="btn btn-info" type="button" onclick="moveTab('#review-tab')">Review Your Order <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                 <partial name="_OrderDetails" for="@Model" />
                 <div class="card-footer p-0">
                     <div class="btn btn-group col-12 border-0 rounded-0 p-0">
-                        <button class="btn btn-primary" type="button" onclick="moveTab('#billing-tab')"><i class="fas fa-arrow-left"></i> Go back to Billing Information </button>
+                        <button class="btn btn-primary" type="button" onclick="moveTab('#billing-tab')"><i class="fas fa-arrow-left"></i> Go back to Additional Order Information</button>
                         @if (Model.Id > 0) {
                             <button name="SubmitAction" type="submit" class="btn btn btn-danger" value="@OrderStatus.Cancelled">Cancel Order</button>
                         }

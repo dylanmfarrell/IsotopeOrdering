@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
     renderDatatables();
     hookupModals();
+    renderUploaders();
+
 });
 
 function renderDatatables() {
@@ -9,6 +11,13 @@ function renderDatatables() {
             if ($(this).parents('.table-responsive').hasClass('table-fadein'))
                 $(this).parents('.table-responsive').fadeIn(100);
         }
+    });
+}
+
+function renderUploaders() {
+    var uploaders = $('.document-upload');
+    uploaders.each(function () {
+        $(this).renderFileUpload().init();
     });
 }
 
@@ -21,7 +30,7 @@ function getCollectionAddOptions(el) {
     return options;
 }
 
-function postCollectionAdd(options, model, successCallback,failureCallback) {
+function postCollectionAdd(options, model, successCallback, failureCallback) {
     $.post(options.url, { model }, function (data) {
         if (toggleErrorState(options.context, data)) {
             if (typeof successCallback === 'function') {

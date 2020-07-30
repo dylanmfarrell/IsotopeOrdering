@@ -23,11 +23,13 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpGet]
+        [Authorize(Policies.CustomerPolicy)]
         public async Task<IActionResult> MyTeam() {
             return View(await _customerManager.GetList());
         }
 
         [HttpGet]
+        [Authorize(Policies.CustomerPolicy)]
         public async Task<IActionResult> MyProfile() {
             CustomerItemModel? customer = await _customerManager.GetCurrentCustomer();
             if (customer == null) {
@@ -41,6 +43,7 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [HttpPost]
+        [Authorize(Policies.CustomerPolicy)]
         public async Task<IActionResult> MyProfile(CustomerDetailModel model) {
             if (ModelState.IsValid) {
                 ApplicationResult result = await _customerManager.Edit(model);

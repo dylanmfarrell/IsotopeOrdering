@@ -60,6 +60,7 @@ namespace IsotopeOrdering.UI.Controllers {
                 SetApplicationResult(result);
                 return RedirectToAction(nameof(HomeController.Confirmation), "Home");
             }
+            model.AllowSignatureFromCustomerAdmin = true;
             return View(model);
         }
 

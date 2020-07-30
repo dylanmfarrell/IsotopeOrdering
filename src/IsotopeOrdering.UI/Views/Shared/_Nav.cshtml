@@ -8,7 +8,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse">
-            @if (await AuthorizationService.AuthorizeAsync(User,Policies.PrivatePolicy)) {
+            @if (await AuthorizationService.AuthorizeAsync(User, Policies.PrivatePolicy)) {
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">
@@ -16,12 +16,14 @@
                             Home
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Customer" asp-action="@nameof(CustomerController.MyProfile)">
-                            <i class="fas fa-user"></i>
-                            My Profile
-                        </a>
-                    </li>
+                    @if (await AuthorizationService.AuthorizeAsync(User, Policies.CustomerPolicy)) {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Customer" asp-action="@nameof(CustomerController.MyProfile)">
+                                <i class="fas fa-user"></i>
+                                My Profile
+                            </a>
+                        </li>
+                    }
                     @if (await AuthorizationService.AuthorizeAsync(User, Policies.OrderPolicy)) {
                         <partial name="_NavOrder" />
                         <partial name="_NavShipment" />

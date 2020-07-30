@@ -29,6 +29,8 @@ namespace IsotopeOrdering.Infrastructure {
             services.Configure<OpenIdOptions>(configuration.GetSection("OpenId"));
             services.AddOidcAuthentication(oidcOptions);
 
+            services.Configure<DevelopmentOptions>(configuration.GetSection("DevelopmentSettings"));
+
             services.Configure<EmailOptions>(configuration.GetSection("EmailSettings"));
             services.AddSingleton<IEmailService, EmailService>();
 

@@ -55,5 +55,9 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
         public async Task<List<T>> GetRecipients<T>(int id) where T : class {
             return await _mapper.ProjectTo<T>(_context.Orders.Include(x => x.Customer).Where(x => x.Id == id).Select(x => x.Customer)).ToListAsync();
         }
+
+        public async Task<List<T>> GetList<T>(OrderStatus status) {
+            return await _mapper.ProjectTo<T>(_context.Orders.List().Where(x => x.Status == status)).ToListAsync();
+        }
     }
 }

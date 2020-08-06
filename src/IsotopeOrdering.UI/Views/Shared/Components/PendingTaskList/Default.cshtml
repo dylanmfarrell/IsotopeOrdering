@@ -1,0 +1,27 @@
+﻿@model PendingTaskListModel
+
+@if (Model.HasPendingTasks) {
+    <div class="card">
+        <div class="card-header">
+            Pending Tasks
+        </div>
+        <div class="card-body">
+            <div class="list-group">
+                @foreach (PendingTaskModel pendingTask in Model.Tasks) {
+                    <partial name="_PendingTask" model="pendingTask" />
+                }
+            </div>
+        </div>
+    </div>
+
+}
+else {
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container" style="text-align:center;">
+            <h1 class="display-4">
+                <i class="fa fa-star float-left text-success" aria-hidden="true" style="font-size: 6rem;"></i>
+                You have no pending tasks
+            </h1>
+        </div>
+    </div>
+}

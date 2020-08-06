@@ -7,5 +7,6 @@ namespace IsotopeOrdering.App.Models.Items {
         public CustomerFormStatus Status { get; set; }
         public FormType Type { get; set; }
         public string Name { get; set; } = null!;
+        public string CustomerName { get; set; } = string.Empty;
     }
 }

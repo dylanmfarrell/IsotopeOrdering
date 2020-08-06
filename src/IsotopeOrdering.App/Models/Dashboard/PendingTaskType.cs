@@ -1,8 +1,8 @@
 ﻿namespace IsotopeOrdering.App.Models.Dashboard {
     public enum PendingTaskType {
-        Form = 0,
-        Order = 1,
-        Shipping = 2
-
+        FormAdminApproval = 0,
+        OrderAdminApproval = 1,
+        OrderCustomerApproval = 2,
+        ShippingAdminApproval = 3
     }
 }

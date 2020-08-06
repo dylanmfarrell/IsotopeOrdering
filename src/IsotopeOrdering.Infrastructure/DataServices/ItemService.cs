@@ -28,17 +28,12 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             return await _mapper.ProjectTo<T>(_context.Items).ToListAsync();
         }
 
-        public async Task<List<T>> GetListForInitiation<T>() {
-            return await _mapper.ProjectTo<T>(_context.Items.Where(x => !x.Unavailable)).ToListAsync();
-        }
-
         public async Task<List<T>> GetListForOrder<T>(int customerId, int? parentCustomerId) {
             List<Item> items = await _context.Items
                     .IncludeFilter(x => x.ItemConfigurations.Where(x => x.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
-                .Where(x => !x.Unavailable && x.ItemConfigurations.Any())
                 .AsNoTracking()
                 .ToListAsync();
-            return _mapper.Map<List<T>>(items);
+            return _mapper.Map<List<T>>(items.Where(x=>x.ItemConfigurations.Any()));
         }
     }
 }

@@ -18,6 +18,7 @@ namespace IsotopeOrdering.Domain.Interfaces {
         Task UpdateCustomerFormStatus(int customerFormId, CustomerFormStatus status);
         Task<List<T>> GetCustomerForms<T>();
         Task<List<T>> GetCustomerForms<T>(int customerId);
+        Task<List<T>> GetCustomerForms<T>(CustomerFormStatus status);
         Task<T?> GetCustomerForm<T>(int customerId, int customerFormId) where T : class;
         Task<T?> GetCustomerForm<T>(int customerFormId) where T : class;
         /// <summary>
@@ -28,5 +29,6 @@ namespace IsotopeOrdering.Domain.Interfaces {
         /// <returns></returns>
         Task<T?> GetCustomerForm<T>(Guid formIdentifier) where T : class;
         Task<CustomerFormStatus> GetInitiationFormStatus(int customerId);
+
     }
 }

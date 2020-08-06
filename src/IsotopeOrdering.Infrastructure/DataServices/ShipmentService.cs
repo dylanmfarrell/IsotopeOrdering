@@ -52,5 +52,9 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
             Customer customer = shipment.Items.First().OrderItem.Order.Customer;
             return new List<T>() { _mapper.Map<T>(customer) };
         }
+
+        public async Task<List<T>> GetList<T>(ShipmentStatus status) {
+            return await _mapper.ProjectTo<T>(_context.Shipments.Details().Where(x => x.Status == status)).ToListAsync();
+        }
     }
 }

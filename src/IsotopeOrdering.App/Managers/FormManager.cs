@@ -52,7 +52,7 @@ namespace IsotopeOrdering.App.Managers {
         public async Task<FormDetailModel> GetInitiationForm(CustomerItemModel customer) {
             FormDetailModel formDetailModel = await _service.Get<FormDetailModel>(FormType.Initiation);
             formDetailModel.InitiationModel = new FormInitiationDetailModel();
-            formDetailModel.InitiationModel.Items = await _itemService.GetListForInitiation<FormInitiationItemModel>();
+            formDetailModel.InitiationModel.Items = await _itemService.GetList<FormInitiationItemModel>();
             formDetailModel.Customer = customer;
             return formDetailModel;
         }

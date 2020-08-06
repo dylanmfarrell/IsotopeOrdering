@@ -1,0 +1,17 @@
+﻿@model PendingTaskModel
+@{
+    string actionUrl = string.Empty;
+    if (Model.Type == PendingTaskType.FormAdminApproval) {
+        actionUrl = Url.Action(nameof(FormController.InitiationForm), "Form", new { customerFormId = Model.Id });
+    }
+    else if (Model.Type == PendingTaskType.OrderAdminApproval) {
+        actionUrl = Url.Action(nameof(OrderController.Review), "Order", new { id = Model.Id });
+    }
+    else if (Model.Type == PendingTaskType.OrderCustomerApproval) {
+        actionUrl = Url.Action(nameof(OrderController.ReviewAmendment), "Order", new { id = Model.Id });
+    }
+    else if (Model.Type == PendingTaskType.ShippingAdminApproval) {
+        actionUrl = Url.Action(nameof(ShipmentController.Edit), "Shipment", new { id = Model.Id });
+    }
+}
+<a href="@actionUrl" class="list-group-item list-group-item-action">@Model.Description</a>

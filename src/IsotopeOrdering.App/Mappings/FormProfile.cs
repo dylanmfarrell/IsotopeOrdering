@@ -46,6 +46,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Form.Name))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Status))
                 .ForMember(x => x.Type, opt => opt.MapFrom(x => x.Form.Type))
+                .ForMember(x => x.CustomerName, opt => opt.MapFrom(x => x.Customer.Contact.FirstName + " " + x.Customer.Contact.LastName))
                 .ReverseMap();
         }
     }

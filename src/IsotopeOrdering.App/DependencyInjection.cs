@@ -66,6 +66,7 @@ namespace IsotopeOrdering.App {
             services.AddTransient<IEventManager, EventManager>();
             services.AddTransient<ITemplateManager, TemplateManager>();
             services.AddTransient<INotificationManager, NotificationManager>();
+            services.AddTransient<IDashboardManager, DashboardManager>();
             return services;
         }
     }

@@ -1,27 +1,21 @@
 ﻿@model FormInitiationItemModel
+<input type="hidden" asp-for="@Model.Item.Id">
+<input type="hidden" asp-for="@Model.Item.Name">
+<input type="hidden" asp-for="@Model.Item.Target">
+<input type="hidden" asp-for="@Model.Item.Reaction">
+<input type="hidden" asp-for="@Model.Item.FinalComposition">
+<input type="hidden" asp-for="@Model.Item.SpecificActivity">
+<input type="hidden" asp-for="@Model.Item.QualityControlAnalysis">
+<input type="hidden" asp-for="@Model.Item.DefaultMaxQuantity">
+<input type="hidden" asp-for="@Model.Item.DefaultMinQuantity">
+<input type="hidden" asp-for="@Model.Item.DefaultPrice">
 @if (ViewData.IsReadonly()) {
     if (Model.IsSelected) {
         <li class="list-group-item p-2">
             <div class="custom-control custom-checkbox">
-                <input type="hidden" asp-for="@Model.Item.Id">
-                <input type="hidden" asp-for="@Model.Item.Name">
-                <input type="hidden" asp-for="@Model.Item.Target">
-                <input type="hidden" asp-for="@Model.Item.Reaction">
-                <input type="hidden" asp-for="@Model.Item.FinalComposition">
-                <input type="hidden" asp-for="@Model.Item.SpecificActivity">
-                <input type="hidden" asp-for="@Model.Item.QualityControlAnalysis">
                 <input type="hidden" asp-for="@Model.IsSelected" />
                 <label class="font-weight-bold" style="font-size:15px;">@Model.Item.Name</label>
-                <dl class="row cursor-pointer mb-0">
-                    <dt class="col-sm-3">Target Material</dt>
-                    <dd class="col-sm-9">@Model.Item.Target</dd>
-                    <dt class="col-sm-3">Final Composition</dt>
-                    <dd class="col-sm-9">@Model.Item.FinalComposition</dd>
-                    <dt class="col-sm-3">Specific Activity</dt>
-                    <dd class="col-sm-9">@Model.Item.SpecificActivity</dd>
-                    <dt class="col-sm-3">Quality Control Analysis</dt>
-                    <dd class="col-sm-9">@Model.Item.QualityControlAnalysis</dd>
-                </dl>
+                <partial name="_ItemSelectDetail" model="Model.Item" />
             </div>
         </li>
     }
@@ -30,43 +24,19 @@ else {
     if (Model.Item.Unavailable) {
         <li class="list-group-item disabled p-2">
             <div class="custom-control custom-checkbox">
-                <label class="cursor-pointer font-weight-bold custom-control-label" asp-for="@Model.IsSelected" style="font-size:15px;">@Model.Item.Name</label>
+                <input type="hidden" asp-for="@Model.IsSelected" />
+                <label class="cursor-pointer font-weight-bold custom-control-label" style="font-size:15px;">@Model.Item.Name</label>
                 <i>Currently Unavailable</i>
-                <dl class="row cursor-pointer mb-0">
-                    <dt class="col-sm-3">Target Material</dt>
-                    <dd class="col-sm-9">@Model.Item.Target</dd>
-                    <dt class="col-sm-3">Final Composition</dt>
-                    <dd class="col-sm-9">@Model.Item.FinalComposition</dd>
-                    <dt class="col-sm-3">Specific Activity</dt>
-                    <dd class="col-sm-9">@Model.Item.SpecificActivity</dd>
-                    <dt class="col-sm-3">Quality Control Analysis</dt>
-                    <dd class="col-sm-9">@Model.Item.QualityControlAnalysis</dd>
-                </dl>
+                <partial name="_ItemSelectDetail" model="Model.Item" />
             </div>
         </li>
     }
     else {
         <li class="list-group-item p-2">
             <div class="custom-control custom-checkbox">
-                <input type="hidden" asp-for="@Model.Item.Id">
-                <input type="hidden" asp-for="@Model.Item.Name">
-                <input type="hidden" asp-for="@Model.Item.Target">
-                <input type="hidden" asp-for="@Model.Item.Reaction">
-                <input type="hidden" asp-for="@Model.Item.FinalComposition">
-                <input type="hidden" asp-for="@Model.Item.SpecificActivity">
-                <input type="hidden" asp-for="@Model.Item.QualityControlAnalysis">
                 <input class="custom-control-input" asp-for="@Model.IsSelected" type="checkbox" />
                 <label class="cursor-pointer font-weight-bold custom-control-label" asp-for="@Model.IsSelected" style="font-size:15px;">@Model.Item.Name</label>
-                <dl class="row cursor-pointer mb-0">
-                    <dt class="col-sm-3">Target Material</dt>
-                    <dd class="col-sm-9">@Model.Item.Target</dd>
-                    <dt class="col-sm-3">Final Composition</dt>
-                    <dd class="col-sm-9">@Model.Item.FinalComposition</dd>
-                    <dt class="col-sm-3">Specific Activity</dt>
-                    <dd class="col-sm-9">@Model.Item.SpecificActivity</dd>
-                    <dt class="col-sm-3">Quality Control Analysis</dt>
-                    <dd class="col-sm-9">@Model.Item.QualityControlAnalysis</dd>
-                </dl>
+                <partial name="_ItemSelectDetail" model="Model.Item" />
             </div>
         </li>
     }

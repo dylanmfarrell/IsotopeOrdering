@@ -3,7 +3,7 @@
 @{
     ViewData[ViewDataKeys.Title] = "Home Page";
 }
-@await Component.InvokeAsync("PendingTaskList")
+
 @if (!await AuthorizationService.AuthorizeAsync(Policies.CustomerPolicy)) {
     if (Model.ShowInitiationMessage) {
         <partial name="_InitiationMessage" />
@@ -13,5 +13,6 @@
     }
 }
 else {
+    @await Component.InvokeAsync("PendingTaskList")
     <partial name="_SystemInstructions" />
 }

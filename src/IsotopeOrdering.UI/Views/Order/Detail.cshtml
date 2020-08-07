@@ -3,10 +3,18 @@
 @{
     ViewData[ViewDataKeys.Title] = "Order Details";
 }
-<partial name="_OrderDetails" model="Model.OrderReview.Order" />
-@foreach (var shipment in Model.Shipments) {
-    <partial name="~/Views/Shipment/_ShipmentDetails.cshtml" model="shipment" />
-}
+    <div class="row">
+        <div class="col-md-10 col-sm-12">
+            <partial name="_OrderDetails" model="Model.OrderReview.Order" />
+
+            @foreach (var shipment in Model.Shipments) {
+                <partial name="~/Views/Shipment/_ShipmentDetails.cshtml" model="shipment" />
+            }
+        </div>
+        <div class="col-md-2 col-sm-12">
+            <partial name="_OrderSummary" model="Model" />
+        </div>
+    </div>
 @section Scripts{
     <script type="text/javascript" src="@Configuration["FileUploadUri"]"></script>
 }

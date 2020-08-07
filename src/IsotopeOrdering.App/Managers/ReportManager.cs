@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Managers {
     public class ReportManager : IReportManager {
-        public Task<DataTable> GetBillingReport() {
-            throw new NotImplementedException();
+        public async Task<DataTable> GetBillingReport(DateTime startDate, DateTime endDate) {
+            return new DataTable();
         }
     }
 }

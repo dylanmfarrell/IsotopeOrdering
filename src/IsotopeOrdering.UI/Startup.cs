@@ -29,6 +29,9 @@ namespace IsotopeOrdering.UI {
             //Add db context, data services, api services, oidc authentication
             services.AddInfrastructure(_configuration, _environment.IsDevelopment());
 
+
+
+
             //Add logical managers, policies, automapper mappings
             services.AddApplication(_configuration);
 

@@ -11,12 +11,17 @@
     <PackageReference Include="FluentValidation" Version="8.6.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
-    <PackageReference Include="MIR.Core.Domain" Version="3.1.4" />
     <PackageReference Include="RazorLight" Version="2.0.0-beta7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\IsotopeOrdering.Domain\IsotopeOrdering.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MIR.Core.Domain">
+      <HintPath>..\..\libs\MIR.Core.Domain.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

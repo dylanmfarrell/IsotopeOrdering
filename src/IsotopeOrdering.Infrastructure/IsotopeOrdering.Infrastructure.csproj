@@ -16,21 +16,36 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Appman.Core.Service" Version="1.0.2" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="IdentityModel" Version="5.0.0" />
     <PackageReference Include="MailKit" Version="2.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
-    <PackageReference Include="MIR.Core.Data" Version="3.1.3" />
-    <PackageReference Include="MIR.Core.Domain" Version="3.1.4" />
-    <PackageReference Include="MIR.Core.Mvc" Version="3.1.8" />
     <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="3.0.50" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\IsotopeOrdering.Domain\IsotopeOrdering.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MIR.Core.Domain">
+      <HintPath>..\..\libs\MIR.Core.Domain.dll</HintPath>
+    </Reference>
+
+    <Reference Include="MIR.Core.Data">
+      <HintPath>..\..\libs\MIR.Core.Data.dll</HintPath>
+    </Reference>
+
+    <Reference Include="MIR.Core.Mvc">
+      <HintPath>..\..\libs\MIR.Core.Mvc.dll</HintPath>
+    </Reference>
+
+    <Reference Include="Appman.Core.Service">
+      <HintPath>..\..\libs\Appman.Core.Service.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

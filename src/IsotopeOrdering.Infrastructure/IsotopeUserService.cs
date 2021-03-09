@@ -18,7 +18,7 @@ namespace IsotopeOrdering.Infrastructure {
     public class IsotopeUser : IUser {
         private readonly ClaimsPrincipal _claimsPrincipal;
 
-        public IsotopeUser(ClaimsPrincipal claimsPrincipal) {
+        public IsotopeUser(ClaimsPrincipal claimsPrincipal) { 
             _claimsPrincipal = claimsPrincipal;
         }
 

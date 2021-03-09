@@ -9,6 +9,6 @@ namespace IsotopeOrdering.Infrastructure.Services {
         public DevelopmentUserService(IOptionsMonitor<DevelopmentOptions> options) {
             _options = options;
         }
-        public IUser User => new DevelopmentUser(_options.CurrentValue);
+        public IUser User => new DevelopmentUser(_options.CurrentValue); 
     }
 }

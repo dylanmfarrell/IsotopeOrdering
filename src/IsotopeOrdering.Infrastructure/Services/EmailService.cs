@@ -21,7 +21,7 @@ namespace IsotopeOrdering.Infrastructure.Services {
             return (await Send(new List<Notification>() { notification })).First().Value;
         }
 
-        public async Task<Dictionary<int, bool>> Send(List<Notification> notifications) {
+        public async Task<Dictionary<int, bool>> Send(List<Notification> notifications) { 
             Dictionary<int, bool> results = new Dictionary<int, bool>();
             using SmtpClient client = new SmtpClient { ServerCertificateValidationCallback = (s, c, h, e) => true };
             client.AuthenticationMechanisms.Remove("XOAUTH2");

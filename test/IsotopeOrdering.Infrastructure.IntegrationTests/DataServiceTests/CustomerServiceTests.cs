@@ -13,7 +13,7 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
         public async void Get_Customer_Mapping_Correct(Customer customer, NotificationConfiguration configuration) {
             string instanceName = Guid.NewGuid().ToString();
             using (var context = TestUtilities.GetDbContext(instanceName)) {
-                customer.Subscriptions.Add(new NotificationSubscription() {
+                customer.Subscriptions.Add(new NotificationSubscription() { 
                     NotificationConfiguration = configuration,
                     IsDeleted = false
                 });

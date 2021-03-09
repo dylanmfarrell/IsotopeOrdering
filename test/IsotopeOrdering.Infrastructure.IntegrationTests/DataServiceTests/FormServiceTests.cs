@@ -14,7 +14,7 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
             form.Type = FormType.Initiation;
             string instanceName = Guid.NewGuid().ToString();
             using (var context = TestUtilities.GetDbContext(instanceName)) {
-                context.Forms.Add(form);
+                context.Forms.Add(form); 
                 await context.SaveChangesAsync();
             }
             using (var context = TestUtilities.GetDbContext(instanceName)) {

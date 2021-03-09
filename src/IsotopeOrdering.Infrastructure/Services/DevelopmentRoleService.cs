@@ -10,6 +10,6 @@ namespace IsotopeOrdering.Infrastructure.Services {
         public DevelopmentRoleService(IOptionsMonitor<DevelopmentOptions> options) {
             _options = options;
         }
-        public IEnumerable<string> UserRoles => new string[] { _options.CurrentValue.DevelopmentRole.ToString() };
+        public IEnumerable<string> UserRoles => new string[] { _options.CurrentValue.DevelopmentRole.ToString() }; 
     }
 }

@@ -16,7 +16,7 @@ namespace IsotopeOrdering.App.Mappings {
                 .ForMember(x => x.SubscriptionConfiguration, opt => opt.Ignore())
                 .ForMember(x => x.Subscriptions, opt => opt.MapFrom(x => x.Subscriptions));
 
-            CreateMap<CustomerDetailModel, Customer>()
+            CreateMap<CustomerDetailModel, Customer>() 
                 .ForMember(x => x.Forms, opt => opt.Ignore())
                 .ForMember(x => x.Subscriptions, opt => opt.MapFrom(x => x.SubscriptionConfiguration.Subscriptions))
                 .ForMember(x => x.ParentCustomer, opt => opt.Ignore());

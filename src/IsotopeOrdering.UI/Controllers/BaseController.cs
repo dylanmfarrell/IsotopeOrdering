@@ -21,7 +21,7 @@ namespace IsotopeOrdering.UI.Controllers {
 
         protected IActionResult JsonValidationErrorResult(ModelStateDictionary modelState) {
             IEnumerable<ModelStateEntry> entries = modelState.Values.Where(x => x.ValidationState != ModelValidationState.Valid);
-            string message = string.Join(Environment.NewLine, entries.SelectMany(x => x.Errors).Select(x => x.ErrorMessage));
+            string message = string.Join(Environment.NewLine, entries.SelectMany(x => x.Errors).Select(x => x.ErrorMessage)); 
             ApplicationResult result = new ApplicationResult(message, false);
             return Json(result);
         }

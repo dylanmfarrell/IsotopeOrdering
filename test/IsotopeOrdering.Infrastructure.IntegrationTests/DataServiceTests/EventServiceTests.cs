@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿ using AutoMapper;
 using IsotopeOrdering.App.Models.Items;
 using IsotopeOrdering.Domain.Entities;
 using IsotopeOrdering.Domain.Enums;

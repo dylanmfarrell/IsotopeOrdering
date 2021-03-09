@@ -14,7 +14,7 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests {
             return new Mapper(config);
         }
 
-        public static IUserService GetUserService(string userName) {
+        public static IUserService GetUserService(string userName) { 
             Mock<IUser> mockUser = new Mock<IUser>();
             mockUser.SetupGet(x => x.UserName).Returns(userName);
             mockUser.SetupGet(x => x.EducationId).Returns(userName);

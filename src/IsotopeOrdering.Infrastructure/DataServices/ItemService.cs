@@ -33,7 +33,7 @@ namespace IsotopeOrdering.Infrastructure.DataServices {
                     .IncludeFilter(x => x.ItemConfigurations.Where(x => x.CustomerId == parentCustomerId.GetValueOrDefault(customerId)))
                 .AsNoTracking()
                 .ToListAsync();
-            return _mapper.Map<List<T>>(items.Where(x=>x.ItemConfigurations.Any()));
+            return _mapper.Map<List<T>>(items.Where(x => x.ItemConfigurations.Any()));
         }
     }
 }

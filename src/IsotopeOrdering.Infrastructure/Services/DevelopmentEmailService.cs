@@ -10,7 +10,7 @@ namespace IsotopeOrdering.Infrastructure.Services {
         }
 
         public async Task<Dictionary<int, bool>> Send(List<Notification> notifications) {
-            return await Task.FromResult(new Dictionary<int, bool>());
+            return await Task.FromResult(new Dictionary<int, bool>()); 
         }
     }
 }

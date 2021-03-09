@@ -25,7 +25,7 @@ namespace IsotopeOrdering.UI.Controllers {
             IShipmentManager shipmentManager) {
             _orderManager = orderManager;
             _customerManager = customerManager;
-            _itemManager = itemManager;
+            _itemManager = itemManager; 
             _authorizationService = authorizationService;
             _shipmentManager = shipmentManager;
         }

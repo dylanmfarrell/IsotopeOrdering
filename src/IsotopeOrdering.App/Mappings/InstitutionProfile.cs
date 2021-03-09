@@ -19,6 +19,6 @@ namespace IsotopeOrdering.App.Mappings {
             CreateMap<CustomerInstitution, OrderAddressDetailModel>()
                 .ForMember(x => x.Address, opt => opt.MapFrom(x => x.Institution.Address))
                 .ForMember(x => x.Type, opt => opt.Ignore());
-        }
+        } 
     }
 }

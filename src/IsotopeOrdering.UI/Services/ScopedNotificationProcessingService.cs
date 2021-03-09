@@ -24,7 +24,7 @@ namespace IsotopeOrdering.UI.Services {
                 _logger.LogInformation("Processed {notificationsProcessed} events/notifications.Sent {emailsSent} notifications.", notificationsProcessed, notificationSent);
 
                 await Task.Delay(_taskIntervalSeconds * 1000, stoppingToken);
-            }
+            } 
         }
     }
 }

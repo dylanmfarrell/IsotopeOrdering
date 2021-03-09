@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace IsotopeOrdering.App.Managers {
     public class ItemManager : IItemManager {
         private readonly ILogger<ItemManager> _logger;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper; 
         private readonly IItemService _service;
 
         public ItemManager(ILogger<ItemManager> logger, IMapper mapper, IItemService service) {

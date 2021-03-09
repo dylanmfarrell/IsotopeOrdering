@@ -15,7 +15,7 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
             }
             using (var context = TestUtilities.GetDbContext(instanceName, customer.UserId)) {
                 InstitutionService service = new InstitutionService(context, TestUtilities.GetMapper());
-                InstitutionItemModel? result = await service.GetInstitutionForCustomer<InstitutionItemModel>(customer.Id);
+                InstitutionItemModel? result = await service.GetInstitutionForCustomer<InstitutionItemModel>(customer.Id); 
                 Assert.NotNull(result);
             }
         }

@@ -131,8 +131,7 @@ namespace IsotopeOrdering.App.Managers {
         }
 
         private async Task<List<RecipientDto>> GetRecipientsForEvent(EntityEvent entityEvent) {
-            return entityEvent.Type switch
-            {
+            return entityEvent.Type switch {
                 EntityEventType.Customer => await _customerService.GetRecipients<RecipientDto>(entityEvent.EntityId),
                 EntityEventType.Order => await _orderService.GetRecipients<RecipientDto>(entityEvent.EntityId),
                 EntityEventType.Shipping => await _shipmentService.GetRecipients<RecipientDto>(entityEvent.EntityId),

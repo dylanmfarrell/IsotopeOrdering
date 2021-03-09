@@ -14,7 +14,7 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests.DataServiceTests {
             item.Unavailable = false;
             item.ItemConfigurations.Clear();
             customer1.ItemConfigurations = new List<ItemConfiguration>() {
-                new ItemConfiguration() {
+                new ItemConfiguration() { 
                      Item = item,
                      Price = 1,
                      MinimumAmount = 1,

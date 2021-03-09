@@ -14,7 +14,7 @@ namespace IsotopeOrdering.Infrastructure {
             yield return new Form() {
                 Id = 1,
                 Type = FormType.Initiation,
-                Name = "Material Transfer Agreement",
+                Name = "Material Transfer Agreement", 
                 CreatedBy = _systemUser,
                 UpdatedBy = _systemUser,
                 CreatedDate = _now,

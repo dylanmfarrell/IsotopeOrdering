@@ -14,7 +14,7 @@ namespace IsotopeOrdering.Infrastructure.Services {
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync() {
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Name, "username", "devauth"));
-            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims, Scheme.Name));
+            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims, Scheme.Name)); 
             return await Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(claimsPrincipal, Scheme.Name)));
         }
     }

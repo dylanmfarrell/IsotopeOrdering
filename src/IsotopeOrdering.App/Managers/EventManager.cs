@@ -10,7 +10,7 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IEventService _eventService;
 
         public EventManager(IEventService eventService) {
-            _eventService = eventService;
+            _eventService = eventService; 
         }
 
         public async Task CreateEvent(EntityEventType type, int id, string eventDescription) {

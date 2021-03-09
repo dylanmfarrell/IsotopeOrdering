@@ -1,12 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
-namespace IsotopeOrdering.Infrastructure.Migrations
-{
-    public partial class UpdateDocumentColumnsToNullableNameAndDetails : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace IsotopeOrdering.Infrastructure.Migrations {
+    public partial class UpdateDocumentColumnsToNullableNameAndDetails : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.UpdateData(
                 table: "Forms",
                 keyColumn: "Id",
@@ -309,8 +306,7 @@ namespace IsotopeOrdering.Infrastructure.Migrations
                 values: new object[] { new DateTime(2020, 7, 30, 10, 6, 53, 741, DateTimeKind.Local).AddTicks(9440), new DateTime(2020, 7, 30, 10, 6, 53, 741, DateTimeKind.Local).AddTicks(9440) });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.UpdateData(
                 table: "Forms",
                 keyColumn: "Id",

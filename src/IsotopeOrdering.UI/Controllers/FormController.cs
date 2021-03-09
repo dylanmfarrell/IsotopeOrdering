@@ -21,7 +21,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [HttpGet]
         [Authorize(Policies.PrivatePolicy)]
         public async Task<IActionResult> InitiationForm() {
-            CustomerItemModel? customer = await _customerManager.GetCurrentCustomer();
+            CustomerItemModel? customer = await _customerManager.GetCurrentCustomer(); 
             if (customer == null) {
                 return NotFound();
             }

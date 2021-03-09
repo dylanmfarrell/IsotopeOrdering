@@ -22,7 +22,7 @@ namespace IsotopeOrdering.UI.Controllers {
         }
 
         [Authorize(Policies.PrivatePolicy)]
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Index() { 
             HomeViewModel model = new HomeViewModel();
             model.Customer = await _customerManager.InitializeCustomerForCurrentUser();
             model.FormStatus = await _formManager.GetCustomerInitiationFormStatus(model.Customer.Id);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Managers {
     public class DashboardManager : IDashboardManager {
-        private readonly IIsotopeOrderingAuthorizationService _authorization;
+        private readonly IIsotopeOrderingAuthorizationService _authorization; 
         private readonly IFormService _formService;
         private readonly IOrderService _orderService;
         private readonly IShipmentService _shipmentService;

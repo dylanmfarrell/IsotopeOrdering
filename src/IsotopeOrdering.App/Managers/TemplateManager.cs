@@ -12,7 +12,7 @@ namespace IsotopeOrdering.App.Managers {
             string basePath = Path.Combine(AppDomain.CurrentDomain!.BaseDirectory!, templateTypePath);
             var engine = new RazorLightEngineBuilder()
                 .UseFileSystemProject(basePath)
-                .UseMemoryCachingProvider()
+                .UseMemoryCachingProvider() 
                 .Build();
             return await engine.CompileRenderAsync(templatePath, model);
         }

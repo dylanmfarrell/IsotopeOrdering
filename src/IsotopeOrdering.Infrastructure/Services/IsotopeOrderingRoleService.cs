@@ -14,7 +14,7 @@ namespace IsotopeOrdering.Infrastructure.Services {
         private readonly IMemoryCache _cache;
         private readonly IOptions<RoleServiceOptions> _options;
 
-        public IsotopeOrderingRoleService(IAppManCoreService appmanService, IUserService userService, IMemoryCache cache, IOptions<RoleServiceOptions> options) {
+        public IsotopeOrderingRoleService(IAppManCoreService appmanService, IUserService userService, IMemoryCache cache, IOptions<RoleServiceOptions> options) { 
             _service = appmanService;
             _userService = userService;
             _cache = cache;

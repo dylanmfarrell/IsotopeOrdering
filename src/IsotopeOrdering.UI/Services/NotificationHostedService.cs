@@ -22,7 +22,7 @@ namespace IsotopeOrdering.UI.Services {
 
         public override async Task StopAsync(CancellationToken cancellationToken) {
             _logger.LogInformation("Notification service is stopping");
-            await Task.CompletedTask;
+            await Task.CompletedTask; 
         }
 
         private async Task DoWork(CancellationToken stoppingToken) {

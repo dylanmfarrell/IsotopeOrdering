@@ -10,7 +10,7 @@ namespace IsotopeOrdering.Infrastructure.Services {
             _options = options;
         }
 
-        public ClaimsPrincipal ClaimsPrincipal => new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, "username", "devauth") }));
+        public ClaimsPrincipal ClaimsPrincipal => new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, "username", "devauth") })); 
 
         public string UserName => _options.UserName;
 

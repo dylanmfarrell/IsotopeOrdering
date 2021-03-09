@@ -20,7 +20,7 @@ namespace IsotopeOrdering.UI.Controllers {
         [Authorize(Policies.ReviewerPolicy)]
         public async Task<IActionResult> Manage() {
             return View(await _customerManager.GetList());
-        }
+        } 
 
         [HttpGet]
         [Authorize(Policies.CustomerPolicy)]

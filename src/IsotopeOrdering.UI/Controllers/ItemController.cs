@@ -23,7 +23,7 @@ namespace IsotopeOrdering.UI.Controllers {
 
 
         [HttpGet]
-        public async Task<IActionResult> Create() {
+        public async Task<IActionResult> Create() { 
             return View(await Task.FromResult(new ItemDetailModel()));
         }
 

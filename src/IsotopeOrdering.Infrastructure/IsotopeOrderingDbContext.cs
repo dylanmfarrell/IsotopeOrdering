@@ -17,7 +17,7 @@ namespace IsotopeOrdering.Infrastructure {
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
-        }
+        } 
 
         public DbSet<Customer> Customers { get; set; } = null!;
         public DbSet<CustomerAddress> CustomerAddresses { get; set; } = null!;

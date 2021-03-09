@@ -17,7 +17,7 @@ namespace IsotopeOrdering.Infrastructure {
         }
 
         internal static IQueryable<Customer> Search(this IQueryable<Customer> customers, string search) {
-            return customers.Where(x => x.Status == CustomerStatus.Initiated &&
+            return customers.Where(x => x.Status == CustomerStatus.Initiated && 
             (x.Contact.FirstName.ToLower().Contains(search.ToLower()) || x.Contact.LastName!.ToLower().Contains(search.ToLower())));
         }
 

@@ -13,7 +13,7 @@ namespace IsotopeOrdering.Infrastructure.IntegrationTests {
             f.Customize(new AutoMoqCustomization { ConfigureMembers = true });
             return f;
         }
-
+         
         public AutoMoqDataAttribute() : base(FixtureFactory) { }
     }
 }

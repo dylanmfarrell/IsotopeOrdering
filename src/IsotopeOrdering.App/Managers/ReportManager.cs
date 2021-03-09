@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IsotopeOrdering.App.Managers {
     public class ReportManager : IReportManager {
-        public async Task<DataTable> GetBillingReport(DateTime startDate, DateTime endDate) {
+        public async Task<DataTable> GetBillingReport(DateTime startDate, DateTime endDate) { 
             return new DataTable();
         }
     }

@@ -19,7 +19,7 @@ namespace IsotopeOrdering.App.Managers {
         private readonly IShipmentService _service;
         private readonly IMapper _mapper;
         private readonly ICustomerService _customerService;
-        private readonly IEventManager _eventManager;
+        private readonly IEventManager _eventManager; 
         private readonly IIsotopeOrderingAuthorizationService _authorizationService;
 
         public ShipmentManager(

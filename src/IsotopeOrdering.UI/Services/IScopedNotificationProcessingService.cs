@@ -6,3 +6,4 @@ namespace IsotopeOrdering.UI.Services {
         Task DoWork(CancellationToken stoppingToken);
     }
 }
+ 

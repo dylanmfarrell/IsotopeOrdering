@@ -14,6 +14,6 @@ namespace IsotopeOrdering.Infrastructure.Services {
 
         public async Task<IEnumerable<string>> GetUserRolesByEmail(string emailAddress, string applicationToken, string defaultRole) {
             return await Task.FromResult(new string[0]);
-        }
+        } 
     }
 }
